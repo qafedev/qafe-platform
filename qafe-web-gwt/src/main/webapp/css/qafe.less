@@ -1,0 +1,712 @@
+
+/*
+ * Qafe style sheet
+ *
+ * Author: Martin de Boer
+ * Date: 24-1-2012
+ *  
+ * Design goals:
+ * - Create a theme / style that can be customized by a settings values for a small number of base variables
+ * - Other variables are set relative to the base values (but can be changed if needed)
+ * 		- Use lighten and darken functions to set colors relative to base color
+ * 		- Use em to set spacing relative to base font size
+ * - Create a compact and readable style sheet
+ * - Separate color scheme, typography, user interface and layout.
+ *
+ * Notes:
+ * - Compile less to css with lessc (linux) or lesscss.app (osx)
+ *
+ */
+
+// @import "qafe-color-scheme.less"  ;
+
+
+//
+// Color scheme
+
+//  Background colors
+@gmailLikeBackgroundColor: #F5F5F5 ;  // very-light-blue
+@extgwtLikeBackgroundColor: #DFE8F6 ;    // light-blue
+
+@baseBackgroundColor:  @extgwtLikeBackgroundColor ;
+
+@panelBackgroundColor: @baseBackgroundColor ;
+@textFieldBackgroundColor: lighten( @baseBackgroundColor, 20% ) ;
+@buttonBackgroundColor: #C40606 ;   		// lighten( @baseBackgroundColor, 10% ) ;
+@buttonBackgroundColorBlue: #435FEC;
+
+// Border colors
+ @requiredBorderColor: #D46060 ; // red 
+
+// Text colors
+@baseTextColor: #3c3b36 ;
+
+@buttonTextColor: lighten( @baseTextColor, 10% ) ;
+@checkBoxTextColor: @baseTextColor;
+@datagridTextColor: @baseTextColor ;
+@labelTextColor: lighten( @baseTextColor, 10% ) ;
+@listBoxTextColor: @baseTextColor ;
+@radioButtonTextColor: @baseTextColor ;
+@stackPanelTextColor: @labelTextColor ;
+@textFieldTextColor: @baseTextColor ;
+
+//
+// Typography
+
+@baseFont:  arial, sans-serif, helvetica,  verdana  ;
+@baseFontSize: 12px;
+
+@buttonFontSize: @baseFontSize ;
+@checkBoxFontSize: @baseFontSize ;
+@datagridFontSize: @baseFontSize - 1px ;
+@labelFontSIze: @baseFontSize - 1px ;
+@listBoxFontSize: @baseFontSize ;
+@radioButtonFontSize: @baseFontSize ;
+@stackPanelFontSize: @labelFontSIze ;
+@textfieldFontSize: @baseFontSize ;
+
+
+//
+// Generics
+
+// Backgrounds
+
+.qafe_background( @color: @baseBackgroundColor ) {
+	background: @color ;
+}
+
+.qafe_background( gradient, @from, @to ) {
+  background: @from;
+  background: -webkit-gradient( linear, left top, left bottom, from(@from), to(@to) );
+  background: -moz-linear-gradient( top,  @from,  @to );
+  // FIXME: IE support
+  // filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='@color', endColorstr='darken(@color, @p)) ;	
+}
+
+
+// Borders
+
+.qafe_border() {
+	border: 0px;
+}
+
+.qafe_border( rounded, @color,  @radius: 0.5em ) {
+	border: 1px solid @color ;
+	border-radius: @radius ;
+	-webkit-border-radius: @radius ;
+	-moz-border-radius: @radius ;
+}
+
+.qafe_border( top-rounded, @color, @radius: 0.5em ) {
+	border: 1px solid @color ;
+	border-top-left-radius: @radius ;
+	-webkit-border-top-left-radius: @radius ;
+	-moz-border-top-left-radius: @radius ;
+	border-top-rigth-radius: @radius ;
+	-webkit-border-top-right-radius: @radius ;
+	-moz-border-top-right-radius: @radius ;	
+}
+
+.qafe_border( lowered, @color, @p: 10% ) {
+  border: 1px solid ;  
+  border-top-color: darken( @color, @p ) ;
+  border-bottom-color: lighten( @color, @p ) ;
+  border-left-color: darken( @color, @p ) ;
+  border-right-color: lighten( @color, @p ) ;
+}
+
+.qafe_border( raised, @color, @p: 10% ) {
+  border: 1px solid ;  
+  border-top-color: lighten( @color, @p ) ;
+  border-bottom-color: darken( @color, @p ) ;
+  border-left-color: lighten( @color, @p ) ;
+  border-right-color: darken( @color, @p ) ;  
+}
+
+
+// Colors (foreground)
+
+.qafe_color( @color: @baseTextColor ) {
+  color: @color ;
+}
+
+// Fonts
+
+.qafe_font ( @size: @baseFontSize, @weigth: normal ) {
+  font-family: @baseFont ;
+  font-size: @size ;
+  font-weight: @weigth ;
+}
+
+
+// Margins
+
+.qafe_margin( @top: 3px, @right: 3px, @bottom: 3px, @left: 3px ) {
+	// FIXME: lesscss bug: margin: @arguments ; should but does not work?
+	margin: @top @right @bottom @left ;
+}
+.qafe_empty_margin( @top:0px, @right: 0px, @bottom: 0px, @left: 0px ) {
+	// FIXME: lesscss bug: margin: @arguments ; should but does not work?
+	margin: @top @right @bottom @left ;
+}
+
+
+// Padding
+
+.qafe_padding( @top: 0.5em, @right: 0.5em, @bottom: 0.5em, @left: 0.5em  ) {
+	// FIXME: lesscss bug: padding: @arguments ;  should but does not work?
+	padding: @top @right @bottom @left ;
+}
+
+.qafe_empty_padding( @top: 0em, @right: 0em, @bottom: 0em, @left: 0em  ) {
+	// FIXME: lesscss bug: padding: @arguments ;  should but does not work?
+	padding: @top @right @bottom @left ;
+}
+
+// Shadows
+
+.qafe_shadow() {
+	box-shadow: 0 1px 2px rgba(0,0,0,.2) ;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2) ;
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2) ;
+	// TODO: add ie shadow definition (when ie adds support for shadows)
+}
+
+
+//
+// Interface
+
+// Generics
+
+.qafe_text_input {
+	display: block;
+	height: 20px;
+        padding:0px;
+        padding-left:0px;
+        padding-right:0px;
+        padding-height:0px;
+        padding-bottom:0px;
+	.qafe_background( @textFieldBackgroundColor ) ;
+	.qafe_border( lowered, @panelBackgroundColor ) ;
+	.qafe_margin ;
+	.qafe_font( @textfieldFontSize ) ;
+	
+}
+
+.qafe_readonly_text {
+	color: black !important;
+}
+
+.gwt-SuggestBox {
+    .qafe_text_input;
+}
+
+.gwt-SuggestBox-readonly {
+	.qafe_readonly_text;
+}
+
+.gwt-TextBox-readonly {
+	.qafe_readonly_text;
+}
+
+.gwt-ListBox-readonly {
+	.qafe_readonly_text;
+}
+
+// Fixme: Direct GWT
+
+.gwt-DecoratedTabBar {
+	background: red ;
+ 	padding-top: 6px ;
+}
+
+
+
+// Components
+
+.qafe_button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	.qafe_background( gradient, lighten(@buttonBackgroundColor, 10%), darken(@buttonBackgroundColor, 10%) ) ;
+	.qafe_border( rounded, lighten(@buttonBackgroundColor, 30%) ) ;
+	color: white;
+	.qafe_font( @buttonFontSize, bold ) ;
+	.qafe_margin ;
+	.qafe_padding ;
+	.qafe_shadow ;
+	width: 115px;
+	font-family: Arial, sans-serif;
+}
+
+.qafe_button:hover {
+  text-decoration: none;
+  .qafe_background( gradient, darken(@buttonBackgroundColor, 5%), darken(@buttonBackgroundColor, 15%) ) ;
+}
+
+.qafe_button:active {
+  position: relative;
+  top: 1px;
+  color: lighten( @buttonTextColor, 20% ) ;
+  .qafe_background( gradient, darken(@buttonBackgroundColor, 20%), @buttonBackgroundColor ) ;
+}
+
+.qafe_blue_button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	.qafe_background( gradient, lighten(@buttonBackgroundColorBlue, 10%), darken(@buttonBackgroundColorBlue, 10%) ) ;
+	.qafe_border( rounded, lighten(@buttonBackgroundColorBlue, 30%) ) ;
+	color: white;
+	.qafe_font( @buttonFontSize, bold ) ;
+	.qafe_margin ;
+	.qafe_padding ;
+	.qafe_shadow ;
+	width: 115px;
+	font-family: Arial, sans-serif;
+}
+
+.qafe_blue_button:hover {
+  text-decoration: none;
+  .qafe_background( gradient, darken(@buttonBackgroundColorBlue, 5%), darken(@buttonBackgroundColorBlue, 15%) ) ;
+}
+
+.qafe_blue_button:active {
+  position: relative;
+  top: 1px;
+  color: lighten( @buttonTextColor, 20% ) ;
+  .qafe_background( gradient, darken(@buttonBackgroundColorBlue, 20%), @buttonBackgroundColorBlue ) ;
+}
+
+// undocumented?
+.qafe_checkbox {
+	.qafe_color( @checkBoxTextColor ) ;
+	.qafe_empty_margin ;
+	.qafe_empty_padding ;
+	label {
+		.qafe_font( @checkBoxFontSize, normal ) ;
+		.qafe_padding ;
+	}
+}
+
+// choice = radiobutton 
+.qafe_choice {
+	.qafe_font( @radioButtonFontSize ) ;
+	.qafe_color( @radioButtonTextColor ) ;
+	.qafe_margin ;
+	.qafe_padding ;
+	// TODO: vertically center allign radiobutton and value label
+	// add spacing between radiobutton and value label
+	label {
+		.qafe_padding ;
+	} 
+}
+
+.qafe_datagrid {
+}
+
+.qafe_datagrid-column {
+}
+
+// undocumented / GWT specific
+.gwt-DateBox {
+	.qafe_text_input ;
+}
+
+.gwt-DateBox-readonly {
+	.qafe_readonly_text;
+}
+
+.qafe_datepicker  {
+}
+
+.qafe_datepicker_td  {
+}
+
+// undocumented / GWT specific
+.gwt-decoratorpanel {
+	.qafe_background( @panelBackgroundColor ) ;
+	.qafe_border ;
+}
+
+.qafe_dropdown {
+	/* text-transform: uppercase; */
+}
+
+.qafe_fileupload {
+}
+
+.qafe_frame {
+}
+
+.qafe_hidden {
+}
+
+// styling datagrid cells 
+.dataTable {
+	.qafe_html {
+		.qafe_border ;
+		.qafe_color( @datagridTextColor ) ;
+	//	.qafe_margin ;
+		.qafe_font( @datagridFontSize ) ;
+		.qafe_padding ;
+	}
+}
+
+.qafe_image {
+}
+
+.qafe_label {
+  .qafe_font( @labelFontSIze, bold ) ;
+  .qafe_color( @labelTextColor ) ;
+  .qafe_padding ;
+}
+
+.qafe_link {
+}
+
+.qafe_listbox {
+	.qafe_font( @listBoxFontSize ) ;
+	.qafe_color( @listBoxTextColor ) ;
+        .qafe_text_input;
+	.qafe_empty_padding ;
+	
+	option {
+		.qafe_padding ;
+	}
+}
+
+.qafe_map {
+}
+
+.qafe_menu {
+}
+
+.qafe_menu-item {
+}
+
+.qafe_overflowpanel {
+}
+
+.qafe_panel {
+  .qafe_background( @panelBackgroundColor ) ;
+  .qafe_border( raised, @panelBackgroundColor ) ;
+}
+
+.qafe_password {
+  .qafe_text_input ;
+}
+
+// undocumented / GWT specific
+.gwt-RichTextArea {
+	.qafe_text_input ;
+}
+
+.gwt-RichTextArea-readonly {
+	.qafe_readonly_text;
+}
+
+.qafe_rootpanel {
+	.qafe_border ;
+	.qafe_background( @panelBackgroundColor ) ;
+}
+
+.qafe_scrolltable {
+}
+
+.qafe_scrolltable_datatable_td {
+}
+
+.qafe_scrolltable_datatable_td {
+}
+
+.qafe_scrolltable_datatable_tr {
+}
+
+.qafe_scrolltable_datatable_tr {
+}
+
+.qafe_scrolltable_footertable_t {
+}
+
+// FIXME: ignored?
+.qafe_scrolltable_headertable {
+	.qafe_background( darken(@panelBackgroundColor, 10%) ) ;
+}
+
+// undocumented
+.headerTable {
+	.qafe_background( darken(@panelBackgroundColor, 10%) ) ;
+}
+
+// FIXME: ignored?
+.qafe_scrolltable_headerwrapper {
+	.qafe_background( @panelBackgroundColor ) ;
+}
+
+// undocumented: hide wrapper as it is larger than grid / table
+.headerwrapper {
+	background: @panelBackgroundColor;
+}
+
+.qafe_slider {
+}
+
+.qafe_splitpanel {
+	.qafe_background( @panelBackgroundColor ) ;
+	.qafe_border ;
+}
+
+.qafe_stackpanel {
+	.qafe_color( red ) ;
+}
+
+// undocumented
+.gwt-DecoratedStackPanel {
+	.qafe_background( @panelBackgroundColor ) ;	
+}
+
+.gwt-StackPanelItem {
+	.stackItemMiddleCenterInner {
+		.qafe_color( @stackPanelTextColor ) ; 
+		.qafe_font( @stackPanelFontSize, normal ) ;
+		.qafe_padding ;
+		// .qafe_margin ;
+	}
+}
+
+.gwt-StackPanelItem-selected {
+	.stackItemMiddleCenterInner{
+		.qafe_color( @stackPanelTextColor ) ; 
+		.qafe_font( @stackPanelFontSize, bold ) ;	
+		.qafe_padding ;
+	}
+}
+
+.qafe_tab {
+	.qafe_background( darken(@panelBackgroundColor, 15%) ) ;
+	.qafe_padding( 0.5em, 0.5em, 0em, 0.5em ) ;
+}
+
+.qafe_tabbaritem {
+	.qafe_border( top-rounded, darken(@panelBackgroundColor, 10%) ) ;	
+	.qafe_background( darken(@panelBackgroundColor, 10%) ) ;
+	
+	.qafe_label {
+		.qafe_font( @labelFontSIze, normal ) ;
+		.qafe_color(blue);
+	}
+}
+
+.qafe_tabbaritem-selected {
+	.qafe_background( @panelBackgroundColor ) ;
+	
+	.qafe_label {
+		.qafe_font( @labelFontSIze, bold ) ;
+		.qafe_color(white);
+	}
+}
+
+.qafe_tabpanel {
+  .qafe_background( @panelBackgroundColor ) ;
+  .qafe_border ;
+}
+
+.qafe_tabpanelbottom {
+	.qafe_background ;
+  	.qafe_border( raised, @panelBackgroundColor ) ;
+}
+
+.qafe_textarea {
+        height:120px;
+        width:170px;
+        left:-10px;
+       	.qafe_text_input ;
+        .qafe_empty_padding;
+        
+}
+
+.gwt-TextArea {
+    .qafe_textarea;
+}
+
+.gwt-TextArea-readonly {
+	.qafe_readonly_text;
+}
+
+.qafe_textfield {
+	.qafe_text_input ;
+}
+
+.qafe_textfieldRequired {
+  .qafe_text_input ;
+  .qafe_border( lowered, @requiredBorderColor ) ;
+}
+
+.qafe_toolbar {
+}
+
+.qafe_tree {
+}
+
+.qafe_tree-item {
+}
+
+// undocumented / GWT specific
+.gwt-ValueSpinner {
+	input {
+		.qafe_text_input ;
+	}
+}
+.textBox-readonly {
+	.qafe_readonly_text
+}
+
+.qafe_window {
+	background-color: red;
+}
+
+.qafe_invalid_field {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	font-size: 13px;
+}
+
+.qafe_valid_field {
+	border-style: solid;
+	border-color: none;
+	border-width: 1px;
+	font-size: 13px;
+}
+
+.dataTable input, .dataTable select {
+	margin: 0px;
+	height: 25px;
+	width: 100%;
+}
+
+.dataTable button {
+	margin: 1px;
+	line-height: 9px;
+}
+
+.dataTable .gwt-CheckBox input {
+	height: 22px;
+}
+
+.dataTable .gwt-HTML, .dataTable .gwt-Hyperlink {
+	padding: 0px;
+	line-height: 25px;
+	font-size: 13px;
+}
+
+.qafe_close_on_showPanel {
+	font-family: Calibri,"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+	padding: 0pt;
+	cursor: pointer;
+	color: grey;
+	text-align: center;
+	font-weight: bold;
+	width: 15px;
+	height: 15px;
+}
+
+.qafe_close_on_showPanel:hover {
+	color: red;
+}
+
+.datagrids {
+	border-color: #4D6821;
+	border-style: groove;
+	border-width: 1px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	/* text-transform: uppercase; */
+}
+
+.headerTable {
+	.qafe_background( gradient, lighten(#3c3c3b, 10%), darken(#3c3c3b, 10%) ) ;
+}
+
+.datagrids .headerWrapper {
+	border-style: groove;
+	border-width: 2px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	.qafe_background( gradient, lighten(#3c3c3b, 10%), darken(#3c3c3b, 10%) ) ;
+}
+
+.datagridHeaderLabels {
+	color: white;
+	font-size: 8pt;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+	text-align: left;
+	margin-top: 4px;
+	width: 100px;
+	/* text-transform: uppercase; */
+}
+
+.datagrids .dataTable tr.highlighted {
+	border-style: groove;
+	border-width: 2px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+    background: #D0E8F4;    
+}
+
+.datagrids .dataTable tr.selected {
+	border-style: groove;
+	border-width: 2px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+    background: #9CC7F2;
+}
+
+.datagrids .dataTable td.highlighted {
+    background: #D0E8F4;
+}
+
+.qafe-glass-panel {
+  background-color: #000;
+  opacity: 0.20;
+  filter: alpha(opacity=30);  
+}
+
+.qafe_body{
+	background-image: url(images/wallpaper.jpg);
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-color:#000;
+	z-index: 0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+} 
+
+.datePickerButton {
+	font-size: 120%;
+	line-height: 1em;
+	color: blue;
+	cursor: hand;
+	cursor: pointer;
+	padding: 0px 4px;
+}
+
+.datePickerPreviousButtonYear {
+	.datePickerButton;
+	padding-right: 10px;	
+}
+
+.datePickerNextButtonYear {
+	.datePickerButton;
+	padding-left: 10px;	
+}

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="qodex" displayname="QAFE Designer Extension" width="700" height="600">
+				<rootpanel id="rootPanel" menu="main_menu">
+					<verticallayout>
+						<panel width="700" height="280">
+							<verticallayout>
+							<panel>
+								<horizontallayout>
+								<panel displayname="Select the Form" width="175px">
+									<horizontallayout>
+										<panel>
+											<verticallayout>
+											<dropdown id="implementations" />
+											<button displayname="Generate output" id="generate" visible="false"/>
+										</verticallayout>
+										</panel>
+									</horizontallayout>
+								</panel>
+								<tabpanel visible="false" id="connectionpanel" width="400px" name="connection">
+									<tab displayname="Connection">
+										<gridlayout>
+											<element x="0" y="0">
+												<label displayname="Enter your connection name" />
+											</element>
+											<element x="1" y="0">
+												<textfield id="connectionname" name="name" required="true" min-length="2" />
+											</element>
+											<element x="0" y="1">
+												<label displayname="Choose the database driver" />
+											</element>
+											<element x="1" y="1">
+												<dropdown id="connectiondriver" name="driver">
+													<item id="oracle" value="oracle" displayname="Oracle" selected="true" />
+												</dropdown>
+											</element>
+											<element x="0" y="2">
+												<label displayname="Enter database Username" />
+											</element>
+											<element x="1" y="2">
+												<textfield id="connectionusername" name="username" required="true" min-length="2" />
+											</element>
+											<element x="0" y="3">
+												<label displayname="Enter database Password" />
+											</element>
+											<element x="1" y="3">
+												<textfield id="connectionpassword" name="password" required="true" min-length="2" />
+											</element>
+											<element x="0" y="4">
+												<label displayname="Enter database Driverclass" />
+											</element>
+											<element x="1" y="4">
+												<textfield id="connectiondriverclass" name="driverclass" required="true" min-length="2" editable="false">
+													<value>oracle.jdbc.OracleDriver</value>
+												</textfield>
+											</element>
+											<element x="0" y="5">
+												<label displayname="Enter database URL" />
+											</element>
+											<element x="1" y="5">
+												<textfield id="connectionurl" name="url" required="true" min-length="2">
+													<value>
+												jdbc:oracle:thin:@HOSTNAME:PORT:SID</value>
+												</textfield>
+											</element>
+										</gridlayout>
+									</tab>
+									<tab displayname="JNDI Connection">
+										<gridlayout>
+											<element x="0" y="0">
+												<label displayname="Enter your connection name" />
+											</element>
+											<element x="1" y="0">
+												<textfield id="connectionname" name="name" required="true" min-length="2" />
+											</element>
+											<element x="0" y="1">
+												<label displayname="JNDI Name" />
+											</element>
+											<element x="1" y="1">
+												<textfield id="jndiname" name="jndiname" required="true" min-length="2" editable="false">
+													<value>jdbc/</value>
+												</textfield>
+											</element>
+										</gridlayout>
+									</tab>
+
+								</tabpanel>
+								</horizontallayout>
+							</panel>
+							</verticallayout>
+						</panel>
+						<panel displayname="sample code" id="qamlcodepanel" visible="false">
+						<verticallayout>
+							<textarea  id="qamlcode" rows="20" tooltip="QAMl Output code" editable="false"/>
+						</verticallayout>
+						</panel>
+						
+					</verticallayout>
+
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="generate" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<dialog type="info">
+							<title value="Generation process" />
+							<message value="The output will be generated in a zipfile, containing the application and statements packed together." />
+						</dialog>
+						
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="qodex" />
+								<listener type="onload" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getImplementationNames">
+							<out name="implementationNames" ref="result" />
+						</business-action>
+
+						<set component-id="implementations" ref="implementationNames">
+							<mapping key="value" value="id" />
+							<mapping key="id" value="implementationname" />
+
+						</set>
+					</event>
+					<event src-value="value">
+						<listeners>
+							<listenergroup>
+								<component ref="implementations" />
+								<listener type="onchange" />
+							</listenergroup>
+						</listeners>
+
+						<business-action ref="getWindowNames">
+							<in name="module" ref="value" />
+							<out name="wresult" ref="result" />
+						</business-action>
+						<!-- <set component-id="windows" ref="result" />-->
+						<set-property property="visible" value="true">
+							<component ref="connectionpanel" />
+							<component ref="qamlcodepanel" />
+							<component ref="generate" />
+						</set-property>
+						<business-action ref="getQamlCode">
+							<in name="module" ref="currentmodule" src="user" />
+							<out name="qresult" ref="result" />
+						</business-action>
+						<set component-id="qamlcode" ref="qresult" />
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="qodex.file_menu_exit" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<closewindow ref="qodex" />
+					</event>
+				</events>
+			</window>
+			<menu-definition id="main_menu">
+				<menu id="file_menu" shortcut="CTRL+Y" displayname="File">
+
+					<menu id="file_menu_exit" shortcut="CTRL+Y" displayname="Exit" />
+				</menu>
+			</menu-definition>
+		</view>
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="getImplementationNames">
+				<service method-ref="getImplementationNames" ref="repo-service-java">
+					<out name="result" ref="result" />
+				</service>
+			</business-action>
+			<business-action id="getWindowNames">
+				<service method-ref="getWindowNames" ref="repo-service-java">
+					<in name="module" ref="module" />
+					<out name="result" ref="result" />
+				</service>
+			</business-action>
+			<business-action id="getQamlCode">
+				<service method-ref="getQamlCode" ref="repo-service-java">
+					<in name="module" ref="module" />
+					<out name="result" ref="result" />
+				</service>
+			</business-action>
+
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service resource-ref="database" id="repo-service">
+				<method id="getImplementationNames" name="getImplementationNames">
+					<out name="result" />
+				</method>
+				<method id="getWindowNames" name="getWindowNames">
+					<in name="module" ref="module" />
+					<out name="result" />
+				</method>
+
+
+			</service>
+			<service resource-ref="DesignerGeneraterService" id="repo-service-java">
+				<method id="getImplementationNames" name="getModules">
+					<out name="result" />
+				</method>
+				<method id="getWindowNames" name="getWindows">
+					<in name="0" ref="module" />
+					<out name="result" />
+				</method>
+				<method id="getQamlCode" name="getQamlCodeByModule">
+					<in name="0" ref="module" />
+					<out name="result" />
+				</method>
+
+			</service>
+
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<drivermanager-datasource driver-classname="oracle.jdbc.driver.OracleDriver" id="database" statements-file-url="qodex/qodex-statements.xml" url="jdbc:oracle:thin:@localhost:1521:XE" dialect="oracle" password="des4qpd" username="qpddesrepowner" />
+
+			<javaclass id="DesignerGeneraterService" classname="com.qualogy.qafe.tools.conversion.oracleforms.designer.service.impl.DesignerGeneratorServiceImpl" />
+
+		</resources>
+
+	</resource-tier>
+</application-mapping> 

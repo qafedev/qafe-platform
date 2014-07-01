@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+		
+			<business-action id="insertData">
+				<service method-ref="insertData" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+			<business-action id="testSelectToVerify">
+				<service method-ref="testSelectToVerify" ref="HDEMO65DatabaseService">
+					<out name="result" ref="result"></out>
+				</service>
+			</business-action>
+			
+			<business-action id="testSelectAllToVerify">
+				<service method-ref="testSelectAllToVerify" ref="HDEMO65DatabaseService">
+					<out name="result" ref="result"></out>
+				</service>
+			</business-action>
+			
+			<business-action id="testUpdateWithoutPK">
+				<service method-ref="testUpdateWithoutPK" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+			<business-action id="testUpdateWithPK">
+				<service method-ref="testUpdateWithPK" ref="HDEMO65DatabaseService"/>
+			</business-action>		
+			
+			<business-action id="testUpdateMultipleFieldsWithoutPK">
+				<service method-ref="testUpdateMultipleFieldsWithoutPK" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+			<business-action id="testUpdateMultipleFieldsWithPK">
+				<service method-ref="testUpdateMultipleFieldsWithPK" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+			<business-action id="testDateUpdateWithPK">
+				<service method-ref="testDateUpdateWithPK" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+			<business-action id="testUpdateWithSQLAttribute">
+				<service method-ref="testUpdateWithSQLAttribute" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAttributeAndInParams">
+				<service method-ref="testUpdateWithSqlAttributeAndInParams" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAttributeAndInParamsAsMap">
+				<service method-ref="testUpdateWithSqlAttributeAndInParamsAsMap" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateTagWithInParamsAsMap">
+				<service method-ref="testUpdateTagWithInParamsAsMap" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAttributeAndInParamsAsCollection">
+				<service method-ref="testUpdateWithSqlAttributeAndInParamsAsCollection" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateTagWithInParamsAsCollection">
+				<service method-ref="testUpdateTagWithInParamsAsCollection" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAsText">
+				<service method-ref="testUpdateWithSqlAsText" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAsTextAndInParams">
+				<service method-ref="testUpdateWithSqlAsTextAndInParams" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAsTextAndInParamsAsMap">
+				<service method-ref="testUpdateWithSqlAsTextAndInParamsAsMap" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAsTextAndInParamsAsCollection">
+				<service method-ref="testUpdateWithSqlAsTextAndInParamsAsCollection" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithAllAttributes">
+				<service method-ref="testUpdateWithAllAttributes" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithAllAttributesAndInParamsAsMap">
+				<service method-ref="testUpdateWithAllAttributesAndInParamsAsMap" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithAllAttributesAndInParamsAsCollection">
+				<service method-ref="testUpdateWithAllAttributesAndInParamsAsCollection" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithTableAndSqlAttribute">
+				<service method-ref="testUpdateWithTableAndSqlAttribute" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAndWhereAttribute">
+				<service method-ref="testUpdateWithSqlAndWhereAttribute" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSqlAttributeAndSqlText">
+				<service method-ref="testUpdateWithSqlAttributeAndSqlText" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithTableAndWhereAttribute">
+				<service method-ref="testUpdateWithTableAndWhereAttribute" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="testUpdateWithSQLTextUsingCDATA">
+				<service method-ref="testUpdateWithSQLTextUsingCDATA" ref="HDEMO65DatabaseService" />
+			</business-action>
+			
+			<business-action id="deleteData">
+				<service method-ref="deleteData" ref="HDEMO65DatabaseService"/>
+			</business-action>
+			
+		</business-actions>
+	</business-tier>
+</application-mapping>

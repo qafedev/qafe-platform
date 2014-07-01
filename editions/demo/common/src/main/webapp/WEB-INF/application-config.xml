@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications  xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	
+	<configuration name="external.properties"  value="external.properties"/>
+	<configuration name="mode.development" value="true"/>
+	<configuration name="load.on.startup" value="system_app.welcome"/>
+	
+	<!-- <configuration name="mode.mdi" value="false"/> --> 
+
+	<application name="apps" id="system_app" >
+		<application-mapping-file location="qafe-default-system-app.xml"/>
+		<application-mapping-file location="about.xml"/>
+	</application>
+	
+	<!--  Hello World application  -->
+	<application name="Hello World Application" id="HelloWorld" >
+		<application-mapping-file location="helloworld.xml"/>		
+	</application>
+	
+	<!--  Random application  -->
+	<application name="Simple Java Demo" id="randomdemo">
+		<application-mapping-file location="RandomDemo.xml"/>		
+	</application>
+
+	<!--  Belastindienst application  -->
+	<application name="Belastindienst" id="Belastindienst" >
+		<application-mapping-file location="belastingdienstapp/belastingdienstapp.xml"/>		
+	</application>
+	
+	<!--  Chart application  -->
+	<application name="Chart" id="Chart" >
+		<application-mapping-file location="chartapp/charts.xml"/>		
+	</application>
+	
+	<!--  Showcase application  -->
+	<application name="Showcase" id="Showcase" >
+		<application-mapping-file location="showcaseapp/MyService.xml"/>
+		<application-mapping-file location="showcaseapp/showcase.xml"/>		
+		<application-mapping-file location="showcaseapp/button.xml"/>
+		<application-mapping-file location="showcaseapp/label.xml"/>	
+		<application-mapping-file location="showcaseapp/tilelist.xml"/>
+		<application-mapping-file location="showcaseapp/fileupload.xml"/>
+		<application-mapping-file location="showcaseapp/listenergroup.xml"/>
+		<application-mapping-file location="showcaseapp/event_ref.xml"/>
+		<application-mapping-file location="showcaseapp/set.xml"/>
+		<application-mapping-file location="showcaseapp/setProperty.xml"/>
+		<application-mapping-file location="showcaseapp/dialog.xml"/>
+		<application-mapping-file location="showcaseapp/toggle.xml"/>
+		<application-mapping-file location="showcaseapp/changeStyle.xml"/>
+		<application-mapping-file location="showcaseapp/focus.xml"/>
+		<application-mapping-file location="showcaseapp/copy.xml"/>
+		<application-mapping-file location="showcaseapp/if.xml"/>
+		<application-mapping-file location="showcaseapp/switch.xml"/>
+		<application-mapping-file location="showcaseapp/choice.xml"/>
+		<application-mapping-file location="showcaseapp/textfield.xml"/>
+		<application-mapping-file location="showcaseapp/textarea.xml"/>
+		<application-mapping-file location="showcaseapp/password.xml"/>
+		<application-mapping-file location="showcaseapp/listbox.xml"/>
+		<application-mapping-file location="showcaseapp/dropdown.xml"/>
+		<application-mapping-file location="showcaseapp/datagrid.xml"/>
+	</application>
+	
+	<application name="Twitter" id="twitter" root-menu="menu_network">	
+		<application-mapping-file location="twitter-qafe.xml"/>		
+		<!--application-mapping-file location="google.xml"/-->		
+	</application>
+
+	<application name="Youtube QAFE" id="youtube" root-menu="menu_network">	
+		<application-mapping-file location="youtube.xml"/>		
+	</application>
+
+	<application name="Documentation" id="docs" root-menu="menu_about">
+		<application-mapping-file location="documentation.xml"/>		
+		<application-mapping-file location="qualogy.xml"/>		
+	</application>
+	
+
+</applications>

@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="test">
+				<transaction managed="no" />
+				<service ref="JavaService" method-ref="test"
+					>
+					<in ref="businessactionin" name="servicein" /><!-- in ref is how its stored in the datastore, name out to service -->
+					<out ref="serviceout" name="businessactionout" /><!-- in ref from service, out name to the world -->
+				</service>
+			</business-action>
+			<business-action id="testValueWithPlaceHolders">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" value="${1}">
+						<placeholder name="1" value="hello world" />
+					</in>
+				</service>
+			</business-action>
+			<business-action id="testValueWithNoPlaceHolders">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" value="${1}" />
+				</service>
+			</business-action>
+			<business-action id="testValueWithTheSamePlaceHolders">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" value="${1} - ${1}">
+						<placeholder name="1" value="hello world" />
+					</in>
+				</service>
+			</business-action>
+			<business-action id="testExpression">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" expr="((1+1)*4)/8" />
+				</service>
+			</business-action>
+			<business-action id="testExpressionWithPlaceHolders">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" expr="((1+1)*4)/${1}">
+						<placeholder name="1" value="8" type="int" />
+					</in>
+				</service>
+			</business-action>
+			<business-action id="testMessages">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" ref="amessagefromcontextfile"
+						src="message" />
+				</service>
+			</business-action>
+			<business-action id="testMessagesWithPlaceHolder">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" ref="amessagefromcontextfilewithparam"
+						src="message">
+						<placeholder name="1" value="withplaceholder" />
+					</in>
+				</service>
+			</business-action>
+			<business-action
+				id="testMessagesWithPlaceHolderAndBundle">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" ref="bundle_id_1.amessagefromcontextfilewithparam"
+						src="message">
+						<placeholder name="1" value="withplaceholder" />
+					</in>
+				</service>
+			</business-action>
+			<business-action id="testMessagesWithBundle">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" ref="bundle_id_1.amessagefromcontextfile"
+						src="message" />
+				</service>
+			</business-action>
+			<business-action id="testMessagesWithBundleFromFile">
+				<service ref="JavaService" method-ref="returnIn"
+					>
+					<in name="in" ref="bundle_id_2.amessagefrommessagefile"
+						src="message" />
+				</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="JavaService" resource-ref="javaServicer">
+				<method id="test" name="testParameter">
+					<in ref="servicein" name="0" /><!-- ref is how its stored in the datastore, name is how this service calls it -->
+					<out ref="actualserviceout" name="serviceout" /><!-- in ref from actualservice, out name to the world -->
+				</method>
+				<method id="returnIn" name="returnIn">
+					<in ref="in" name="0" /><!-- ref is how its stored in the datastore, name is how this service calls it -->
+					<out name="outcome" /><!-- in ref from actualservice, out name to the world -->
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="javaServicer" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService"  jarfile-location="/../../samples/test.jar"/>
+		</resources>
+	</resource-tier>
+</application-mapping>

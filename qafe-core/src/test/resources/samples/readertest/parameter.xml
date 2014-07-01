@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="test">
+				<service ref="JavaService" method-ref="test" >
+					<in ref="businessactionin" name="servicein"/><!-- in ref, name out to service -->
+					<out ref="serviceout" name="businessactionout"/><!-- in ref from service, out name to the world -->
+				</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="JavaService" resource-ref="javaServicer">
+				<method id="test" name="testParameter">
+					<in ref="servicein" name="actualservicein"/><!-- in ref, name out to actual service -->
+					<out ref="actualserviceout" name="serviceout"/><!-- in ref from actualservice, out name to the world -->
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="javaServicer" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService" jarfile-location=""/>
+		</resources>
+	</resource-tier>
+</application-mapping>

@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="Sample window">
+
+				<!--<menu id="menu1_rp" shortcut="CTRL+X"  name="RootMenu">
+					<menu id="menu2_rp" shortcut="CTRL+Y"  name="SubMenu"/>
+					
+					</menu>-->
+				<rootpanel id="invoicing" menu="main_menu"
+					displayname="Oracle Applications - Qualogy" toolbar="maintoolbar">
+
+					<verticallayout>
+
+
+						<panel id="totalsPane" contextmenu="menu1"
+							displayname="Totals">
+
+							<gridlayout>
+								<element x="1" y="1" gridwidth="4">
+									<label id="bcTotalLabel"
+										contextmenu="main_menu" displayname="Batch Control Total" />
+								</element>
+								<element x="2" y="1">
+									<textfield id="bcTotalTextfield">
+										<value>111</value>
+									</textfield>
+								</element>
+								<element x="1" y="2">
+									<label id="acTotalLabel"
+										displayname="Actual Total" />
+								</element>
+								<element x="2" y="2">
+									<textfield id="acTotalTextfield">
+										<value>22</value>
+									</textfield>
+								</element>
+								<element x="2" y="3">
+									<checkbox id="checkbox"
+										displayname="xxx" checked="false" />
+								</element>
+							</gridlayout>
+						</panel>
+						<label id="window2label"
+							displayname="Hell world !! (Window1)" />
+						<tree id="tree" displayname="Hello">
+							<tree-item id="nested3" value=""
+								displayname="I'm a tree">
+								<tree-item id="nested2" value=""
+									displayname="and child">
+									<tree-item id="nested5" value=""
+										displayname="and sibling" />
+
+									<tree-item id="nested6" value=""
+										displayname="and sibling" expand="true">
+										<tree-item id="nested61"
+											value="" displayname="and sibling" />
+
+										<tree-item id="nested62"
+											value="" displayname="and sibling" />
+									</tree-item>
+									<tree-item id="nested7" value=""
+										displayname="and sibling" />
+								</tree-item>
+								<tree-item id="nested4" value=""
+									displayname="and sibling" />
+							</tree-item>
+						</tree>
+						<tabpanel id="tabpanel">
+
+							<tab id="innerpanel1" displayname="Tab1">
+								<absolutelayout>
+									<element x="0" y="0">
+										<panel id="panel1.1">
+											<verticallayout />
+										</panel>
+									</element>
+								</absolutelayout>
+							</tab>
+							<tab id="innerpanel2" displayname="Tab2">
+								<verticallayout>
+									<label id="label1111"
+										displayname="Hi I'm a label" />
+								</verticallayout>
+							</tab>
+
+						</tabpanel>
+						<!-- Invoices Table overview -->
+						<panel id="invoiceoverview">
+							<verticallayout>
+								<table id="invoiceoverviewtable" width="400" height="300">
+									<header
+										id="invoiceoverviewtableheader">
+										<cell id="cellType">
+											<label id="c1"
+												displayname="Type" />
+										</cell>
+										<cell id="celldcName">
+											<label id="c2"
+												displayname="DocumentCategoryName" />
+										</cell>
+										<cell id="cellsupplier">
+											<label id="c3"
+												displayname="Supplier" />
+										</cell>
+									</header>
+									<row id="row1">
+										<cell id="cellTypeV11">
+											<label id="1c1"
+												displayname="Type Row" />
+										</cell>
+										<cell id="cellAccountedV11">
+											<label id="1c11"
+												displayname="Accounted" />
+										</cell>
+										<cell id="cellAccountedV21">
+											<image id="image2"
+												location="http://www.google.com/intl/en_ALL/images/logo.gif" />
+										</cell>
+									</row>
+								</table>
+							</verticallayout>
+						</panel>
+						<!-- Invoices Table Details -->
+						<panel id="invoicedetails">
+							<gridlayout>
+								<element x="1" y="1" gridheight="3"
+									gridwidth="2">
+									<panel id="amountPaid"
+										displayname="Amount Paid">
+<!-- Voor title geen id nodig + Title kent niet veel variaties -->
+
+										<gridlayout>
+											<element x="1" y="1">
+												<label id="labelcurreny"
+													displayname="EUR" />
+											</element>
+											<element x="2" y="1">
+												<textfield
+													id="textfieldCurrencyValue">
+													<value>
+														434.35
+													</value>
+												</textfield>
+											</element>
+										</gridlayout>
+									</panel>
+								</element>
+
+								<element x="3" y="1" gridheight="3"
+									gridwidth="5">
+									<panel id="summary">
+										<gridlayout>
+											<element x="1" y="1">
+												<label id="labelHolds"
+													displayname="Holds" />
+											</element>
+											<element x="2" y="1">
+												<textfield
+													id="textfieldHolds">
+													<value>0</value>
+												</textfield>
+											</element>
+											<element x="3" y="1">
+												<label
+													id="labelDistTotal" displayname="DistributionTotal" />
+											</element>
+											<element x="4" y="1">
+												<textfield
+													id="textfieldDistTotal">
+													<value>
+														434.35
+													</value>
+												</textfield>
+											</element>
+											<element x="1" y="2">
+												<label id="labelStatus"
+													displayname="Status" />
+											</element>
+											<element x="2" y="2">
+												<textfield
+													id="textfieldStatus">
+													<value>
+														Approved
+													</value>
+												</textfield>
+											</element>
+											<element x="3" y="2">
+												<label
+													id="labelAccounted" displayname="Accounted" />
+											</element>
+											<element x="4" y="2">
+												<textfield
+													id="textfieldAccounted">
+													<value>Yes</value>
+												</textfield>
+											</element>
+											<element x="1" y="3">
+												<label id="labelDesc"
+													displayname="Desc" />
+											</element>
+											<element x="2" y="3"
+												gridwidth="3">
+												<textfield
+													id="textfieldDesc">
+													<value>
+														Renovatie
+														parkeervakken
+														(restant)
+													</value>
+												</textfield>
+											</element>
+										</gridlayout>
+									</panel>
+								</element>
+								<element x="1" y="4">
+									<button id="buttonAction" key="A"
+										displayname="Actions" />
+								</element>
+								<element x="2" y="4">
+									<button id="buttonHolds" key="o"
+										displayname="Holds" />
+								</element>
+								<element x="3" y="4">
+									<button id="buttonPayments" key="P"
+										displayname="Payments" />
+								</element>
+								<element x="4" y="4" gridwidth="2">
+									<panel id="buttonPanel">
+										<gridlayout>
+											<element x="1" y="1">
+												<button id="buttonMatch"
+													key="M" displayname="Match" />
+											</element>
+											<element x="2" y="1">
+												<dropdown
+													id="dropdownOrderType">
+													<item id="item1"
+														value="PO" displayname="Purchase Order" />
+													<item id="item2"
+														value="P" displayname="Purchase" />
+												</dropdown>
+											</element>
+										</gridlayout>
+									</panel>
+								</element>
+								<element x="1" y="5" gridwidth="2">
+									<button id="buttonScheduledPayments"
+										key="c" displayname="Scheduled Payments" />
+								</element>
+
+								<element x="3" y="5" gridwidth="2">
+									<button id="buttonOverview" key="r"
+										displayname="Overview" />
+								</element>
+								<element x="5" y="5">
+									<button id="buttonDistributions"
+										key="D" displayname="Distributions" />
+								</element>
+							</gridlayout>
+						</panel>
+						<panel id="choicePanel">
+							<verticallayout>
+								<choice id="choice">
+									<choice-item id="ci1" value="11"
+										displayname="11" />
+									<choice-item id="ci2" value="11"
+										displayname="33" />
+								</choice>
+							</verticallayout>
+						</panel>
+						<panel id="listboxPanel">
+							<verticallayout>
+								<listbox id="listboxOrderType">
+									<item id="li1" value="POli1"
+										displayname="Purchase Orderli1" />
+									<item id="li2" value="POli1"
+										displayname="Purchase li2" />
+								</listbox>
+							</verticallayout>
+						</panel>
+						<panel id="imagePanel">
+							<verticallayout>
+								<image id="image"
+									location="http://forums.adventchildren.net/images/avatars/ffviiac/cloud_06.jpg" />
+
+							</verticallayout>
+						</panel>
+						<panel id="menuPanel">
+							<verticallayout>
+								<!--<menu id="menu1" shortcut="CTRL+X"  name="RootMenu">
+									<menu id="menu2" shortcut="CTRL+Y"  name="SubMenu"/>
+									
+									</menu> -->
+								<password id="password"
+									password-mask="xxxxxx">
+									<value>Yahooo!!</value>
+								</password>
+								<textarea id="textarea" rows="3">
+									<value />
+								</textarea>
+							</verticallayout>
+						</panel>
+
+
+						<fileupload id="fileupload" />
+					</verticallayout>
+				</rootpanel>
+			</window>
+			<window id="window2" resizable="false" displayname="window2">
+				<rootpanel id="window2rootpanel" toolbar="maintoolbar"
+					menu="main_menu">
+					<verticallayout>
+						<textfield id="tooltiptest">
+							<value />
+						</textfield>
+						<label id="window5label" visible="false"
+							displayname="Hell world !! (Window2) There is an onClick for this!!" />
+						<label id="window3label"
+							displayname="Click me!!" />
+						<textfield id="window3textfield" type="date"
+							format="dd/MM/yyyy" tooltip="First date Field">
+							<value />
+						</textfield>
+						<textfield id="window33textfield" type="date"
+							format="dd----MM----yyyy" required="true">
+							<value />
+						</textfield>
+						<textfield id="window333textfield" min-length="1"
+							max-length="8">
+							<value />
+						</textfield>
+						<textfield id="window3333textfield"
+							required="true">
+							<value />
+						</textfield>
+						<checkbox id="checkbox" displayname="xxxxxx"
+							checked="false" checked-value="y" unchecked-value="n" />
+						<map id="mymap" name="mymap"
+							image="http://www.w3schools.com/tags/planets.gif">
+							<area shape="rect" coords="0,0,82,126"
+								alt="Sun" />
+							<area shape="circle" coords="90,58,3"
+								alt="Mercury" />
+							<area shape="circle" coords="124,58,8"
+								alt="Venus" />
+							<!--<panel id="myfirstreusablepanel" name="myData" ref="reusablepaneldef1"/>-->
+						</map>
+						<panel id="panel2window2">
+							<borderlayout>
+								<north>
+									<label id="panel2window3label1"
+										displayname="North" />
+								</north>
+								<center>
+									<label id="panel2window3label2"
+										displayname="CENTER" />
+								</center>
+								<east>
+									<label id="panel2window3label3"
+										displayname="EAST" />
+								</east>
+								<west>
+									<label id="panel2window3label4"
+										displayname="WEST" />
+								</west>
+								<south>
+									<label id="panel2window3label5"
+										displayname="SOUTH" />
+								</south>
+							</borderlayout>
+						</panel>
+						<stackpanel id="stackPanel">
+							<stack id="stack1" displayname="U Suck">
+								<label id="panel2window3label11"
+									displayname="NORTH" />
+							</stack>
+							<stack id="stack2" displayname="This is cool">
+								<label id="panel2window3label12"
+									displayname="South" />
+							</stack>
+						</stackpanel>
+						<splitpanel id="splitpanel" height="" width="">
+							<first>
+								<panel id="splitpanelleft">
+									<verticallayout>
+										<label id="splabel1"
+											displayname="U suck 2" />
+									</verticallayout>
+								</panel>
+							</first>
+							<second>
+								<panel id="splitpanelright">
+									<verticallayout>
+										<label id="splabel2"
+											displayname="U suck 2" />
+									</verticallayout>
+								</panel>
+							</second>
+						</splitpanel>
+
+						<!--<datagrid id="mydatagrid" maxrows="20" pagesize="40">
+							<column id="col1" sortable="true" type="int" title="This is column 1" editable="true"/>
+							<column id="col2" sortable="true" type="string" title="This is column 2" />
+							<column id="col3" sortable="false" type="boolean" title="This is column 3"/>
+							</datagrid>-->
+						<link id="link" displayname="I'm a link!!" />
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="xxx1">
+						<listeners>
+							<listenergroup>
+								<component ref="col3" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+
+						<dialog type="info">
+							<title value="Test colclick" />
+							<message value="click col3" />
+						</dialog>
+					</event>
+					<event id="mymapevent">
+						<listeners>
+							<listenergroup>
+								<component ref="mymap" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="doSomething" >
+							<in name="cat" ref="mymap" src="component" />
+						</business-action>
+						<dialog type="info">
+							<title
+								value="Test colclick mymap" />
+							<message value="click mymap" />
+						</dialog>
+
+						<store name="MyName" ref="mymap" src="component"
+							value="default" />
+
+						<set component-id="window3label"
+							value="Hello my Name is ${MyName}" />
+
+						<store-clear />
+						<store-clear name="MyName" />
+						<event ref="xxx2" />
+					</event>
+					<event id="xxx2">
+						<listeners>
+							<listenergroup>
+								<component ref="col1" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<dialog type="info">
+							<title value="Test colclick" />
+							<message value="click col1" />
+						</dialog>
+					</event>
+					<event id="aaa">
+						<listeners>
+							<listenergroup>
+								<component ref="panel2window3label11" />
+								<listener type="onmouse-enter" />
+							</listenergroup>
+						</listeners>
+						<toggle>
+							<component ref="window3textfield" />
+						</toggle>
+						<openwindow>
+							<ref value="window1"/> 
+						</openwindow>
+						<openwindow>
+					
+							<ref value="window1"/>
+							<params  value="menubar=no"/>
+							<title value=""/>
+							<url value=""/>
+							  
+						</openwindow>
+					</event>
+					<event id="bbb">
+						<listeners>
+							<listenergroup>
+								<component ref="panel2window3label11" />
+								<listener type="onmouse-exit" />
+							</listenergroup>
+						</listeners>
+						<toggle>
+							<component ref="window3textfield" />
+						</toggle>
+
+					</event>
+					<event id="xxxbbb">
+						<listeners>
+							<listenergroup>
+								<component ref="panel2window3label3" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<event ref="xxxbbb1" />
+
+					</event>
+					<event id="xxxbbb1">
+						
+						<!--<set component-id="window3textfield[tooltip,tooltip,value]" ref="window333textfield" src="component"/>-->
+						<set component-id="checkbox"
+							ref="window333textfield" src="component" />
+					</event>
+
+					<event id="someEvent4">
+						<listeners>
+							<listenergroup>
+								<component ref="window3label" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<set-property  property="visible" value="true">
+							<component ref="window5label" />
+						</set-property>
+						<dialog type="info">
+							<title value="something" />
+							<message value="something" />
+						</dialog>
+					</event>
+					<event id="someEvent3">
+						<listeners>
+							<listenergroup>	
+								<component ref="window5label" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPerson" >
+							<in name="usuck" ref="window3textfield"
+								src="component" />
+						</business-action>
+						<!--<set ref="window2label" src="component" component-id="person.name" />-->
+						<dialog type="info">
+							<title value="Exiting textfield" />
+							<message
+								value="sample of exit event of field with alert" />
+						</dialog>
+					</event>
+				</events>
+
+			</window>
+			<window id="window3" displayname="window3">
+				<rootpanel id="window3rootpanel" menu="main_menu">
+					<verticallayout>
+						<panel id="xxxperson" name="myfields">
+							<verticallayout>
+								<textfield id="col1person" name="id"
+									type="int" tooltip="ID" editable="false" />
+								<textfield id="col2person" name="age"
+									type="text" tooltip="What the age ?" />
+								<textfield id="col3person" name="name"
+									type="text" tooltip="Name:" />
+								<textfield id="col4person"
+									name="lastName" type="text" tooltip="Last name:" />
+								<datagrid id="mydatagrid" 
+									pagesize="40" row-colors="red, blue">
+									<column id="id" sortable="true"
+										 displayname="ID" editable="true" />
+									<column id="age" sortable="true"
+										 displayname="Age" />
+									<column id="name" sortable="false"
+										 displayname="Name:" />
+									<column id="lastName"
+										sortable="false"  displayname="Last name:" />
+								</datagrid>
+								<!--<textfield id="x1" name="myfield1" displayname="My Field"/>
+									<textfield id="x2" name="myfield2" displayname="My Second Field"/>
+									<panel id="xxy" name="subfields">
+									<verticallayout>
+									<textfield id="col1" name="myfield5" sortable="true" type="int" title="This is column 1" editable="true"/>
+									<textfield id="col2" name="myfield6" sortable="true" type="string" title="This is column 2" />
+									</verticallayout>
+									
+									</panel>-->
+							</verticallayout>
+						</panel>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="xxxxxxx1">
+						<listeners>
+							<listenergroup>
+								<component ref="window3" />
+								<listener type="onload" />
+							</listenergroup>
+						</listeners>
+						<dialog type="info">
+
+							<title value="something" />
+							<message value="something" />
+						</dialog>
+						<business-action ref="getPerson"  />
+						<business-action ref="getPersonenList"
+							 />
+						<set component-id="myfields" ref="person" />
+						<set component-id="mydatagrid" ref="persons" />
+					</event>
+					<event id="xxxxx-xxxx1">
+						<listeners>
+							<listenergroup>
+								<component ref="myfields.refresh" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPerson"  />
+						<business-action ref="getPersonenList"
+							 />
+						<set name="myfields" ref="person" />
+						<set component-id="mydatagrid" ref="persons" />
+					</event>
+					<event id="yyyyyyyy1">
+						<listeners>
+							<listenergroup>
+								<component ref="myfields.save" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<dialog type="info">
+							<title value="myfields save onclick" />
+							<message value="myfields save onclick" />
+						</dialog>
+						<business-action ref="addPerson" >
+							<in name="addperson" ref="myfields"
+								src="component" />
+						</business-action>
+						<business-action ref="getPersonenList"
+							 />
+						<set component-id="mydatagrid" ref="persons" />
+					</event>
+				</events>
+			</window>
+			<window id="non-resizable" resizable="false" displayname="non-resizable">
+				<rootpanel id="window4rootpanel">
+					<verticallayout />
+				</rootpanel>
+			</window>
+			<window id="non-minimizable" minimizable="false" displayname="non-minimizable">
+				<rootpanel id="window5rootpanel">
+					<verticallayout>
+						<panel-ref id="My New Panel"
+							ref="reusablepaneldef1" name="myfields" />
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="window55event">
+						<listeners>
+							<listenergroup>	
+								<component ref="non-minimizable" />
+								<listener type="onload" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPerson"  />
+						<business-action ref="getPersonenList"
+							 />
+						<set name="myfields" ref="person" />
+						<set component-id="mydatagrid" ref="persons" />
+					</event>
+				</events>
+			</window>
+			<window id="non-draggable" draggable="false" displayname="non-draggable">
+				<rootpanel id="window6rootpanel">
+					<verticallayout />
+				</rootpanel>
+			</window>
+			<window id="non-closable" closable="false" displayname="non-closable">
+				<rootpanel id="window7rootpanel">
+					<verticallayout />
+				</rootpanel>
+			</window>
+			<window id="non-maximizable" maximizable="false" displayname="non-maxmizable">
+				<rootpanel id="window8rootpanel">
+					<verticallayout />
+				</rootpanel>
+			</window>
+
+
+			<!--  Mind that keyboard shortcuts + MultiLingual support is new to the Oracle Forms world (on the fly changing language was not possible) -->
+			<menu-definition id="main_menu">
+				<menu id="file_menu" shortcut="CTRL+Y"
+					displayname="File">
+					<menu id="file_menu_save" shortcut="CTRL+Y"
+						displayname="Save" />
+					<menu id="file_menu_save_and_proceed"
+						shortcut="CTRL+Y" displayname="Save and Process" />
+					<separator />
+					<menu id="file_menu_logon" shortcut="CTRL+Y"
+						displayname="Log On as Different User" />
+					<separator />
+					<menu id="file_menu_print" shortcut="CTRL+Y"
+						displayname="Print.." />
+					<separator />
+					<menu id="file_menu_close_form" shortcut="CTRL+Y"
+						displayname="Close Form" />
+					<menu id="file_menu_close_all" shortcut="CTRL+Y"
+						displayname="Close All" />
+					<separator />
+					<menu id="file_menu_exit" shortcut="CTRL+Y"
+						displayname="Exit" />
+				</menu>
+				<menu id="edit_menu" shortcut="CTRL+Y"
+					displayname="Edit">
+					<menu id="edit_menu_undo" shortcut="CTRL+Y"
+						displayname="Undo Record" />
+					<separator />
+					<menu id="edit_menu_cut" shortcut="CTRL+Y"
+						displayname="Cut" />
+					<menu id="edit_menu_copy" shortcut="CTRL+Y"
+						displayname="Copy" />
+					<menu id="edit_menu_paste" shortcut="CTRL+Y"
+						displayname="Paste" />
+					<separator />
+					<menu id="edit_menu_new_record" shortcut="CTRL+Y"
+						displayname="New Record" />
+					<menu id="edit_menu_duplicate_record"
+						shortcut="CTRL+Y" displayname="Duplicate">
+						<menu
+							id="edit_menu_duplicate_record_field_above" shortcut="CTRL+Y"
+							displayname="Field Above" />
+						<menu
+							id="edit_menu_duplicate_record_record_above" shortcut="CTRL+Y"
+							displayname="Record Above" />
+					</menu>
+					<separator />
+					<menu id="edit_menu_delete_record" shortcut="CTRL+Y"
+						displayname="Delete Record" />
+					<separator />
+					<menu id="edit_menu_clear" shortcut="CTRL+Y"
+						displayname="Clear">
+						<menu id="edit_menu_clear_field"
+							shortcut="CTRL+Y" displayname="Clear Field" />
+						<menu id="edit_menu_clear_record"
+							shortcut="CTRL+Y" displayname="Clear Record" />
+						<menu id="edit_menu_clear_block"
+							shortcut="CTRL+Y" displayname="Clear Block" />
+						<menu id="edit_menu_clear_form"
+							shortcut="CTRL+Y" displayname="Clear Form" />
+					</menu>
+					<separator />
+					<menu id="edit_menu_select_all" shortcut="CTRL+Y"
+						displayname="Select All" />
+					<menu id="edit_menu_deselect_all" shortcut="CTRL+Y"
+						displayname="Deselect All" />
+					<menu id="edit_menu_list_of_values"
+						shortcut="CTRL+Y" displayname="List of Values" />
+					<menu id="edit_menu_edit_field" shortcut="CTRL+Y"
+						displayname="Edit Field" />
+					<menu id="edit_menu_preferences" shortcut="CTRL+Y"
+						displayname="Preferences">
+						<menu id="edit_menu_preferences_change_password"
+							shortcut="CTRL+Y" displayname="Change Password" />
+						<menu id="edit_menu_preferences_preferences"
+							shortcut="CTRL+Y" displayname="Preferences" />
+					</menu>
+				</menu>
+				<menu id="view_menu" shortcut="CTRL+Y"
+					displayname="View">
+					<menu id="view_menu_find" shortcut="CTRL+Y"
+						displayname="Find" />
+					<menu id="view_menu_find_all" shortcut="CTRL+Y"
+						displayname="Find All" />
+					<separator />
+					<menu id="view_menu_enter_query" shortcut="CTRL+Y"
+						displayname="Enter Query" />
+					<menu id="view_menu_run_query" shortcut="CTRL+Y" />
+					<menu id="view_menu_cancel_query" shortcut="CTRL+Y" />
+					<separator />
+					<menu id="view_menu_count_and_match"
+						shortcut="CTRL+Y" />
+					<menu id="view_menu_show_last_criteria"
+						shortcut="CTRL+Y" />
+					<separator />
+					<menu id="view_menu_record" shortcut="CTRL+Y">
+						<menu id="view_menu_record_next"
+							shortcut="CTRL+Y" />
+						<menu id="view_menu_record_previous"
+							shortcut="CTRL+Y" displayname="Previous Record" />
+						<menu id="view_menu_record_first"
+							shortcut="CTRL+Y" displayname="First" />
+						<menu id="view_menu_record_last"
+							shortcut="CTRL+Y" displayname="Last" />
+					</menu>
+					<separator />
+					<menu id="view_menu_order_by_currentfield"
+						shortcut="CTRL+Y" displayname="Order by Current Field">
+						<menu
+							id="view_menu_order_by_currentfield_ascending" shortcut="CTRL+Y"
+							displayname="Ascending" />
+						<menu
+							id="view_menu_order_by_currentfield_descending" shortcut="CTRL+Y"
+							displayname="Descending" />
+					</menu>
+					<separator />
+					<menu id="view_menu_clear_orderby" shortcut="CTRL+Y"
+						displayname="Clear Order By" />
+
+				</menu>
+				<menu id="window_menu" shortcut="CTRL+Y"
+					displayname="Window" />
+				<menu id="help_menu" shortcut="CTRL+Y"
+					displayname="Help">
+					<menu id="help_menu_help_topics" shortcut="CTRL+Y"
+						displayname="Help Topics" />
+					<menu id="help_menu_whatsthis" shortcut="CTRL+Y"
+						displayname="What's this?" />
+					<menu id="help_menu_keyboard_help" shortcut="CTRL+Y"
+						displayname="Keyboard help" />
+					<menu id="help_menu_show_item_hint"
+						shortcut="CTRL+Y" displayname="Show Item Hint" />
+					<separator />
+					<menu id="help_menu_diagnotics" shortcut="CTRL+Y"
+						displayname="Diagnostics">
+						<menu id="help_menu_diagnotics_headstart"
+							shortcut="CTRL+Y" displayname="Headstart Debug Mode" />
+						<separator />
+						<menu id="help_menu_diagnotics_displayerror"
+							shortcut="CTRL+Y" displayname="Display Error" />
+						<menu id="help_menu_diagnotics_last_query"
+							shortcut="CTRL+Y" displayname="Last Query" />
+						<separator />
+						<menu id="help_menu_diagnotics_trace"
+							shortcut="CTRL+Y" displayname="Trace" />
+						<menu id="help_menu_diagnotics_set_break"
+							shortcut="CTRL+Y" displayname="Set Break" />
+
+					</menu>
+					<separator />
+					<menu id="help_menu_recordhistory" shortcut="CTRL+Y"
+						displayname="Record History" />
+					<menu id="help_menu_about_this_application"
+						shortcut="CTRL+Y" displayname="About This Application" />
+
+				</menu>
+
+
+			</menu-definition>
+			<toolbar-definition id="maintoolbar">
+				<tb-item id="tbsave" image="images/filesave.png"
+					tooltip="Opslaan" />
+				<tb-item id="tbdelete" image="images/delete.png"
+					tooltip="Verwijderen" />
+				<tb-item id="tbnew" image="images/new.png"
+					tooltip="Nieuw" />
+				<tb-item id="tbprint" image="images/print.png"
+					tooltip="Print" />
+				<tb-item id="tbrefresh" image="images/refresh.png"
+					tooltip="Refresh" />
+				<tb-item id="tbfirst" image="images/go-first.png"
+					tooltip="Eerste record" />
+				<tb-item id="tbprevious" image="images/go-previous.png"
+					tooltip="Vorige record" />
+				<tb-item id="tbnext" image="images/go-next.png"
+					tooltip="Volgende record" />
+				<tb-item id="tblast" image="images/go-last.png"
+					tooltip="Laatste record" />
+			</toolbar-definition>
+			<panel-definition id="reusablepaneldef1">
+				<verticallayout>
+					<textfield id="col1person" name="id" type="int"
+						tooltip="ID" editable="false" />
+					<textfield id="col2person" name="age" type="text"
+						tooltip="What the age ?" />
+					<textfield id="col3person" name="name" type="text"
+						tooltip="Name:" />
+					<textfield id="col4person" name="lastName"
+						type="text" tooltip="Last name:" />
+					<datagrid id="mydatagrid" 
+						pagesize="40">
+						<column id="id" sortable="true"
+							displayname="ID" editable="true" />
+						<column id="age" sortable="true" 
+							displayname="Age" />
+						<column id="name" sortable="false"
+							 displayname="Name:" />
+						<column id="lastName" sortable="false"
+							 displayname="Last name:" />
+					</datagrid>
+				</verticallayout>
+			</panel-definition>
+		</view>
+
+		<styles>
+		</styles>
+		<events>
+
+			<event id="tbsaveevent">
+				<listeners>
+					<listenergroup>
+						<component ref="window1.tbsave" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<business-action ref="doSomethingWithException"
+					 />
+
+				<dialog type="info">
+					<title value="Toolbar event" />
+					<message value="Toolbar save is clicked" />
+				</dialog>
+			</event>
+			<event id="exitmenu">
+				<listeners>
+					<listenergroup>
+						<component ref="window1.file_menu_exit" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<closewindow ref="window1" />
+			</event>
+			<event id="innerpanelclick">
+				<listeners>
+					<listenergroup>
+						<component ref="innerpanel2" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="Tab event" />
+					<message value="Innerpanel2 is clicked" />
+				</dialog>
+			</event>
+			<event id="xonload">
+				<listeners>
+					<listenergroup>
+						<component ref="window1" />
+						<listener type="onload" />
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="Onload event" />
+					<message
+						value="Automatically executed when window is started..." />
+				</dialog>
+			</event>
+			<event id="xonunload">
+				<listeners>
+					<listenergroup>
+						<component ref="window2" />
+						<listener type="onunload" />
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="something" />
+					<message value="something" />
+				</dialog>
+
+			</event>
+			<event id="keypress">
+				<listeners>
+					<listenergroup>
+						<component ref="bcTotalTextfield" />
+						<listener type="onkeypress">
+							<listener-parameter name="keys" value="i" />
+							<listener-parameter name="keys" value="k" />
+	
+						</listener>
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="something" />
+					<message value="something" />
+				</dialog>
+			</event>
+
+			<event id="keydown">
+				<listeners>
+					<listenergroup>
+						<component ref="bcTotalTextfield" />
+						<listener type="onkeydown">
+							<listener-parameter name="key" value="KEY_UP" />
+						</listener>
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="something" />
+					<message value="something" />
+				</dialog>
+			</event>
+
+			<event id="keyup">
+				<listeners>
+					<listenergroup>
+						<component ref="bcTotalTextfield" />
+						<listener type="onkeyup">
+							<listener-parameter name="key" value="KEY_UP" />
+						</listener>
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title value="something" />
+					<message value="something" />
+				</dialog>
+			</event>
+			<event id="keyup2">
+				<listeners>
+					<listenergroup>
+						<component ref="totalsPane" />
+						<listener type="onkeyup">
+							<listener-parameter name="key" value="KEY_UP" />
+						</listener>
+					</listenergroup>
+				</listeners>
+			</event>
+			<event id="xxxxxx">
+				<listeners>
+					<listenergroup>
+						<component ref="image2" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+
+			</event>
+			<event id="xxxxxx2">
+				<listeners>
+					<listenergroup>
+						<component ref="nested2" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+
+				<closewindow ref="window1" />
+			</event>
+
+			<event id="someButtonEventx">
+				<listeners>
+					<listenergroup>
+						<component ref="image" />
+						<listener type="onmouse-exit" />
+					</listenergroup>
+				</listeners>
+				<set-property  property="visible" value="true">
+					<component ref="innerpanel2" />
+				</set-property>
+			</event>
+			<event id="someButtonEventxx">
+				<listeners>
+					<listenergroup>
+						<component ref="image" />
+						<listener type="onmouse-enter" />
+					</listenergroup>
+				</listeners>
+				<set-property  property="visible" value="true">
+					<component ref="innerpanel1" />
+				</set-property>
+			</event>
+
+			<event id="someButtonEvent">
+				<listeners>
+					<listenergroup>
+						<component ref="bcTotalLabel" />
+						<component ref="buttonAction" />
+						<component ref="acTotalTextfield" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+
+				<set-property  property="enabled" value="false">
+					<component ref="bcTotalTextfield" />
+				</set-property>
+				<change-style>
+					<component ref="bcTotalTextfield" />
+					<style-action action="set" key="background"
+						value="red" />
+					<style-action action="set" key="font-weight"
+						value="bold" />
+				</change-style>
+				<clear ref="acTotalTextfield" />
+				<!-- clear a panel -->
+				<clear ref="totalsPane" />
+
+			</event>
+			<event id="someButtonEvent2">
+				<listeners>
+					<listenergroup>
+						<component ref="checkbox" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+
+				<set-property  property="enabled" value="true">
+					<component ref="bcTotalTextfield" />
+				</set-property>
+				<change-style>
+					<component ref="bcTotalTextfield" />
+					<style-action action="set" key="background"
+						value="green" />
+					<style-action action="set" key="font-weight"
+						value="bold" />
+
+				</change-style>
+				<!--<validate message="Email validation failed">
+					<component ref="bcTotalTextfield"/>
+					<regexp><![CDATA[^[a-zA-Z]+(([\'\,\.\-][a-zA-Z])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\\w[-._\w]*\w\.\w{2,4})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,4})$]]></regexp>
+					</validate>-->
+				<!--<set component-id="invoiceoverviewtable" ref="data from datastore"/>-->
+				<!--<business-action ref="doSomething" />-->
+				<!--<business-action ref="getPersonenList" />-->
+				<business-action ref="getPerson"  />
+				<set name="invoiceoverviewtable" ref="person.name"
+					 /><!-- ds -->
+				<!--<set ref="bcTotalTextfield" ref="$SYSTEM.person.name"  />--><!-- JMX -->
+				<!--<set ref="bcTotalTextfield" ref="person.name"  />--><!-- from screen -->
+				<!--<set ref="bcTotalTextfield" value="person.name"  />-->
+			</event>
+			<event id="showevent">
+				<listeners>
+					<listenergroup>
+						<component ref="labelHolds" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<set-property  property="visible" value="true">
+					<component ref="textfieldHolds" />
+				</set-property>
+			</event>
+			<event id="testalert">
+				<listeners>
+					<listenergroup>
+						<component ref="labelHolds" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<dialog type="info">
+					<title ref="textfieldHolds" />
+					<message ref="textfieldHolds" value="bs" />
+				</dialog>
+				<set component-id="window3label"
+					value="Hello my Name is ${MyName}" />
+				<store name="MyName" ref="mymap" src="component"
+					value="default" />
+			</event>
+			<event id="hideevent">
+				<listeners>
+					<listenergroup>
+						<component ref="labelDistTotal" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<set-property  property="visible" value="false">
+					<component ref="textfieldHolds" />
+				</set-property>
+			</event>
+			<event id="focusevent">
+				<listeners>
+					<listenergroup>
+						<component ref="labelStatus" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<focus ref="textfieldHolds" />
+
+
+			</event>
+			<event id="copyevent">
+				<listeners>
+					<listenergroup>
+						<component ref="labelAccounted" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<copy from="textfieldHolds" to="textfieldDistTotal" />
+			</event>
+			<event id="toggleevent">
+				<listeners>
+					<listenergroup>
+						<component ref="labelcurreny" />
+						<listener type="onclick" />
+					</listenergroup>
+				</listeners>
+				<toggle>
+					<component ref="invoiceoverview" />
+				</toggle>
+			</event>
+		</events>
+
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="doSomething">
+				<service ref="JavaService" method-ref="doSomething"
+					 />
+			</business-action>
+			<business-action id="getPersonenList">
+				<service ref="JavaService" method-ref="getPersonenList"
+					 />
+			</business-action>
+			<business-action id="getPerson">
+				<transaction managed="no" />
+				<service ref="JavaService" method-ref="getPerson"
+					 />
+			</business-action>
+			<business-action id="doSomethingWithException">
+				<transaction managed="no" />
+				<service ref="JavaService"
+					method-ref="doSomethingWithException"  />
+			</business-action>
+
+
+			<business-action id="getPrevious">
+				<service ref="JavaService" method-ref="getPrevious"
+					>
+					<in name="current" ref="current" />
+				</service>
+			</business-action>
+			<business-action id="getNext">
+				<service ref="JavaService" method-ref="getNext"
+					>
+					<in name="current" ref="current" />
+				</service>
+			</business-action>
+			<business-action id="getFirst">
+				<service ref="JavaService" method-ref="getFirst"
+					 />
+
+			</business-action>
+			<business-action id="getLast">
+				<service ref="JavaService" method-ref="getLast"
+					 />
+
+			</business-action>
+			<business-action id="getPersonById">
+				<service ref="JavaService" method-ref="getPersonById"
+					>
+					<in name="current" ref="current" />
+				</service>
+			</business-action>
+			<business-action id="addPerson">
+				<service ref="JavaService" method-ref="addPerson"
+					>
+					<in name="newperson" ref="addperson" />
+				</service>
+			</business-action>
+
+		</business-actions>
+		<types />
+
+
+
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="JavaService" resource-ref="javaService">
+				<method id="doSomething" name="doSomething" />
+				<method id="addPerson" name="addPerson">
+					<in name="0" ref="newperson"
+						adapter="MyPersonAdapter" />
+				</method>
+				<method id="getPersonenList" name="getPersonenList">
+					<out name="persons" />
+				</method>
+				<!-- database like functionality -->
+				<method id="getPerson" name="getPerson">
+					<out name="person" />
+				</method>
+				<method id="doSomethingWithException"
+					name="doSomethingWithException" />
+
+
+
+				<method id="getPrevious" name="getPrevious">
+					<in name="current" />
+					<out name="person" />
+				</method>
+				<method id="getNext" name="getNext">
+					<in name="current" />
+					<out name="person" />
+				</method>
+				<method id="getFirst" name="getFirst">
+
+					<out name="person" />
+				</method>
+				<method id="getLast" name="getLast">
+
+					<out name="person" />
+				</method>
+				<method id="getPersonById" name="getPerson">
+					<in name="current" />
+					<out name="person" />
+				</method>
+				<!-- end of database like functionality -->
+
+			</service>
+		</services>
+<!-- 		<adapters>
+			<adapter id="MyPersonAdapter" type="MyPerson"
+				adapt-all="true"
+				class="com.qualogy.qpd.genesis.gwt.server.ui.service.MyServicePerson" />
+
+
+		</adapters> -->
+
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="javaService" classname="test.com.qualogy.qpd.qafe.services.JavaService" jarfile-location=""/>
+		</resources>
+	</resource-tier>
+</application-mapping>

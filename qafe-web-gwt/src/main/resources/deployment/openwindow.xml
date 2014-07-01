@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		 <view>
+	        <window id="window1" displayname="Open Window">
+			<rootpanel id="myRootPanel">	 
+	   			<horizontallayout>
+					<panel displayname="Open Window">
+						<verticallayout>
+							<button id="openWindowCascade" displayname="Cascade"/>
+							<button id="openWindowCenterCascade" displayname="Center Cascade"/>
+							<button id="openWindowTiled" displayname="Tiled"/>
+						</verticallayout>
+
+					</panel>
+					<panel displayname="Open External Window">
+						<verticallayout>
+							<button id="openExtWindowCascade" displayname="Cascade"/>
+							<button id="openExtWindowCenterCascade" displayname="Center Cascade"/>
+							<button id="openExtWindowTiled" displayname="Tiled"/>
+						</verticallayout>
+					</panel>
+					<panel displayname="Open Window With Params">
+						<verticallayout>
+							<button id="openWindowPos" displayname="Postion"/>
+							<button id="openWindowModal" displayname="Modal"/>
+							<button id="openWindowSize" displayname="Size"/>
+						</verticallayout>
+					</panel>
+
+				</horizontallayout>
+			</rootpanel>
+			<events>
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowCascade"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="cascade">
+						<title value="Google Cascade"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowCenterCascade"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="center-cascade">
+						<title value="Google Center-Cascade"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowTiled"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="tiled">
+						<title value="Google Tiled"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+
+
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowPos"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="cascade">
+						<params value="left=200,top=500"/>
+						<title value="Pos"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowModal"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="cascade">
+						<params value="modal=true"/>
+						<title value="Modal"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+				<event>
+					<listeners>
+						<listenergroup>
+							<component ref="openWindowSize"/>
+							<listener type="onclick"/>
+						</listenergroup>					
+					</listeners>
+					<openwindow placement="cascade">
+						<params value="height=300,width=600"/>
+						<title value="Size"/> 
+						<url value="http://www.google.com"/>
+					</openwindow>		
+				</event>
+
+			</events>
+			<styles>
+				<!--<style window-id="window1" location="http://www.qafe.com/static/qafe.css"/>-->						
+			</styles>
+		</window>
+		</view>
+	</presentation-tier>
+</application-mapping> 

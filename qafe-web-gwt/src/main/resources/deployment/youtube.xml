@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+   <presentation-tier>
+		<view>
+			<window id="youtube" displayname="QAFE Introduction" width="510" height="430" icon="images/youtube.png" icon-style="color:white">
+				<rootpanel id="myrootpanel">
+						<verticallayout>
+							<html><text><![CDATA[ <object width="510" height="430"><param name="movie" value="http://www.youtube.com/v/MyiqzrDQQs8&hl=en_GB&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/MyiqzrDQQs8&hl=en_GB&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="510" height="430"></embed></object> ]]></text></html>	
+						</verticallayout>
+				</rootpanel>		
+
+			</window>
+			<window id="youtubechannel" displayname="QAFE Youtube Channel" width="920" height="690" icon="images/youtube.png" in-dock="true">
+				<rootpanel id="myrootpanel">
+						<verticallayout>
+							<frame height="600" width="1024" src="http://www.youtube.com/qafechannel" id="gtalkframe" />
+						</verticallayout>
+				</rootpanel>		
+			</window>
+
+		</view>
+   </presentation-tier>
+
+</application-mapping>

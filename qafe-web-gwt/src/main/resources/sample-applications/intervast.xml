@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+	<presentation-tier>
+		<view>
+			<window id="intervastwindow" displayname="INTERVAST" width="800" height="500">
+
+
+				<!-- #### ROOT PANEL #### -->
+				<!--id="rootPanel" toolbar="oracle-forms-toolbar"  menu="main_menu"			-->
+				<rootpanel class="main" id="rootPanel" toolbar="oracle-forms-toolbar"  menu="main_menu"	>
+					<verticallayout>
+						<panel class="upperpanel1" >
+							<horizontallayout>
+								<panel-ref id="upperTargetPanel1" ref="firstUpperPanel"/>
+							</horizontallayout>
+						</panel>
+						<panel class="upperpanel2" >
+							<horizontallayout>
+								<panel-ref id="upperTargetPanel2" ref="secondUpperPanel"/>
+							</horizontallayout>
+						</panel>
+						<panel class="upperpanel3" >
+							<horizontallayout>
+								<panel-ref id="upperTargetPanel3" ref="thirdUpperPanel"/>
+							</horizontallayout>
+						</panel>
+						<panel class="lowerpanel" >
+							<horizontallayout>
+								<panel-ref id="lowerTargetPanel" ref="firstLowerPanel"/>
+							</horizontallayout>
+						</panel>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="kavelsPanelEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="Kavels_menu"/>
+						<!--		<component ref="pg5"/>
+								<component ref="goToNextPanel"/>	-->
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<set-property property="visible" value="false">
+										<component ref="lowerTargetPanel"/>
+									</set-property>
+						<set-panel target="lowerTargetPanel" src="KavelsLowerPanel" />
+						<set-property property="visible" value="true">
+										<component ref="lowerTargetPanel"/>
+									</set-property>
+				<!--	<set-panel target="leftTargetPanel" src="secondLeftPanel" />
+					<set component-id="pg2" value="Persoonlijke gegevens : ${outputResult.naam}"/>	-->
+					</event>
+					<event id="overzichtPanelEvent">	
+						<listeners>
+							<listenergroup>
+								<component ref="Kavels_menu"/>
+								<component ref="Overzicht"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+							<set-panel target="lowerTargetPanel" src="OverzichtLowerPanel" />
+					</event>
+				
+				
+				
+				
+				
+				</events>
+
+			</window>
+			<menu-definition id="main_menu">
+				<menu id="Projecten_menu" shortcut="CTRL+Y"
+					displayname="Projecten">
+				</menu>
+				
+				<menu id="Kavels_menu" shortcut="CTRL+Y"
+					displayname="Kavels">
+				</menu>
+				
+				<menu id="Opties_menu" shortcut="CTRL+Y"
+					displayname="Opties">
+				</menu>
+				
+				<menu id="Klanten_menu" shortcut="CTRL+Y"
+					displayname="Klanten">
+				</menu>
+				
+				<menu id="Administratie_menu" shortcut="CTRL+Y"
+					displayname="Administratie">
+				</menu>
+				
+				<menu id="Koersen_menu" shortcut="CTRL+Y"
+					displayname="Koersen">
+				</menu>
+				
+				<menu id="Werknemers_menu" shortcut="CTRL+Y"
+					displayname="Werknemers">
+				</menu>
+				
+				<menu id="Referentie_menu" shortcut="CTRL+Y"
+					displayname="Referentie data">
+				</menu>
+				
+				<menu id="Logboek_menu" shortcut="CTRL+Y"
+					displayname="Logboek">
+				</menu>
+			
+			
+			
+			</menu-definition>
+			
+			<panel-definition id="firstUpperPanel">
+				<autolayout>
+					<label id="upper1"  class="upperlogo "/>
+				</autolayout>
+			</panel-definition>
+			<panel-definition id="secondUpperPanel">
+				<horizontallayout>
+					<panel>
+						<autolayout>
+							<label id="upper2"  />
+						</autolayout>
+					</panel>
+					
+				</horizontallayout>
+			</panel-definition>
+			<panel-definition id="thirdUpperPanel">
+				<horizontallayout>
+					<panel>
+						<autolayout>
+							<label id="upper3"  />
+						</autolayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<element  x="1" y="1"><label id="Overzicht" displayname="Overzicht projecten|"		class="upperpanel-text3"	/></element>
+						</gridlayout>
+					</panel>
+				</horizontallayout>
+			</panel-definition>
+			
+			<panel-definition id="firstLowerPanel">
+				<autolayout>
+					<label id="pg1" displayname="My lower panel" class="leftpanel-text leftpanel-textBG "/>
+				</autolayout>
+			</panel-definition>
+			<panel-definition id="KavelsLowerPanel">
+				<autolayout>
+					<label id="pg2" displayname="Kavels panel" class="leftpanel-text leftpanel-textBG "/>
+				</autolayout>
+			</panel-definition>
+			<panel-definition id="OverzichtLowerPanel">
+				<autolayout>
+					<label id="pg3" displayname="Overzicht panel" class="leftpanel-text leftpanel-textBG "/>
+				</autolayout>
+			</panel-definition>
+		
+		
+		</view>
+		<styles>
+			<!-- <style location="../css/intervast.css" window-id="intervastwindow"/>-->
+		</styles>
+	</presentation-tier>
+
+</application-mapping>

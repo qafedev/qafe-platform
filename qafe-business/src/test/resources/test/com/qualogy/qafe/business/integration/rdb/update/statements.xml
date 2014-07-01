@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<statements xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd">
+		
+	<batch id="insertData">
+		<query>insert into QAFE_TEST_UPDATE (ID, NAME, ADDRESS, EMAIL, SALARY) values (1, 'A', 'A1' , 'a@a.com', 1000)</query>
+		<query>insert into QAFE_TEST_UPDATE (ID, NAME, ADDRESS, EMAIL, SALARY) values (2, 'B', 'B2' , 'b@b.com', 2000)</query>
+		<query>insert into QAFE_TEST_UPDATE (ID, NAME, ADDRESS, EMAIL, SALARY) values (3, 'C', 'C3' , 'c@c.com', 3000)</query>
+		<query>insert into QAFE_TEST_UPDATE (ID, NAME, ADDRESS, EMAIL, SALARY) values (4, 'D', 'D4' , 'd@d.com', 4000)</query>
+	</batch>
+	
+	<query id="selectOne">select * from QAFE_TEST_UPDATE where ID = 1</query>
+	
+	<query id="selectAll">select * from QAFE_TEST_UPDATE order by ID</query>
+	
+	<update id="useUpdateTagWithTableName" table="QAFE_TEST_UPDATE"/>
+	
+	<update id="updateWithSqlAttribute" sql="update QAFE_TEST_UPDATE set NAME='Bob' where ID=1"/>
+	
+	<update id="updateWithSqlAttributeAndInParams" sql="update QAFE_TEST_UPDATE set NAME=:nameVar, SALARY=:salaryVar, ENTRY_DATE=:dateVar where ID=:idVar"/>
+	
+	<update id="updateWithSqlAsText">update QAFE_TEST_UPDATE set NAME='Amanda', SALARY=8000 where ID=1</update> <!-- Double quotes are replaced to single quotes before executing. -->
+	
+	<update id="updateWithSqlAsTextAndInParams">update QAFE_TEST_UPDATE set NAME=:nameVar, SALARY=:salaryVar where ID=:idVar</update>
+	
+	<update id="updateWithAllAttributes" table="IGNORED" sql="update QAFE_TEST_UPDATE set ADDRESS=:addressVar where ID=:idVar" where="IGNORED"/>
+
+	<update id="updateWithTableAndSqlAttribute" table="IGNORED" sql="update QAFE_TEST_UPDATE set ADDRESS=:addressVar, SALARY=:salaryVar where ID=:idVar"/>
+	
+	<update id="updateWithSqlAndWhereAttribute" sql="update QAFE_TEST_UPDATE set NAME=:nameVar, ENTRY_DATE=:dateVar where ID=:idVar" where="IGNORED"/>
+	
+	<update id="updateWithSqlAttributeAndSqlText" sql="update QAFE_TEST_UPDATE set ENTRY_DATE=:dateVar where ID=:idVar">IGNORED</update>
+	
+	<update id="updateWithTableAndWhereAttribute" table="QAFE_TEST_UPDATE" where="ID > :ID and ADDRESS=:ADDRESS"/>
+	
+	<update id="updateWithSQLTextUsingCDATA"><![CDATA[update QAFE_TEST_UPDATE 
+														 set NAME=:nameVar, SALARY=:salaryVar 
+													   where ID > :minIdVar and ID < :maxIdVar]]></update>
+	
+	<query id="deleteData">delete from QAFE_TEST_UPDATE</query>
+		
+</statements>

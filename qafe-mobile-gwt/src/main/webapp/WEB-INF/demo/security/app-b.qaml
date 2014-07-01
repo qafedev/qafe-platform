@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="windowId1B" displayname="Window 1B">
+				<rootpanel>
+					<horizontallayout>
+						<button id="componentId1" displayname="Button 1" />
+						<button id="componentId2" displayname="Button 2" />
+					</horizontallayout>
+				</rootpanel>
+			</window>
+
+			<window id="windowCustomLogin" displayname="Login" isparent="false">
+				<rootpanel>
+					<verticallayout>
+						<panel style="margin: auto;">
+							<gridlayout>
+								<element x="0" y="0">
+									<label displayname="Username" />
+								</element>
+								<element x="1" y="0">
+									<textfield id="$username" />
+								</element>
+								<element x="0" y="1">
+									<label displayname="Password" />
+								</element>
+								<element x="1" y="1">
+									<textfield id="$password" />
+								</element>
+								<element x="0" y="2" gridwidth="2">
+									<panel>
+										<horizontallayout>
+											<button id="$_authenticate_submit" displayname="Submit" />
+											<button id="$_authenticate_cancel" displayname="Cancel" />
+											<button id="btnRegister" displayname="Register" />
+										</horizontallayout>
+									</panel>
+								</element>
+							</gridlayout>
+						</panel>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="btnRegister" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<dialog>
+							<title value=""></title>
+							<message value="Register"></message>
+						</dialog>
+					</event>
+				</events>
+			</window>
+		</view>
+	</presentation-tier>
+	<business-tier></business-tier>
+</application-mapping> 

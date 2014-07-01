@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://qafe.com/schema"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://qafe.com/schema"
+	elementFormDefault="qualified">
+	<xs:annotation>
+	<xs:documentation>
+
+				DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+				Copyright 2006- 2010 Qualogy B.V.. All rights reserved.
+
+				The contents of this file are subject to the terms that are provided by
+				Qualogy B.V. The file may not be copied or (re)distributed without
+				the explicit written permission from Qualogy B.V.
+				
+				For more information visit http://www.qafe.com
+                     
+      
+    		</xs:documentation>
+    </xs:annotation>	
+	<xs:element name="messages" type="messagesType" >
+		<xs:annotation>
+			<xs:documentation>This element "Messages" denotes the group of messages that are in fact support for dynamical labels/text on your screen.
+Messages are used for customization and MultiLingual support</xs:documentation>
+		</xs:annotation></xs:element>
+
+	<xs:complexType name="messagesType">
+        <xs:annotation>
+        	<xs:documentation>The root type of the messages. The messages can consist of an inline bundle or an externally defined bundle (denoted with tag bundle-file)
+</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="bundle" type="bundleType"
+				maxOccurs="unbounded" >
+				<xs:annotation>
+					<xs:documentation>An inline bundle definition</xs:documentation>
+				</xs:annotation></xs:element>
+			<xs:element name="bundle-file" type="bundleFileType"
+				maxOccurs="unbounded" >
+				<xs:annotation>
+					<xs:documentation>The reference to an external message bundle file</xs:documentation>
+				</xs:annotation></xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="bundleType">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="message" type="messageType" >
+				<xs:annotation>
+					<xs:documentation>List of messages can appear for the number of message_keys you have (for example in a label)</xs:documentation>
+				</xs:annotation></xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional" >
+			<xs:annotation>
+				<xs:documentation>The id of the bundle. </xs:documentation>
+			</xs:annotation></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="bundleFileType">
+        <xs:annotation>
+        	<xs:documentation>This type is to define the location of an external bundle file, instead of having it as inline code.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="location" type="xs:string" use="required" >
+			<xs:annotation>
+				<xs:documentation>The location of where the message bundle file can be found.</xs:documentation>
+			</xs:annotation></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="messageType">
+        <xs:annotation>
+        	<xs:documentation>A message contains the key (message_key in the components), it's value (text attribute) and in which locale (en_US, en,etc).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="text" type="textType" >
+				<xs:annotation>
+					<xs:documentation>The target value of the "key" attribute. Depending on the language setting this value is chosen</xs:documentation>
+				</xs:annotation></xs:element>
+		</xs:sequence>
+		<xs:attribute name="key" type="xs:string" use="required" >
+			<xs:annotation>
+				<xs:documentation>The message key that is going to be substituted with the value in the "text" attribute</xs:documentation>
+			</xs:annotation></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="textType">
+        <xs:annotation>
+        	<xs:documentation>The definition of the locale definition.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="locale" default="" type="xs:string">
+				<!-- 	<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="" />
+							<xs:enumeration value="nl_NL" />
+							<xs:enumeration value="en_GB" />
+							<xs:enumeration value="en_US" />
+							<xs:enumeration value="de_DE" />
+							<xs:enumeration value="fr_FR" />
+							<xs:enumeration value="it_IT" />
+							<xs:enumeration value="es_ES" />
+							<xs:enumeration value="fr_CA" />
+							<xs:enumeration value="en_CA" />
+						</xs:restriction>
+					</xs:simpleType> -->
+				<xs:annotation>
+					<xs:documentation>The locale for the text (for example "en_US" (for English US) or just "en"). This information is taken from the browser.
+
+The language argument is a valid ISO Language Code. These codes are the lower-case, two-letter codes as defined by ISO-639. You can find a full list of these codes at a number of sites, such as: 
+http://www.loc.gov/standards/iso639-2/englangn.html
+
+The country argument is a valid ISO Country Code. These codes are the upper-case, two-letter codes as defined by ISO-3166. You can find a full list of these codes at a number of sites, such as: 
+http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html</xs:documentation>
+				</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

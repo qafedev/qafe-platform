@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="Hello World" width="300"
+				height="250">
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<button id="setStackPanelInvisibleBtn" displayname="Make Stack Panel In-Visible" width="200"/>
+						<button id="setStackPanelVisibleBtn" displayname="Make Stack Panel Visible" width="200"/>
+												
+						<button id="stack1InvisibleBtn" displayname="Stack1 In-Visible" width="200"/>
+						<button id="stack1VisibleBtn" displayname="Stack1 Visible" width="200"/>						
+						
+						<button id="stack2InvisibleBtn" displayname="Stack2 In-Visible" width="200"/>
+						<button id="stack2VisibleBtn" displayname="Stack2 Visible" width="200"/>
+						
+						<button id="stack3InvisibleBtn" displayname="Stack3 In-Visible" width="200"/>
+						<button id="stack3VisibleBtn" displayname="Stack3 Visible" width="200"/>
+						
+						<stackpanel id="mystackpanel" visible="true">
+							<stack displayname="Stack1" id="stack1" visible="true">
+								<panel id="panelInStack" displayname="panelIn Stack1">
+									<verticallayout>
+										<label displayname=" Item1 in stack 1" id="stack1Label"/>
+										<label displayname=" Item2 in stack 1"/>
+									</verticallayout>
+								</panel>
+							</stack>
+							<stack displayname="Stack2" id="stack2" visible="true">
+								<panel>
+									<verticallayout>
+										<label displayname=" Item in stack 2" id="stack2Label"/>
+									</verticallayout>
+								</panel>
+							</stack>
+							<stack displayname="Stack3" id="stack3" visible="true">
+								<panel>
+									<verticallayout>
+										<label displayname=" Item in stack 3"/>
+									</verticallayout>
+								</panel>
+							</stack>							
+						</stackpanel>
+						
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event components="setStackPanelVisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="true">
+							<component ref="mystackpanel" />
+						</set-property>
+					</event>
+					<event components="setStackPanelInvisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="false">
+							<component ref="mystackpanel" />
+						</set-property>						
+					</event>
+					
+					<event components="stack1InvisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="false">
+							<component ref="stack1" />
+						</set-property>						
+					</event>
+					<event components="stack1VisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="true">
+							<component ref="stack1" />
+						</set-property>						
+					</event>
+					
+					<event components="stack2InvisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="false">
+							<component ref="stack2" />
+						</set-property>						
+					</event>
+					
+					<event components="stack2VisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="true">
+							<component ref="stack2" />
+						</set-property>				
+							
+					</event>
+					
+					<event components="stack3InvisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="false">
+							<component ref="stack3" />
+						</set-property>						
+					</event>
+					
+					<event components="stack3VisibleBtn" listener-types="onclick">						
+						<set-property property="visible" value="true">
+							<component ref="stack3" />
+						</set-property>						
+					</event>
+										
+					
+				</events>
+			</window>
+		</view>
+	</presentation-tier>
+</application-mapping> 

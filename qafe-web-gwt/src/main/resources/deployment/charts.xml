@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		 <view>
+	        <window id="window1" displayname="Chart Components" width="810" height="660">
+			<rootpanel id="myRootPanel">	 
+	   			<verticallayout>
+					<tabpanel>
+						<tab displayname="Charts overview">
+							<verticallayout>
+								<panel height="50">
+						   			<gridlayout>
+						   				<element x="0" y="0"><button id="btnNormalData" displayname="Get sample data"/></element>
+						   				<element x="0" y="1"><button id="btnNormalData2" displayname="Get sample data dynamically"/></element>
+						   				<element x="1" y="1"><label displayname="Please enter nr of lines"/></element>
+						   				<element x="2" y="1"><textfield id="txtNormalData2" min-value="0" max-value="20" type="spinner" editable="false"/></element>
+						   			</gridlayout>
+								</panel>
+								<panel>
+									<gridlayout>
+						   				<element x="0" y="0">
+											<barchart id="barChart" width="250" height="250" legend="none">
+												<category-axis name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>									
+											</barchart>
+										</element>
+						   				<element x="1" y="0">
+											<columnchart id="columnChart" width="250" height="250" legend="none">
+												<category-axis name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>								
+											</columnchart>	
+										</element>
+						   				<element x="0" y="1">
+											<linechart id="lineChart" width="250" height="250" legend="none">
+												<category-axis name="month"/>
+												<linear-axis min-value="200" max-value="2500" ticksize="400"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>									
+											</linechart>
+										</element>
+						   				<element x="1" y="1">
+											<plotchart id="plotChart" width="250" height="250" legend="none">
+												<category-axis name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>
+											</plotchart>	
+										</element>
+						   				<element x="2" y="1">
+											<piechart id="pieChart" width="250" height="250" legend="none">
+												<category-axis name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+											</piechart>						
+										</element>										
+									</gridlayout>
+<!--
+									<horizontallayout>
+										<barchart id="barChart" width="250" height="250" legend="none">
+											<category-axis name="month"/>
+											<chart-item displayname="Profit" name="profit"/>
+											<chart-item displayname="Expenses" name="expenses"/>									
+										</barchart>
+										<columnchart id="columnChart" width="250" height="250" legend="none">
+											<category-axis name="month"/>
+											<chart-item displayname="Profit" name="profit"/>
+											<chart-item displayname="Expenses" name="expenses"/>								
+										</columnchart>	
+										<linechart id="lineChart" width="250" height="250" legend="none">
+											<category-axis name="month"/>
+											<linear-axis min-value="200" max-value="2500" ticksize="400"/>
+											<chart-item displayname="Profit" name="profit"/>
+											<chart-item displayname="Expenses" name="expenses"/>									
+										</linechart>
+										<plotchart id="plotChart" width="250" height="250" legend="none">
+											<category-axis name="month"/>
+											<chart-item displayname="Profit" name="profit"/>
+											<chart-item displayname="Expenses" name="expenses"/>
+										</plotchart>	
+										<piechart id="pieChart" width="250" height="250" legend="none">
+											<category-axis name="month"/>
+											<chart-item displayname="Profit" name="profit"/>
+										</piechart>						
+									</horizontallayout>
+-->
+								</panel>
+								<!--<tabpanel>
+									<tab displayname="Bar">
+										<verticallayout>
+											<barchart id="barChart" displayname="Financial Overview">
+												<category-axis displayname="Monthly" name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>									
+											</barchart>							
+										</verticallayout>
+									</tab>
+									<tab displayname="Column">
+										<verticallayout>
+											<columnchart id="columnChart" displayname="Financial Overview" legend="none">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Lin Axis"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>								
+											</columnchart>							
+										</verticallayout>
+									</tab>	
+									<tab displayname="Line">
+										<verticallayout>
+											<linechart id="lineChart" displayname="Financial Overview" legend="left">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Lin Axis" min-value="200" max-value="2500" ticksize="400"/>
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>									
+											</linechart>							
+										</verticallayout>
+									</tab>	
+									<tab displayname="Plot">
+										<verticallayout>
+											<plotchart id="plotChart" displayname="Financial Overview" legend="top">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Lin Axis" min-value="0" max-value="2500" ticksize="500"/>										
+												<chart-item displayname="Profit" name="profit"/>
+												<chart-item displayname="Expenses" name="expenses"/>
+											</plotchart>							
+										</verticallayout>
+									</tab>	
+									<tab displayname="Pie">
+										<verticallayout>
+											<piechart id="pieChart" legend="bottom">
+												<category-axis displayname="Monthly" name="month"/>
+												<chart-item displayname="Profit" name="profit"/>
+											</piechart >							
+										</verticallayout>
+									</tab>
+								</tabpanel>-->					
+							</verticallayout>
+						</tab>		
+						<!--<tab displayname="Advance">
+							<verticallayout>
+								<panel height="50">
+						   			<horizontallayout>
+										<button id="btnAdvanceData" displayname="Get Financial Data"/>
+										<button id="btnAdvanceData2" displayname="Get Financial Data with number of"/>
+										<textfield id="txtAdvanceData2"/>
+						   			</horizontallayout>
+								</panel>
+								<tabpanel>
+									<tab displayname="Bar">
+										<verticallayout>
+											<barchart id="barChart2" displayname="Financial Overview">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Profit" name="profit"/>
+												<chart-item displayname="Branch" name="branch"/>										
+											</barchart>							
+										</verticallayout>
+									</tab>
+									<tab displayname="Column">
+										<verticallayout>
+											<columnchart id="columnChart2" displayname="Financial Overview" legend="none">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Profit" name="profit" min-value="0" max-value="2500"/>										
+												<chart-item displayname="Branch" name="branch"/>
+											</columnchart>							
+										</verticallayout>
+									</tab>	
+									<tab displayname="Line">
+										<verticallayout>
+											<linechart id="lineChart2" displayname="Financial Overview" legend="left">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Profit" name="profit" min-value="0" max-value="2500" ticksize="500"/>										
+												<chart-item displayname="Branch" name="branch"/>
+											</linechart>							
+										</verticallayout>
+									</tab>	
+									<tab displayname="Plot">
+										<verticallayout>
+											<plotchart id="plotChart2" displayname="Financial Overview" legend="top">
+												<category-axis displayname="Monthly" name="month"/>
+												<linear-axis displayname="Profit" name="profit" min-value="0" max-value="2500" ticksize="250"/>										
+												<chart-item displayname="Branch" name="branch"/>
+											</plotchart>							
+										</verticallayout>
+									</tab>	
+								</tabpanel>							
+							</verticallayout>
+						</tab>-->	
+					</tabpanel>
+				</verticallayout>
+			</rootpanel>
+			<events>
+					<event id="evtData1">
+						<listeners>
+							<listenergroup>
+								<component ref="btnNormalData" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getFinancialData" >
+  							<out name="data" ref="result"/>
+  						</business-action>						
+						<event ref="evtLoadData"/>
+					</event>				
+					<event id="evtData1A">
+						<listeners>
+							<listenergroup>
+								<component ref="btnNormalData2" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getFinancialDataWithCount" >
+  							<in name="count" ref="txtNormalData2" src="component"/>
+  							<out name="data" ref="result"/>
+  						</business-action>						
+						<event ref="evtLoadData"/>
+					</event>		
+		
+					<event id="evtData2">
+						<listeners>
+							<listenergroup>
+								<component ref="btnAdvanceData" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getFinancialData2" >
+  							<out name="data" ref="result"/>
+  						</business-action>						
+						<event ref="evtLoadData2"/>
+					</event>				
+					<event id="evtData2A">
+						<listeners>
+							<listenergroup>
+								<component ref="btnAdvanceData2" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="getFinancialData2WithCount" >
+  							<in name="count" ref="txtAdvanceData2" src="component"/>
+  							<out name="data" ref="result"/>
+  						</business-action>						
+						<event ref="evtLoadData2"/>
+					</event>				
+
+
+					<event id="evtLoadData">
+						<set component-id="barChart" ref="data"/>
+						<set component-id="columnChart" ref="data"/>
+						<set component-id="lineChart" ref="data"/>
+						<set component-id="plotChart" ref="data"/> 												
+						<set component-id="pieChart" ref="data"/> 												
+					</event>			
+
+					<event id="evtLoadData2">
+						<!--<set component-id="barChart2" ref="data"/>-->
+						<!--<set component-id="columnChart2" ref="data"/>-->
+						<!--<set component-id="lineChart2" ref="data"/>-->
+						<!--<set component-id="plotChart2" ref="data"/>--> 												
+					</event>
+			</events>
+		</window>
+		</view>
+	</presentation-tier>
+
+	<business-tier>
+		<business-actions>
+			<business-action id="getFinancialData">
+				<service ref="dataService" method-ref="getFinancialData">
+				    <out name="result"/>
+				</service>
+			</business-action>
+			<business-action id="getFinancialDataWithCount">
+				<service ref="dataService" method-ref="getFinancialDataWithCount">
+				    <in name="count" ref="count"/>
+				    <out name="result"/>
+				</service>
+			</business-action>
+
+			<business-action id="getFinancialData2">
+				<service ref="dataService" method-ref="getFinancialData2">
+				    <out name="result"/>
+				</service>
+			</business-action>
+			<business-action id="getFinancialData2WithCount">
+				<service ref="dataService" method-ref="getFinancialData2WithCount">
+				    <in name="count" ref="count"/>
+				    <out name="result"/>
+				</service>
+			</business-action>
+
+		</business-actions>
+	</business-tier>
+	
+	<integration-tier>
+		<services>
+			<service resource-ref="chartsApp" id="dataService">
+				<method id="getFinancialData" name="getFinancialData">
+				    <out name="result"/>
+				</method>
+				<method id="getFinancialDataWithCount" name="getFinancialData">
+				    <in name="0" ref="count" type="int"/>
+				    <out name="result"/>
+				</method>
+
+				<method id="getFinancialData2" name="getFinancialData2">
+				    <out name="result"/>
+				</method>
+				<method id="getFinancialData2WithCount" name="getFinancialData2">
+				    <in name="0" ref="count" type="int"/>
+				    <out name="result"/>
+				</method>
+
+			</service>
+		</services>
+	</integration-tier>
+	
+	<resource-tier>
+		<resources>
+			<javaclass id="chartsApp" classname="com.charts.business.data.service.DataService"/>
+		</resources>
+	</resource-tier>
+
+</application-mapping> 

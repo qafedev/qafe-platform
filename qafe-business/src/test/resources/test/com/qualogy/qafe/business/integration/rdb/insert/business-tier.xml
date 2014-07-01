@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="setup">
+				<service ref="databaseService" method-ref="setup" />
+			</business-action>
+			<business-action id="teardown">
+				<service ref="databaseService" method-ref="teardown" />
+			</business-action>
+
+			<business-action id="getData">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="getData">
+				</service>
+			</business-action>
+
+			<!--  Insert Passing TableName With Inputs Form Service-->			
+			<business-action id="testInsertPassingTableNameWithInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithInputsFormService">
+				</service>
+			</business-action>	
+			<business-action id="testInsertPassingTableNameWithNotNullableColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithNotNullableColumnsOnlyFormService">
+				</service>
+			</business-action>			
+			<business-action id="testInsertPassingTableNameWithNullableColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithNullableColumnsOnlyFormService">
+				</service>
+			</business-action>	
+			<business-action id="testInsertPassingTableNameWithAllInputsColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithAllInputsColumnsOnlyFormService">
+				</service>
+			</business-action>	
+			<business-action id="testInsertPassingTableNameWithMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithMapOfInputsFormService">
+				</service>
+			</business-action>
+			<business-action id="testInsertPassingTableNameWithListOfHashMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingTableNameWithListOfHashMapOfInputsFormService">
+				</service>
+			</business-action>
+			
+			<!-- Insert Passing SqlAttribute With Inputs Form Service -->	
+			<business-action id="testInsertPassingSqlAttributeWithNotNullableColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAttributeWithNotNullableColumnsOnlyFormService">
+				</service>
+			</business-action>			
+			<business-action id="testInsertPassingSqlAttributeWithInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAttributeWithInputsFormService">
+				</service>
+			</business-action>
+			<business-action id="testInsertPassingSqlAttributeWithMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAttributeWithMapOfInputsFormService">
+				</service>
+			</business-action>
+			<business-action id="testInsertPassingSqlAttributeWithListOfHashMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAttributeWithListOfHashMapOfInputsFormService">
+				</service>
+			</business-action>
+	
+			<!-- Insert Passing SqlAttribute With Inputs Form Service -->	
+			<business-action id="testInsertPassingSqlAsTextWithNotNullableColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAsTextWithNotNullableColumnsOnlyFormService">
+				</service>
+			</business-action>			
+			<business-action id="testInsertPassingSqlAsTextWithAllInputsColumnsOnlyFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAsTextWithAllInputsColumnsOnlyFormService">
+				</service>
+			</business-action>
+			<business-action id="testInsertPassingSqlAsTextWithMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAsTextWithMapOfInputsFormService">
+				</service>
+			</business-action>
+			<business-action id="testInsertPassingSqlAsTextWithListOfHashMapOfInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingSqlAsTextWithListOfHashMapOfInputsFormService">
+				</service>
+			</business-action>					
+						
+			<!-- using CDATA in Sql As Text -->
+			<business-action id="testInsertPassingCDataSqlAsTextWithInputsFormService">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="testInsertPassingCDataSqlAsTextWithInputsFormService">
+				</service>
+			</business-action>					
+						
+		</business-actions>		
+	</business-tier>
+</application-mapping>

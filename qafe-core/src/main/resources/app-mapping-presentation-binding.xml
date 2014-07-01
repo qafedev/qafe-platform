@@ -1,0 +1,2442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<binding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="binding.xsd">
+
+	<mapping class="com.qualogy.qafe.bind.presentation.style.StyleSet"
+		name="styles">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+
+		<collection field="styles"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.style.Style" usage="optional" />
+		
+		<collection field="conditionalStyles"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.style.ConditionalStyle" usage="optional" />
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.style.Style"
+		name="style" extends="com.qualogy.qafe.bind.domain.BindBase" post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="window-id" style="attribute" field="windowId" />
+		
+		<structure field="styleFileLocation" usage="optional"
+			type="com.qualogy.qafe.bind.io.FileLocation" post-set="postset">
+			<value name="location" field="location" usage="required" style="attribute" />
+		</structure>
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.presentation.style.ConditionalStyle"
+		name="conditional-style">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="required" ident="def"/>
+		<collection field="conditions"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.style.Condition" usage="optional" />
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.style.Condition"
+		name="condition" extends="com.qualogy.qafe.bind.domain.BindBase">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="class" style="attribute" field="styleClass" usage="optional"/>					
+		<value name="style" style="attribute" field="style" usage="optional"/>
+		<value name="expr" style="attribute" field="expr" usage="required" />		
+	</mapping>
+	
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.Event"
+		name="event" post-set="postset" extends="com.qualogy.qafe.bind.domain.BindBase">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="description" field="description" usage="optional"
+			style="attribute" />
+		<structure usage="optional" name="comments" field="comment"
+			type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="cdata" />
+		</structure>
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="src-name" style="attribute" field="sourceName"
+			usage="optional" />
+		<value name="src-id" style="attribute" field="sourceId" usage="optional" />
+		<value name="src-value" style="attribute" field="sourceValue"
+			usage="optional" />
+		<value name="src-listener-type" style="attribute" field="sourceListenerType" usage="optional" />	
+		<value name="components" style="attribute" field="components" usage="optional" />
+		<value name="listener-types" style="attribute" field="listenerTypes" usage="optional" />
+		<collection name="listeners" field="listeners"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.ListenerGroup"
+			usage="optional" />
+		<collection field="eventItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.EventItem" usage="optional"
+			ordered="false">
+			<structure type="com.qualogy.qafe.bind.core.statement.ControlStatement"
+				usage="optional" />
+			<structure name="business-action" type="com.qualogy.qafe.bind.business.action.BusinessActionRef" usage="optional" pre-set="setRefId">
+				<value name="description" field="description" usage="optional" style="attribute" />
+				<structure usage="optional" name="comments" field="comment"	type="com.qualogy.qafe.bind.domain.Comment">
+					<value field="value" usage="optional" style="text" />
+				</structure>
+				<value field="ref" name="ref" usage="required" style="attribute" ident="ref" type="com.qualogy.qafe.bind.business.action.BusinessAction" />
+				<collection field="input"
+					factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+					item-type="com.qualogy.qafe.bind.commons.type.In" usage="optional" />
+				<collection field="output"
+					factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+					item-type="com.qualogy.qafe.bind.commons.type.Out" usage="optional" />
+			</structure>
+			<structure name="event"
+				type="com.qualogy.qafe.bind.presentation.event.function.EventRef"
+				usage="optional">
+				
+				<value name="ref" field="event" style="attribute" usage="optional" />
+			</structure>
+			<structure
+				type="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction"
+				usage="optional" />
+			<structure type="com.qualogy.qafe.bind.commons.error.ErrorHandler"
+				usage="optional" />
+		</collection>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.ListenerGroup"
+		name="listenergroup">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+		<collection field="listenerTypes"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Listener" usage="optional" />
+	</mapping>
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.Listener"
+		name="listener">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="type" style="attribute" field="type" />
+		<collection field="parameters"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.ListenerParameter"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.ListenerParameter"
+		name="listener-parameter">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="name" style="attribute" field="name" />
+		<value name="value" style="attribute" field="value" />
+	</mapping>
+
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.EventItem"
+		abstract="true">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.Component"
+		name="component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="ref" style="attribute" field="componentId" usage="optional" />
+		<value name="name" style="attribute" field="componentName"
+			usage="optional" />
+	</mapping>
+
+
+	<!--
+		***********************Built in function******************************
+	-->
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction"
+		abstract="true" extends="com.qualogy.qafe.bind.presentation.event.EventItem">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.ChangeStyle"
+		name="change-style"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+		<collection field="actions"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.function.ChangeStyleAction"
+			usage="optional" />
+	</mapping>
+
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.Authenticate"
+		name="authenticate"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure field="ref" type="com.qualogy.qafe.bind.business.action.BusinessActionRef" usage="required" pre-set="setRefId">
+			<value field="ref" name="business-action-ref" usage="required" style="attribute" ident="ref" type="com.qualogy.qafe.bind.business.action.BusinessAction" />
+		</structure>
+		<structure name="username" field="username"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<!--
+				<value name="name" style="attribute" field="name" usage="optional"/>
+			-->
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+
+		<structure name="password" field="password"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<!--
+				<value name="name" style="attribute" field="name" usage="optional"/>
+			-->
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+
+	</mapping>
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.Logout"
+		name="logout"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="confirmation-required" style="attribute" field="confirmationRequired" usage="optional" default="false"/>
+	</mapping>
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.Return"
+		name="return"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.OpenWindow"
+		name="openwindow"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction"
+		post-set="postset" ordered="false">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="placement" field="placement" usage="optional" style="attribute"
+			default="cascade" />
+			
+		<value name="external" field="external" usage="optional" style="attribute" default="false" />
+		<structure name="ref" field="window" type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional" default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass" usage="optional" />
+				<value name="value" style="attribute" field="staticValue" usage="optional" />
+			</structure>
+		</structure>
+		<structure name="params" field="params" type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional" default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass" usage="optional" />
+				<value name="value" style="attribute" field="staticValue" usage="optional" />
+			</structure>
+		</structure>		
+		<structure name="title" field="title" type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional" default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass" usage="optional" />
+				<value name="value" style="attribute" field="staticValue" usage="optional" />
+			</structure>
+		</structure>
+		<structure name="url" field="url" type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional" default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass" usage="optional" />
+				<value name="value" style="attribute" field="staticValue" usage="optional" />
+			</structure>
+		</structure>
+		<collection field="dataParameters" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
+			<structure type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional" name="data-param">  
+ 				<value name="name" style="attribute" field="name" usage="required"/>
+				<value name="expr" style="attribute" field="expression" usage="optional"/>
+				<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+					<value name="ref" style="attribute" field="ref"/>
+					<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+				</structure>
+				<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+				<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+				<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+					<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+					<value name="class" style="attribute" field="outputClass" usage="optional"/>
+					<value name="value" style="attribute" field="staticValue" usage="optional"/>
+				</structure>
+			</structure>
+		</collection>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.LocalStore"
+		name="store"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="action" field="action" usage="optional" style="attribute"
+			default="set" />
+		<value name="field" field="field" usage="optional" style="attribute" />
+		<value name="target" field="target" usage="optional" style="attribute"
+			default="pipe" />
+		<!--<value name="scope" field="scope" usage="optional" style="attribute"
+			default="local" />-->			
+		<structure field="parameter"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+	</mapping>
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.LocalDelete"
+		name="store-clear"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="name" style="attribute" field="name" usage="optional" />
+		<value name="target" field="target" usage="optional" style="attribute" default="user" />			
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.CloseWindow"
+		name="closewindow"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="ref" field="window" style="attribute" 
+			serializer="com.qualogy.qafe.bind.presentation.event.function.CloseWindow.serializeWindow"
+		/>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.Toggle"
+		name="toggle"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.SetProperty"
+		name="set-property"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="property" field="property" style="attribute" />
+		<structure field="parameter"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+	
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+	</mapping>
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.LogFunction"
+		name="log"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="delay" style="attribute" field="delay" usage="optional" default="2000"/>
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="message" name="message" 
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>		
+		</structure>			
+	</mapping>
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.ChangeStyleAction"
+		name="style-action">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="key" style="attribute" field="key" usage="optional" />
+		<value name="value" style="attribute" field="value" usage="optional" />
+		<value name="action" style="attribute" field="action" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.SetPanel"
+		name="set-panel"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="src" field="src" style="attribute" />
+		<value name="target" field="target" style="attribute" />
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.ShowPanel"
+		name="show-panel"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="src" field="src" style="attribute" />
+		<value name="auto-hide" field="autoHide" style="attribute" usage="optional" default="true"/>
+		<value name="modal" field="modal" style="attribute" usage="optional" />
+		<value name="x" field="left" style="attribute" usage="optional" />
+		<value name="y" field="top" style="attribute" usage="optional" />
+		<value name="position" field="position" style="attribute" usage="optional" />
+	</mapping>
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.ClosePanel"
+		name="close-panel"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="ref" field="ref" style="attribute" />
+	</mapping>
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.SetValue"
+		name="set"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="component-id" field="componentId" style="attribute"
+			usage="optional" />
+		<value name="group-name" field="group" style="attribute"
+			usage="optional" />
+		<value name="action" field="action" style="attribute"
+		usage="optional" default="set"/>
+			
+		<structure field="parameter"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+		<collection field="mapping"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.function.SetValueMapping"
+			usage="optional" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.SetValueMapping"
+		name="mapping">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="key" field="key" style="attribute" />
+		<value name="value" field="value" style="attribute" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.Copy"
+		name="copy"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="from" field="from" style="attribute" />
+		<value name="to" field="to" style="attribute" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.Clear"
+		name="clear"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="ref" field="componentId" style="attribute" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.Focus"
+		name="focus"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="ref" field="componentId" style="attribute" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.dialog.MessageDialog"
+		abstract="true"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="title" field="title" style="attribute" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.dialog.GenericDialog" 
+		name="dialog"
+		extends="com.qualogy.qafe.bind.presentation.event.function.dialog.MessageDialog"
+		ordered="false">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="type" field="type" usage="optional" style="attribute"
+			default="info" />
+		<value name="width" field="width" usage="optional" style="attribute" />
+		<value name="height" field="height" usage="optional" style="attribute" />
+
+		<structure name="title" field="title"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+		<structure name="message" field="message"
+			type="com.qualogy.qafe.bind.commons.type.Parameter">
+			<value name="expr" style="attribute" field="expression" usage="optional" />
+			<value name="name" style="attribute" field="name" usage="optional" />
+			<structure usage="optional" field="ref"
+				type="com.qualogy.qafe.bind.commons.type.Reference">
+				<value name="ref" style="attribute" field="ref" />
+				<value name="src" style="attribute" field="source" usage="optional"
+					default="pipe" />
+			</structure>
+			<value name="adapter" style="attribute" field="adapter" usage="optional"
+				ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" />
+			<collection field="placeHolders"
+				factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+				item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional" />
+			<structure usage="optional" field="value"
+				type="com.qualogy.qafe.bind.commons.type.Value">
+				<value name="type" style="attribute" field="type" usage="optional"
+					ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition" />
+				<value name="class" style="attribute" field="outputClass"
+					usage="optional" />
+				<value name="value" style="attribute" field="staticValue"
+					usage="optional" />
+			</structure>
+		</structure>
+
+	</mapping>
+
+
+	
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.event.function.RegExpValidate"
+		name="validate"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		
+		<value name="message" field="message" usage="optional" style="attribute" />
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Component" usage="optional" />
+		<value name="regexp" field="regexp" usage="optional" />
+		<value name="type" field="type" usage="optional" style="attribute" />
+
+	</mapping>
+
+	<!-- The main UI class -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.View"
+		name="view" allow-repeats="true" ordered="false" post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value field="title" name="title" usage="optional" style="attribute" />
+		
+		<collection field="windows"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Window"
+			usage="optional" />
+		<collection field="contextMenus"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.MenuDefinitionItem"
+			usage="optional" />
+		<collection field="toolbars"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Toolbar"
+			usage="optional" />
+		<collection field="panelDefinitions"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.PanelDefinition"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Window"
+		name="window" extends="com.qualogy.qafe.bind.presentation.component.Component"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" ident="def" />
+		<!--value name="title" field="title" usage="required" style="attribute" /-->
+		<value name="displayname" field="displayname" usage="required" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value field="resizable" name="resizable" usage="optional"
+			style="attribute" default="true" />
+		<value field="closable" name="closable" usage="optional" style="attribute"
+			default="true" />
+		<value field="minimizable" name="minimizable" usage="optional"
+			style="attribute" default="true" />
+		<value field="maximizable" name="maximizable" usage="optional"
+			style="attribute" default="true" />
+		<value field="draggable" name="draggable" usage="optional"
+			style="attribute" default="true" />
+		<value field="isparent" name="isparent" usage="optional" style="attribute"
+			default="true" />
+		<value field="width" name="width" usage="optional" style="attribute" default="200"/>
+		<value field="height" name="height" usage="optional" style="attribute" default="200"/>
+
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="icon" style="attribute" field="icon" usage="optional" />
+		<value name="icon-style" style="attribute" field="iconStyle" usage="optional" />
+		<value name="top" style="attribute" field="top" usage="optional" />
+		<value name="left" style="attribute" field="left" usage="optional" />
+		<value name="in-dock" style="attribute" field="inDock" usage="optional"  default="false"/>
+				
+		
+		<!--<value name="menu" field="menu"  usage="optional"/>-->
+		<!--<structure field="menu" usage="optional"/>-->
+		<structure field="rootpanel"
+			type="com.qualogy.qafe.bind.presentation.component.RootPanel" />
+		<collection name="events" field="events"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.event.Event" usage="optional" />
+		<structure field="styles" usage="optional" />
+	</mapping>
+
+	<!-- Component Superclass -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Component"
+		abstract="true">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<!-- EditableComponent Superclass -->
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.EditableComponent"
+		abstract="true" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<!-- ChartComponent Superclass -->
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.ChartComponent"
+		abstract="true" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<!-- LinearChartComponent Superclass -->
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.LinearChartComponent"
+		abstract="true" extends="com.qualogy.qafe.bind.presentation.component.ChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<!-- AxisComponent Superclass -->
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.AxisComponent"
+		abstract="true" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Element"
+		name="element">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value field="x" name="x" style="attribute" />
+		<value field="y" name="y" style="attribute" />
+		<value field="gridwidth" name="gridwidth" usage="optional"
+			style="attribute" />
+		<value field="gridheight" name="gridheight" usage="optional"
+			style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<structure field="component" usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Toolbar"
+		name="toolbar-definition" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" ident="def" />
+		<value name="item-height" style="attribute" field="itemHeight"
+			default="16px" usage="optional" />
+		<value name="item-width" style="attribute" field="itemWidth"
+			default="16px" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<collection field="toolbarItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ToolbarItem"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.ToolbarItem"
+		name="tb-item" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" />
+		<value name="image" style="attribute" field="imageLocation" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+	</mapping>
+
+	<!--
+		PanelRef: panel with refers to a panel-definition, so reused panels
+	-->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.PanelRef"
+		name="panel-ref" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" />
+		<value name="title" field="title" style="attribute" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="ref" style="attribute" field="ref" ident="ref" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+	</mapping>
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Panel"
+		name="panel" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="showdatacontrol" style="attribute" field="showdatacontrol"
+			usage="optional" default="false" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="disclosure" style="attribute" field="disclosure" usage="optional" default="false"/>
+		<structure field="layout" />
+	</mapping>
+
+	<!-- Panel: The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.OverFlowPanel"
+		name="overflow" extends="com.qualogy.qafe.bind.presentation.component.Panel">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="showdatacontrol" style="attribute" field="showdatacontrol"
+			usage="optional" default="false" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<structure field="layout" />
+	</mapping>
+	<!-- Panel: The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.DatagridControlBar"
+		name="controlbar" extends="com.qualogy.qafe.bind.presentation.component.Panel">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="showdatacontrol" style="attribute" field="showdatacontrol"
+			usage="optional" default="false" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="placement" field="placement" usage="optional" style="attribute"
+			default="bottom" />
+		<structure field="layout" />
+	</mapping>
+	
+	<!-- ReusablePanel: The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.PanelDefinition"
+		name="panel-definition" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" ident="def" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<structure field="layout" />
+	</mapping>
+
+	<!-- Panel: The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.StackPanel"
+		name="stackpanel" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<collection field="stacks"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Stack" usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Stack"
+		name="stack" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<!--value name="title" field="title" style="attribute" /-->
+		<value name="displayname" field="displayname" usage="required" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<structure field="component" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.SplitPanel"
+		name="splitpanel" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="position" style="attribute" field="position" usage="optional"
+			default="50%" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="horizontal" style="attribute" field="horizontalOrientation"
+			usage="optional" default="true" />
+		<value field="width" name="width" style="attribute" />
+		<value field="height" name="height" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<structure name="first">
+			<structure field="first" />
+		</structure>
+		<structure name="second">
+			<structure field="second" />
+		</structure>
+	</mapping>
+
+	<!-- Tab within TabPanel -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Tab"
+		name="tab" extends="com.qualogy.qafe.bind.presentation.component.Panel">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+	
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<structure field="layout" />
+	</mapping>
+
+	<!-- RootPanel : The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.RootPanel"
+		name="rootpanel" extends="com.qualogy.qafe.bind.presentation.component.Panel"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="menu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="toolbar" style="attribute" field="toolbar" ident="ref"
+			usage="optional" />
+		<!--value name="title" field="title" style="attribute" usage="optional" /-->
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+	
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+
+		<structure field="layout" />
+	</mapping>
+
+	<!-- Hidden -->
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Hidden"
+		name="hidden" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="value" field="value" style="attribute" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+	</mapping>
+
+	<!-- The link component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Link"
+		name="link" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" field="value" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+
+	</mapping>
+	<!-- The label component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Label"
+		name="label" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" field="displayname" usage="optional"
+			style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+	</mapping>
+
+	<!-- The html component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.HTMLComponent"
+		name="html" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="html" name="text" usage="optional" />
+		<value field="escape" name="escape" usage="optional" style="attribute"
+			default="false" />
+		<value field="preformat" name="preformat" usage="optional"
+			style="attribute" default="false" />
+	</mapping>
+	<!-- The frame component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.FrameComponent"
+		name="frame" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="src" name="src" usage="optional" style="attribute" />
+	</mapping>
+
+
+	<!-- The TextField component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TextField"
+		name="textfield" extends="com.qualogy.qafe.bind.presentation.component.Component"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value field="type" name="type" style="attribute" usage="optional"
+			default="text" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<value name="required-class" style="attribute" field="requiredStyleClassName" usage="optional" />
+		<value name="displayname" style="attribute" field="displayname"
+			usage="optional" default="" />
+			<value name="orientation" style="attribute" field="orientation"
+			usage="optional" default="leftright" />
+		<value name="format" style="attribute" field="format" usage="optional"
+			default="dd/MM/yyyy" />
+		<value name="value" field="value" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="min-length" style="attribute" field="minLength"
+			usage="optional" />
+		<value name="max-length" style="attribute" field="maxLength"
+			usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="suggest" name="suggest" usage="optional" style="attribute"
+			default="false" />
+		<value field="suggestCharacters" name="suggest-chars" usage="optional"
+			style="attribute" default="3" />
+
+		<value field="regExp" name="regexp" usage="optional" />
+		<value field="validationMessageKey" name="validation-message-key" usage="optional" style="attribute" />	
+		<value field="validationMessage" name="validation-message" usage="optional"	style="attribute" />
+		<value field="validationTitleKey" name="validation-title-key" usage="optional" style="attribute" />	
+		<value field="validationTitle" name="validation-title" usage="optional"	style="attribute" />
+		<value field="requiredValidationTitle" name="required-validation-title" usage="optional" style="attribute" />	
+		<value field="requiredValidationTitleKey" name="required-validation-title-key" usage="optional" style="attribute" />	
+		<value field="requiredValidationMessage" name="required-validation-message" usage="optional" style="attribute" />
+		<value field="requiredValidationMessageKey" name="required-validation-message-key" usage="optional" style="attribute" />
+		
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+					
+		<value field="minValue" name="min-value" usage="optional" style="attribute" />
+		<value field="maxValue" name="max-value" usage="optional" style="attribute" />
+		<value name="conditional-style-ref" style="attribute" field="conditionalStyleRef" ident="ref"  usage="optional" /> 
+		
+
+	</mapping>
+
+	<!-- The FileUpload component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.FileUpload"
+		name="fileupload" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+
+	</mapping>
+	<!-- The PasswordTextField component -->
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.PasswordTextField"
+		name="password" extends="com.qualogy.qafe.bind.presentation.component.Component"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<value name="required-class" style="attribute" field="requiredStyleClassName" usage="optional" />
+		<value name="displayname" style="attribute" field="displayname"
+			usage="optional" default="" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="orientation" style="attribute" field="orientation"
+			usage="optional" default="leftright" />
+		<value name="value" field="value" usage="optional" />
+		<value name="password-mask" field="passwordMask" style="attribute"
+			usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+
+	</mapping>
+
+	<!-- The TextArea component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TextArea"   
+		name="textarea" extends="com.qualogy.qafe.bind.presentation.component.TextField"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<value name="displayname" style="attribute" field="displayname"
+			usage="optional" default="" />
+	
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="orientation" style="attribute" field="orientation"
+			usage="optional" default="leftright" />
+		<value name="value" field="value" usage="optional" default="" />
+		<value name="rows" field="rows" style="attribute" usage="optional"
+			default="1" />
+		<value name="cols" field="cols" style="attribute" usage="optional"/>
+		<value name="rich" field="rich" style="attribute" usage="optional"
+			default="false" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="min-length" style="attribute" field="minLength"
+			usage="optional" />
+		<value name="max-length" style="attribute" field="maxLength"
+			usage="optional" />
+	</mapping>
+
+	<!-- TabPanel: The container for all the components -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TabPanel"
+		name="tabpanel" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<collection field="tabs"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Tab" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+
+	</mapping>
+
+
+	<!-- Tree:  -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Tree"
+		name="tree" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" field="displayname" style="attribute" usage="optional"/>
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<collection field="children"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.TreeItem"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TreeItem"
+		name="tree-item" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+
+		<value field="expand" name="expand" style="attribute" usage="optional"
+			default="false" />
+		<value name="value" field="value" style="attribute" usage="optional" />
+		<value name="displayname" field="displayname" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<!--
+			<structure field="component" usage="optional"
+			type="com.qualogy.qafe.bind.presentation.component.Component"/>
+		-->
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<collection field="children"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.TreeItem"
+			usage="optional" />
+	</mapping>
+
+
+	<!-- The CheckBox component (EditableComponent) -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.CheckBox"
+		name="checkbox" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="checked" field="value" style="attribute" default="false"
+			usage="optional" />
+		<value name="displayname" field="displayname" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="checked-value" style="attribute" field="checkedValue"
+			usage="optional" />
+		<value name="unchecked-value" style="attribute" field="unCheckedValue"
+			usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="displaynamePosition" name="displayname-position" usage="optional" style="attribute" default="right" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TileList"
+		name="tilelist" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="columns" name="columns" usage="optional" style="attribute"
+			default="1" />
+		<structure field="component" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Button"
+		name="button" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" field="displayname" style="attribute" usage="optional"/>
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="image" field="imageLocation" style="attribute" usage="optional"/>
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Slider"
+		name="slider" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref" usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional" default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional" default="true" />
+		<value field="displayname" name="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value field="minTicks" name="min-ticks" style="attribute" usage="optional" />
+		<value field="maxTicks" name="max-ticks" style="attribute" usage="optional" />
+		<value field="tickSize" name="ticksize" style="attribute" usage="optional" />
+		<value field="tickLabels" name="tick-labels" style="attribute" usage="optional" />
+		<value field="value" name="value" usage="optional" />
+		<!--
+			<value field="orientation" name="orientation" style="attribute"
+			usage="optional" default="horizontal" />
+		-->
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+	</mapping>
+	
+	<!-- AreaMap -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.MapComponent"
+		name="map" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="name" style="attribute" field="name" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="image" field="imageUrl" style="attribute" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<!--
+			<value name="fieldname" style="attribute" field="fieldName"
+			usage="optional" />
+		-->
+		<collection field="areas"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			usage="optional">
+			<structure name="area"
+				type="com.qualogy.qafe.bind.presentation.component.Area">
+				<value name="shape" field="shape" usage="required" style="attribute" />
+				<value name="coords" field="coords" usage="required" style="attribute" />
+				<value name="alt" field="alt" usage="required" style="attribute" />
+			</structure>
+		</collection>
+	</mapping>
+
+
+	<!-- Choice Component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.ChoiceItem"
+		name="choice-item" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value field="selected" name="selected" style="attribute" usage="optional"
+			default="false" />
+		<value name="value" field="value" usage="optional" style="attribute" />
+		<value name="displayname" field="displayname" usage="optional"
+			style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Choice"
+		name="choice" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.EditableComponent" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="horizontal" style="attribute" field="horizontalOrientation"
+			usage="optional" default="true" />
+		<collection field="choiceItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChoiceItem"
+			usage="optional" />
+
+	</mapping>
+
+
+	<!-- Drop Down Component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.DropDownItem"
+		name="item" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value field="selected" name="selected" style="attribute" usage="optional"
+			default="false" />
+		<value name="value" field="value" usage="optional" style="attribute" />
+		<value name="displayname" field="displayname" usage="optional"
+			style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.DropDown"
+		name="dropdown" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!-- <value field="editable" name="editable" style="attribute" usage="optional"
+			default="false" />-->
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+
+		<collection field="dropDownItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.DropDownItem"
+			usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<value name="required-class" style="attribute" field="requiredStyleClassName" usage="optional" />
+		<value name="empty-item-displayname" style="attribute" field="emptyItemDisplayName" usage="optional"/>
+		<value name="empty-item-value" style="attribute" field="emptyItemValue" usage="optional"/>
+		<value name="empty-item-message-key" style="attribute" field="emptyItemMessageKey" usage="optional"/>
+	</mapping>
+
+
+	<!-- List box -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.ListBox"
+		name="listbox" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.EditableComponent" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!--
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="false" />
+		-->
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="nr-visible-items" style="attribute" field="nrOfVisibleItems"
+			usage="optional" />
+		<value name="multiple-select" style="attribute" field="multipleSelect"
+			usage="optional" default="false" />
+		<value name="required" style="attribute" field="required" usage="optional"
+			default="false" />
+		<collection field="dropDownItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.DropDownItem"
+			usage="optional" />
+
+	</mapping>
+
+	<!-- Image Component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Image"
+		name="image" extends="com.qualogy.qafe.bind.presentation.component.Component"
+		post-set="postset">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="imageLocation" name="location" usage="optional"
+			style="attribute" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+	</mapping>
+
+	<!-- Menu Item  -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.MenuItem"
+		name="menu" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" ident="def" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!--
+			<value name="menu" style="attribute" field="menu" ident="ref"
+			usage="optional"/>
+		-->
+		<value field="shortcut" name="shortcut" usage="optional" style="attribute" />
+		<value field="displayname" name="displayname" usage="optional"
+			style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<!--
+			<value name="fieldname" style="attribute" field="fieldName"
+			usage="optional" />
+		-->
+		<collection field="subMenus"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.MenuItem"
+			usage="optional" />
+	</mapping>
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.MenuItemSeparator"
+		name="separator" extends="com.qualogy.qafe.bind.presentation.component.MenuItem">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+
+
+	<mapping
+		class="com.qualogy.qafe.bind.presentation.component.MenuDefinitionItem"
+		name="menu-definition" extends="com.qualogy.qafe.bind.presentation.component.MenuItem">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" ident="def" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<!--
+			<value name="menu" style="attribute" field="menu" ident="ref"
+			usage="optional"/>
+		-->
+		<value field="shortcut" name="shortcut" usage="optional" style="attribute" />
+		<value field="displayname" name="displayname" usage="optional"
+			style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<!--
+			<value name="fieldname" style="attribute" field="fieldName"
+			usage="optional" />
+		-->
+		<collection field="subMenus"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.MenuItem"
+			usage="optional" />
+	</mapping>
+
+
+	<!-- The DataGrid  component (EditableComponent) -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.DataGrid"
+		name="datagrid" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure
+			map-as="com.qualogy.qafe.bind.presentation.component.EditableComponent" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="false" />
+		<value field="maxRows" name="maxrows" style="attribute" usage="optional"
+			default="-1" />
+		<value field="pageSize" name="pagesize" style="attribute" usage="optional"
+			default="-1" />
+		<value field="pageScroll" name="page-scroll" style="attribute" usage="optional"
+			default="false" />	
+		<value field="minRows" name="minrows" style="attribute" usage="optional"
+			default="5" />
+		<value field="delete" name="delete" style="attribute" usage="optional"
+			default="false" />
+		<value field="add" name="add" style="attribute" usage="optional"
+			default="false" />
+		<value field="export" name="export" style="attribute" usage="optional"
+			default="false" />
+		<value field="exportFormats" name="export-formats" style="attribute" usage="optional"
+			default="excel,pdf,csv,xml" />	
+		<value field="importEnabled" name="import" style="attribute" usage="optional"
+			default="false" />					
+			
+					
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="multiple-select" style="attribute" field="multipleSelect" usage="optional"
+			default="false" />
+		<value name="row-colors" style="attribute" field="rowColors" usage="optional"/>
+		<value name="select-first-row" style="attribute" field="selectFirstRow" default="false" 
+			usage="optional"/>
+
+		<value name="save" style="attribute" field="save" default="true" 
+			usage="optional"/>
+		<value name="cancel" style="attribute" field="cancel" default="true" 
+			usage="optional"/>
+		<value name="refresh" style="attribute" field="refresh" default="true" 
+			usage="optional"/>
+		<value name="overflow-group" style="attribute" field="overflowGroup" usage="optional" />
+			
+
+		<collection field="columns"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.DataGridColumn"
+			usage="optional" />
+		<structure field="overflow" usage="optional" />
+		<structure field="controlbar" usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.DataGridColumn"
+		name="column" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure
+			map-as="com.qualogy.qafe.bind.presentation.component.EditableComponent" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" />
+		<value field="sortable" name="sortable" style="attribute" usage="optional"
+			default="false" />
+		<value field="staticField" name="static" style="attribute"
+			usage="optional" default="false" />
+		<value field="identifyingField" name="idfield" style="attribute"
+			usage="optional" default="false" />
+
+		<value field="content" name="content" style="attribute" usage="optional"
+			default="string" />
+		<value field="displayname" name="displayname" style="attribute"
+			usage="optional" />
+		<value name="message-key" field="messageKey" usage="optional"
+			style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+  		<value name="conditional-style-ref" style="attribute" field="conditionalStyleRef" ident="ref"  usage="optional" /> 
+
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		
+		<value field="width" name="width" usage="optional" style="attribute" />
+		<value field="height" name="height" usage="optional" style="attribute" />
+
+		<structure field="component" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+	</mapping>
+
+	<!-- The Table  component (EditableComponent) -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.Table"
+		name="table" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!--value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" /-->
+		<!--value field="maxRows" name="maxrows" style="attribute" usage="optional"
+			default="-1" /-->
+		<!--value field="pageSize" name="pagesize" style="attribute" usage="optional"
+			default="-1" /-->
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value field="width" name="width" usage="required" style="attribute" />
+		<value field="height" name="height" usage="required" style="attribute" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<structure field="header" />
+		<collection field="rows"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.TableRow"
+			usage="optional" />
+
+	</mapping>
+
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TableHeader"
+		name="header" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!--value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" /-->
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<collection field="cells"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.TableCell"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TableRow"
+		name="row" extends="com.qualogy.qafe.bind.presentation.component.EditableComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<!--value field="editable" name="editable" style="attribute" usage="optional"
+			default="true" /-->
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+
+		<collection field="cells"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.TableCell"
+			usage="optional" />
+	</mapping>
+
+
+	<mapping class="com.qualogy.qafe.bind.presentation.component.TableCell"
+		name="cell" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.component.Component" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<structure field="component" usage="optional" />
+	</mapping>
+
+
+
+	<!-- The Chart CategoryAxis component, usually the horizontal axis -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.CategoryAxis"
+		name="category-axis" extends="com.qualogy.qafe.bind.presentation.component.AxisComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+	</mapping>
+	
+	<!-- The Chart LinearAxis component, usually the vertical axis -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.LinearAxis"
+		name="linear-axis" extends="com.qualogy.qafe.bind.presentation.component.AxisComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="min-value" style="attribute" field="minValue" usage="optional" />
+		<value name="max-value" style="attribute" field="maxValue" usage="optional" />
+		<value name="ticksize" style="attribute" field="tickSize" usage="optional" />
+	</mapping>
+	
+	<!-- The Chart Item component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.ChartItem"
+		name="chart-item" extends="com.qualogy.qafe.bind.presentation.component.Component">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" field="displayname" usage="optional" style="attribute" />
+		<value name="message-key" field="messageKey" usage="optional" style="attribute" />
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+	</mapping>
+	
+	<!-- The LineChart component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.LineChart"
+		name="linechart" extends="com.qualogy.qafe.bind.presentation.component.LinearChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />		
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" style="attribute" field="displayname"	usage="optional" 
+			default="" />
+		<value name="message-key" style="attribute" field="messageKey" usage="optional"/>			
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="width" style="attribute" field="width" usage="optional" />
+		<value name="height" style="attribute" field="height"  usage="optional" />
+		<value name="legend" style="attribute" field="legend" usage="optional"
+			default="right" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="categoryAxis" />
+		<structure field="linearAxis" usage="optional" />
+		
+		<collection field="chartItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChartItem" />
+		
+	</mapping>
+
+	<!-- The BarChart component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.BarChart"
+		name="barchart" extends="com.qualogy.qafe.bind.presentation.component.LinearChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" style="attribute" field="displayname"	usage="optional" 
+			default="" />
+		<value name="message-key" style="attribute" field="messageKey" usage="optional"/>			
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="width" style="attribute" field="width" usage="optional" />
+		<value name="height" style="attribute" field="height"  usage="optional" />
+		<value name="legend" style="attribute" field="legend" usage="optional"
+			default="right" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="categoryAxis" />
+		<structure field="linearAxis" usage="optional" />
+		
+		<collection field="chartItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChartItem" />
+		
+	</mapping>
+	
+	<!-- The ColumnChart component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.ColumnChart"
+		name="columnchart" extends="com.qualogy.qafe.bind.presentation.component.LinearChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />		
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" style="attribute" field="displayname"	usage="optional" 
+			default="" />
+		<value name="message-key" style="attribute" field="messageKey" usage="optional"/>			
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="width" style="attribute" field="width" usage="optional" />
+		<value name="height" style="attribute" field="height"  usage="optional" />
+		<value name="legend" style="attribute" field="legend" usage="optional"
+			default="right" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="categoryAxis" />
+		<structure field="linearAxis" usage="optional" />
+		
+		<collection field="chartItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChartItem" />
+		
+	</mapping>
+	
+	<!-- The PlotChart component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.PlotChart"
+		name="plotchart" extends="com.qualogy.qafe.bind.presentation.component.LinearChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />		
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" style="attribute" field="displayname"	usage="optional" 
+			default="" />
+		<value name="message-key" style="attribute" field="messageKey" usage="optional"/>			
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="width" style="attribute" field="width" usage="optional" />
+		<value name="height" style="attribute" field="height"  usage="optional" />
+		<value name="legend" style="attribute" field="legend" usage="optional"
+			default="right" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="categoryAxis" />
+		<structure field="linearAxis" usage="optional" />
+		
+		<collection field="chartItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChartItem" />
+		
+	</mapping>
+	
+	<!-- The PieChart component -->
+	<mapping class="com.qualogy.qafe.bind.presentation.component.PieChart"
+		name="piechart" extends="com.qualogy.qafe.bind.presentation.component.ChartComponent">
+		<namespace uri="http://qafe.com/schema" default="elements" />		
+		<value name="id" style="attribute" field="id" usage="optional" />
+		<value name="contextmenu" style="attribute" field="menu" ident="ref"
+			usage="optional" />
+		<value name="disabled" style="attribute" field="disabled" usage="optional"
+			default="false" />
+		<value name="visible" style="attribute" field="visible" usage="optional"
+			default="true" />
+		<value name="displayname" style="attribute" field="displayname"	usage="optional" 
+			default="" />
+		<value name="message-key" style="attribute" field="messageKey" usage="optional"/>			
+		<value name="name" style="attribute" field="fieldName" usage="optional" />
+		<value name="group-name" style="attribute" field="group" usage="optional" />
+		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
+		<value name="width" style="attribute" field="width" usage="optional" />
+		<value name="height" style="attribute" field="height"  usage="optional" />
+		<value name="legend" style="attribute" field="legend" usage="optional"
+			default="right" />
+		<value name="class" style="attribute" field="styleClass" usage="optional" />
+		<value name="style" style="attribute" field="style" usage="optional" />
+		
+		<structure field="categoryAxis" />
+		
+		<collection field="chartItems"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.ChartItem" />
+		
+	</mapping>
+
+
+	<!-- Layout definition -->
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.Layout"
+		abstract="true" extends="com.qualogy.qafe.bind.domain.BindBase">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+	</mapping>
+	<!--
+		Deprecated, use horizontal or vertical layout for this <mapping
+		class="com.qualogy.qafe.bind.presentation.layout.BoxLayout"
+		name="boxlayout"
+		extends="com.qualogy.qafe.bind.presentation.layout.Layout"> <structure
+		map-as="com.qualogy.qafe.bind.presentation.layout.Layout"/>
+		<collection field="components"
+		factory="org.jibx.runtime.Utility.arrayListFactory"
+		type="java.util.List"
+		item-type="com.qualogy.qafe.bind.presentation.component.Component"
+		usage="optional"/> </mapping>
+	-->
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.BorderLayout"
+		name="borderlayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout"
+		ordered="false">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+
+		<structure name="north" usage="optional">
+			<structure field="north"
+				type="com.qualogy.qafe.bind.presentation.component.Component" />
+		</structure>
+		<structure name="south" usage="optional">
+			<structure field="south" usage="optional"
+				type="com.qualogy.qafe.bind.presentation.component.Component" />
+		</structure>
+		<structure name="center" usage="optional">
+			<structure field="center" usage="optional"
+				type="com.qualogy.qafe.bind.presentation.component.Component" />
+		</structure>
+		<structure name="east" usage="optional">
+			<structure field="east" usage="optional"
+				type="com.qualogy.qafe.bind.presentation.component.Component" />
+		</structure>
+		<structure name="west" usage="optional">
+			<structure field="west" usage="optional"
+				type="com.qualogy.qafe.bind.presentation.component.Component" />
+		</structure>
+
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.GridLayout"
+		name="gridlayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+		<collection field="elements"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Element"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.AbsoluteLayout"
+		name="absolutelayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+		<collection field="elements"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Element"
+			usage="optional">
+			<structure name="element"
+				type="com.qualogy.qafe.bind.presentation.component.Element">
+				<value field="x" name="x" style="attribute" />
+				<value field="y" name="y" style="attribute" />
+				<structure field="component" usage="optional" />
+			</structure>
+		</collection>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.HorizontalLayout"
+		name="horizontallayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Component"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.VerticalLayout"
+		name="verticallayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Component"
+			usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.presentation.layout.AutoLayout"
+		name="autolayout" extends="com.qualogy.qafe.bind.presentation.layout.Layout">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+		<structure map-as="com.qualogy.qafe.bind.presentation.layout.Layout" />
+		<value name="cols" style="attribute" field="cols" usage="optional"
+			default="1" />
+		<collection field="components"
+			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
+			item-type="com.qualogy.qafe.bind.presentation.component.Component"
+			usage="optional" />
+	</mapping>
+
+</binding>

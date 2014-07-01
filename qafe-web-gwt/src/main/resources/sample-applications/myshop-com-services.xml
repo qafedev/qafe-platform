@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<integration-tier>
+		<services>
+			<service id="bookstoreService" resource-ref="database">
+
+				<method id="retrieveBooksByTitleAndAuthor" name="booksByTitleAndAuthor">
+					<in name="title" ref="bookTitle" />
+					<in name="author" ref="bookAuthor" />
+					<out name="books" />
+				</method>
+				<method id="getDescription" name="getBook">
+					<in name="id" ref="id" />
+					<out name="description" ref="description" type="string" />
+					<out name="title" ref="title" type="string" />
+				</method>
+				<method id="getBook" name="getBook">
+					<in name="id" ref="id" />
+					<out name="book" />
+				</method>
+				<method id="createOrder" name="createOrder">
+					<in name="cur_id" ref="userid" />
+					<out name="orr_id" />
+				</method>
+				<method id="createOrderBookRelation" name="createOrderBookRelation">
+					<in name="bok_id" ref="bookid" />
+					<in name="orr_id" ref="orderid" />
+					<in name="quantity" ref="quantity" />
+				</method>
+				<method id="updateStock" name="updateBook">
+					<in name="id" ref="id" />
+					<in name="stock" ref="stock" />
+				</method>
+			</service>
+			<service id="paymentService" resource-ref="paymentResource">
+
+				<method id="doPayment0" name="doPayment">
+					<in name="0" adapter="PaymentDetailsAdapter" />
+					<out name="paymentResult" />
+				</method>
+				<method id="doPayment1" name="doPayment">
+					<in name="0" ref="userid" />
+					<in name="1" ref="itemId" />
+					<in name="2" ref="paymentAmount" type="double" />
+					<out name="paymentResult" />
+				</method>
+			</service>
+			<service id="userService" resource-ref="loginResource">
+
+				<method id="login" name="login">
+					<in name="0" ref="username" />
+					<in name="1" ref="password" />
+					<out name="result" />
+				</method>
+			</service>
+		</services>
+		<errors>
+			<error id="name.already.registered" exception="java.lang.Exception">
+				<log>jaja</log>
+			</error>
+		</errors>
+		<adapters>
+			<adapter id="PaymentDetailsAdapter" type="PaymentDetails"
+				class="com.myshop.business.payment.service.domain.PaymentDetails">
+				<attribute name="userId" ref="userId" />
+				<attribute name="itemId" ref="itemId" />
+				<attribute name="amount" ref="amount" />
+			</adapter>
+		</adapters>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<drivermanager-datasource driver-classname="oracle.jdbc.OracleDriver"
+				id="database" statements-file-url="myshop-statements.xml"
+				url="jdbc:oracle:thin:@172.23.35.59:1521:XE" dialect="oracle"
+				password="myshop" username="myshop" />
+			<!--
+				<javaclass id="loginResource"
+				classname="com.myshop.business.user.service.LoginService" />
+				<javaclass id="paymentResource"
+				classname="com.myshop.business.payment.service.PaymentService" />
+			-->
+			<javaclass id="loginResource"
+				classname="com.lol.business.user.service.LoginService" />
+			<javaclass id="paymentResource"
+				classname="com.lol.business.payment.service.PaymentService" />
+		</resources>
+	</resource-tier>
+</application-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	<application id="" name="app-happy-day" root-menu="system_menu">
+		<application-mapping>
+			<presentation-tier>
+	 			<view>
+        		<window id="window" displayname="title">
+							<rootpanel id="rootPanel" menu="menu" displayname="title"  toolbar="toolbar">
+							<gridlayout/>
+						</rootpanel>
+					</window>
+				</view>
+			</presentation-tier>
+		</application-mapping>
+	</application>
+</applications>

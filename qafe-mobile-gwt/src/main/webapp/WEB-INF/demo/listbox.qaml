@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndList" displayname="List" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<listbox id="lbxSingle">
+							<item displayname="List 1" value="List A"/>
+							<item displayname="List 2" value="List B"/>
+							<item displayname="List 3" value="List C"/>
+						</listbox>
+						<button id="btnGetSingleList" displayname="Get Single Value"/>
+						<listbox id="lbxMulti" multiple-select="true">
+							<item displayname="List 4" value="List D"/>
+							<item displayname="List 5" value="List E"/>
+							<item displayname="List 6" value="List F"/>
+						</listbox>
+						<button id="btnGetMultiList" displayname="Get Multi Value"/>
+						<button id="btnSetMultiList" displayname="Set"/>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+  							<listenergroup>
+  								<component ref="btnGetSingleList"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="singleListValue" ref="lbxSingle" src="component" />
+  						<dialog>
+  							<title value="Single" />
+  							<message ref="singleListValue" />
+  						</dialog>
+					</event>
+					<event>
+						<listeners>
+  							<listenergroup>
+  								<component ref="btnGetMultiList"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="multiListValue" ref="lbxMulti" src="component" />
+  						<dialog>
+  							<title value="Multi" />
+  							<message ref="multiListValue" />
+  						</dialog>
+					</event>
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnSetMultiList"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="lbxMulti" ref="result">
+  							<mapping key="id" value="lastName"/>
+  							<mapping key="value" value="name"/>
+  						</set>
+  					</event>
+				</events>
+			</window>							
+		</view>
+	</presentation-tier>	
+</application-mapping>

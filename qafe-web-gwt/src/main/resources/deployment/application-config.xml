@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications  xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	<configuration name="mode.development" value="true"/>
+        <configuration name="external.properties" value="external.properties"/>
+	
+        <!--<configuration name="mode.mdi" value="false"/> -->
+        <!--<configuration name="load.on.startup" value="system_app.email,youtube.youtube"/> 	-->
+	<application name="apps" id="system_app" >
+		<application-mapping-file location="qafe-default-system-app.xml"/>		
+	</application>
+	<application name="Dutch Tax Form" id="IB">
+		<application-mapping-file location="belastingdienstapp.xml"/>				
+	</application>
+	<application id="charts" name="Charts">
+		 <application-mapping-file location="charts.xml"/>
+	</application>
+
+        <application name="My First Application" id="app5" >
+		<application-mapping-file location="helloworld.xml"/>		
+	</application>
+
+	<application name="Simple Java Demo" id="randomdemo">
+		<application-mapping-file location="RandomDemo.xml"/>		
+	</application>
+	
+<!-- 
+	<application name="System Date Demo" id="DBSysDateDemo">
+		<application-mapping-file location="sysdate.xml"/>		
+	</application>
+-->
+	<application name="Showcase" id="showcase" root-menu="menu_labs">
+		<application-mapping-file location="showcase.xml"/>		
+		<application-mapping-file location="MyService.xml"/>
+		<transaction>
+		<business-action id="*" managed="local" isolation="default" propagation="required" timeout="0"/>
+		</transaction>
+	</application>
+
+	<application name="Twitter" id="twitter" root-menu="menu_network">	
+		<application-mapping-file location="twitter-qafe.xml"/>		
+		<!--application-mapping-file location="google.xml"/-->		
+	</application>
+
+	<application name="Google" id="google" root-menu="menu_network">	
+		<application-mapping-file location="google.xml"/>		
+	</application>
+
+	<application name="Youtube QAFE" id="youtube" root-menu="menu_network">	
+		<application-mapping-file location="youtube.xml"/>		
+	</application>
+
+	<application name="W3C" id="w3c" root-menu="menu_about">	
+		<application-mapping-file location="w3c.xml"/>		
+	</application>
+
+	<application name="Documentation" id="docs" root-menu="menu_about">
+		<application-mapping-file location="documentation.xml"/>		
+		<application-mapping-file location="qualogy.xml"/>		
+	</application>
+
+
+	<!--<application name="Qualogy" id="q" root-menu="menu_about">	
+	</application>-->
+
+
+<!--
+	<application name="Albert Hein " id="ah">
+		<application-mapping-file location="ah.xml"/>				
+	</application>
+
+-->
+		
+</applications>

@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="noTransaction">
+				<transaction managed="no"/>
+				<service ref="RDBService" method-ref="select_all" />
+				<service ref="RDBService" method-ref="testSelectSQLAsAttribute" />
+			</business-action>
+			<business-action id="localTransaction">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="select_all" />
+				<service ref="RDBService" method-ref="testSelectSQLAsAttribute" >
+					<in name="id" value="id"/>
+				</service>
+			</business-action>
+			<business-action id="testSelectSQLAsAttribute">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="testSelectSQLAsAttribute" >
+					<in name="id" ref="id"/>
+					<out name="db_value_for_name" ref="db_value_for_name" type="string"/>
+				</service>
+			</business-action>
+			<business-action id="localTransactionWithDuplicate">
+				<transaction managed="local"/>
+			</business-action>
+			<business-action id="doSelect">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="select_all" />
+			</business-action>
+			<business-action id="setup">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="setup" />
+			</business-action>
+			<business-action id="insertuseralreadyexists">
+				<transaction managed="local"/>
+				<business-action ref="insertuseraction_notransaction" >
+					<in name="id" value="10000"/>
+					<in name="name" value="name"/>
+				</business-action>
+				<business-action ref="insertuseraction" >
+					<in name="id" value="10000"/>
+					<in name="name" value="name"/>
+				</business-action>
+			</business-action>
+			<business-action id="teardown">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="teardown" />
+			</business-action>
+			<business-action id="testJavaServiceThrowingAfterDBCalls">
+				<transaction managed="local"/>
+				<business-action ref="insertuseraction" />
+				<business-action ref="throwillegalargument" />
+			</business-action>
+			<business-action id="insertuseraction">
+				<transaction managed="local"/>
+				<service ref="RDBService" method-ref="insert_user" >
+					<in name="name" ref="name"/>
+					<in name="id" ref="id"/>
+				</service>
+			</business-action>
+			<business-action id="insertuseraction_notransaction">
+				<transaction managed="local" propagation="not_supported"/>
+				<service ref="RDBService" method-ref="insert_user" >
+					<in name="name" ref="name"/>
+					<in name="id" ref="id"/>
+				</service>
+			</business-action>
+			<business-action id="throwillegalargument">
+				<transaction managed="local" propagation="not_supported"/>
+				<service ref="JavaService2" method-ref="throwillegalargument" />
+			</business-action>
+			<business-action id="donothinglocal">
+				<transaction managed="local"/>
+				<service ref="JavaService2" method-ref="doNo-thing" />
+			</business-action>
+			<business-action id="donothingglobal">
+				<transaction managed="global"/>
+				<service ref="JavaService2" method-ref="doNo-thing" />
+			</business-action>
+		</business-actions>
+		<types>
+			<type id="User">
+				<attribute name="id" type="string"/>
+				<attribute name="name" type="string"/>
+			</type>
+		</types>	
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="RDBService" resource-ref="dataSource">
+				<method id="select_all" name="select_all">
+					<out name="user" adapter="UserAdapter"/>
+				</method>
+				<method id="testSelectSQLAsAttribute">
+					<in name="id" ref="id"/>
+					<out name="db_value_for_name" ref="NAME"/>
+				</method>
+				<method id="insertuseralreadyexists"/>
+				<method id="setup" name="setup"/>
+				<method id="teardown" name="teardown"/>
+				<method id="insert_user">
+					<in name="name" ref="name"/>
+					<in name="id" ref="id"/>
+				</method>
+			</service>
+			<service id="JavaService2" resource-ref="javaservice">
+				<method id="throwillegalargument" name="throwIllegalArgument"/>
+				<method id="doNo-thing" name="doNothing"/>
+			</service>
+		</services>
+		<adapters>
+			<adapter id="UserAdapter" type="User">
+				<attribute name="id" ref="ID"/>
+				<attribute name="name" ref="NAME"/>
+			</adapter>
+		</adapters>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="javaServicer" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService" jarfile-location="/../../samples/test.jar"/>
+			<javaclass id="javaservice" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService" jarfile-location="/../../samples/test.jar"/>
+			<drivermanager-datasource id="dataSource" 
+				driver-classname="org.hsqldb.jdbcDriver"
+				url="jdbc:hsqldb:mem:aname" 
+				username="sa"
+				password=""
+				statements-file-url="statement.xml"/>
+		</resources>
+	</resource-tier>
+</application-mapping>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<binding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="binding.xsd">
+  
+	<include path="app-mapping-commons-binding.xml"/>
+	<include path="app-mapping-presentation-binding.xml"/>
+	<include path="app-mapping-business-binding.xml"/>
+	<include path="filter-rule-binding.xml"/>
+	
+	
+	 <mapping class="com.qualogy.qafe.bind.domain.ApplicationMapping" name="application-mapping" ordered="false" post-set="postset">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<structure field="presentationTier" usage="optional" />
+		<structure field="businessTier" usage="optional" />
+		<structure field="integrationTier" usage="optional" />
+		<structure field="resourceTier" usage="optional" />
+		
+	</mapping>
+     
+    
+	<mapping class="com.qualogy.qafe.bind.domain.PresentationTier" name="presentation-tier" ordered="false" allow-repeats="true" post-set="postset">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>  
+		<structure field="view" usage="optional"/>
+		<collection name="events" field="events" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.presentation.event.Event" usage="optional"/>	  
+		<structure field="styles" usage="optional"/>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.domain.BusinessTier" name="business-tier" ordered="false">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<collection name="business-actions" field="businessActions"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.business.action.BusinessAction" usage="optional"/>
+		<collection name="types" field="typeDefinitions"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.TypeDefinition" usage="optional"/>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.domain.IntegrationTier" name="integration-tier" ordered="false">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<collection name="services" field="services" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.integration.service.Service" usage="optional"/>
+		<collection name="adapters" field="adapters"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.AdapterMapping" usage="optional"/>
+		<structure field="errors"  usage="optional" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.domain.ResourceTier" name="resource-tier" ordered="false">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>   
+		<collection name="resources" field="resources"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.resource.BindResource" usage="optional"/>
+	</mapping>
+</binding>

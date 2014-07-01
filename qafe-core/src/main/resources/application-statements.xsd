@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://qafe.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://qafe.com/schema" elementFormDefault="qualified">
+	<xs:annotation>
+	<xs:documentation>
+
+				DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+				Copyright 2006- 2010 Qualogy B.V.. All rights reserved.
+
+				The contents of this file are subject to the terms that are provided by
+				Qualogy B.V. The file may not be copied or (re)distributed without
+				the explicit written permission from Qualogy B.V.
+				
+				For more information visit http://www.qafe.com
+                     
+      
+    		</xs:documentation>
+    </xs:annotation>	
+	<xs:element name="statements" type="statementsType">
+		<xs:annotation>
+			<xs:documentation>The container for the several kinds of statements tags (insert, update,delete, etc).</xs:documentation>
+		</xs:annotation></xs:element>
+	<xs:complexType name="queryType"  mixed="true">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="xs:string" use="required"/>
+				<xs:attribute name="order" type="xs:string" use="optional"/>
+				<xs:attribute name="sql" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="sqlQueryType">
+		<xs:annotation>
+			<xs:documentation>Either set the table attribute for generated query based upon table name and in out parameters or the sql attibute for handwritten sql or write inline sql which can be surrounded with CDATA</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="queryType">
+				<xs:attribute name="table" type="xs:string"/>				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="statementsType">
+        <xs:annotation>
+        	<xs:documentation>The super type of the supported statements</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="batch" type="batchType"/>
+			<xs:element name="call" type="callType"/>
+			<xs:element name="query" type="simpleQueryType"/>
+			<xs:element name="delete" type="deleteType"/>
+			<xs:element name="select" type="selectType"/>
+			<xs:element name="update" type="updateType"/>
+			<xs:element name="insert" type="insertType"/>
+		</xs:choice>
+	</xs:complexType>
+	<!-- regular -->
+	<xs:complexType name="updateType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for update statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryType">
+				<xs:attribute name="where" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="selectType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for select statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="insertType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for insert statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="deleteType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for delete statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryType">
+				<xs:attribute name="where" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="simpleQueryType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for any type of sql query statement, free format, validation is done by the database.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="callType">
+		<xs:simpleContent>
+			<xs:extension base="queryType">
+				<xs:attribute name="call-name" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!-- batch -->
+	<xs:complexType name="updateBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for update statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="selectBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for select statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="insertBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for insert statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="deleteBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for delete statements.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="simpleQueryBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. Tag for any type of sql query statement, free format, validation is done by the database.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="sqlQueryBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="callBatchType">
+		<xs:simpleContent>
+			<xs:extension base="queryBatchType">
+				<xs:attribute name="call-name" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="queryBatchType" abstract="true">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="ref" type="xs:string" use="optional"/>
+				<xs:attribute name="order" type="xs:string" use="optional"/>
+				<xs:attribute name="sql" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="batchBatchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. A Batch can contain all statements specified. Batch statements will be executed according to their order attribute or the order Qafe reads the statements (assumably top down)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="statementsBatchType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="sqlQueryBatchType">
+		<xs:annotation>
+			<xs:documentation>Either set the table attribute for generated query based upon table name and in out parameters or the sql attibute for handwritten sql or write inline sql which can be surrounded with CDATA</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="queryBatchType">
+				<xs:attribute name="table" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="statementsBatchType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="batch" type="batchBatchType"/>
+			<xs:element name="call" type="callBatchType"/>
+			<xs:element name="query" type="simpleQueryBatchType"/>
+			<xs:element name="delete" type="deleteBatchType"/>
+			<xs:element name="select" type="selectBatchType"/>
+			<xs:element name="update" type="updateBatchType"/>
+			<xs:element name="insert" type="insertBatchType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="batchType">
+		<xs:annotation>
+			<xs:documentation>See super type for attribute options. A Batch can contain all statements specified. Batch statements will be executed according to their order attribute or the order Qafe reads the statements (assumably top down)</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="statementsBatchType">
+				<xs:attribute name="id" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

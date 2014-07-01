@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+<presentation-tier>	
+<view>
+  		<window id="DateDemo" displayname="Date Demo" width="830" height="740">
+  			<rootpanel>
+  				<autolayout>
+  					<button id="getDate" displayname="Retrieve date from database"/>
+  					<label id="date"/>
+  					<label id="sourcecode" displayname="Click here for source code"/>
+					<panel id="sourcecodepanel"   visible="false">
+					<autolayout>
+ 						<textarea rows="30" height="400px" width="800px" editable="false">
+							<value><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+<presentation-tier>	
+<view>
+  		<window id="DateDemo" title="Date Demo" width="830" height="740">
+  			<rootpanel>
+  				<autolayout>
+  					<button id="getDate" displayname="Retrieve date from database"/>
+  					<label id="date"/>
+  					<label id="sourcecode" displayname="Click here for source code"/>
+  				
+  				</autolayout>
+  			</rootpanel>
+  			<events>
+  				<event id="dateEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="getDate"/>
+  							<listener type="onclick"/>
+  						</listenergroup>
+  					</listeners>
+  					<business-action ref="hsd_business_relationsMyDatabaseTime" >
+  					<out name="value" ref="result"/>
+  					
+  					</business-action>
+  					<set component-id="date" ref="value.mydate"/>
+  				</event>
+  				<event id="sourceCodeEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="sourcecode"/>
+  							<listener type="onclick"/>  							
+  						</listenergroup>
+  					</listeners>
+  					<toggle>
+  						<component ref="sourcecodepanel"/>
+  					</toggle>  	
+				</event>
+ 
+  			</events>
+  		</window>
+  	</view>	
+ </presentation-tier>
+  <business-tier>
+    <business-actions>
+      <business-action id="hsd_business_relationsMyDatabaseTime">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="MyDatabaseTime">
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="hsd_business_relations" resource-ref="DatabaseResource">
+        <method id="MyDatabaseTime" name="MyDatabaseTime">
+          <out name="result"/>
+        </method>
+     
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+         <drivermanager-datasource id="DatabaseResource" statements-file-url="sysdate-statements.xml" url="jdbc:oracle:thin:@localhost:1521:XYZ" username="xxxx" password="xxxx" driver-classname="oracle.jdbc.driver.OracleDriver"/>
+    
+    </resources>
+  </resource-tier>
+</application-mapping>
+
+ ]]></value>
+								</textarea>
+								<label displayname="Source of the sysdate-statements.xml which is referenced in the resource definition"/>
+ <textarea rows="20" height="200px" width="800px" editable="false">
+									<value><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<statements xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd">
+
+  <select id="MyDatabaseTime" sql="select 'We live at '|| TO_CHAR(sysdate, 'DD-MON-YYYY HH24:MI:SS') as mydate from dual"/>
+
+</statements>
+ ]]></value>
+								</textarea>
+								
+								</autolayout>
+							</panel>
+  				
+  				</autolayout>
+  			</rootpanel>
+  			<events>
+  				<event id="dateEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="getDate"/>
+  							<listener type="onclick"/>
+  						</listenergroup>
+  					</listeners>
+  					<business-action ref="hsd_business_relationsMyDatabaseTime" >
+  					<out name="value" ref="result"/>
+  					
+  					</business-action>
+  					<set component-id="date" ref="value[0].mydate"/>
+  				</event>
+  				<event id="sourceCodeEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="sourcecode"/>
+  							<listener type="onclick"/>  						
+  						</listenergroup>
+  					</listeners>
+  					<toggle>
+  						<component ref="sourcecodepanel"/>
+  					</toggle>  	
+				</event>
+ 
+  			</events>
+  		</window>
+  	</view>	
+ </presentation-tier>
+  <business-tier>
+    <business-actions>
+      <business-action id="hsd_business_relationsMyDatabaseTime">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="MyDatabaseTime">
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="hsd_business_relations" resource-ref="DatabaseResource">
+        <method id="MyDatabaseTime" name="MyDatabaseTime">
+          <out name="result" />
+        </method>
+      
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+      <!--drivermanager-datasource id="DatabaseResource" statements-file-url="sysdate-statements.xml" url="jdbc:oracle:thin:@dev030.qualogy.com:1521:QPDDEV1" username="QAFE_DEMOS" password="QAFE_DEMOS" driver-classname="oracle.jdbc.OracleDriver"/-->
+	<drivermanager-datasource id="DatabaseResource" statements-file-url="sysdate-statements.xml" url="jdbc:oracle:thin:@demodb.qafe.com:1521:XE" username="qafedemo" password="qafedemo" driver-classname="oracle.jdbc.OracleDriver"/>
+   </resources>
+  </resource-tier>
+</application-mapping>

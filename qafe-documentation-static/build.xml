@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project basedir="." default="init" name="qafe-web-gwt" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+
+	<property name="project.home" value="." />
+	<property name="project.build" value="${project.home}/build" />
+	<property name="project.deploy" value="${project.home}/deploy" />
+	<property name="project.lib" value="${project.home}/lib" />
+	<property name="project.test" value="${project.home}/test" />
+	<property name="project.src" value="${project.home}/src" />
+
+
+	<target name="init">
+		<echo message="Installing XSD and documentation on remote server"/>
+	</target>
+
+	<target name="remoteInstall"  depends="init">
+		<!-- ant replacetask for version nr-->
+  <!--<scp verbose="true" file="src/images/aboutbg.jpg" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/static/images" trust="true"/>
+	  <scp verbose="true" file="src/about.htm" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/static/" trust="true"/>
+      <scp verbose="true" file="../qafe-core/etc/application-mapping.xsd" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/schema/" trust="true"/>
+	  <scp verbose="true" file="../qafe-core/etc/application-statements.xsd" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/schema/" trust="true"/>
+	  <scp verbose="true" file="../qafe-core/etc/application-context.xsd" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/schema/" trust="true"/>
+      <scp verbose="true" file="../qafe-core/etc/application-messages.xsd" todir="${username}:${password}@${host}:/home/${username}/www.qafe.nl/schema/" trust="true"/>	  
+	-->
+
+		<java classname="com.docflex.xml.Generator"  fork="yes" maxmemory="512M" taskname="docflexgenerator-application-mapping">
+			<classpath>
+				<pathelement path="${compile_classpath}"/>
+				<pathelement path="${runtime_classpath}"/>
+			</classpath>
+			<arg value="-config"/>
+			<arg value="config/generator.config"/>
+			<arg value="-template"/>
+			<arg value="./docflex/templates/XSDDoc/FramedDoc.tpl"/>
+			<arg value="-format"/>
+			<arg value="HTML"/>
+			<arg value="-nodialog"/>
+			<arg value="-launchviewer=false"/>
+			<arg value="-d"/>
+			<arg value="target/api"/>
+			<arg value="-f"/>
+			<arg value="application-mapping"/>
+			<arg value="http://www.qafe.com/schema/2.2/application-mapping.xsd"/>
+		</java>
+		
+		<java classname="com.docflex.xml.Generator" fork="yes" maxmemory="512M" taskname="docflex-generator-application-context">
+			<classpath>
+				<pathelement path="${compile_classpath}"/>
+				<pathelement path="${runtime_classpath}"/>
+			</classpath>
+			<arg value="-config"/>
+			<arg value="config/generator.config"/>
+			<arg value="-template"/>
+			<arg value="docflex/templates/XSDDoc/FramedDoc.tpl"/>
+			<arg value="-format"/>
+			<arg value="HTML"/>
+			<arg value="-nodialog"/>
+			<arg value="-launchviewer=false"/>
+			<arg value="-d"/>
+			<arg value="target/api"/>
+			<arg value="-f"/>
+			<arg value="application-context"/>
+			<arg value="http://www.qafe.com/schema/application-context.xsd"/>
+		</java>
+
+		<java classname="com.docflex.xml.Generator" fork="yes" maxmemory="512M" taskname="docflex-generator-application-statements">
+			<classpath>
+				<pathelement path="${compile_classpath}"/>
+				<pathelement path="${runtime_classpath}"/>
+			</classpath>
+			<arg value="-config"/>
+			<arg value="config/generator.config"/>
+			<arg value="-template"/>
+			<arg value="./docflex/templates/XSDDoc/FramedDoc.tpl"/>
+			<arg value="-format"/>
+			<arg value="HTML"/>
+			<arg value="-nodialog"/>
+			<arg value="-launchviewer=false"/>
+			<arg value="-d"/>
+			<arg value="target/api"/>
+			<arg value="-f"/>
+			<arg value="application-statements"/>
+			<arg value="http://www.qafe.com/schema/application-statements.xsd"/>
+		</java>
+
+		<java classname="com.docflex.xml.Generator" fork="yes" maxmemory="512M" taskname="docflex-generator-application-messages">
+			<classpath>
+				<pathelement path="${compile_classpath}"/>
+				<pathelement path="${runtime_classpath}"/>
+			</classpath>
+			<arg value="-config"/>
+			<arg value="config/generator.config"/>
+			<arg value="-template"/>
+			<arg value="./docflex/templates/XSDDoc/FramedDoc.tpl"/>
+			<arg value="-format"/>
+			<arg value="HTML"/>
+			<arg value="-nodialog"/>
+			<arg value="-launchviewer=false"/>
+			<arg value="-d"/>
+			<arg value="target/api"/>
+			<arg value="-f"/>
+			<arg value="application-messages"/>
+			<arg value="http://www.qafe.com/schema/application-messages.xsd"/>
+		</java>
+
+		<!-- Copy to qafe.com -->
+		<!--scp verbose="true" trust="true" todir="${username}:${password}@${host}:/home/${username}/static/documentation/api" port="${port}">
+    		<fileset dir="./target/api/"/>
+  		</scp-->
+
+	</target>
+</project>
+

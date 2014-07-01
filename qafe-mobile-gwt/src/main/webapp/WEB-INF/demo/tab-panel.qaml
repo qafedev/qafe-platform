@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>					
+			<window id="wndTab" displayname="Tab" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>						
+						<tabpanel>
+							<tab displayname="My Tab 1">
+								<verticallayout>
+									<button id="btnHelloWorld" displayname="Hello World" name="toggling"/>
+									<label displayname="Label 1"/>
+									<slider id="sdrRange" min-ticks="0" max-ticks="50">
+										<value>10</value>
+									</slider>
+									<label id="lblRangeValue" displayname="???"/>
+									<checkbox displayname="Mobile" name="toggling"/>
+									<button id="btnToggle" displayname="Toggle"/>
+									<textfield id="txtInput">
+										<value>Input</value>
+									</textfield>
+									<password>
+										<value>OK</value>
+									</password>
+									<dropdown id="ddPersons" />
+									<button id="btnGetPerson" displayname="Get Person"/>
+									<button id="btnVisible" displayname="Visible"/>
+									<button id="btnInvisible" displayname="Invisible"/>
+									<button id="btnEnabled" displayname="Enabled"/>
+									<button id="btnDisabled" displayname="Disabled"/>
+									<button id="btnEditable" displayname="Editable"/>
+									<button id="btnReadonly" displayname="Readonly"/>
+								</verticallayout>
+							</tab>
+							<tab displayname="My Tab 2">
+								<horizontallayout>
+									<button id="btnChangeStyleAttribute" displayname="Change Style Attribute"/>
+									<button id="btnRemoveStyleAttribute" displayname="Remove Style Attribute"/>
+									<button id="btnChangeStyleClass" displayname="Change Style"/>
+									<button id="btnRemoveStyleClass" displayname="Remove Style"/>
+									<button id="btnChangePropDisplayname" displayname="Change Displayname"/>
+								</horizontallayout>
+							</tab>
+							<tab id="tab3" displayname="My Tab 3">
+								<verticallayout>
+									<textfield id="txtInput2" displayname="My Input">
+										<value>Input</value>
+									</textfield>
+									<button id="btnChangeTextPropDisplayname" displayname="Change TextField Displayname"/>
+									<button id="btnChangTabPropDisplayname" displayname="Change Tab Displayname"/>
+									<button id="btnToggleTab" displayname="Toggle Tab"/>
+								</verticallayout>
+							</tab>
+							<tab id="tab4" displayname="My Tab 4">
+								<verticallayout>
+									<panel id="pnlPerson" name="person">
+										<autolayout cols="2">
+											<label displayname="Name"/>
+											<textfield id="txtName" name="name"></textfield>
+											<label displayname="Address"/>
+											<textfield id="txtAddress"></textfield>
+										</autolayout>
+									</panel>
+									<button id="btnSubmit" displayname="Submit" />
+									<button id="btnSet" displayname="Set" />								
+									<button id="btnClear" displayname="Clear" />
+									<button id="btnClearName" displayname="Clear Name" />
+									<button id="btnCopyName" displayname="Copy Name" />
+									<button id="btnFocusName" displayname="Focus Name" />
+									<button id="btnFocusInput" displayname="Focus Input in Tab 1" />
+								</verticallayout>
+							</tab>
+							<tab displayname="My Tab 5">
+								<verticallayout>
+									<textfield id="txtSearch" displayname="Search" suggest="true" suggest-chars="3"></textfield>
+									<frame width="300px" height="300px" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=nl&amp;q=qualogy+rijswijk&amp;aq=t&amp;ie=UTF8&amp;output=embed"/>
+								</verticallayout>
+							</tab>
+							<tab id="tab6" displayname="My Tab 6">
+								<verticallayout>
+									<dropdown id="ddOptions">
+										<item displayname="Option 1" value="Option A"/>
+										<item displayname="Option 2" value="Option B"/>
+										<item displayname="Option 3" value="Option C"/>
+									</dropdown>
+									<checkbox id="cbxOption" displayname="Checked"/>
+									<choice id="chChoices">
+										<choice-item displayname="Choice 1" value="Choice A"/>
+										<choice-item displayname="Choice 2" value="Choice B"/>
+									</choice>
+									<button id="btnSelection" displayname="Selection"/>
+								</verticallayout>
+							</tab>
+						</tabpanel>						
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="wndTab"/>
+  								<listener type="onload"/>
+  							</listenergroup>
+  						</listeners>
+  						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="ddPersons" ref="result">
+  							<mapping key="id" value="lastName"/>
+  							<mapping key="value" value="name"/>
+  						</set>
+  					</event>
+  					<event src-id="srcId">
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnChangeStyleAttribute"/>
+  								<component ref="btnRemoveStyleAttribute"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<if>
+  							<expression expr="${srcId} == 'btnChangeStyleAttribute'" />
+  							<results>
+  								<result value="true">
+  									<change-style>
+			  							<component ref="btnChangeStyleAttribute"/>
+			  							<style-action action="set" key="color" value="red"/>
+			  						</change-style>
+  								</result>
+  								<result value="false">
+	  								<change-style>
+			  							<component ref="btnChangeStyleAttribute"/>
+			  							<style-action action="remove" key="color" value="red"/>
+			  						</change-style>
+  								</result>
+  							</results>
+  						</if>
+  					</event>
+  					<event src-id="srcId">
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnChangeStyleClass"/>
+  								<component ref="btnRemoveStyleClass"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<if>
+  							<expression expr="${srcId} == 'btnChangeStyleClass'" />
+  							<results>
+  								<result value="true">
+  									<change-style>
+			  							<component ref="btnChangeStyleClass"/>
+			  							<style-action action="set" style="item-label-small"/>
+			  						</change-style>
+  								</result>
+  								<result value="false">
+	  								<change-style>
+			  							<component ref="btnChangeStyleClass"/>
+			  							<style-action action="remove" style="item-label-small"/>
+			  						</change-style>
+  								</result>
+  							</results>
+  						</if>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnSelection"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="selected" value="Option C">
+  							<component ref="ddOptions"/>
+  						</set-property>
+  						<set-property property="selected" value="Choice B">
+  							<component ref="chChoices"/>
+  						</set-property>
+  						<set-property property="selected" value="false">
+  							<component ref="cbxOption"/>
+  						</set-property>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnChangePropDisplayname"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="displayname" value="Changed">
+  							<component ref="btnChangePropDisplayname"/>
+  						</set-property>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnChangeTextPropDisplayname"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="displayname" value="Changed">
+  							<component ref="txtInput2"/>
+  						</set-property>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnChangTabPropDisplayname"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="displayname" value="Changed">
+  							<component ref="tab3"/>
+  						</set-property>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnGetPerson"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="person" src="component" ref="ddPersons"></store>
+  						<dialog>
+  							<title value="Person"></title>
+  							<message value="${person}"></message>
+  						</dialog>  						
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnVisible"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="visible" value="true">
+  							<component ref="btnHelloWorld"/>
+  							<component ref="sdrRange"/>
+  							<component ref="lblRangeValue"/>
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnInvisible"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="visible" value="false">
+  							<component ref="btnHelloWorld"/>
+  							<component ref="sdrRange"/>
+  							<component ref="lblRangeValue"/>
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnEnabled"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="enabled" value="true">
+  							<component ref="btnHelloWorld"/>
+  							<component ref="sdrRange"/>
+  							<component ref="lblRangeValue"/>
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnDisabled"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="enabled" value="false">
+  							<component ref="btnHelloWorld"/>
+  							<component ref="sdrRange"/>
+  							<component ref="lblRangeValue"/>
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnEditable"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="editable" value="true">
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnReadonly"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set-property property="editable" value="false">
+  							<component ref="txtInput"/>
+  						</set-property>  						  					
+  					</event>
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnHelloWorld"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog type="info"> 
+							<title value="Hello Dialog"/>  
+							<message value="Hello World!"/> 
+						</dialog> 
+  					</event>		
+  					<event src-id="sourceId" src-name="sourceName" src-value="sourceValue" src-listener-type="sourceListenerType">
+  						<listeners>
+  							<listenergroup>
+  								<component ref="sdrRange"/>
+  								<listener type="onchange"/>
+  							</listenergroup>
+  						</listeners>
+  						<set component-id="lblRangeValue" src="component" ref="sdrRange"/>
+  					</event>	
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnSet"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<set component-id="txtName" value="Luke Wright"/>
+  						<set component-id="txtAddress" value="Nothing Hill 18"/>  						
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnSubmit"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="myName" src="component" ref="txtName"></store>
+  						<store name="myAddress" src="component" ref="txtAddress"></store>
+  						<dialog type="info"> 
+							<title value=""/>  
+							<message value="${myName} - ${myAddress}"/> 
+						</dialog> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnClear"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<clear ref="pnlPerson"></clear> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnClearName"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<clear ref="person"></clear> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnCopyName"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<copy to="txtAddress" from="name"></copy>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnToggle"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<toggle>
+  							<component ref="txtName"/>
+  							<component name="toggling" />
+  							<component ref="lblRangeValue"/>
+  							<component ref="txtInput"/>
+  						</toggle> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnFocusName"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<focus ref="txtName"></focus>
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnFocusInput"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<focus ref="txtInput"></focus>
+  					</event>
+  					<event src-id="sourceId" src-name="sourceName" src-value="sourceValue" src-listener-type="sourceListenerType">
+  						<listeners>
+  							<listenergroup>
+  								<component ref="txtName"/>
+  								<listener type="onchange"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="myName" src="component" ref="txtName"></store>
+  						<dialog type="info"> 
+							<title value="Value Change ${myName}"/>  
+							<message value="${sourceId} - ${sourceName} - ${sourceValue} - ${sourceListenerType}"/> 
+						</dialog> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="txtSearch"/>
+  								<listener type="onchange"/>
+  							</listenergroup>
+  						</listeners>
+  						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+						<set component-id="txtSearch" ref="result"> 
+							<mapping key="value" value="name"/>
+						</set>
+  						<dialog type="info"> 
+							<title value="Suggestion"/>  
+							<message ref="txtSearch" src="component"/> 
+						</dialog> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="txtSearch"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog type="info"> 
+							<title value="Selection"/>  
+							<message ref="txtSearch" src="component"/> 
+						</dialog> 
+  					</event>
+  					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnToggleTab"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<toggle>
+  							<component ref="tab4"/>
+  							<component ref="tab6"/>
+  						</toggle> 
+  					</event>
+				</events>
+			</window>			
+		</view>
+	</presentation-tier>	
+</application-mapping> 

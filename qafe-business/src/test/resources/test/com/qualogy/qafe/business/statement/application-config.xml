@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	<application id="QPetstore" name="QPetstore">
+		<application-mapping>
+			<business-tier>
+				<business-actions>
+					<business-action id="baif">
+						<if>
+							<expression expr="${left} == ${right}">
+								<!--
+									<group type="or"> <comparison type="eq"> <expression-left
+									ref="field1.value" src="component"/> <expression-right
+									value="true"/> </comparison> <isNotNull> <expression-left
+									ref="somekey" src="system"/> </isNotNull> </group>
+								-->
+							</expression>
+							<results>
+								<result value="true" >
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="true" />
+										
+									</service>
+								</result>
+									
+								<result value="false">
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="false" />
+										
+									</service>
+								</result>
+							</results>
+						</if>
+					</business-action>
+					<business-action id="baifwithexplicit">
+					<transaction managed="no"/>
+						<if>
+							<expression expr="${1}==${2}">
+								<placeholder name="1" ref="left" />
+								<placeholder name="2" ref="right" />
+							</expression>
+							<results>
+								<result value="true">
+									
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="true" />
+										
+									</service>
+								</result>
+								<result value="false">
+										<service ref="s1" method-ref="y" >
+										<in name="name" value="false" />
+									</service>
+								</result>
+							</results>
+						</if>
+					</business-action>
+					<business-action id="baifwithexplicitnoplaceholders">
+						<if>
+							<expression expr="${1}==${2}" />
+							<results>
+								<result value="true">
+									<service ref="s1" method-ref="y">
+										<in name="name" value="true" />
+									</service>
+								</result>
+								<result value="false">
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="false" />
+									</service>
+								</result>
+							</results>
+						</if>
+					</business-action>
+					<business-action id="baswitchwithexplicit">
+						<switch>
+							<expression expr="${1}">
+								<placeholder name="1" ref="switch" />
+							</expression>
+							<results>
+								<result value="1">
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="1" />
+									</service>
+								</result>
+								<result value="2">
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="2" />
+									</service>
+								</result>
+								<default>
+									<service ref="s1" method-ref="y" >
+										<in name="name" value="3" />
+									</service>
+								</default>
+							</results>
+						</switch>
+					</business-action>
+					<business-action id="baforloop-begin2-end10-increment2">
+						<iteration begin="2" end="10" increment="2" items-ref="alist"
+							var="tmp" >
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+					<business-action id="baforloop-begin2-end4-increment2">
+						<iteration begin="2" end="4" increment="2" items-ref="alist"
+							var="tmp" >
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+					<business-action id="baforloop">
+						<iteration items-ref="alist" var="tmp" >
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+					<business-action id="baforloop-begin2-end10-increment100">
+						<iteration begin="2" end="10" increment="100" items-ref="alist"
+							var="tmp" >
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+					<business-action id="baforloop-begin0-end0">
+						<iteration begin="0" end="0" items-ref="alist" var="tmp"
+							>
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+					<business-action id="baforloop-begin0-end2">
+						<iteration begin="0" end="2" items-ref="alist" var="tmp"
+							>
+
+							<service ref="s1" method-ref="y" >
+								<in name="name" ref="tmp.name" />
+							</service>
+
+						</iteration>
+					</business-action>
+				</business-actions>
+			</business-tier>
+			<integration-tier>
+				<services>
+					<service id="s1" resource-ref="xs">
+						<method id="y" name="returnInput">
+							<in name="0" ref="name" />
+							<out name="outcome" />
+						</method>
+					</service>
+				</services>
+			</integration-tier>
+			<resource-tier>
+				<resources>
+					<javaclass id="xs"
+						classname="test.com.qualogy.qafe.business.integration.testservices.EchoService"
+						/>
+				</resources>
+			</resource-tier>
+		</application-mapping>
+	</application>
+</applications>

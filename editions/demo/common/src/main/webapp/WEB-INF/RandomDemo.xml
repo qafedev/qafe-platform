@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	
+  <presentation-tier>
+  	<view>
+  		<window id="RandomDemo" displayname="Random Demo" width="820" height="510">
+  			<rootpanel id="rootpanel">
+  				<autolayout>
+  					<button id="getDate" displayname="Retrieve new random value from server"/>
+  					<label id="random" />
+
+					<label id="sourcecode" displayname="Click here for source code"/>
+					<panel id="sourcecodepanel"   visible="false">
+					<autolayout>
+					<textarea rows="30" height="400px" width="800px" editable="false">
+						<value><![CDATA[<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd"> 
+	
+  <presentation-tier> 
+  	<view> 
+  		<window id="Random demo" displayname="Random Demo" width="820" height="510"> 
+  			<rootpanel> 
+  				<autolayout> 
+  					<button id="getDate" displayname="Retrieve new random value from server"/> 
+  					<label id="random"/> 
+					<link id="sourcecode" displayname="Click here for source code"/> 
+  				</autolayout> 
+  			</rootpanel> 
+  			<events> 
+  				<event id="dateEvent"> 
+  					<listeners> 
+  						<listenergroup> 
+  							<component ref="getDate"/> 
+  							<listener type="onclick"/> 
+  						</listenergroup> 
+  					</listeners> 
+  					<business-action ref="randomNextLong" > 
+  					<out name="value" ref="outputFromBusinessAction"/> 
+  					
+  					</business-action> 
+  					<set component-id="random" ref="value"/> 
+  				</event> 
+				<event id="sourceCodeEvent"> 
+  					<listeners> 
+  						<listenergroup> 
+  							<component ref="sourcecode"/> 
+  							<listener type="onclick"/> 
+  						</listenergroup> 
+  					</listeners> 
+					<toggle>
+  						<component ref="sourcecodepanel"/>
+  					<openwindow url="http://www.qafe.com"/> 
+  				</event> 
+				
+  			</events> 
+  		</window> 
+  	</view> 
+  </presentation-tier> 
+  <business-tier> 
+    <business-actions> 
+      <business-action id="randomNextLong"> 
+        <transaction managed="no"/> 
+        <service ref="Random" method-ref="nextLong"> 
+          <out name="outputFromBusinessAction" ref="output"/> 
+        </service> 
+      </business-action> 
+    </business-actions> 
+  </business-tier> 
+  <integration-tier> 
+    <services> 
+      <service id="Random" resource-ref="RandomResource"> 
+        <method id="nextLong"> 
+          <out name="output"/> 
+        </method> 
+      </service> 
+    </services> 
+  </integration-tier> 
+  <resource-tier> 
+    <resources> 
+  		<javaclass id="RandomResource" classname="java.util.Random" />
+     </resources> 
+  </resource-tier> 
+</application-mapping> 
+ ]]>
+						</value>
+					</textarea>
+				</autolayout>
+			</panel>
+
+		</autolayout>
+  	</rootpanel>
+  			<events>
+  				<event id="dateEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="getDate"/>
+  							<listener type="onclick"/>
+  						</listenergroup>
+  					</listeners>
+  					<business-action ref="randomNextLong" >
+  					<out name="value" ref="nextLongOut0"/>
+  					
+  					</business-action>
+  					<set component-id="random" ref="value"/>
+
+  				</event>
+				<event id="sourceCodeEvent">
+  					<listeners>
+  						<listenergroup>
+  							<component ref="sourcecode"/>
+  							<listener type="onclick"/>
+  						</listenergroup>
+  					</listeners>
+  					<toggle>
+  						<component ref="sourcecodepanel"/>
+  					</toggle>  					
+  				</event>
+				
+  			</events>
+		</window>
+		
+  	</view>
+  </presentation-tier>
+  <business-tier>
+    <business-actions>
+      <business-action id="randomNextLong">
+        <transaction managed="no"/>
+        <service ref="Random" method-ref="nextLong">
+          <out name="nextLongOut0" ref="nextLongOut0"/>
+        </service>
+      </business-action>
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="Random" resource-ref="RandomResource">
+        <method id="nextLong" >
+          <out name="nextLongOut0"/>
+        </method>
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+           <javaclass id="RandomResource" classname="java.util.Random" />
+    </resources>
+  </resource-tier>
+</application-mapping>
+

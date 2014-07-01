@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	<application name="ParameterTest" id="ParameterTest">
+		<configuration name="businessmanager.implementation.class" value="com.qualogy.qafe.business.BusinessActionManagerImpl"/>
+		<application-mapping>	
+			<business-tier>
+				<business-actions>
+					<business-action id="testSupportNullReferences">
+						<service ref="JavaService" method-ref="testSupportNullReferences" >
+							<in name="servicein"/><!-- in ref is how its stored in the datastore, name out to service -->
+							<out name="businessactionout"/><!-- in ref from service, out name to the world -->
+						</service>
+					</business-action>
+					<business-action id="testNamedParametersOnJavaService">
+						<service ref="JavaService" method-ref="testNamedParametersOnJavaService" >
+							<in name="servicein" ref="servicein"/><!-- in ref is how its stored in the datastore, name out to service -->
+						</service>
+					</business-action>
+					<business-action id="testMethodWithPrimitive">
+						<service ref="JavaService" method-ref="testMethodWithPrimitive" >
+							<in name="servicein" ref="servicein"/>
+						</service>
+					</business-action>
+					<business-action id="testValidateWithMap">
+						<service ref="JavaService" method-ref="validateWithMap" />
+					</business-action>
+					<business-action id="testValidateWithMyPerson">
+						<service ref="JavaService" method-ref="validateWithMyPerson" />
+					</business-action>
+				</business-actions>
+			</business-tier>
+			<integration-tier>
+				<services>
+					<service id="JavaService" resource-ref="javaServicer">
+						<method id="testSupportNullReferences" name="testNullParam">
+							<in ref="servicein" name="0"/><!-- ref is how its stored in the datastore, name is how this service calls it -->
+							<out name="serviceout"/><!-- in ref from actualservice, out name to the world -->
+						</method>
+						<method id="testNamedParametersOnJavaService" name="testNullParam">
+							<in ref="servicein" name="0"/><!-- ref is how its stored in the datastore, name is how this service calls it -->
+							<out ref="actualserviceout" name="serviceout"/><!-- in ref from actualservice, out name to the world -->
+						</method>
+						<method id="testMethodWithPrimitive">
+							<in ref="servicein" name="0"/><!-- ref is how its stored in the datastore, name is how this service calls it -->
+							<out name="serviceout"/><!-- in ref from actualservice, out name to the world -->
+						</method>
+						<method id="validateWithMap" name="validate">
+							<in name="0" ref="0"/>
+							<out/>
+						</method>
+						<method id="validateWithMyPerson" name="validate">
+							<in name="0" ref="0" class="test.com.qualogy.qafe.business.integration.testservices.MyPerson"/>
+							<out/>
+						</method>
+					</service>
+				</services>
+			</integration-tier>
+			<resource-tier>
+				<resources>
+					<javaclass id="javaServicer" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService"/>
+				</resources>
+			</resource-tier>
+		</application-mapping>
+	</application>
+</applications>

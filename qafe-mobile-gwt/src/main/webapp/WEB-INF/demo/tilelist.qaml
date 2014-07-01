@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndTileList" displayname="TileList" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<tilelist id="tlEmployees" columns="2">
+							<panel>
+								<gridlayout>
+									<element x="0" y="0" gridheight="6" style="vertical-align: top">
+										<image location="images/unknown.png" class="item-picture"/>
+									</element>
+									<element x="1" y="0">
+										<textfield displayname="Name" name="name" group-name="groupX"></textfield>
+									</element>
+									<element x="0" y="1">
+										<textfield displayname="Last Name" name="lastName" group-name="groupX"></textfield>
+									</element>
+									<element x="0" y="2">
+										<textfield displayname="Age" name="age" group-name="groupX"></textfield>
+									</element>
+									<element x="0" y="3">
+										<textfield type="date" displayname="Registration Date" name="registrationDate" group-name="groupX"></textfield>
+									</element>
+									<element x="0" y="4">
+										<link id="lnkWebsite" displayname="www.qualogy.com" />
+									</element>
+									<element x="0" y="5">
+										<button id="btnDetail" displayname="Detail"/>
+									</element>
+								</gridlayout>								
+							</panel>
+						</tilelist>
+						<button id="btnAdd" displayname="Add"/>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="wndTileList"/>
+								<listener type="onload"></listener>	
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="tlEmployees" ref="result"></set>
+					</event>
+					<event id="addPersons">
+						<listeners>
+							<listenergroup>
+								<component ref="btnAdd"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="tlEmployees" ref="result" action="add"></set>
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="tlEmployees.btnDetail"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<store name="employee" ref="tlEmployees" src="component" />
+						<dialog>
+  							<title value="Detail" />
+  							<message ref="employee" />
+  						</dialog>
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="tlEmployees.lnkWebsite"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<store name="employee" ref="tlEmployees" src="component" />
+						<dialog>
+  							<title value="Website" />
+  							<message value="${employee.name} - ${employee.lastName}" />
+  						</dialog>
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="tlEmployees"/>
+								<listener type="onscroll-bottom"></listener>	
+							</listenergroup>
+						</listeners>
+						<event ref="addPersons"></event>
+					</event>
+				</events>
+			</window>
+		</view>
+	</presentation-tier>	
+</application-mapping> 

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndShowPanel" displayname="ShowPanel" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<panel>
+							<autolayout cols="2">
+								<button id="invokeShowPanel1" displayname="Invoke show-panel" />
+								<label displayname="with auto hide = true, modal = false, No X and Y"/>
+								
+								<button id="invokeShowPanel2" displayname="Invoke show-panel" />
+								<label displayname="with auto hide = true, modal = false, X = 500 and Y = 500"/>
+								
+								<button id="invokeShowPanel3" displayname="Save the world"/>
+								<label displayname="with auto hide = false, modal = true"/>
+								
+								<button id="invokeShowPanel4" displayname="Show at center"/>
+								<label displayname="with position = center"/>
+								
+							</autolayout>
+						</panel>
+						<label id="showPanelTestLabel"/>
+					</verticallayout>
+				</rootpanel>
+			</window>
+			
+			<panel-definition id="testPanelDefId1">
+				<verticallayout>
+					<textfield id="showPanelTextField"/>
+					<button id="showPanelButton" displayname="Reply"/>
+				</verticallayout>
+			</panel-definition>
+			
+			<panel-definition id="confirmationPanel">
+				<verticallayout>
+					<panel>
+						<borderlayout>
+							<north>
+								<label displayname="Are you sure you want to save the world?"/>
+							</north>
+							<center>
+								<panel>
+									<horizontallayout>
+										<button id="okButton" displayname="Yes"/>
+										<button id="cancelButton" displayname="No"/>
+									</horizontallayout>
+								</panel>
+							</center>
+						</borderlayout>
+					</panel>
+				</verticallayout>
+			</panel-definition>
+			
+			<panel-definition id="atCenterPanel">
+				<verticallayout>
+					<label displayname="Pop-up at the center"/>
+				</verticallayout>
+			</panel-definition>
+		</view>
+		
+		<events>
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="invokeShowPanel1"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<show-panel src="testPanelDefId1"/>
+				<set component-id="showPanelTextField" value="Hi, How are you?"/>
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="invokeShowPanel2"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<show-panel src="testPanelDefId1" x="500" y="500"/>
+				<set component-id="showPanelTextField" value="Ohh ****, You again? !"/>
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="invokeShowPanel3"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<show-panel src="confirmationPanel" auto-hide="false" modal="true"/>
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="invokeShowPanel4"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<show-panel src="atCenterPanel" auto-hide="false" modal="true" position="center"/>
+			</event>
+			
+			<event src-id="srcId">
+				<listeners>
+					<listenergroup>
+						<component ref="okButton"/>
+						<component ref="cancelButton"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<if>
+					<expression expr="${clickedOn} == 'okButton'">
+						<placeholder name="clickedOn" ref="srcId"></placeholder>
+					</expression>
+					<results>
+						<result value="true">
+							<set component-id="showPanelTestLabel" value="Dude, You are screwed....Good luck !"/>
+						</result>
+						<result value="false">
+							<set component-id="showPanelTestLabel" value="Yeah, Thats what I thought."/>
+						</result>
+					</results>
+				</if>
+				<close-panel ref="confirmationPanel"/>
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="showPanelButton"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<set component-id="showPanelTestLabel" ref="showPanelTextField" src="component"/>
+			</event>
+			
+		</events>
+		
+	</presentation-tier>
+</application-mapping>

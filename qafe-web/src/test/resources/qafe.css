@@ -1,0 +1,26 @@
+
+body,td,a,div,.p{
+	font-family:arial,sans-serif
+}
+
+div,td{
+		color:#000000
+}
+
+a:link,.w,.w a:link{
+	color:#0000cc
+}
+		
+a:visited{
+	color:#551a8b
+}
+
+a:active{
+	color:#ff0000
+}
+
+.qafe_button {
+	border-bottom : 0;
+	background-image: url('../images/toolbar-bg.gif');
+	
+}	

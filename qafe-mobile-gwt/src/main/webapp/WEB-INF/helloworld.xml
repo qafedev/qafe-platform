@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndHelloWorld" displayname="Hello World" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>						
+						<button id="btnHelloWorld" displayname="Hello World" />						
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnHelloWorld"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog type="info"> 
+							<title value="Hello Dialog"/>  
+							<message value="Hello World!"/> 
+						</dialog> 
+  					</event>					
+				</events>
+			</window>
+			<window id="wndMyForm" displayname="My Form" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<panel>
+							<autolayout cols="2">
+								<label displayname="Name"/>
+								<textfield id="txtName"></textfield>
+								<label displayname="Address"/>
+								<textfield id="txtAddress"></textfield>
+							</autolayout>
+						</panel>
+						<button id="btnSubmit" displayname="Submit" />								
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+  						<listeners>
+  							<listenergroup>
+  								<component ref="btnSubmit"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<store name="myName" src="component" ref="txtName"></store>
+  						<store name="myAddress" src="component" ref="txtAddress"></store>
+  						<dialog type="info"> 
+							<title value=""/>  
+							<message value="${myName} - ${myAddress}"/> 
+						</dialog> 
+  					</event>					
+				</events>				
+			</window>
+		</view>
+	</presentation-tier>
+</application-mapping> 

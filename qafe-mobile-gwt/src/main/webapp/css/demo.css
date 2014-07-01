@@ -1,0 +1,32 @@
+.item-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.item-picture {
+	width: 146px;
+	height: 146px;
+}
+
+.item-label {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.item-label-small {
+	font-size: 12px;
+	color: blue;
+}
+
+.item-label-description {
+	font-size: 12px;
+	color: #CACACA;
+}
+
+.item-value {
+	color: #9DAAC2;
+}
+
+.log-message {
+	background: red;
+}

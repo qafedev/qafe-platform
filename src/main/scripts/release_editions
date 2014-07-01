@@ -1,0 +1,67 @@
+#!/bin/bash
+# mvn -s settings.xml -P<EDITION-IDENTIFIER> clean package assembly:assembly
+
+HOST=$(hostname)
+EDITIONS_BUILD_BASE_DIR=$1
+RELEASE_VER=$2
+RELEASE_TAG=$3
+EDITIONS_TO_CREATE=$4
+QAFE_DEBUG_MODE=$5
+
+QAFE_DEBUG_OPTION=""
+QAFE_DEBUG_MESSAGE=""
+QAFE_DEBUG_POSTFIX=""
+EDITIONS_BUILD_DIR="${EDITIONS_BUILD_BASE_DIR}/${RELEASE_TAG}"
+TARGET="target"
+
+PATH_QAFE_INSTALLER="/u01/hudson-workingdirectory/qafe/buildinstaller"
+
+if [ "${QAFE_DEBUG_MODE}" == "true" ]; then
+  QAFE_DEBUG_OPTION="-Dqafe-compiler-debug=PRETTY"
+  QAFE_DEBUG_MESSAGE="with DEBUG information"
+  QAFE_DEBUG_POSTFIX="_DEBUG"
+fi
+
+echo "############# the following editions [$EDITIONS_TO_CREATE] will be created $QAFE_DEBUG_MESSAGE"
+
+editions=$(echo $EDITIONS_TO_CREATE | tr "," "\n")
+
+if [ -d "${EDITIONS_BUILD_BASE_DIR}" ]; then
+  echo "$EDITIONS_BUILD_BASE_DIR already exist"
+else
+  mkdir $EDITIONS_BUILD_BASE_DIR
+fi
+
+if [ -d "${EDITIONS_BUILD_DIR}" ]; then
+    echo "$EDITIONS_BUILD_DIR already exist"
+else
+  mkdir $EDITIONS_BUILD_DIR
+fi
+
+for edition in $editions
+do
+  EDITION_IDENTIFIER=$edition
+  TIME=$(date)
+  start_time=$(date +%s)
+  
+  echo "############# creating edition $EDITION_IDENTIFIER $QAFE_DEBUG_MESSAGE started at [$TIME] on Host [$HOST]"
+  
+  mvn -s settings.xml -P${EDITION_IDENTIFIER} clean package assembly:assembly ${QAFE_DEBUG_OPTION}
+  
+  # copy the resulted edition to a spesific location on the network
+  edition_zip_from="${EDITION_IDENTIFIER}_${RELEASE_VER}.zip"
+  edition_zip_to="${EDITION_IDENTIFIER}${QAFE_DEBUG_POSTFIX}_${RELEASE_VER}.zip"
+  cp ./${TARGET}/${edition_zip_from} ${EDITIONS_BUILD_DIR}/${edition_zip_to}
+  
+  TIME=$(date)
+  finish_time=$(date +%s)
+  duration_min=$(( $((finish_time - start_time)) /60 ))
+  
+  echo "############# creating edition $EDITION_IDENTIFIER $QAFE_DEBUG_MESSAGE finished at [$TIME] on Host [$HOST] taking [$duration_min] minutes"
+
+  if [ "${EDITION_IDENTIFIER}" == "qafe-enterprise-edition" ]; then
+    ${PATH_QAFE_INSTALLER}/installer ${RELEASE_VER}
+    echo "############# creating installer for edition $EDITION_IDENTIFIER $QAFE_DEBUG_MESSAGE finished at [$TIME] on Host [$HOST] taking [$duration_min] minutes"
+  fi
+
+done

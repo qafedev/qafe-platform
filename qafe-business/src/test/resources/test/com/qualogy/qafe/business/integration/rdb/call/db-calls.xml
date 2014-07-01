@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+	<business-tier>
+		<business-actions>
+			<business-action id="getFuncHello">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getFuncHello">					
+				</service>
+			</business-action>
+			<business-action id="getFuncName">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getFuncName">					
+				</service>
+			</business-action>
+			<business-action id="getProcName">
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getProcName">
+				</service>
+			</business-action>
+			<business-action id="getPackFuncName">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackFuncName">					
+				</service>
+			</business-action>
+			<business-action id="getPackProcName">
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackProcName">
+				</service>
+			</business-action>
+			<business-action id="getFuncNameBySQL">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getFuncNameBySQL">					
+				</service>
+			</business-action>
+			<business-action id="getProcNameBySQL">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getProcNameBySQL">					
+				</service>
+			</business-action>
+			<business-action id="getPackFuncNameBySQL">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackFuncNameBySQL">					
+				</service>
+			</business-action>
+			<business-action id="getPackProcNameBySQL">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackProcNameBySQL">					
+				</service>
+			</business-action>
+			<business-action id="getFuncNameBySQLAndNamedVars">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getFuncNameBySQLAndNamedVars">					
+				</service>
+			</business-action>
+			<business-action id="getProcNameBySQLAndNamedVars">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getProcNameBySQLAndNamedVars">					
+				</service>
+			</business-action>
+			<business-action id="getPackFuncNameBySQLAndNamedVars">				
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackFuncNameBySQLAndNamedVars">					
+				</service>
+			</business-action>
+			<business-action id="getPackProcNameBySQLAndNamedVars">
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="getPackProcNameBySQLAndNamedVars">
+				</service>
+			</business-action>
+			
+			<business-action id="callWithObjectOutput">
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="callWithObjectOutput">					
+					<out name="result" ref="result"/>
+				</service>
+			</business-action>
+			<business-action id="callWithObjectInput">
+				<transaction managed="no" />
+				<service ref="dbService" method-ref="callWithObjectInput">
+					<in name="input" ref="input"/>				
+					<out name="result" ref="result"/>
+				</service>
+			</business-action>
+			
+			<business-action id="callSAY_HELLO_FNCOfQAFE_TESTS">
+				<transaction managed="no"/>
+				<service ref="dbService" method-ref="callSAY_HELLO_FNCOfQAFE_TESTS">
+					<in name="P_NAME" ref="P_NAME"/>
+					<out name="result" ref="result"/>
+				</service>
+			</business-action>
+			<business-action id="callSAY_HELLO_PRCOfQAFE_TESTS">
+				<transaction managed="no"/>
+				<service ref="dbService" method-ref="callSAY_HELLO_PRCOfQAFE_TESTS">
+					<in name="P_NAME" ref="P_NAME"/>
+					<out name="P_RESULT" ref="P_RESULT"/>
+				</service>
+			</business-action>
+			<business-action id="callSAY_HELLO_FNCOfQAFE_TESTSOfAnotherSchema">
+				<transaction managed="no"/>
+				<service ref="dbService" method-ref="callSAY_HELLO_FNCOfQAFE_TESTSOfAnotherSchema">
+					<in name="P_NAME" ref="P_NAME"/>
+					<out name="result" ref="result"/>
+				</service>
+			</business-action>
+			<business-action id="callSAY_HELLO_PRCOfQAFE_TESTSOfAnotherSchema">
+				<transaction managed="no"/>
+				<service ref="dbService" method-ref="callSAY_HELLO_PRCOfQAFE_TESTSOfAnotherSchema">
+					<in name="P_NAME" ref="P_NAME"/>
+					<out name="P_RESULT" ref="P_RESULT"/>
+				</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	
+	
+	<integration-tier>
+		<services>
+			<service id="dbService" resource-ref="dbResource">
+				<method id="getFuncHello" name="getFuncHello">
+					<out name="result" ref="0"/>
+				</method>
+
+				<method id="getFuncName" name="getFuncName">
+					<in name="1" ref="id"/>
+					<out name="result" ref="0"/>
+				</method>
+				<method id="getProcName" name="getProcName">
+					<in name="0" ref="id"/>
+					<out name="result" ref="1"/>
+				</method>				
+				
+				<method id="getPackFuncName" name="getPackFuncName">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="result"/>
+				</method>
+				<method id="getPackProcName" name="getPackProcName">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="P_ENAME"/>
+				</method>
+				
+				<method id="getFuncNameBySQL" name="getFuncNameBySQL">
+					<in name="1" ref="id"/>
+					<out name="result" ref="0"/>
+				</method>
+				<method id="getProcNameBySQL" name="getProcNameBySQL">
+					<in name="0" ref="id"/>
+					<out name="result" ref="1"/>
+				</method>
+				
+				<method id="getPackFuncNameBySQL" name="getPackFuncNameBySQL">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="result"/>
+				</method>
+				<method id="getPackProcNameBySQL" name="getPackProcNameBySQL">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="P_ENAME"/>
+				</method>
+				
+				<method id="getFuncNameBySQLAndNamedVars" name="getFuncNameBySQLAndNamedVars">
+ 					<in name="P_EMPNO" ref="id"/>
+ 					<out name="result" ref="0"/>
+				</method>
+				<method id="getProcNameBySQLAndNamedVars" name="getProcNameBySQLAndNamedVars">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="P_ENAME"/>
+				</method>
+
+				<method id="getPackFuncNameBySQLAndNamedVars" name="getPackFuncNameBySQLAndNamedVars">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="0"/>
+				</method>
+				<method id="getPackProcNameBySQLAndNamedVars" name="getPackProcNameBySQLAndNamedVars">
+					<in name="P_EMPNO" ref="id"/>
+					<out name="result" ref="P_ENAME"/>
+				</method>
+				
+				<method id="callWithObjectOutput" name="callWithObjectOutput">							
+					<out name="result" ref="0"/>
+				</method>
+				
+				<method id="callWithObjectInput" name="callWithObjectInput">
+					<in name="0" ref="input"/>
+					<out name="result" ref="1"/>
+				</method>
+				
+				<method id="callSAY_HELLO_FNCOfQAFE_TESTS" name="callSAY_HELLO_FNCOfQAFE_TESTS"> 
+					<in name="P_NAME" ref="P_NAME"/>  
+					<out name="result" ref="0"/> 
+				</method>  
+				<method id="callSAY_HELLO_PRCOfQAFE_TESTS" name="callSAY_HELLO_PRCOfQAFE_TESTS"> 
+					<in name="P_NAME" ref="P_NAME"/>  
+					<out name="P_RESULT" ref="P_RESULT"/> 
+				</method>
+				<method id="callSAY_HELLO_FNCOfQAFE_TESTSOfAnotherSchema" name="callSAY_HELLO_FNCOfQAFE_TESTSOfAnotherSchema"> 
+					<in name="P_NAME" ref="P_NAME"/>  
+					<out name="result" ref="0"/> 
+				</method>  
+				<method id="callSAY_HELLO_PRCOfQAFE_TESTSOfAnotherSchema" name="callSAY_HELLO_PRCOfQAFE_TESTSOfAnotherSchema"> 
+					<in name="P_NAME" ref="P_NAME"/>  
+					<out name="P_RESULT" ref="P_RESULT"/> 
+				</method> 
+			</service>
+		</services>
+	</integration-tier>
+	
+	<resource-tier>
+		<resources>
+			<drivermanager-datasource id="dbResource"
+				statements-file-url="call-statements.xml" 
+				url="jdbc:oracle:thin:@testqpd.qualogy.com:1521:xe" username="hdemo65"
+				password="hdemo65" driver-classname="oracle.jdbc.OracleDriver"/>
+		</resources>
+		
+	</resource-tier>
+	
+</application-mapping>
