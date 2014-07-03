@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<messages xmlns="http://qafe.com/schema"      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-messages.xsd">
+   <bundle id="mybundle">
+        <message key="name">
+            <text locale="nl_NL"><![CDATA[Naam]]></text>
+            <text locale="en_US"><![CDATA[Name]]></text>
+        </message>
+        <message key="email">
+            <text locale="nl_NL"><![CDATA[E-mail]]></text>
+            <text locale="en_US"><![CDATA[Email]]></text>
+        </message>
+        <message key="score">
+            <text locale="nl_NL"><![CDATA[Aantal blikken]]></text>
+            <text locale="en_US"><![CDATA[Score]]></text>
+        </message>
+        <message key="phone">
+            <text locale="nl_NL"><![CDATA[Telefoon]]></text>
+            <text locale="en_US"><![CDATA[Phone number]]></text>
+        </message>
+        <message key="save">
+            <text locale="nl_NL"><![CDATA[Opslaan]]></text>
+            <text locale="en_US"><![CDATA[Save]]></text>
+        </message>
+        <message key="reset">
+            <text locale="nl_NL"><![CDATA[Opschonen]]></text>
+            <text locale="en_US"><![CDATA[Reset]]></text>
+        </message>
+    </bundle>
+</messages>

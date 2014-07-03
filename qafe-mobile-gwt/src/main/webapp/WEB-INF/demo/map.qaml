@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndMap" displayname="Map" >
+				<rootpanel id="myRootPanel" toolbar="myToolbar">
+					<verticallayout>
+						<map id="mapPlanets" name="planets" image="http://www.w3schools.com/tags/planets.gif">
+							<area shape="rect" coords="0,0,82,126" alt="Sun" />
+							<area shape="circle" coords="90,58,3" alt="Mercury" />
+							<area shape="circle" coords="124,58,8" alt="Venus" />
+						</map>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+  							<listenergroup>
+  								<component ref="mapPlanets"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog>
+  							<title value="Planet" />
+  							<message ref="mapPlanets" src="component" />
+  						</dialog>
+					</event>
+					<event>
+						<listeners>
+  							<listenergroup>
+  								<component ref="tbiAction"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog>
+  							<title value="Action" />
+  							<message value="Action selected" />
+  						</dialog>
+					</event>
+					<event>
+						<listeners>
+  							<listenergroup>
+  								<component ref="tbiTrash"/>
+  								<listener type="onclick"/>
+  							</listenergroup>
+  						</listeners>
+  						<dialog>
+  							<title value="Trash" />
+  							<message value="Trash selected" />
+  						</dialog>
+					</event>
+				</events>
+			</window>							
+			<toolbar-definition id="myToolbar" item-width="-1" item-height="-1">
+				<tb-item image="images/action.png" id="tbiAction" />
+				<tb-item image="images/trash.png" id="tbiTrash"/>
+			</toolbar-definition>
+		</view>
+	</presentation-tier>	
+</application-mapping>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://qafe.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://qafe.com/schema" elementFormDefault="qualified">
+	<xs:annotation>
+	<xs:documentation>
+
+				DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+				Copyright 2006- 2010 Qualogy B.V.. All rights reserved.
+
+				The contents of this file are subject to the terms that are provided by
+				Qualogy B.V. The file may not be copied or (re)distributed without
+				the explicit written permission from Qualogy B.V.
+				
+				For more information visit http://www.qafe.com
+                     
+      
+    		</xs:documentation>
+    </xs:annotation>	
+	<xs:include schemaLocation="http://www.qafe.com/schema/application-messages.xsd"/>
+	<xs:include schemaLocation="http://www.qafe.com/schema/1.3/application-mapping.xsd"/>
+	
+	<xs:element name="applications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="configuration" type="clusterConfigurationType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="security" type="stackSecuritySettingsType"  minOccurs="0" maxOccurs="1"/>
+				<xs:element name="application" type="applicationType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="applicationType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="configuration" type="applicationConfigurationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="security" type="applicationSecuritySettingsType"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="transaction" type="defaultTransactionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="application-mapping-file" type="applicationMappingFileType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="application-mapping" type="applicationMappingType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="messages" type="messagesType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="root" type="xs:string"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="order" type="xs:string" use="optional"/>
+		<xs:attribute name="root-menu" type="xs:string" use="optional"/>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="auto-scan" default="false" type="xs:boolean"/>
+		<xs:attribute name="recurse-scan" type="xs:boolean" default="false"/>
+		
+	</xs:complexType>
+
+<!-- start security -->
+	<xs:complexType name="securitysettingsFileType">
+		<xs:attribute name="location" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="stackSecuritySettingsType">
+		<xs:sequence>
+			<xs:element name="settings-file" type="securitysettingsFileType"  minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="authentication" type="stackAuthenticationSettingsType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="authorization-rules" type="stackAuthorizationRulesType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationSecuritySettingsType">
+		<xs:sequence>
+			<xs:element name="settings-file" type="securitysettingsFileType"  minOccurs="0" maxOccurs="1"/>
+			<xs:element name="authentication" type="applicationAuthenticationSettingsType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="authorization-rules" type="applicationAuthorizationRulesType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="stackAuthorizationRulesType">
+		<xs:sequence>
+			<xs:element name="rule" type="stackAuthorizationRuleType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationAuthorizationRulesType">
+		<xs:sequence>
+			<xs:element name="rule" type="applicationAuthorizationRuleType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="authorizationRuleType">
+		<xs:attribute name="access" type="xs:string" default="if-any-granted"/>
+		<xs:attribute name="when-no-access" type="xs:string"/>
+		<xs:attribute name="authorize" type="xs:string"/>
+	</xs:complexType>
+
+	<xs:complexType name="applicationAuthorizationRuleType">
+		<xs:complexContent>
+			<xs:extension base="authorizationRuleType">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="component" type="componentIdentifierPatternType" minOccurs="1" maxOccurs="unbounded"/>
+					<xs:element name="business-action" type="actionIdentifierPatternType" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:choice>	
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="stackAuthorizationRuleType">
+		<xs:complexContent>
+			<xs:extension base="authorizationRuleType">
+				<xs:sequence>
+					<xs:element name="application" type="applicationIdentifierPatternType" minOccurs="1" maxOccurs="unbounded"/>
+				</xs:sequence>	
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="authenticationModuleType">
+		<xs:attribute name="window-ref" type="xs:string" use="required"/>
+		<xs:attribute name="resource-ref" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="stackAuthenticationModuleType">
+		<xs:attribute name="window-ref" type="xs:string" use="required"/>
+		<xs:attribute name="application-ref" type="xs:string" use="required"/>
+		<xs:attribute name="resource-ref" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationAuthenticationModuleType">
+		<xs:attribute name="window-ref" type="xs:string" use="required"/>
+		<xs:attribute name="resource-ref" type="xs:string" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="stackAuthenticationSettingsType">
+		<xs:sequence>
+			<xs:element name="module" type="stackAuthenticationModuleType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="required-on" type="stackRequiredOnType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>	
+	</xs:complexType>
+	
+	<xs:complexType name="applicationAuthenticationSettingsType">
+		<xs:sequence>
+			<xs:element name="module" type="applicationAuthenticationModuleType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="required-on" type="applicationRequiredOnType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>	
+	</xs:complexType>
+	
+	<xs:complexType name="stackRequiredOnType">
+		<xs:sequence>
+			<xs:element name="application" type="applicationIdentifierPatternType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="applicationRequiredOnType">
+		<xs:choice>
+			<xs:element name="window" type="windowIdentifierPatternType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:choice>	
+	</xs:complexType>
+
+	<xs:complexType name="identifierPatternType">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="applicationIdentifierPatternType">
+		<xs:complexContent>
+			<xs:extension base="identifierPatternType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="actionIdentifierPatternType">
+		<xs:complexContent>
+			<xs:extension base="identifierPatternType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="componentIdentifierPatternType">
+		<xs:complexContent>
+			<xs:extension base="identifierPatternType">
+				<xs:attribute name="window-id" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="windowIdentifierPatternType">
+		<xs:complexContent>
+			<xs:extension base="identifierPatternType"/>
+		</xs:complexContent>
+	</xs:complexType>
+<!-- end security -->	
+	
+	<xs:complexType name="defaultTransactionType">
+		<xs:sequence minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="business-action" type="baWildCardTransactionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="baWildCardTransactionType">
+		<xs:complexContent>
+			<xs:extension base="TransactionBehaviourType">
+				<xs:attribute name="id" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="applicationMappingFileType">
+		<xs:attribute name="location" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="clusterConfigurationType">
+		<xs:attribute name="value" type="xs:string" use="required"/>
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="businessmanager.implementation.class"/>
+					<xs:enumeration value="eventhandler.implementation.class"/>
+					<xs:enumeration value="global.transaction.behaviour"/>
+					<xs:enumeration value="script.engine.name"/>
+					<xs:enumeration value="load.on.startup"/>
+					<xs:enumeration value="mode.development"/>
+					<xs:enumeration value="mode.usedock"/>
+					<xs:enumeration value="mode.mdi"/>
+					<xs:enumeration value="showlog"/>
+					<xs:enumeration value="max.upload.filesize"/>
+					<xs:enumeration value="monitor.stack.recorder"/>
+					<xs:enumeration value="external.properties"/>
+					<xs:enumeration value="date.format">
+					
+				<xs:annotation><xs:documentation>
+						Patterns
+Symbol Meaning Presentation Example 
+G era designator Text AD 
+y year Number 1996 
+M month in year Text or Number July (or) 07 
+d day in month Number 10 
+h hour in am/pm (1-12) Number 12 
+H hour in day (0-23) Number 0 
+m minute in hour Number 30 
+s second in minute Number 55 
+S fractional second Number 978 
+E day of week Text Tuesday 
+a am/pm marker Text PM 
+k hour in day (1-24) Number 24 
+K hour in am/pm (0-11) Number 0 
+z time zone Text Pacific Standard Time(see comment) 
+Z time zone (RFC 822) Text -0800(See comment) 
+v time zone id Text America/Los_Angeles(See comment) 
+						
+					</xs:documentation>	</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="qafe.xml.validation">
+					
+						<xs:annotation>
+							<xs:documentation>
+									Property to turn xsd validation of the mapping files on or off
+								</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="localstore.timeout">
+						<xs:annotation>
+							<xs:documentation>
+									in ms
+								</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="applicationConfigurationType">
+		<xs:attribute name="value" type="xs:string" use="required"/>
+		<xs:attribute name="name" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="businessmanager.implementation.class"/>
+					<xs:enumeration value="eventhandler.implementation.class"/>
+					<xs:enumeration value="global.transaction.behaviour"/>
+					<xs:enumeration value="script.engine.name"/>
+					<xs:enumeration value="localstore.timeout">
+						<xs:annotation>
+							<xs:documentation>
+									in ms
+								</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

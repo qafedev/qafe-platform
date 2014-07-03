@@ -1,0 +1,596 @@
+.gridStyleName{
+	text-align: left;
+	float:left;
+	
+}
+body,td,a,div,.p{
+	font-family:arial,sans-serif
+}
+
+div,td{
+		color:#000000
+}
+
+a:link,.w,.w a:link{
+	color:#0000cc
+}
+		
+a:visited{
+	color:#551a8b
+}
+
+a:active{
+	color:#ff0000
+}
+
+.toolbarContainer {
+	border-bottom : 0;
+	background-image: url(images/toolbar-bg.gif);
+	
+}	
+
+
+
+  /**
+ * Applied to SliderBar.
+ */
+.gwt-SliderBar-shell {
+  border: 2px solid #faf9f7;
+  border-right: 2px solid #848280;
+  border-bottom: 2px solid #848280;
+  background-color: #efebe7;
+  height: 34pt;
+  width: 50%;
+}
+.gwt-SliderBar-shell .gwt-SliderBar-line {
+  border: 1px solid black;
+  background-color: white;
+  height: 4px;
+  width: 95%;
+  top: 22pt;
+  overflow: hidden;
+}
+.gwt-SliderBar-shell .gwt-SliderBar-knob {
+  top: 14pt;
+  width: 11px;
+  height: 21px;
+  z-index: 1;
+  cursor: pointer;
+}
+.gwt-SliderBar-shell .gwt-SliderBar-tick {
+  top: 12pt;
+  width: 1px;
+  height: 8pt;
+  background: black;
+  overflow: hidden;
+}
+.gwt-SliderBar-shell .gwt-SliderBar-label {
+  top: 2pt;
+  font-size: 8pt;
+  cursor: default;
+}
+.gwt-SliderBar-shell-focused {
+}
+.gwt-SliderBar-shell .gwt-SliderBar-line-sliding {
+  background-color: #DDDDDD;
+  cursor: pointer;
+} 
+
+.desktopicontitle{
+	color:white;
+	font-size: 8pt;
+		 
+}
+
+.desktopicon {
+	margin-top:5px;
+}
+
+.datagridexportlabel{
+	cursor:hand;
+	text-decoration: underline;
+	margin-right: 5px;	
+}
+
+.qafe_item_disabled{
+	color: gray;
+}
+
+.qafe-toolbar{
+
+	height: 20px;
+	border-bottom : 0;
+	padding-left: 5px;
+	background-image: url(images/toolbar-bg.gif);
+}
+
+.imglogo {
+ 	border:0;
+ 	padding:0;
+ 	margin:0;
+ 	position:absolute;
+ 	right:8%;
+ 	bottom:8%;
+ 	background-image:url(images/wallpaper-logo.png);
+ 	z-index:-999;
+ 	 	
+ }
+ 
+//Spreadsheet
+.QAFESpreadSheetCell {
+ 	color: white;
+	background-color: gray;	
+	border-color: blue;
+}
+.QAFESpreadSheetCell-readonly {
+  color: #888;
+}
+
+.SDIPanel {
+	
+	user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	padding: 0px;
+	
+	background: white;	
+	width: 100%;
+	height: 100%;
+}
+
+.qafe_hand{
+	cursor:hand;
+}
+
+.qafe_textfield {
+	font-size: 13px;
+/*  	font-size: 11px;
+  	color: #3E5895;  */
+}
+
+.qafe_rich_textarea {
+  border: 1px solid #BBBBBB;
+  border-spacing: 0px;
+}
+
+.qafe_invalid_field{
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+	font-size: 13px;
+}
+
+.qafe_valid_field{
+/*	border-style: solid;
+	border-color: black;
+	border-width: 1px;*/
+	font-size: 13px;
+}
+.qafe_suggest{
+	z-index: 1000;
+	position:relative;
+}
+
+.qafe-error-message{
+	font-family:Verdana;
+	font-size:10pt;
+}
+
+.qafe-minimizedPanelContent {
+	cursor:hand;
+	font-weight: bold;
+	margin-left: 6px;
+}
+
+body {
+  padding: 10px;
+}
+
+
+
+.fisheye-menu{
+     border-bottom: solid #000000;
+     cursor:pointer;
+     
+     background-image:url(images/balkmidden.png);
+     background-repeat:repeat-x;
+}
+.qafe_rootpanel {
+	background: rgb(245, 245, 245);
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin: 1px,1px,1px,1px;
+}
+
+.qafe_suggest_popup{
+	z-index: 2147483647;
+}
+
+.qafe_suggest_popup .item {
+  padding: 2px 6px;
+  color: #424242;
+  cursor: default;
+}
+.qafe_suggest_popup .item-selected {
+  background: #b7d6f6;
+}
+.qafe_suggest_popup .suggestPopupContent {
+  background: white;
+}
+.qafe_suggest_popup .suggestPopupTopCenter {
+  background: url(images/hborder.png) repeat-x;
+}
+.qafe_suggest_popup .suggestPopupBottomCenter {
+  background: url(images/hborder.png) repeat-x 0px -4px;
+  -background: url(images/hborder_ie6.png) repeat-x 0px -4px;
+}
+.qafe_suggest_popup .suggestPopupMiddleLeft {
+  background: url(images/vborder.png) repeat-y;
+}
+.qafe_suggest_popup .suggestPopupMiddleRight {
+  background: url(images/vborder.png) repeat-y -4px 0px;
+  -background: url(images/vborder_ie6.png) repeat-y -4px 0px;
+}
+.qafe_suggest_popup .suggestPopupTopLeftInner {
+  width: 5px;
+  height: 5px;
+  zoom: 1;  
+}
+.qafe_suggest_popup .suggestPopupTopRightInner {
+  width: 8px;
+  height: 5px;
+  zoom: 1;
+}
+.qafe_suggest_popup .suggestPopupBottomLeftInner {
+  width: 5px;
+  height: 8px;
+  zoom: 1;
+}
+.qafe_suggest_popup .suggestPopupBottomRightInner {
+  width: 8px;
+  height: 8px;
+  zoom: 1;
+}
+.qafe_suggest_popup .suggestPopupTopLeft {
+  background: url(images/corner.png) no-repeat 0px -23px;
+  -background: url(images/corner_ie6.png) no-repeat 0px -23px;
+}
+.qafe_suggest_popup .suggestPopupTopRight {
+  background: url(images/corner.png) no-repeat -5px -23px;
+  -background: url(images/corner_ie6.png) no-repeat -5px -23px;
+}
+.qafe_suggest_popup .suggestPopupBottomLeft {
+  background: url(images/corner.png) no-repeat 0px -28px;
+  -background: url(images/corner_ie6.png) no-repeat 0px -28px;
+}
+.qafe_suggest_popup .suggestPopupBottomRight {
+  background: url(images/corner.png) no-repeat -5px -28px;
+  -background: url(images/corner_ie6.png) no-repeat -5px -28px;
+}
+ 
+.dateBoxPopup {
+		z-index: 2147483647;
+}
+
+/**
+
+Following classes can be used to override the default style classes used.
+These classes would be converted to GET compatable or Flex compatable which is
+done by the CSS generator.
+
+.qafe_label {
+	color: #000000;
+  	font-size:11px;
+}
+
+.qafe_checkbox {
+	color: #000000;
+  	font-size:11px;
+}
+
+.qafe_listbox {
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #3E5895;  
+}
+
+.qafe_dropdown {
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #3E5895;  
+}
+
+.qafe_choice {
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #000000;
+}
+
+.qafe_textfield {
+  	font-size: 11px;
+  	color: #3E5895;  
+}
+
+.qafe_textarea {
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #3E5895;  
+}
+
+.qafe_button {
+	height: 21px;
+	width:90px;
+	border-style: solid;
+	margin: 1px,1px,1px,1px;
+	text-align: center;
+	background-image: url('http://www.qafe.com/static/css/knop-center2.JPG');
+  	background-position: center;
+  	background-repeat: repeat-x;
+  	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	cursor: hand; 
+}
+
+.qafe_tab {
+  margin-left: 6px;
+  cursor: pointer;
+  cursor: hand;
+  font-weight: bold;
+  text-align: center;
+  background: rgb(245, 245, 245);
+}
+
+.qafe_tabpanelbottom {
+  border-color: #DCDCDC;
+  border-style: solid;
+  border-width: 3px,2px,2px;
+  overflow: hidden;
+  padding: 6px;
+}
+
+.qafe_tabbaritem {
+  cursor: pointer;
+  cursor: hand;
+  text-align: center;
+  background: rgb(245, 245, 245);
+  background-image: url('http://www.qafe.com/static/css/h-tab-center-actief.png');
+  background-repeat: repeat-x;
+  font-family: Arial, Verdana;
+  font-size: 9px;
+  font-weight: normal;
+  height: 15px;
+}
+
+.qafe_tabbaritem_selected {
+	background-image: url('http://www.qafe.com/static/css/h-tab-center-actief.png');
+  	background-repeat: repeat-x;
+  	border-color: #DCDCDC;
+  	border-style: solid;
+  	border-width: 3px,2px,2px;
+}
+
+.qafe_scrolltable {
+   	border-color: rgb(245, 245, 245);
+  	border-style: solid;
+  	border-width: 1px,0px,1px,1px;
+  	margin: 1px,0px,1px,5px;
+}
+
+.qafe_scrolltable_headerwrapper {
+	background:  #DCDCDC;
+}
+
+.qafe_scrolltable_datatable_td {
+  	border-color: #DCDCDC;
+  	border-style: solid;
+  	border-width: 1px,1px,1px,1px;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	color: rgb(128,128,128);
+	font-size:11px;
+	text-align: center;
+}
+
+.qafe_scrolltable_headertable_td {
+  	border-color: #DCDCDC;
+  	border-style: solid;
+  	border-width: 1px,1px,1px,1px;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	color: rgb(128,128,128);
+	font-size:11px;
+	text-align: center;
+}
+
+.qafe_scrolltable_footertable_td {
+  	border-color: #DCDCDC;
+  	border-style: solid;
+  	border-width: 1px,1px,1px,1px;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	color: rgb(128,128,128);
+	font-size:11px;
+	text-align: center;
+}
+
+.qafe_scrolltable_datatable_tr_highlighted {
+	background: rgb(245, 245, 245);
+}
+
+.qafe_scrolltable_datatable_td_highlighted {
+	background: #FFFFAA;
+  	cursor: hand;
+  	cursor: pointer;
+}
+
+.qafe_scrolltable_datatable_tr_selected {
+	background: rgb(245, 245, 245);
+}
+
+.qafe_datepicker {
+	border: 1px, solid, #f1f1f1;
+	border-bottom: 2px, solid, #f1f1f1;
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #3E5895;
+	cursor: auto;
+	padding: 0px;
+}
+
+.qafe_datepicker_td {
+	padding: 2px;
+	text-align: center;
+	padding: 2px;
+	outline: none;
+	-moz-outline: none;
+	cursor: auto;
+	font-family: Arial, Verdana;
+  	font-size: 11px;
+  	font-weight: normal;
+  	color: #3E5895;
+}
+**/
+
+/*** ComboBox ***/
+
+.mosaic-ComboBox {
+	border: 1px inset #ccc;
+	background: url("images/hborder.png") repeat-x 0px -27px;
+}
+
+.mosaic-ComboBox input {
+	border: 0px;
+	text-align: middle;
+}
+.mosaic-ComboBox button {
+	width: 17px !important;
+	border: 0px;
+	border-left: 1px solid #ccc;
+	padding: 0px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url(images/combobox/arrow-down.png);
+}
+
+.notificationBox{
+	width: 200px;
+	height: 100px;
+	background-color: white;
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	border: 1px solid #000; 
+	padding: 10px;"
+}	
+
+.qmessagebox{
+	width: 200px;
+	height: 20px;	
+	background-color: yellow;
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	border: 1px solid #ffa500;
+	z-index: : 2147483647;
+	text-align: center;
+}
+
+.qmessageboxlabel{
+	text-align: center;
+}
+
+.dockItem {
+    display: inline;
+    height: 40px;
+    width: 40px;
+    vertical-align: bottom;
+    margin-right:9px;
+
+    transition-property:width, height;
+    -o-transition-property:width, height;
+    -ms-transition-property:width, height;
+    -moz-transition-property:width, height;
+    -webkit-transition-property:width, height;
+    transition-duration:.25s;
+    -o-transition-duration:.25s;
+    -ms-transition-duration:.25s;
+    -moz-transition-duration:.25s;
+    -webkit-transition-duration:.25s;
+    transition-timing-function:ease-in-out;
+    -o-transition-timing-function:ease-in-out;
+    -ms-transition-timing-function:ease-in-out;
+    -moz-transition-timing-function:ease-in-out;
+    -webkit-transition-timing-function:ease-in-out;
+}
+.dockItem:hover {
+    height: 60px;
+    width: 60px;
+}
+.dockItem:active {
+    vertical-align:top;
+    height:75px
+}
+
+/* position the bars and balls correctly (rotate them and translate them outward)*/
+.bar1 {
+  -moz-transform:rotate(0deg) translate(0, -8px);
+  -webkit-transform:rotate(0deg) translate(0, -8px);
+}
+.bar2 {
+  -moz-transform:rotate(45deg) translate(0, -8px);
+  -webkit-transform:rotate(45deg) translate(0, -8px);
+}
+.bar3 {
+  -moz-transform:rotate(90deg) translate(0, -8px);
+  -webkit-transform:rotate(90deg) translate(0, -8px);
+}
+.bar4 {
+  -moz-transform:rotate(135deg) translate(0, -8px);
+  -webkit-transform:rotate(135deg) translate(0, -8px);
+}
+.bar5 {
+  -moz-transform:rotate(180deg) translate(0, -8px);
+  -webkit-transform:rotate(180deg) translate(0, -8px);
+}
+.bar6 {
+  -moz-transform:rotate(225deg) translate(0, -8px);
+  -webkit-transform:rotate(225deg) translate(0, -8px);
+}
+.bar7 {
+  -moz-transform:rotate(270deg) translate(0, -8px);
+  -webkit-transform:rotate(270deg) translate(0, -8px);
+}
+.bar8 {
+  -moz-transform:rotate(315deg) translate(0, -8px);
+  -webkit-transform:rotate(315deg) translate(0, -8px);
+}
+
+.spinner {
+  margin-top: -2px;
+  width:20px;
+  height:20px;
+  -moz-border-radius:20px;
+  -moz-transform:scale(0.7);
+  -webkit-transform:scale(0.7);
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration:2s;
+  -webkit-animation-iteration-count:infinite;
+  -webkit-animation-timing-function:linear;
+}
+
+.spinner div {
+  width:2px;
+  height:6px;
+  background:#000;
+  position:absolute;
+  top:7px;
+  left:9px;
+}
+
+@-webkit-keyframes rotateThis {
+	from {-webkit-transform:scale(0.7) rotate(0deg);}
+	to {-webkit-transform:scale(0.7) rotate(360deg);}
+}

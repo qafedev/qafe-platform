@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<integration-tier>
+		<services>
+			<service id="databaseService" resource-ref="db">
+				<method id="setup"/>
+				<method id="teardown"/>
+				<method id="getUsersOrderdById">
+					<out name="user"/>
+				</method>
+				<method id="testGeneratedUpdate">
+					<in name="id" ref="id"/>
+					<in name="name" ref="name"/>
+				</method>
+				<method id="testDateFieldUpdate" name="testGeneratedUpdate">
+					<in name="id" ref="id"/>
+					<in name="birthdate" ref="birthdate" type="date"/>
+				</method>
+				<method id="getUsersById">
+					<in name="id" ref="id"/>
+					<out name="outcome"/>
+				</method>
+			</service>
+		</services>
+		<adapters>
+			<adapter id="UserAdapter" type="User">
+				<attribute name="id" ref="ID"/>
+				<attribute name="name" ref="NAME"/>
+			</adapter>
+		</adapters>
+	</integration-tier>
+</application-mapping>

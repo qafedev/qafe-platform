@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://qafe.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://qafe.com/schema" elementFormDefault="qualified">
+		<xs:annotation>
+	<xs:documentation>
+
+				DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+				Copyright 2006- 2010 Qualogy B.V.. All rights reserved.
+
+				The contents of this file are subject to the terms that are provided by
+				Qualogy B.V. The file may not be copied or (re)distributed without
+				the explicit written permission from Qualogy B.V.
+				
+				For more information visit http://www.qafe.com
+                     
+      
+    		</xs:documentation>
+    </xs:annotation>	
+  <xs:element name="filter-rules" type="filter-rulesType"/>
+  <xs:complexType name="filter-rulesType">
+    <xs:sequence>
+      <xs:element type="filter-ruleType" name="filter-rule" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="expressionType">
+    <xs:sequence>
+      <xs:element type="placeholderType" name="placeholder" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="expr" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="placeholderType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="value" use="optional"/>
+        <xs:attribute type="xs:string" name="ref" use="optional"/>
+        <xs:attribute type="xs:string" name="type" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="filter-ruleType">
+    <xs:sequence>
+      <xs:element type="expressionType" name="expression" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="node" use="optional"/>
+  </xs:complexType>
+</xs:schema>

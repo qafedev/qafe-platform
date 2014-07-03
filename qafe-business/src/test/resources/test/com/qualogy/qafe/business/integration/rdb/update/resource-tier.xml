@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<resource-tier>
+		<resources>	
+			 <drivermanager-datasource
+				id="DBResource"
+				statements-file-url="statements.xml"
+				url="jdbc:oracle:thin:@testqpd.qualogy.com:1521:xe"
+				username="hdemo65"
+				password="hdemo65"
+				driver-classname="oracle.jdbc.OracleDriver" />
+ 
+             <!--<drivermanager-datasource id="DBResource"-->
+				<!--driver-classname="com.mysql.jdbc.Driver"-->
+				<!--url="jdbc:mysql://localhost:3306/test"-->
+				<!--username="qpd_owner"-->
+				<!--password="qpd_owner"-->
+				<!--statements-file-url="statements.xml"/>-->
+		</resources>
+	</resource-tier>
+</application-mapping>

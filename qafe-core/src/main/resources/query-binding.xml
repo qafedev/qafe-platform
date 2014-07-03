@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<binding  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="binding.xsd" track-source="true">
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.QueryContainer" name="statements" ordered="false" post-set="postset">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+		<collection field="statements" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" item-type="com.qualogy.qafe.bind.resource.query.Query"/>
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Query" abstract="true">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+	</mapping>	
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Batch" name="batch" extends="com.qualogy.qafe.bind.resource.query.Query">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<collection field="queries"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" item-type="com.qualogy.qafe.bind.resource.query.Query"/>
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.SQLQuery" abstract="true" extends="com.qualogy.qafe.bind.resource.query.Query">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value usage="optional" style="cdata" field="sqlAsText" />
+		<value usage="optional" name="table" style="attribute" field="table" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.SQLOnly" name="query" extends="com.qualogy.qafe.bind.resource.query.SQLQuery">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Select" name="select" extends="com.qualogy.qafe.bind.resource.query.SQLQuery">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+		<value usage="optional" name="table" style="attribute" field="table" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Insert" name="insert" extends="com.qualogy.qafe.bind.resource.query.SQLQuery">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+		<value usage="optional" name="table" style="attribute" field="table" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Delete" name="delete" extends="com.qualogy.qafe.bind.resource.query.SQLQuery">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value name="where" style="attribute" usage="optional" field="where"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+		<value usage="optional" name="table" style="attribute" field="table" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.query.Update" name="update" extends="com.qualogy.qafe.bind.resource.query.SQLQuery">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value name="where" style="attribute" usage="optional" field="where"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+		<value usage="optional" name="table" style="attribute" field="table" />
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.resource.query.Call" name="call" extends="com.qualogy.qafe.bind.resource.query.Query">
+		<namespace uri="http://qafe.com/schema"  default="elements"/>
+	 	<value name="id" style="attribute" field="id" usage="optional"/>
+		<value name="ref" style="attribute" field="ref" usage="optional"/>
+		<value name="order" style="attribute" field="order"  usage="optional"/>
+		<value name="call-name" style="attribute" usage="optional" field="callName"/>
+		<value name="sql" style="attribute" usage="optional" field="sqlAsAttribute"/>
+		<value usage="optional" style="cdata" field="sqlAsText"/>
+	</mapping>
+</binding>

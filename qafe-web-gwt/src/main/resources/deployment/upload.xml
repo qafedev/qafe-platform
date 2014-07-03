@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="File Upload">
+				<rootpanel id="myRootPanel">
+					<horizontallayout>
+						<panel displayname="File Upload">
+							<horizontallayout>															
+								<fileupload id="fileup" editable="false"/>
+							</horizontallayout>
+						</panel>
+					</horizontallayout>
+				</rootpanel>
+				<events>
+					<event id="evtUploadOK">
+						<listeners>
+							<listenergroup>
+								<component ref="fileup" />
+								<listener type="onfinish" />
+							</listenergroup>
+						</listeners>						
+						<business-action ref="hsd_business_upload" >
+  							<in name="filedata" ref="fileup" src="component"/>
+  						</business-action>												
+					</event>				
+				</events>
+			</window>
+			<window id="window2" displayname="File Upload Form">
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<panel displayname="File Upload" name="uploadForm">
+							<verticallayout>
+								<textfield id="txtName" displayname="Name" name="name"/>
+								<textfield id="txtAddress" displayname="Address" name="address"/>
+								<fileupload id="fileup" editable="false"/>
+							</verticallayout>
+						</panel>
+						<button id="submit" displayname="Submit"/>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="evtSubmit">
+						<listeners>
+							<listenergroup>
+								<component ref="submit" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>						
+						<business-action ref="hsd_business_uploadForm" >
+  							<in name="filedata" ref="fileup" src="component"/>
+  							<in name="formdata" ref="uploadForm" src="component"/>
+  						</business-action>												
+					</event>				
+				</events>
+			</window>						
+		</view>
+	</presentation-tier>
+	 <business-tier>
+    <business-actions>
+      <business-action id="hsd_business_upload">
+        <transaction managed="no"/>
+        <service ref="hsd_business_uploadfile" method-ref="uploadFile">
+	    <in name="filedata" ref="filedata"/>
+        </service>
+      </business-action>
+      <business-action id="hsd_business_uploadForm">
+        <transaction managed="no"/>
+        <service ref="hsd_business_uploadfile" method-ref="uploadForm">
+	    <in name="filedata" ref="filedata"/>
+	    <in name="formdata" ref="formdata"/>
+        </service>
+      </business-action>
+
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="hsd_business_uploadfile" resource-ref="uploadApp">
+	  <method id="uploadFile" name="uploadFile">
+	    <in name="0" ref="filedata"/>
+        </method>
+	  <method id="uploadForm" name="uploadForm">
+	    <in name="0" ref="filedata"/>
+	    <in name="1" ref="formdata"/>
+        </method>
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+	<resources>
+		<javaclass id="uploadApp" classname="com.uploadfile.bussiness.service.UploadFileService"/>
+	</resources>
+  </resource-tier>
+</application-mapping> 

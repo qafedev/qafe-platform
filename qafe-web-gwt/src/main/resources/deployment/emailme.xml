@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+   <presentation-tier>
+		<view>
+				<window id="emailwindow" displayname="Keep me posted" width="500" height="200">
+				<rootpanel name="emailpanel">
+					<autolayout cols="1">
+						<label id="messagelabel" displayname="Please enter your emailaddress, so that we can keep you up to date!"/> 
+						<textfield type="email" id="email" name="email" required="true"/>
+						<button displayname="Continue" id="continue"/>
+					</autolayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="continue"/>
+								<listener type="onclick"/>
+							</listenergroup>							
+						</listeners>
+						<store name="emailaddress" ref="email" src="component" ></store><!--
+						<business-action ref="mailServiceImplSend">
+							<in name="sendIn0" value="rjankie@qafe.com"/>
+							<in name="sendIn1" value="${emailaddress} wants to be informed on changes in http://demo.qafe.com"/>							
+						</business-action>
+						
+						--><set-property property="visible" value="false">
+							<component ref="email"/>
+							<component ref="continue"/>
+						</set-property>
+					
+						
+						<set component-id="messagelabel" value="This emailaddress: ${emailaddress} is stored for future reference. Thanks."/>
+					</event>
+				</events>
+			</window>
+		</view>
+   </presentation-tier>
+	 <business-tier>
+    <business-actions>
+      <business-action id="mailServiceImplSend">
+        <transaction managed="no"/>
+        <service ref="MailServiceImpl" method-ref="send">
+          <in name="sendIn0" ref="sendIn0"/>
+          <in name="sendIn1" ref="sendIn1"/>
+        </service>
+      </business-action>
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="MailServiceImpl" resource-ref="MailServiceImplResource">
+        <method id="send">
+          <in name="0" ref="sendIn0"/>
+          <in name="1" ref="sendIn1"/>
+        </method>
+      </service>
+    </services>
+    <adapters/>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+      <javaclass id="MailServiceImplResource" classname="com.qualogy.qafe.generic.mail.service.impl.MailServiceImpl" />
+    </resources>
+  </resource-tier>
+</application-mapping>

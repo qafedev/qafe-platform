@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+    <!--
+        Prototype settings file for Qualogy QAFE builds. Copy this file to you
+        profile under .m2/settings.xml or run mvn with the -s switch.
+    -->
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!--
+        localRepository: Specify the path to use for the local repository.
+        Make sure it's not part of the windows profile!
+    -->
+
+    <localRepository>C:\svn\qafe\platform\maven-repository</localRepository>
+
+    <!--
+        ActiveProfiles
+    -->
+    <!--<activeProfiles>
+        <activeProfile>local</activeProfile>
+        <activeProfile>qafe-build-all</activeProfile>
+        <activeProfile>qafe-enterprise-edition</activeProfile>
+        <activeProfile>qafe-demo-edition</activeProfile>
+    </activeProfiles>-->
+
+    <!--
+        Profiles
+    -->
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!--
+                    This is the Maven lifecycle phase to which the code checking plugins
+                    are attached. Change it to a non-existent phase ("none" works) to
+                    disable them (warning: CI does attach the code checking plugins...)
+                -->
+                <solutions.codechecking.phase>verify</solutions.codechecking.phase>
+                <qafe.gwt.permutation.workers>4</qafe.gwt.permutation.workers>
+            </properties>
+        </profile>
+        <!--<profile>
+            <id>local</id>
+            <properties>
+                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
+            </properties>
+        </profile>
+        <profile>
+            <id>qafe-build-all</id>
+            <properties>
+                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
+            </properties>
+        </profile>
+        <profile>
+            <id>qafe-enterprise-edition</id>
+            <properties>
+                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
+            </properties>
+        </profile>
+        <profile>
+            <id>qafe-demo-edition</id>
+            <properties>
+                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
+            </properties>
+        </profile>-->
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+                <sonar.jdbc.driver>com.mysql.jdbc.Driver</sonar.jdbc.driver>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>sonar</sonar.jdbc.password>
+                <sonar.host.url>http://localhost:9000/sonar</sonar.host.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>env-dev</id>
+            <repositories>
+                <repository>
+                    <id>projects.releases</id>
+                    <name>Projects Releases</name>
+                    <url>http://dev031.qualogy.com:8080/nexus/content/repositories/projects.releases</url>
+                    <releases>
+                        <checksumPolicy>ignore</checksumPolicy>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <checksumPolicy>ignore</checksumPolicy>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>projects.snapshots</id>
+                    <name>Projects Snapshots</name>
+                    <url>http://dev031.qualogy.com:8080/nexus/content/repositories/projects.snapshots</url>
+                    <releases>
+                        <checksumPolicy>ignore</checksumPolicy>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <checksumPolicy>ignore</checksumPolicy>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+            </repositories>
+        </profile>
+    </profiles>
+
+    <!--
+        servers: Specify profile info for one or more servers to use when connecting to online repositories.
+        TODO:change later to product user
+    -->
+    <servers>
+        <server>
+            <id>qafe.releases</id>
+            <username>tomcat</username>
+        </server>
+        <server>
+            <id>qafe.snapshots</id>
+            <username>tomcat</username>
+        </server>
+        <server>
+            <id>qafe.websites</id>
+            <username>tomcat</username>
+        </server>
+    </servers>
+
+    <!--
+        mirrors: Specify one or more mirrors to use for central (or any other
+        repository defined by the project).
+        http://maven.apache.org/guides/mini/guide-mirror-settings.html
+    -->
+    <mirrors>
+        <mirror>
+            <id>public</id>
+            <name>Qualogy Maven Repository</name>
+            <url>http://dev031.qualogy.com:8080/nexus/content/groups/public/</url>
+            <mirrorOf>central,thirdparty,apache-snapshots,codehaus-snapshots</mirrorOf>
+        </mirror>
+        <mirror>
+            <id>snapshots</id>
+            <name>Qualogy Maven SNAPSHOT Repository</name>
+            <url>http://dev031.qualogy.com:8080/nexus/content/repositories/qafe.snapshots/</url>
+            <mirrorOf>qafe.snapshots</mirrorOf>
+        </mirror>
+        <mirror>
+            <id>releases</id>
+            <name>Qualogy Maven Releases Repository</name>
+            <url>http://dev031.qualogy.com:8080/nexus/content/repositories/qafe.releases/</url>
+            <mirrorOf>qafe.releases</mirrorOf>
+        </mirror>
+    </mirrors>
+
+</settings>

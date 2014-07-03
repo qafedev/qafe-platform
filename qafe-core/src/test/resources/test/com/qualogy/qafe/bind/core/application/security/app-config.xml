@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	
+	<security>
+		<authentication>
+			<module application-ref="inapp" window-ref="predefined-authentication-window-1" resource-ref="someRef"/>
+			<required-on>
+				<application id="1"/>
+			</required-on>
+		</authentication>
+		<authorization-rules>
+			<rule access="if-all-granted" when-no-access="{visible:hidden}" authorize="USER_ROLE"><!-- case insentive?? -->
+				<application id="applicat*"/>
+			</rule>
+		</authorization-rules>	
+	</security>				
+
+	<application id="inapp" name="inapp" auto-scan="true">
+		<security>
+			<authentication>
+				<module window-ref="predefined-authentication-window-1" resource-ref="someRef"/>
+				<required-on>
+					<window id="1" />
+				</required-on>
+			</authentication>
+			
+			<authorization-rules><!-- constraints -->
+				<rule access="if-all-granted" when-no-access="{visible:hidden}" authorize="USER_ROLE"><!-- case insentive?? -->
+					<component id="application1.window2.button1"/>
+				</rule>
+				<rule access="if-none-granted" when-no-access="{visible:hidden}" authorize="USER_ROLE,USER_MANAGER">
+					<component id="*"/>
+				</rule>
+				<rule access="if-any-granted" when-no-access="{visible:hidden}" authorize="USER_ROLE,USER_MANAGER">
+					<component id="*" window-id="1"/>
+				</rule>
+				<rule access="if-all-granted" when-no-access="{visible:hidden}" authorize="USER_ROLE,USER_MANAGER">
+					<business-action id="application1.get*"/>
+					<component id="application1.get*"/>
+				</rule>
+			</authorization-rules>
+			
+		</security>
+		<application-mapping>
+			<presentation-tier>
+				<view>
+					<window id="1" displayname="1">
+						<rootpanel id="11">
+							<verticallayout>
+								<button id="jaja" displayname="jaja"/>
+							</verticallayout>
+						</rootpanel>
+					</window>
+				</view>
+			</presentation-tier>
+			<resource-tier>
+				<resources>
+					<javaclass id="someRef" classname="jaja" jarfile-location=""/>
+				</resources>
+			</resource-tier>
+		</application-mapping>
+	</application>
+	
+</applications>

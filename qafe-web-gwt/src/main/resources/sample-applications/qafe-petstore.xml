@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="JpetStore">
+				
+				<rootpanel id="rootPanel1">
+				<borderlayout>
+					<north>
+						<panel id="panel1">
+							<gridlayout>
+								<element x="0" y="0">
+									<image id="logoTop" location="images/logo-topbar.gif" tooltip="JPetStore"/>
+								</element>
+								<element x="10"  y="0">
+									<image id="imgCart" location="images/cart.gif" tooltip="View Shopping Cart"/>
+								</element>
+								<element x="11" y="0">
+									<image id="imgSign" location="images/sign-in.gif" tooltip="Sign in JPet Store"/>
+								</element>																
+								<element x="12" y="0">
+									<image id="imgHelp" location="images/help.gif" tooltip="Help"/>
+								</element>
+							</gridlayout>
+						</panel>
+                    </north>
+                    <west>
+						<panel id="panel2">
+							<gridlayout>					
+								<element x="0" y="1">
+									<image id="fishLeft" location="images/sm_fish.gif" tooltip="Fish"/>
+								</element>
+								<element x="0" y="2">
+									<image id="dogsLeft" location="images/sm_dogs.gif" tooltip="Dogs"/>
+								</element>
+								<element x="0" y="3">
+									<image id="catsLeft" location="images/sm_cats.gif" tooltip="Cats"/>
+								</element>
+								<element x="0" y="4">
+									<image id="reptilesLeft" location="images/sm_reptiles.gif" tooltip="Reptiles"/>
+								</element>
+								<element x="0" y="5">
+									<image id="birdsLeft" location="images/sm_birds.gif" tooltip="Birds"/>
+								</element>
+							</gridlayout>
+						</panel>																													
+                    </west>
+                    <center>
+                   		<panel id="centerPanel">
+                    	<verticallayout>
+							<panel id="panel3">
+								<gridlayout>
+									<element x="6" y="6">
+										<image id="fishImg" location="images/fish1.gif" tooltip="Fish"/>
+									</element>
+									<element x="7" y="6">
+										<image id="dogsImg" location="images/dog1.gif" tooltip="Dogs"/>
+									</element>
+									<element x="8" y="6">
+										<image id="reptilesImg" location="images/lizard1.gif" tooltip="Reptiles"/>
+									</element>
+									<element x="9" y="6">
+										<image id="catsImg" location="images/cat1.gif" tooltip="Cats"/>
+									</element>
+									<element x="10" y="6">
+										<image id="birdsImg" location="images/bird1.gif" tooltip="Birds"/>
+									</element>
+								</gridlayout>
+								</panel>
+               				<panel id="panel4" visible="false">
+								<verticallayout>
+									<datagrid id="productTable"  pagesize="3" delete="true" add="true">
+										<column id="productId"  sortable="true" displayname="Product Id" content="link"/>
+										<column id="name" sortable="true" displayname="Name" static="true" >
+											<label id="mylab1" displayname="Click on me " />
+										</column>
+										<!--	<column id="descn" sortable="true" type="string" title="Description"/>-->
+									</datagrid>
+                    			</verticallayout> 
+							</panel>
+							<panel id="panel5" visible="false">
+								<verticallayout>
+									<datagrid id="itemTable"  pagesize="10" add="true">
+										<column id="itemId"  displayname="Item ID" content="link"/>
+										<column id="jeevsproductid"  displayname="Product ID"/>
+										<column id="description"  displayname="Description"/>
+										<column id="listPrice"  displayname="List Price" required="true"/>										
+										<column id="addtocart"  displayname="Add to Cart" static="true">
+											<image id="addtocartimage" location="images/button_add_to_cart.gif" tooltip="Add to cart" /> 
+                                                                                </column>																		
+									</datagrid>
+
+									<datagrid id="itemTable2"  pagesize="10">
+										<column id="itemId"   displayname="Item ID" content="link"/>
+										<column id="jeevsproductid"  displayname="Product ID"/>
+										<column id="description"  displayname="Description"/>
+										<column id="listPrice"  displayname="List Price"/>
+										<column id="addtocart"  displayname="Add to Cart" static="true">
+											<image id="addtocartimage" location="images/button_add_to_cart.gif" tooltip="Add to cart" /> 
+                                                                                </column>																		
+									</datagrid>
+                    			</verticallayout> 
+							</panel>
+							<panel id="panel6" visible="false">
+								<gridlayout>
+                                 	<element x="0" y="0">  
+                                    	<label id="usrpwLabel" displayname="Please enter your username and password"/>
+								    </element>                                    
+                                 	<element x="1" y="1">
+								    	<label id="labelUsr" displayname="Username"/>
+									</element>
+                                 	<element x="2" y="1">
+										<textfield id="signUsr">
+										</textfield>
+									</element>
+                                 	<element x="1" y="2">
+							    		<label id="labelPw" displayname="Password"/>
+								    </element>
+                                 	<element x="2" y="2">
+										<password id="signPw" editable="false"><value/>
+										</password>
+									</element>
+                                 	<element x="2" y="4">
+										<image id="buttonSubmit" location="images/button_submit.gif"/>
+                                 	</element>
+                                 	<element x="2" y="5">
+										<image id="buttonRegister" location="images/button_register_now.gif"/>
+                                 	</element>									                                 	
+								</gridlayout>
+ 						</panel>
+ 						</verticallayout>
+                    	</panel>
+					</center>
+					<east/>
+					<south/>
+                </borderlayout>
+				</rootpanel>
+		    </window>
+		</view>
+	
+       <events>
+       		<event id="mainEvent1">
+       			<listeners>
+					<listenergroup>
+	       				<component ref="logoTop"/>
+						<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>
+       			<set-property  property="visible" value="false">
+       				<component ref="panel4"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>       				       				
+       			</set-property>
+       		</event>
+       		<event id="menuEvent1">
+       			<listeners>
+					<listenergroup>
+	       				<component ref="fishLeft"/>
+						<component ref="fishImg"/>
+						<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>
+       				<component ref="panel5"/>       				
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<business-action ref="getProduct" >
+       				<in name="cat" value="FISH"/>
+				  			</business-action>
+                <clear ref="productTable"/>
+       			<set component-id="productTable" ref="productResult"/>
+       		</event>
+       		<event id="menuEvent2">
+       			<listeners>
+					<listenergroup>
+	       				<component ref="dogsLeft"/>
+						<component ref="dogsImg"/>
+	       				<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<business-action ref="getProduct" >
+       				<in name="cat" value="DOGS"/>
+       			</business-action>
+                <clear ref="productTable"/>
+       			<set component-id="productTable" ref="productResult"/>
+       		</event>       								
+    		<event id="menuEvent3">
+       			<listeners>
+					<listenergroup>
+						<component ref="catsLeft"/>       				
+						<component ref="catsImg"/>
+	       				<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>					
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<business-action ref="getProduct" >
+       				<in name="cat" value="CATS"/>
+       			</business-action>
+                <clear ref="productTable"/>
+       			<set component-id="productTable" ref="productResult"/>
+       		</event>			
+       		<event id="menuEvent4">
+       			<listeners>
+					<listenergroup>
+						<component ref="reptilesLeft"/>       				
+						<component ref="reptilesImg"/>
+	       				<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>					
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<business-action ref="getProduct" >
+       				<in name="cat" value="REPTILES"/>
+       			</business-action>
+                <clear ref="productTable"/>
+       			<set component-id="productTable" ref="productResult"/>
+       		</event>			
+       		<event id="menuEvent5">
+       			<listeners>
+					<listenergroup>	
+						<component ref="birdsLeft"/>
+						<component ref="birdsImg"/>
+		       			<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>																														
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<business-action ref="getProduct" >
+       				<in name="cat" value="BIRDS"/>
+       			</business-action>
+                <clear ref="productTable"/>
+       			<set component-id="productTable" ref="productResult"/>
+       		</event>
+       		<event id="menuEvent6">
+       			<listeners>
+					<listenergroup>
+	       				<component ref="logoTop"/>
+	       				<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>
+       			<set-property  property="visible" value="false">
+       				<component ref="panel4"/>
+       				<component ref="panel5"/>
+       				<component ref="panel6"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel3"/>
+       			</set-property>
+		</event>       		
+		
+
+		<event id="tableEvent1.2">
+			<listeners>
+				<listenergroup>
+					<component ref="itemTable.addtocart"/>
+	       			<listener type="onclick"/>
+				</listenergroup>
+       			</listeners>	
+			<business-action ref="getItem" >
+       				<in name="prodId" ref="itemTable.addtocart" src="component"/>
+       			</business-action>																													
+			<dialog type="info">
+			 	<title value="addtocart"/>
+			 	<message value="addtocartElement is clicked" />
+			 </dialog>
+       		</event>
+		<event id="tableEvent1.3">
+			<listeners>
+				<listenergroup>
+					<component ref="productTable.delete"/>
+	       			<listener type="onclick"/>
+				</listenergroup>
+       			</listeners>	
+			<dialog type="info">
+				<title value="delete"/>
+				<message value="Delete button in table pressed" />
+			</dialog>
+       		</event>
+			<event id="tableEvent1.4">
+			<listeners>
+				<listenergroup>
+					<component ref="productTable.add"/>
+		       		<listener type="onclick"/>
+				</listenergroup>
+       			</listeners>	
+			<dialog type="info">
+				 <title value="add" />
+				 <message value="Add button in table pressed" />
+			</dialog>
+			<business-action ref="getItem" >
+       				<in name="prodId" ref="productTable" src="component"/>
+       			</business-action>
+       		</event>
+			<event id="tableEvent1.5">
+			<listeners>
+				<listenergroup>
+					<component ref="productTable.refresh"/>
+		       		<listener type="onclick"/>
+				</listenergroup>
+       			</listeners>
+					
+			<dialog type="info">
+				<title value="add"/>
+				<message value="Add button in table pressed" />
+				</dialog>
+			<business-action ref="getItem" >
+       				<in name="prodId" ref="productTable" src="component"/>
+       			</business-action>
+       		</event>
+		<event id="tableEvent1">
+       			<listeners>
+					<listenergroup>
+						<component ref="productTable.productId"/>
+	       				<listener type="onclick"/>
+					</listenergroup>
+       			</listeners>																														
+       			<set-property  property="visible" value="false">
+       				<component ref="panel4"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel5"/>
+       			</set-property>
+				<business-action ref="getItem" >
+       				<out name="prodId" ref="productId"/>
+       			</business-action>
+       			<business-action ref="getItem" >
+       				<in name="prodId" ref="productTable.productId" src="component"/>
+       			</business-action>
+                	<clear ref="itemTable"/>
+			<set component-id="itemTable" ref="itemResult"/>
+			<clear ref="itemTable2"/>
+      			<set component-id="itemTable2" ref="itemResult"/>
+       		</event>
+       		<!--<event id="tableEvent2">
+       			<listeners>
+					<component ref="addtocart"/>
+	       			<listener type="onclick"/>
+       			</listeners>
+                
+       		</event>-->       		
+			<event id="loginEvent">
+				<listeners>
+					<listenergroup>
+						<component ref="imgSign"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+       			<set-property  property="visible" value="false">
+       				<component ref="panel3"/>       				
+       				<component ref="panel4"/>
+       				<component ref="panel5"/>
+       			</set-property>
+       			<set-property  property="visible" value="true">
+       				<component ref="panel6"/>
+       			</set-property>
+			</event>
+			<event id="submitEvent">
+				<listeners>
+					<listenergroup>
+						<component ref="buttonSubmit"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+			    <business-action ref="verify" >
+					<in name="username" ref="signUsr" src="component"/>
+				  	<in name="pwd" ref="signPw" src="component"/>
+				</business-action>  
+			    <set component-id="output" ref="result"/>				
+            <!--    <if >                
+                  <expression expr="">
+                    <comparison type="eq">
+                       <expression-left ref="result"/>
+                       <expression-right value="false"/>
+                    </comparison>
+                  </expression>
+                  <results>
+                    <result value="true">
+                      <dialog type="info">
+						  <title value="Sign-on" />
+						  <message value="Sign in succeful" />
+					 </dialog> 
+                    </result>
+                  </results> 
+                 </if>-->               
+			</event>
+		</events>
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="getProduct">
+				<transaction managed="no"/>
+				<service ref="databaseService" method-ref="getProduct" >
+					<in name="cat" ref="cat" />
+					
+				</service>
+			</business-action>
+			<business-action id="getItem">
+				<transaction managed="no"/>
+				<service ref="databaseService" method-ref="getItem" >
+					<in name="productId" ref="prodId" />
+				</service>
+			</business-action>
+			<business-action id="verify">
+				<transaction managed="no"/>
+					<service ref="TestService" method-ref="verify" >
+ 			    </service>
+			</business-action>						
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="databaseService" resource-ref="database">
+				
+				<!--<resource ref="statements"/>-->
+				<method id="getProduct" name="getProduct" scrollable="true">
+					<in name="P_CAT" ref="cat"/>
+					<out name = "productResult" ref="P_REC_SET"/>
+				</method>
+				<method id="getItem" name="getItem">
+					<in name="P_PRODUCT_ID" ref="prodId"/>
+					<out name = "itemResult" ref="P_REC_SET" adapter="ItemAdapter"/>
+				</method>
+			</service>
+      		<service id="TestService" resource-ref="test_Service">
+        	
+        		<method id="verify" name="verify">
+          			<in name="0" ref="username"/>
+          			<in name="1" ref="pwd"/>
+          			<out name="result"/>
+        		</method>
+      		</service>			
+		</services>
+		<adapters>
+			<adapter id="ItemAdapter" adapt-all="true" type="Item">
+				<attribute ref="PRODUCTID" name="jeevsproductid"/>
+			</adapter>
+		</adapters>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+		<drivermanager-datasource driver-classname="oracle.jdbc.driver.OracleDriver" id="OracleXe"
+ 	statements-file-url="statements.xml" url="jdbc:oracle:thin:@localhost:1521:XE"
+ 	dialect="oracle" password="jpet" username="jpet"/>
+			<javaclass id="test_Service" classname="com.qualogy.jpet.integration.JpetService"/>
+      
+		</resources>
+	</resource-tier>
+</application-mapping>

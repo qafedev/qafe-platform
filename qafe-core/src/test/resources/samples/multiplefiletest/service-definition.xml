@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<integration-tier>
+		<services>
+			<!-- service 2 -->
+			<service id="JavaService2" resource-ref="testService">
+				<method id="getCar2" name="getCar2">
+					<out name="." ref="car1" type="Car" adapter="CarAdapter"/>
+						<!-- output type or adapter must be set otherwise will be converted to besteffort -->
+						<!-- don't need a service-id if the root is passed -->
+						<!-- setting the type may become absolete since it has only some use for knwn types, its convient for now -->
+						<!-- .car.name notation is used saying start with output -->
+					<!--	
+						<param type="Car" service-id=".car" datastore-id="car1" adapter="CarAdapter"/><$$ uses the assigned adpater $$>
+						<param type="Car" service-id=".car" datastore-id="car2"/><$$ object adapter (adapts the object or map to the type-definition) $$>
+						<param type="string" service-id=".car.name" datastore-id="car3Name"/><$$ object adapter, will become a single string (uses type-definition (pre-defined type)) $$>
+						<param service-id=".car" datastore-id="car3"/><$$ best effort, will become a map with all of cars params $$>
+						<param service-id=".car.name" datastore-id="car3Name"/><$$ best effort, will become a single string $$>
+					-->
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="testService" classname="test.com.qualogy.qafe.business.integration.testservices.jpet.JPetTestService" jarfile-location=""/>
+		</resources>
+	</resource-tier>
+</application-mapping>

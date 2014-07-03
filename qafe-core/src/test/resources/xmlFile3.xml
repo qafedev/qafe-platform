@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window closable="false" displayname="Authentication" id="$_authenticate_window"
+				isparent="false" maximizable="false" minimizable="false">
+				<rootpanel id="$_authenticate_rootpanel">
+					<verticallayout>
+						<label displayname="Username" id="$_authenticate_username"
+							message-key="$_AUTH_USERNAME" />
+						<textfield id="$username" />
+						<label displayname="Password" id="$_authenticate_password"
+							message-key="$_AUTH_PASSWORD" />
+						<password id="$password" />
+						<panel id="$_authenticate_panel">
+							<horizontallayout>
+								<button displayname="Submit" id="$_authenticate_submit"
+									message-key="$_AUTH_SUBMIT" />
+								<button displayname="Cancel" id="$_authenticate_cancel"
+									message-key="$_AUTH_CANCEL" />
+							</horizontallayout>
+						</panel>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="$_authentication_submit">
+						<listeners>
+							<listenergroup>
+								<component ref="$_authenticate_submit" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<authenticate business-action-ref="$_handle_security">
+							<username ref="$username" src="component" />
+							<password ref="$password" src="component" />
+						</authenticate>
+					</event>
+					<event id="$_authenticate_cancel">
+						<listeners>
+							<listenergroup>
+								<component ref="$_authenticate_cancel" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<closewindow ref="$_authenticate_window" />
+					</event>
+				</events>
+			</window>
+
+			<menu-definition id="main_menu">
+				<menu displayname="File" id="file_menu" shortcut="CTRL+Y">  <!-- KEEP This -->
+					<menu displayname="Save" id="file_menu_save" shortcut="CTRL+Y" />
+					<menu displayname="Print" id="file_menu_print" shortcut="CTRL+Y" />
+					<menu displayname="Exit" id="file_menu_exit" shortcut="CTRL+Y" />
+				</menu>
+				<menu displayname="Edit" id="edit_menu" shortcut="CTRL+Y">
+					<menu displayname="New Record" id="edit_menu_new_record"
+						shortcut="CTRL+Y" />
+					<menu displayname="Delete Record" id="edit_menu_delete_record"
+						shortcut="CTRL+Y" />
+					<menu displayname="Clear Record" id="edit_menu_clear_record"
+						shortcut="CTRL+Y" />
+				</menu>
+				<menu displayname="View" id="view_menu" shortcut="CTRL+Y">
+					<menu displayname="Find" id="view_menu_find" shortcut="CTRL+Y" />
+					<menu displayname="Find All" id="view_menu_find_all" shortcut="CTRL+Y" />
+					<menu displayname="Enter Query" id="view_menu_enter_query"
+						shortcut="CTRL+Y" />
+					<menu displayname="Record" id="view_menu_record" shortcut="CTRL+Y">
+						<menu displayname="Next Record" id="view_menu_record_next"
+							shortcut="CTRL+Y" />
+						<menu displayname="Previous Record" id="view_menu_record_previous"
+							shortcut="CTRL+Y" />
+						<menu displayname="First" id="view_menu_record_first"
+							shortcut="CTRL+Y" />
+						<menu displayname="Last" id="view_menu_record_last" shortcut="CTRL+Y" />
+					</menu>
+				</menu>
+				<menu displayname="Help" id="help_menu" shortcut="CTRL+Y">
+					<menu displayname="About" id="help_menu_about_this_application"
+						shortcut="CTRL+Y" />
+				</menu>
+			</menu-definition>
+		</view>
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="$_handle_security">
+				<service method-ref="authenticate" ref="$_SecurityService" />
+				<service method-ref="getRestrictions" ref="$_SecurityService" />
+			</business-action>
+			<!-- <business-action id="$_handle_security"> <service method-ref="authenticate" 
+				ref="$_AuthenticationService"/> <service method-ref="getRestrictions" ref="$_AuthorisationService"/> 
+				</business-action> -->
+		</business-actions>
+		<types>
+			<type id="boolean" />
+			<type id="character" />
+			<type id="char" />
+			<type id="double" />
+			<type id="string" />
+			<type id="int" />
+			<type id="integer" />
+			<type id="long" />
+		</types>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="$_SecurityService" resource-ref="$_REPLACE_THIS_SECURITY_RESOURCE">
+				<comments>
+                                        The $_REPLACE_THIS_SECURITY_RESOURCE resource ref will be replaced with the one
+
+                                        found in the application context
+                                </comments>
+				<method id="authenticate">
+					<in name="username" ref="$username" />
+					<in name="password" ref="$password" />
+					<in name="extra_fields" ref="$extra_fields" />
+					<out name="authenticate_result" />
+				</method>
+				<method id="getRestrictions">
+					<in name="username" ref="$username" />
+					<in name="extra_fields" ref="$extra_fields" />
+					<out name="authorize_result" />
+				</method>
+			</service>
+			<!-- <service id="$_AuthenticationService" resource-ref="$_REPLACE_THIS_AUTHENTICATION_RESOURCE"> 
+				<comments> the $_REPLACE_THIS_AUTHENTICATION_RESOURCE resource ref will be 
+				replaced with the one found in the application context </comments> <method 
+				id="authenticate"> <in name="username" ref="$username"/> <in name="password" 
+				ref="$password"/> <in name="extra_fields" ref="$extra_fields"/> <out name="authenticate_result"/> 
+				</method> </service> <service id="$_AuthorisationService" resource-ref="$_REPLACE_THIS_AUTHORISATION_RESOURCE"> 
+				<comments> the $_REPLACE_THIS_AUTHORISATION_RESOURCE resource ref will be 
+				replaced with the one found in the application context </comments> <method 
+				id="getRestrictions"> <in name="username" ref="$username"/> <in name="extra_fields" 
+				ref="$extra_fields"/> <out name="authorize_result"/> </method> </service> -->
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass classname="-" id="$_REPLACE_THIS_SECURITY_RESOURCE"
+				jarfile-location="" />
+			<!-- <javaclass id="$_REPLACE_THIS_AUTHENTICATION_RESOURCE" classname="-" 
+				jarfile-location=""/> <javaclass id="$_REPLACE_THIS_AUTHORISATION_RESOURCE" 
+				classname="-" jarfile-location=""/> -->
+		</resources>
+	</resource-tier>
+</application-mapping>

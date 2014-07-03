@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		  <view>
+	        <window id="window1" resizable="false" draggable="false" minimizable="false" closable="false" maximizable="false" displayname="window1">
+	     	<rootpanel id="invoicing">
+			   <!-- <title>Oracle Applications - Qualogy</title> --> 
+	            <verticallayout> 
+				<!-- Totals Panel -->
+				 
+				<panel id="totalsPane" contextmenu="menu1" displayname="Totals">
+					
+					<gridlayout>
+						<element x="1" y="1" gridwidth="4" class="gridclass"><label id="bcTotalLabe"  contextmenu="menu1_rp" displayname="Batch Control Total"/></element>
+						<element x="2" y="1" style="background:red;"><textfield id="bcTotalTextfield" type="spinner" min-value="0" max-value="20" max-length="3" min-length="1"><value>111</value></textfield></element>
+						<element x="1" y="2"><label id="acTotalLabel" displayname="Actual Total"/></element>
+						<element x="2" y="2"><textfield id="acTotalTextfield" required="true" ><value>22</value></textfield></element>
+						<element x="2" y="3"><checkbox id="checkbox" displayname="label" checked="false" checked-value="XX" unchecked-value="YY"/></element>
+					</gridlayout> 
+				</panel>
+			   	<!-- Invoices Table overview -->
+				<panel id="invoiceoverview" >
+						<verticallayout> <!-- Default BOX is centered -->
+						<table id="invoiceoverviewtable" width="400" height="300">
+							 <header id="invoiceoverviewtableheader">
+							    <cell id="cellType"><label id="c1" displayname="Type"/></cell>
+								<cell id="celldcName"><label id="c2" displayname="Document Category Name"/></cell>
+								<cell id="cellsupplier"><label id="c3" displayname="Supplier"/></cell>
+								<cell id="cellsNumber"><label id="c4" displayname="S. Number"/></cell>
+								<cell id="cellSite"><label id="c5" displayname="Site"/></cell>
+								<cell id="cellInvoiceDate"><label id="c6" displayname="Invoice Date"/></cell>
+								<cell id="cellInvoiceNr"><label id="c7" displayname="Invoice Nr"/></cell>
+								<cell id="cellICurr"><label id="c8" displayname="I. Currency"/></cell>
+								<cell id="cellInvoiceAmount"><label id="c9" displayname="Invoice Amount"/></cell>
+								<cell id="cellDescription"><label id="c10" displayname="Description"/></cell>
+								<cell id="cellAccounted"><label id="c11" displayname="Accounted"/></cell>
+							</header>
+						     <row id="row1"><cell id="112"><label id="1c1" displayname="Type"/></cell>
+							               <cell id="113"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="114"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="115"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="116"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="117"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="118"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="119"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="1110"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="1111"><label id="1c1" displayname="Type"/></cell>
+										   <cell id="1112"><label id="1c1" displayname="Type"/></cell>
+										   
+							</row>
+						    
+						</table>
+						</verticallayout>
+				</panel>
+						<!-- Invoices Table Details -->
+				<panel id="invoicedetails">
+					<gridlayout>
+					<element x="1" y="1" gridheight="3" gridwidth="2">
+							<panel id="amountPaid" displayname="Amount Paid"> <!-- Voor title geen id nodig + Title kent niet veel variaties -->
+	                                                        
+								<gridlayout>
+									<element x="1" y="1"><label id="labelcurreny" displayname="EUR"/></element>
+									<element x="2" y="1"><textfield id="textfieldCurrencyValue"><value>434.35</value></textfield></element>
+								</gridlayout>
+							</panel>
+					</element>
+					
+					<element x="3" y="1" gridheight="3" gridwidth="5">
+						<panel id="summary">
+							<gridlayout>
+								<element x="1" y="1"><label id="labelHolds" displayname="Holds"/></element>
+								<element x="2" y="1"><textfield id="textfieldHolds"><value>0</value></textfield></element>
+								<element x="3" y="1"><label id="labelDistTotal" displayname="DistributionTotal"/></element>
+								<element x="4" y="1"><textfield id="textfieldDistTotal"><value>434.35</value></textfield></element>
+								<element x="1" y="2"><label id="labelStatus" displayname="Status"/></element>
+								<element x="2" y="2"><textfield id="textfieldStatus"><value>Approved</value></textfield></element>
+								<element x="3" y="2"><label id="labelAccounted" displayname="Accounted"/></element>
+								<element x="4" y="2"><textfield id="textfieldAccounted"><value>Yes</value></textfield></element>														
+								<element x="1" y="3"><label id="labelDesc" displayname="Desc"/></element>
+								<element x="2" y="3" gridwidth="3"><textfield id="textfieldDesc"><value>Renovatie parkeervakken (restant)</value></textfield></element>
+							</gridlayout>
+						</panel>
+					</element>
+					<element x="1" y="4"><button id="buttonAction" key="A" displayname="Actions"/></element>
+					<element x="2" y="4"><button id="buttonHolds" key="o" displayname="Holds"/></element>
+					<element x="3" y="4"><button id="buttonPayments" key="P" displayname="Payments"/></element>
+					<element x="4" y="4" gridwidth="2">
+						<panel id="buttonPanel">
+							<gridlayout>
+								<element x="1" y="1"><button id="buttonMatch" key="M" displayname="Match"/></element>
+								<element x="2" y="1"><dropdown id="dropdownOrderType" empty-item-displayname="Please Select an Option" empty-item-value="-1" empty-item-message-key="emptyItemMessageKey">
+                                                                <item id="item1" value="PO" displayname="Purchase Order"/>                                                                                                                                                                        
+                                                                <item id="item2" value="P" displayname="Purchase"/>                                                                                                                                                                       
+                                                    </dropdown>
+								</element>
+							</gridlayout>
+						</panel>
+					</element>
+					<element x="1" y="5" gridwidth="2"><button id="buttonScheduledPayments" key="c" displayname="Scheduled Payments"/></element>				
+					
+					<element x="3" y="5" gridwidth="2"><button id="buttonOverview" key="r" displayname="Overview"/></element>
+					<element x="5" y="5" ><button id="buttonDistributions" key="D" displayname="Distributions"/></element>												
+					</gridlayout>
+				</panel>		
+				<panel id="choicePanel">
+					<verticallayout>
+						<choice id="choice" horizontal="false">
+							<choice-item name="ci1" id="ci1" value="11" displayname="11"/>								
+							
+							<choice-item name="ci1" id="ci2" value="11" displayname="33"/>							
+						</choice>
+					</verticallayout>
+				</panel>	
+				<panel id="listboxPanel">
+					<verticallayout>
+						<listbox id="listboxOrderType">
+	                         <item id="li1" value="POli1" displayname="Purchase Orderli1"/>
+   	                         <item id="li2" value="POli1" displayname="Purchase li2"/>             
+					</listbox>
+					</verticallayout>
+				</panel>
+				<panel id="imagePanel">
+					<verticallayout>
+						<image id="image" location="http://forums.adventchildren.net/images/avatars/ffviiac/cloud_06.jpg"/>							
+					</verticallayout>
+				</panel>
+				<panel id="menuPanel">
+					<verticallayout>
+						<!--<menu id="menu1" shortcut="CTRL+X"  name="RootMenu">
+							<menu id="menu2" shortcut="CTRL+Y"  name="SubMenu"/>
+							
+						</menu> -->
+						<password id="password" password-mask="xxxxxx" required="true">
+							<value>Yahooo!!</value>
+						</password>
+						<textarea id="textarea" rows="10">
+							<value></value>
+						</textarea>
+					</verticallayout>
+				</panel>
+				<tabpanel id="tabpanel">
+					
+					<tab id="innerpanel1" displayname="Tab1"><absolutelayout><element x="0" y="1"><panel id="panel1.1"><verticallayout></verticallayout></panel></element></absolutelayout></tab>
+					<tab id="innerpanel2" displayname="Tab2"><verticallayout><panel id="panel1.2"><horizontallayout></horizontallayout></panel></verticallayout></tab>
+					
+				</tabpanel>
+				<tree id="tree"  displayname="" width="100px" height="100px">				
+					<tree-item id="nested3" value="" displayname="Hello"  expand="true">
+						<tree-item id="nested2" value="" displayname="World"/>
+								
+						<tree-item id="nested4" value="" displayname=""/>
+					</tree-item>				
+				</tree>
+				<fileupload id="fileupload"/>
+ 
+			 </verticallayout>
+		</rootpanel>
+		</window>
+		<window id="window2" isparent="false" displayname="window2">
+		    <rootpanel id="window2rootpanel">
+		        <verticallayout><label id="totalsPane" displayname="Hell world !!"/></verticallayout>
+		    </rootpanel>
+			<events>
+				<event id="someButtonEvent">
+					<listeners>
+						<listenergroup>
+							<component ref="aText"/>
+							<component ref="aText"/>
+							<listener type="onclick"/>
+						</listenergroup>
+					</listeners>
+					
+					<change-style >
+						<component ref="titleLabel"/>
+						<style-action action="set"/>
+					</change-style>
+					<event ref="globalEvent"/>
+					<store name="MyName" ref="component.name" src="component" value="default"/>
+					<set name="mydatagrid" ref="myinputfield"  src="component" value="Hello World, ${myinputfield}" />
+
+					<store-clear/>
+					<store-clear name="MyName"/>
+		
+				</event>
+				<event id="globalEvent">
+					
+					<dialog type="info"> 
+						<title value="Global Event"/>
+						<message value="Hi I'm global event"/>
+					</dialog>
+				</event>
+				<event id="xxxbbb">
+          	<listeners>
+				<listenergroup>
+              		<component ref="panel2window3label3"/>
+              		<listener type="onclick"/>
+				</listenergroup>
+          	</listeners>				
+						<event ref="xxxbbb1"/>
+				</event>
+				<event id="xxxbbb1">
+          <listeners/>            				
+					<set component-id="panel2window3label3" ref="window333textfield" src="component"/>				
+        </event>				
+			</events>
+		 </window>
+	</view>
+	</presentation-tier>
+</application-mapping>

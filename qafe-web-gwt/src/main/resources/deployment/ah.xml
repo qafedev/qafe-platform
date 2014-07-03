@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+	<presentation-tier>
+		<styles>
+			<style location="../css/ah.css" window-id="window1"/>
+		</styles>
+		<view>
+			<window id="window1" displayname="Webwinkel" class="mainWindow">
+				<rootpanel id="myRootPanel">
+					<horizontallayout>
+						<panel>
+ 							 <verticallayout>
+								<panel height="70">
+									<horizontallayout>
+	 									<image id="ahlogo" location="images/ah/ahlogo.png"/>
+ 										<image id="boodschappen" location="images/ah/boodschappen.png"/>
+										<panel id="pnlmenu" width="490">
+											<verticallayout>
+												<panel height="20">
+													<horizontallayout>
+														<link id="ahnl" displayname="www.ah.nl" class="navUp"/>
+				 										<image location="images/ah/vertical.png" class="vLine"/>
+														<link id="ahwinkels" displayname="AH Webwinkels" class="navUp"/>
+				 										<image location="images/ah/vertical.png" class="vLine"/>
+														<link id="ahabout" displayname="Over deze webwinkel" class="navUp"/>
+					 									<image location="images/ah/vertical.png" class="vLine"/>
+														<link id="ahservice" displayname="Klantenservice" class="navUp"/>
+					 									<image location="images/ah/vertical.png" class="vLine"/>
+														<link id="ahdiscount" displayname="20 euro korting" class="navUp"/>
+													</horizontallayout>
+												</panel>
+		 										<image location="images/ah/hline.png" width="480"/>
+												<panel height="20">
+													<horizontallayout>
+														<link id="ahproducts" displayname="Alle producten" class="navDown"/>
+														<link id="ahbounus" displayname="AH BONUS" class="navDown"/>
+														<link id="ahbusiness" displayname="Zakelijk" class="navDown"/>
+														<link id="ahtheme" displayname="Themashops" class="navDown"/>
+														<link id="ahrecept" displayname="Recepten" class="navDown"/>
+													</horizontallayout>
+												</panel>
+											</verticallayout>
+										</panel>
+									</horizontallayout>				
+								</panel>
+								<image id="ahbanner" location="images/ah/ahbanner.png"/>
+								<panel height="25" class="searchPanel">
+									<gridlayout>				
+										<element x="0" y="0" class="searchLeftSpace"><label displayname=""/></element>
+										<element x="1" y="0">
+											<panel>
+												<horizontallayout>
+													<textfield id="ahsearch" suggest="true" suggest-chars="1"/>
+		 											<image id="oksearch" location="images/ah/okarrow.png"/>
+												</horizontallayout>
+											</panel>
+										</element>
+									</gridlayout>
+								</panel>
+								<tilelist id="products" name="products" columns="3" width="762">
+									<panel id="pnl" height="120">
+										<horizontallayout>
+											<image name="IMAGE" width="60" height="60"/>
+											<panel>
+												<verticallayout>
+													<label id="txt" name="PRODUCT"/>
+													<label id="txtPrice" name="PRICE"/>
+													<panel>
+														<horizontallayout>
+															<textfield type="spinner" id="txtAmount" name="AMOUNT" displayname="Aantal:" width="50"/>
+															<image id="addtocart" location="images/ah/addtocart.png"/>
+														</horizontallayout>
+													</panel>					
+												</verticallayout>
+											</panel>
+										</horizontallayout>
+									</panel>
+    								</tilelist>	
+							</verticallayout>
+						</panel>
+						<panel>
+							<verticallayout>
+								<image location="images/ah/mywebshop.png"/>
+								<label id="myCart" displayname="Mijn Winkelwagen" class="myCart"/>
+								<tilelist id="cartproducts" name="cartproducts" columns="1" width="208">
+									<panel height="60">
+										<horizontallayout>
+											<image name="IMAGE" width="30" height="30"/>
+											<panel>
+												<verticallayout>		
+													<label id="txt" name="PRODUCT"/>
+													<panel>
+														<horizontallayout>
+															<label id="txtAmount" name="AMOUNT"/>		
+															<label displayname="x"/>
+															<label id="txtPrice" name="PRICE"/>		
+														</horizontallayout>
+													</panel>							
+												</verticallayout>
+											</panel>
+										</horizontallayout>
+									</panel>
+    								</tilelist>	
+							</verticallayout>
+						</panel>
+					</horizontallayout>
+				</rootpanel>
+				<events>
+					<event id="evtWindow1">
+						<listeners>
+							<listenergroup>
+								<component ref="window1" />
+								<listener type="onload" />
+							</listenergroup>
+						</listeners>						
+						<business-action ref="hsd_business_relationsMyDatabaseTime" >
+  							<out name="data" ref="result"/>
+  						</business-action>
+						<set component-id="products" ref="data"/> 												
+					</event>				
+					<event id="evtAddToCart">
+						<listeners>
+							<listenergroup>
+								<component ref="products.addtocart" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<set component-id="cartproducts" ref="products" src="component" action="add"/>
+					</event>	
+					<event id="evtSearch">
+						<listeners>
+							<listenergroup>
+								<component ref="oksearch" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="hsd_business_relationsMyDatabaseTime2" >
+							<in name="productName" ref="ahsearch" src="component"/>
+  							<out name="data" ref="result"/>
+  						</business-action>
+						<set component-id="products" ref="data"/> 
+					</event>	
+					<event id="evtSearchSuggest">
+						<listeners>
+							<listenergroup>
+								<component ref="ahsearch" />
+								<listener type="onchange" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="hsd_business_relationsMyDatabaseTime3" >
+							<in name="productName" ref="ahsearch" src="component"/>
+  							<out name="data" ref="result"/>
+  						</business-action>
+						<set component-id="ahsearch" ref="data"/> 
+					</event>	
+
+				</events>
+			</window>						
+		</view>
+	</presentation-tier>
+	 <business-tier>
+    <business-actions>
+      <business-action id="hsd_business_relationsMyDatabaseTime">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="MyDatabaseTime">
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+      <business-action id="hsd_business_relationsMyDatabaseTime2">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="MyDatabaseTime2">
+	    <in name="productName" ref="productName"/>
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+	<business-action id="hsd_business_relationsMyDatabaseTime3">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="MyDatabaseTime3">
+	    <in name="productName" ref="productName"/>
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+
+
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="hsd_business_relations" resource-ref="DatabaseResource">
+        <method id="MyDatabaseTime" name="MyDatabaseTime">
+          <out name="result"/>
+        </method>
+	  <method id="MyDatabaseTime2" name="MyDatabaseTime2">
+	    <in name="productName" ref="productName"/>
+          <out name="result"/>
+        </method>
+	  <method id="MyDatabaseTime3" name="MyDatabaseTime3">
+	    <in name="productName" ref="productName"/>
+          <out name="result"/>
+        </method>
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+      <!-- <drivermanager-datasource id="DatabaseResource" statements-file-url="sysdate-statements.xml" url="jdbc:oracle:thin:@demodb.qafe.com:1521:XE" username="qafedemo" password="qafedemo" driver-classname="oracle.jdbc.OracleDriver"/>-->
+      <drivermanager-datasource id="DatabaseResource" statements-file-url="ah-statements.xml" url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV1" username="QAFE_DEMOS" password="QAFE_DEMOS" driver-classname="oracle.jdbc.OracleDriver"/>
+    </resources>
+  </resource-tier>
+</application-mapping> 

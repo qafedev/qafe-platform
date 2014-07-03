@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<events>
+			<event id="someButtonEvent">
+				<listeners>
+					<listenergroup>
+						<component ref="aText"/>
+						<component ref="aText"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+					
+				<change-style >
+					<component ref="titleLabel"/>
+					<style-action action="set"/>
+				</change-style>
+				<switch >
+					<expression expr="$SYSTEM.jaja"/>
+					<results>
+						<result value="4">
+							<switch>
+								<expression expr="$SYSTEM.jaja"/>
+								<results>
+									<result value="4"/>
+									<result value="5"/>
+								</results>
+							</switch>
+						</result>
+						<result value="5">
+							<business-action ref="storeLastName" >
+								<in name="prefix" ref="tussenvoegsel"  src="component"/>
+								<in name="lastName" ref="achternaam"  src="component"/>
+								<out name="lastname" ref="lastname"/>
+								
+							</business-action>
+						</result>
+						<result value="5"/>
+					</results>
+				</switch>
+				<!-- if('true'==document.form.lastname_validate.value || (
+						document.form.lastname!=NULL && document.form.lastname.length>2 &&
+						document.form.prefix!=NULL && (
+							document.form.prefix.length + document.form.lastname.length) =< 100
+					)
+				)-->
+				
+	<!--
+				<for-iteration>
+					<index name="index">
+						<system-variable name="jaja"/>
+					</index>
+					<iteration-condition>
+						<expression>
+							<group type="and">
+								<comparison type="lt_eq">
+									<expression-left>
+										<static-variable value="100"/>
+									</expression-left>
+									<expression-right>
+										<static-variable value="100"/>
+									</expression-right>
+								</comparison>
+								<isNotNull>
+									 <view-variable component-id="lastname"/>
+								</isNotNull>
+							</group>
+						</expression>
+					</iteration-condition>	
+					<increment-value>
+						<static-variable value="1"/>
+					</increment-value>
+					<body/>
+				</for-iteration>
+	-->
+
+				<business-action ref="storeLastName" >
+					<in name="prefix" ref="tussenvoegsel"  src="component"/>
+					<in name="lastName" ref="achternaam"  src="component"/>
+					<out name="lastname" ref="lastname"  src="component"/>
+				</business-action>
+				
+				<change-style >
+					<component ref="titleLabel"/>
+					<style-action action="set" key="background" value="green"/>
+					<style-action action="set" key="font-weight" value="bold"/>
+				</change-style>
+				<set-property  property="enabled" value="false">
+					<component ref="titleLabel"/>
+				</set-property>
+				<set-property  property="enabled" value="true">
+					<component ref="titleLabel"/>
+				</set-property>
+				<validate message="Email validation failed">
+					<component ref="titleLabel"/>
+					<regexp><![CDATA[^[a-zA-Z]+(([\\'\\,\\.\\- ][a-zA-Z])?[a-zA-Z]*)*\\s+<(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,4})>$|^(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,4})$]]></regexp>
+				</validate>
+				<!-- clear a simple component -->
+				<clear ref="titleLabel"/>
+				<!-- clear a panel -->
+				<clear ref="totalsPane"/>
+				<dialog type="info">
+					<title value="Think twice"/>
+					<message value="Alert for window"/>
+				</dialog>
+			</event>
+		</events>
+		
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="storeLastName">
+				<business-action ref="combinePrefixAndLastName" >
+					<in name="prefix" ref="prefix" type="string"/>
+					<in name="lastName" ref="lastName" type="string"/>
+					<out name="lastName" ref="prefixAndLastName" type="string"/>
+				</business-action>
+				<business-action ref="getLastName" >
+					<in name="prefixAndLastName" ref="prefixAndLastName"/>
+					<out name="lastName" ref="lastName"/>
+				</business-action>
+				<business-action ref="saveLastName" >
+					<in name="prefixAndLastName" ref="prefixAndLastName"/>
+					<!-- only one output and not to be stored on datastore, so implicit -->
+				</business-action>
+			</business-action>
+			
+	<!--			<simple-iteration range-from="0" range-to="1" >
+					<loop-component temp-datastore-id="anvar" datastore-id="prefix"/>
+					<body>
+						<business-action ref="storeLastName" >
+							<input>
+								<view-variable action-id="prefix" component-id="tussenvoegsel"/>
+								<view-variable action-id="lastName" component-id="achternaam"/>
+							</input>
+							<output>
+								<view-variable action-id="lastname" component-id="lastname"/>
+							</output>
+						</business-action>
+					</body>
+				</simple-iteration>
+	-->
+				
+			<business-action id="saveLastName"/><!-- returns null if not found -->
+			<business-action id="combinePrefixAndLastName"/>
+			<business-action id="getLastName"><!-- returns null if not found -->
+				<service ref="service1" method-ref="getLastName" >
+					<in name="lastName" ref="lastName"/>
+					<out name="sid" ref="id"/>
+					<out name="lastName" ref="lastName"/>
+				</service>
+				<service ref="service2" method-ref="x" >
+					<in name="lastname" ref="lastname"/>
+					<out name="lastname" ref="lastname"/>
+				</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<!-- service 1 -->
+			<service id="service1" resource-ref="testService">
+				<method id="getLastName" name="getLastName">
+					<in ref="id" name="id"/>
+					<out ref="id" name="id"/>
+					<out ref="achternaam" name="lastname"/>
+				</method>
+				<method id="x" name="storeLastName">
+					<in ref="lastName" name="lastName"/>
+				</method>
+			</service>
+			
+			<!-- service 2 -->
+			<service id="service2" resource-ref="testService">
+				
+				<method id="z" name="combinePrefixAndLastName">
+					<in name="0" ref="prefix"/>
+					<in name="1" ref="lastName"/>
+				</method>
+				<method id="y" name="combinePrefixAndLastName">	
+					<in name="0" ref="prefix"/>
+				</method>
+				<method id="x" name="combinePrefixAndLastName">	
+					<in name="3" ref="prefix3"/>
+					<in name="2" ref="prefix2"/>
+					<in name="0" ref="prefix0"/>
+				</method>
+				<method id="convert" name="convert">
+					<in name="0" ref="lastname"/>
+					<out type="string"/>
+				</method>
+			</service>
+		</services>
+		
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="testService" classname="test.com.qualogy.qpd.qafe.services.JavaService" jarfile-location=""/>
+			
+		</resources>
+	</resource-tier>
+</application-mapping>

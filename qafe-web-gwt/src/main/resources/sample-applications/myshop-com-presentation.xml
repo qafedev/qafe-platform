@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="winSearch" displayname="myshop.com" >
+				<rootpanel id="pnlRoot" displayname="Welkom bij myshop.com">
+					<verticallayout>
+						<image id="imgSign" location="images/btn_sign_in.png" tooltip="Sign in myshop.Com"/>
+						<panel id="loginPanel" visible="false" name="logindata">
+							<gridlayout>
+								<element x="0" y="0" gridwidth="3">
+									<label id="usrpwLabel" displayname="Please enter your username and password"/>
+								</element>
+								<element x="0" y="1">
+									<label id="labelUsr" displayname="Username"/>
+								</element>
+								<element x="1" y="1">
+									<textfield id="signUsr" name="username"/>
+								</element>
+								<element x="0" y="2">
+									<label id="labelPw" displayname="Password"/>
+								</element>
+								<element x="1" y="2">
+									<password id="signPw" name="password"/>
+								</element>
+								<element x="2" y="2">
+									<image id="buttonSubmit" location="images/submit.jpg"/>
+								</element>
+							</gridlayout>
+						</panel>
+						<panel id="mainapppanel" visible="false">
+							<verticallayout>
+								<stackpanel id="stackPanel" width="500px">
+									<stack id="stack1" displayname="Search">
+										<panel id="searchPanel">
+											<verticallayout>
+												<panel id="lblSearchPanelTitle" name="pnlSearchCriteria">
+													<gridlayout>
+														<element x="11" y="0">
+												</element>
+														<element x="0" y="0" gridwidth="2">
+															<label id="lbl01" displayname="Zoek boek"/>
+														</element>
+														<element x="0" y="1">
+															<label id="lbl012" displayname="Titel"/>
+														</element>
+														<element x="1" y="1">
+															<textfield id="txtTitle" name="searchTitle"/>
+														</element>
+														<element x="0" y="2">
+															<label id="lbl013" displayname="Zoek"/>
+														</element>
+														<element x="1" y="2">
+															<textfield id="txtAuthor" name="searchAuthor"/>
+														</element>
+														<element x="0" y="3">
+															<label id="lbl014" displayname="ISBN"/>
+														</element>
+														<element x="1" y="3">
+															<textfield id="txtISBN" name="searchIbsn" type="int"/>
+														</element>
+														<element x="2" y="0">
+															<image id="btnSearch" location="images/icon_search.jpg" tooltip="Search the database"/>
+														</element>
+														<element x="2" y="1">
+															<label id="lblMessage" displayname=""/>
+														</element>
+													</gridlayout>
+												</panel>
+												<panel id="pnlSearchResults">
+													<verticallayout>
+														<datagrid id="dgrSearchResults" name="Books" visible="false" editable="false" height="150px" width="500px">
+															<column id="id" displayname="ID"  name="title"/>
+															<column id="title" displayname="Titel">
+																<textfield id="txtBookTitle"/>
+															</column>
+															<column id="author" displayname="Auteur" name="author">
+																<textfield id="txtBookAuthor" name="author"/>
+															</column>
+															<column id="isbn" displayname="ISBN" name="isbn">
+																<textfield id="txtBookIsdn" />
+															</column>
+															<column id="addtocart" displayname="bestellen" static="true">
+																<image id="addtocartimage" location="images/add_to_cart.jpg" tooltip="Add to cart"/>
+															</column>
+														</datagrid>
+													</verticallayout>
+												</panel>
+											</verticallayout>
+										</panel>
+									</stack>
+									<stack id="stack2" displayname="My Account">
+										<tabpanel id="tabpanel1">
+											<tab id="innerpanel11" displayname="Shoppingcart">
+												<verticallayout>
+													<label id="ordertext" displayname=""/>
+													<image id="refreshshoppingcart" location="images/button_update_cart.gif" tooltip="Update cart, Refresh the contents"/>
+													<datagrid id="cartinfo" name="Books">
+														<column id="id" displayname="ID"  content="link"/>
+														<column id="remove"  displayname="Remove?" static="true">
+															<link id="removelink" displayname="Remove me"/>
+														</column>
+														<column id="checkoutlink"  displayname="Checkout" static="true">
+															<link id="checkoutinnerlink" displayname="Checkout"/>
+														</column>
+													</datagrid>
+													<panel id="detailbook" name="bookdetail">
+														<gridlayout>
+															<element x="0" y="0">
+																<label id="lbl012D" displayname="Title"/>
+															</element>
+															<element x="1" y="0">
+																<textfield id="txtTitleD" name="title" editable="false"/>
+															</element>
+															<element x="0" y="1">
+																<label id="lbl013D" displayname="Zoek"/>
+															</element>
+															<element x="1" y="1">
+																<textfield id="txtAuthorD" name="author" editable="false"/>
+															</element>
+															<element x="0" y="2">
+																<label id="lbl014D" displayname="ISBN"/>
+															</element>
+															<element x="1" y="2">
+																<textfield id="txtISBND" name="isbn" type="int" editable="false"/>
+															</element>
+															<element x="0" y="3">
+																<label id="lbl014D" displayname="Description"/>
+															</element>
+															<element x="1" y="3">
+																<textfield id="txtISBND" name="description" editable="false"/>
+															</element>
+														</gridlayout>
+													</panel>
+												</verticallayout>
+											</tab>
+											<tab id="innerpanel21" displayname="Account" name="useraccount">
+												<verticallayout>
+													<label id="usernameidlabel" displayname="ID"/>
+													<textfield id="usernameid" displayname="ID" disabled="true" name="username"/>
+													<label id="passwordidlabel" displayname="Password"/>
+													<password id="passwordid" displayname="Password" disabled="true" name="password"/>
+												</verticallayout>
+											</tab>
+										</tabpanel>
+									</stack>
+								</stackpanel>
+							</verticallayout>
+						</panel>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="evtSearch">
+						<listeners>
+							<listenergroup>
+								<component ref="btnSearch"/>
+								<listener type="onclick"/>
+							</listenergroup>								
+						</listeners>
+						<set-property  property="visible" value="true">
+							<component ref="dgrSearchResults"/>
+						</set-property>
+						<business-action  ref="searchBooksByTitleAndAuthor">
+							<in name="bookTitle" ref="txtTitle" src="component"/>
+							<in name="bookAuthor" ref="txtAuthor" src="component"/>
+						</business-action>
+						<clear ref="dgrSearchResults"/>
+						<set component-id="dgrSearchResults" ref="books"/>
+					</event>
+					<event id="evtAddToCart">
+						<listeners>
+							<listenergroup>
+							<component ref="dgrSearchResults.addtocart"/>
+							<component ref="dgrSearchResults.isbn"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<business-action  ref="getBookForId">
+							<in name="bookid" ref="dgrSearchResults.addtocart" src="component"/>
+						</business-action>
+						<store name="shoppingcartinfo" ref="book" action="add"/>
+						<set component-id="lblMessage" value="ISBN  ${bookid} added"/>
+						<set component-id="cartinfo" ref="shoppingcartinfo" src="user"/>
+					</event>
+					<event id="evtToggle">
+						<listeners>
+							<listenergroup>
+							<component ref="refreshshoppingcart"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<clear ref="component-id"/>
+						<set component-id="cartinfo" ref="shoppingcartinfo" src="user"/>
+					</event>
+					<event id="evtRemoveFromCart">
+						<listeners>
+							<listenergroup>
+							<component ref="cartinfo.remove"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<store name="shoppingcartinfo" ref="cartinfo.remove" src="component" action="delete" field="id"/>
+						<clear ref="cartinfo"/>
+						<clear ref="detailbook"/>
+						<set component-id="cartinfo" ref="shoppingcartinfo" src="user"/>
+					</event>
+					<event id="evtShowDetailCart">
+						<listeners>
+							<listenergroup>
+							<component ref="cartinfo.id"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<business-action  ref="getBookForId">
+							<in name="bookid" ref="dgrSearchResults.addtocart" src="component"/>
+						</business-action>
+						<set name="bookdetail" ref="book"/>
+					</event>
+					<event id="alertEvent">
+						<listeners/>
+						<dialog type="info">
+							<title value="Unimplemented function"/>
+							<message value="Nothing interesting"/>
+						</dialog>
+					</event>
+					<event id="signInEvent"> 
+						<listeners>
+							<listenergroup>
+							<component ref="imgSign"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<toggle>
+							<component ref="loginPanel"/>
+						</toggle>
+					</event>
+					<event id="loginEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="buttonSubmit"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<business-action ref="authenticate">
+							<in name="username" ref="signUsr" src="component"/>
+							<in name="password" ref="signPw" src="component"/>
+							<out name="resultAuthentication" ref="result"/>
+						</business-action>
+						<if>
+							<expression expr="${resultAuthentication} == None"/>
+							<results>
+								<result value="true">
+									<dialog type="info">
+										<title value="Login Failed"/>
+										<message value="Incorrect username(${username})/password combination"/>
+									</dialog>
+								</result>
+								<result value="false">
+									<store name="userinfo" ref="resultAuthentication"/>
+									<set-property  property="visible" value="true">
+										<component ref="mainapppanel"/>
+									</set-property>
+									<toggle>
+										<component ref="loginPanel"/>
+									</toggle>
+								</result>
+							</results>
+						</if>
+					</event>
+					<event id="evtAccountinfo">
+						<listeners>
+							<listenergroup>
+							<component ref="innerpanel21"/>
+							<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<set name="useraccount" ref="userinfo" src="user"/>
+					</event>
+					<!-- place evtcheckout event here -->
+				</events>
+			</window>
+		</view>
+	</presentation-tier>
+</application-mapping>

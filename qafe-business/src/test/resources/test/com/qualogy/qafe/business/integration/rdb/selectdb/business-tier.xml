@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			
+			<business-action id="setUp">
+				<service ref="databaseService" method-ref="setUp" />
+			</business-action>
+			<business-action id="tearDown">
+				<service ref="databaseService" method-ref="tearDown" />
+			</business-action>	
+			<business-action id="insertTestDataSet1">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="insertTestDataSet1"/>
+			</business-action>
+			<business-action id="insertTestDataSet2">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="insertTestDataSet2"/>
+			</business-action>
+			<business-action id="insertTestDataSet3">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="insertTestDataSet3"/>
+			</business-action>			
+			<business-action id="tableWithInputs">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="tableWithInputs">
+					<in name="emp_Id" value="E2"/>
+					<in name="dep_Id" value="D1"/>
+					<out name="result"/>
+				</service>
+			</business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorGreaterEqualTo">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorGreaterEqualTo">
+                    <in name="children" value=">=0"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorEqualTo">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorEqualTo">
+                    <in name="children" value="=1"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorGreaterTo">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorGreaterTo">
+                    <in name="children" value=">0"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingBothSidePercentage">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingBothSidePercentage">
+                    <in name="emp_name" value="%B%"/>
+                    <!--<in name="emp_name" value="*B*"/>-->
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNOTBothSidePercentage">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNOTBothSidePercentage">
+                    <in name="emp_name" value="not %B%"/>
+                    <!--<in name="emp_name" value="*B*"/>-->
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingUnderscore">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingUnderscore">
+                    <in name="emp_name" value="_a__"/>
+                    <!--<in name="emp_name" value="*B*"/>-->
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingRightSidePercentage">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingRightSidePercentage">
+                    <in name="emp_name" value="AB%"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNOTRightSidePercentage">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNOTRightSidePercentage">
+                    <in name="emp_id" value="not E1%"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingInequality">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingInequality">
+                    <in name="children" value="!= 0"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNULL">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNULL">
+                    <in name="children" value="null"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNOTNULL">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNOTNULL">
+                    <in name="children" value="not NULL"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingIN">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingIN">
+                    <in name="children" value="in (1, 2)"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNOTIN">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNOTIN">
+                    <in name="DEP_ID" value="not IN ('D1', 'D2')"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingBetween">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingBetween">
+                    <in name="children" value="between 1 and 2"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+            <business-action id="SqlWithUserExtraFilledOperatorUsingNOTBetween">
+                <transaction managed="local"/>
+                <service ref="databaseService" method-ref="SqlWithUserExtraFilledOperatorUsingNOTBetween">
+                    <in name="children" value="not between 1 and 2"/>
+                    <out name="result"/>
+                </service>
+            </business-action>
+			<business-action id="tableWithInputsAsRef">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="tableWithInputs">
+					<in name="emp_Id" ref="emp_Id"></in>
+					<in name="dep_Id" ref="dep_Id"></in>
+					<out name="result"></out>
+				</service>
+			</business-action>
+			<business-action id="tableWithInputsAsMapRef">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="tableWithInputsAsMapRef">
+					<in name="inputMap" ref="inputMap"></in>
+					<out name="result"></out>
+				</service>
+			</business-action>
+			
+			<business-action id="withTableAndSQLTogether">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withTableAndSQLTogether">					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withSQLWhereContainingDate">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withSQLWhereContainingDate">
+					<in name="birthdate" ref="birthdate"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withSQLTextWhereContainingDate">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withSQLTextWhereContainingDate">
+					<in name="birthdate" ref="birthdate"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withSQLTextAndSQLAttributeTogether">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withSQLTextAndSQLAttributeTogether">
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="sqlWithInputsPlaceholders">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="sqlWithInputsPlaceholders">
+					<in name="empName" ref="empName"></in>
+					<in name="depId" ref="depId"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withTableAndSQLTogetherWithInputs">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withTableAndSQLTogetherWithInputs">
+					<in name="emp_Id" value="E2"></in>
+					<in name="dep_Id" value="D1"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withTableAndSQLWithInputsPlaceholders">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withTableAndSQLWithInputsPlaceholders">
+					<in name="employeeId" ref="employeeId"></in>
+					<in name="dep_Id" value="departmentId"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			<business-action id="withSQLWithMultiplePlaceholderMatch">
+				<transaction managed="local"/>
+				<service ref="databaseService" method-ref="withSQLWithMultiplePlaceholderMatch">
+					<in name="employeeId" ref="employeeId"></in>
+					<in name="dep_Id" value="departmentId"></in>					
+					<out name="result"></out>
+				</service>				
+			</business-action>
+			
+			<!-- Oracle db (tables available)-->
+			<business-action id="getOrderdById">
+				<service ref="databaseService" method-ref="getOrderdById" />
+			</business-action>
+			<business-action id="getByChildren">
+				<service ref="databaseService" method-ref="getByChildren" />
+			</business-action>
+			<business-action id="getDataSorted">
+				<service ref="databaseService" method-ref="getDataSorted" />
+			</business-action>			
+		</business-actions>
+	</business-tier>
+</application-mapping>

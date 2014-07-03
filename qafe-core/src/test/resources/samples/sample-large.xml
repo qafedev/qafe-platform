@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+    <presentation-tier>
+        <events>
+            <event id="getListOf10Maps">
+                <listeners>
+					<listenergroup>
+	                    <component ref="aText"/>
+	                    <component ref="aText"/>
+	              
+	                    <listener type="onclick"/>
+					</listenergroup>
+                </listeners>
+                <business-action  ref="getListOf10Maps">
+                    <in name="strCar" ref="field1"  src="component">
+						<placeholder name="" ref=""/>
+					</in>
+                    <out name="theCar.name" ref="field1"  src="component"/>
+                </business-action>
+                <if >
+                    <expression expr=""/>
+                        <!-- <group type="or">
+                            <comparison type="eq">
+                                <expression-left ref="field1"  src="component"/>
+                                <expression-right value="true"/>
+                            </comparison>
+                            <isNotNull>
+                                <expression-left ref="$SYSTEM.somekey"/>
+                            </isNotNull>
+                        </group>
+                    </expression> -->
+                    <results>
+                        <result value="false"/>
+                    </results>
+                </if>
+            </event>
+        </events>
+        
+    </presentation-tier>
+    <business-tier>
+        <business-actions>
+            <business-action id="testCase">
+             		<comments>klasjdklas</comments>
+             		
+					<!--service ref="JavaService" method-ref="getCar" /-->
+            </business-action>
+            <business-action id="getListOf10Maps">
+               <service method-ref="getCar"  ref="JavaService">
+                    <out name="car1" ref="theCar"/>
+                </service>
+                
+                <error-handler id="error" error-ref="name.already.registered">
+                	<service method-ref="getCarWithOneref"  ref="JavaService">
+	                    <in name="car1" ref="strCar"/>
+	                    <!-- ref in -->
+	                    <out name="car1" ref="theCar"/>
+	                </service>
+                </error-handler>
+                
+                <service method-ref="getCarWithOneref"  ref="JavaService">
+                    <in name="car1" ref="strCar"/>
+                    <!-- ref in -->
+                    <out name="car1" ref="theCar"/>
+                </service>
+                <service method-ref="getCarWithOneref"  ref="JavaService">
+                    <in name="car1" ref="$SYSTEM.strCar"/>
+                    <!-- system key -->
+                    <out name="car1" ref="theCar"/>
+                </service>
+                <service method-ref="getCarWithOneref"  ref="JavaService">
+                    <in name="car1" ref="jaja" value="jaja"/>
+                    <!-- static value -->
+                    <out name="car1" ref="theCar"/>
+                </service>
+            </business-action>
+						<business-action id="baforloop">
+							<iteration begin="2" end="10" increment="2" condition="!" items-ref="alist" var="tmp" >
+								
+									<service ref="JavaService" method-ref="getCar" >
+										<in name="name" ref="tmp.name"/>
+									</service>
+								
+							</iteration>	
+					</business-action>
+        </business-actions>
+        <types>
+            <type abstract="true" id="Vehicle">
+                <attribute default="" name="lastName" type="string"/>
+                    <!--<constraint />-->
+                <attribute default="" name="firstName" type="string"/>
+            </type>
+            <type id="Car" parent="Vehicle"/>
+            <type id="Boat" parent="Vehicle">
+                <attribute name="address" type="Address"/>
+                <attribute name="engine" type="Engine"/>
+            </type>
+            <type id="Engine">
+                <attribute name="part1" type="string"/>
+                <attribute name="part2" type="string"/>
+            </type>
+            <type id="AnotherEngine">
+                <attribute name="part1" type="string"/>
+                <attribute name="part2" type="string"/>
+            </type>
+        </types>
+    </business-tier>
+    <integration-tier>
+        <services>
+            <service id="JavaService" resource-ref="javaServicer">
+                <method id="getCarWithOneref" name="getCar">
+                    <in name="ref1" ref="car1" type="string"/>
+                    <out adapter="CarAdapter" name="." ref="car1" type="Car"/>
+                </method>
+                <method id="getCar" name="getCar">
+                    <out adapter="CarAdapter" name="." ref="car1" type="Car"/>
+                </method>
+            </service>
+            <!-- service 2 -->
+            <service id="JavaService2" resource-ref="javaServicer">
+                <method id="getCar2" name="getCar2">
+                    <out adapter="CarAdapter" name="." ref="car1" type="Car"/>
+                    <!-- output type or adapter must be set otherwise will be converted to besteffort -->
+                    <!-- don't need a service-id if the root is passed -->
+                    <!-- setting the type may become absolete since it has only some use for knwn types, its convient for now -->
+                    <!-- .car.name notation is used saying start with output -->
+                    <!--	
+						<param type="Car" service-id=".car" datastore-id="car1" adapter="CarAdapter"/><$$ uses the assigned adpater $$>
+						<param type="Car" service-id=".car" datastore-id="car2"/><$$ object adapter (adapts the object or map to the type-definition) $$>
+						<param type="string" service-id=".car.name" datastore-id="car3Name"/><$$ object adapter, will become a single string (uses type-definition (pre-defined type)) $$>
+						<param service-id=".car" datastore-id="car3"/><$$ best effort, will become a map with all of cars params $$>
+						<param service-id=".car.name" datastore-id="car3Name"/><$$ best effort, will become a single string $$>
+					-->
+                </method>
+            </service>
+        </services>
+        <errors>
+        	<error id="name.already.registered" exception="java.lang.Exception">  
+				<log message-key="name.already.registered" solution-key="name.already.registered"/> 
+			</error>	
+			<error id="invalid.lastname" exception="java.lang.RuntimeException"> 
+				<log message-key="invalid.lastname" solution-key="invalid.lastname"/> 
+			</error>
+		</errors>
+        <adapters>
+            <adapter id="VehicleConverter" type="Vehicle">
+                <attribute name="carName" ref="carName"/>
+                <!-- internal adapter, can be used to get items from different objects within the root object -->
+                <!--only level down.. in this case meaning, none of the vehicle attrs can be reached -->
+                <!--
+				<adapter output-type="Engine" attribute="carName"> 
+					<attribute attribute="part1" service-id="engine1.difficultnamepart1"/>
+					<attribute attribute="part2" service-id="engine2.difficultnamepart2"/>
+				</adapter>
+				-->
+                <attribute adapter="EngineAdapter" name="carName" ref="carName"/>
+            </adapter>
+            <adapter id="EngineAdapter" type="Engine">
+                <!--external adapter, notice the dif between this and the internal, cannot access other objects on same level or level above -->
+                <attribute name="part1" ref="difficultnamepart1"/>
+                <attribute name="part1" ref="difficultnamepart2"/>
+            </adapter>
+            <adapter id="CarConverter" adapt-all="true" extends="VehicleAdapter" type="Car"/>
+            <adapter id="BoatConverter" extends="VehicleAdapter" type="Boat">
+                <attribute adapter="AddressAdapter" name="address" ref="address"/>
+            </adapter>
+            <adapter id="AnotherVehicleConverter" type="Vehicle">
+                <attribute name="carName" ref="carName"/>
+            </adapter>
+        </adapters>
+    </integration-tier>
+    <resource-tier>
+        <resources>
+            <javaclass id="javaServicer" classname="test.com.qualogy.qpd.qafe.services.JavaService" jarfile-location="test"/>
+			<jndi-datasource id="db1" jndiname="DataSource" statements-file-url="/../samples/statements/statements.xml"/>
+			
+			<drivermanager-datasource id="db2" 
+				driver-classname=""
+				url="1"
+				username="1"
+				password="1"
+				statements-file-url="/../samples/statements/statements.xml"/>
+            
+        </resources>
+    </resource-tier>
+</application-mapping>

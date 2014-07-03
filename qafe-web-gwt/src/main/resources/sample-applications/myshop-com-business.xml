@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="authenticate">
+		      <comments><![CDATA[
+		        Businessaction for authenticating a user, only qafe, qafe will pass as correct
+				credentials.
+		        @in username
+		        @in password
+		        @out result
+		      ]]></comments>
+		      <service ref="userService" method-ref="login" >
+			  	<in name="username" ref="username"/>
+				<in name="password" ref="password"/>
+				<out name="result" ref="result"/>
+			  </service>
+		    </business-action>
+					
+			<business-action id="searchBooksByTitleAndAuthor">
+				<comments><![CDATA[
+					Businessaction for searching for books in the myshop.com stock on title and author
+					@in bookTitle
+					@in bookAuthor
+					@out books - list of books
+				]]></comments>
+				<service ref="bookstoreService" method-ref="retrieveBooksByTitleAndAuthor" />
+			</business-action>
+		
+			<business-action id="getBookForId">
+				<comments><![CDATA[
+					Businessaction for get book details.
+					@in bookid - id of the book
+					@out book - get result
+				]]></comments>
+				<service ref="bookstoreService" method-ref="getBook" >
+					<in name="id" ref="bookid"/>
+					<out name="book" ref="book[0]"/>
+				</service>
+			</business-action>
+			
+		</business-actions>
+	</business-tier>
+</application-mapping>

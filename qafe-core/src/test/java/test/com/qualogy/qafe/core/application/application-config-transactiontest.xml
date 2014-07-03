@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	
+	<application id="TXTEST" name="TXTEST" root="test/com/qualogy/qafe/core/application">
+		<application-mapping>
+			<business-tier>
+				<business-actions>
+					<business-action id="BA_MANAGED">
+						<transaction managed="global" timeout="10"/>
+						<service ref="JavaService" method-ref="test" />
+					</business-action>
+					<business-action id="NO_WILDCARD">
+						<service ref="JavaService" method-ref="test" />
+					</business-action>
+					<!--<business-action id="IS_WILDCARD">
+						<service ref="JavaService" method-ref="test" />
+					</business-action>-->
+					<business-action id="WILDCARD2WILDCARD">
+						<service ref="JavaService" method-ref="test" />
+					</business-action>
+					<business-action id="WILDCARD3">
+						<service ref="JavaService" method-ref="test" />
+					</business-action>
+					<business-action id="4WILDCARD">
+						<service ref="JavaService" method-ref="test" />
+					</business-action>
+					
+				</business-actions>
+			</business-tier>
+			<integration-tier>
+				<services>
+					<service id="JavaService" resource-ref="r1">
+						<method id="test" name="testParameter"/>
+					</service>
+				</services>
+			</integration-tier>
+			<resource-tier>
+				<resources>
+					<javaclass id="r1" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService" jarfile-location="dfas"/>
+				</resources>
+			</resource-tier>
+		</application-mapping>
+		<transaction>
+			<business-action id="*" managed="global" isolation="default" propagation="required" timeout="0"/>
+			<business-action id="NO_WILDCARD" managed="global" isolation="default" propagation="required" timeout="1"/>
+			<business-action id="*2*" managed="global" isolation="default" propagation="required" timeout="2"/>
+			<business-action id="*3" managed="global" isolation="default" propagation="required" timeout="3"/>
+			<business-action id="4*" managed="global" isolation="default" propagation="required" timeout="4"/>
+		</transaction>
+	</application>
+	
+</applications>

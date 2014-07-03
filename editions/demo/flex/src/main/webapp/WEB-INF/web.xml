@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<web-app id="WebApp_ID" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+    <display-name>Flex Webtier Compiler</display-name>
+    <description>Flex SDK Webtier Compiler Template Application</description>
+
+	<!-- DEMO PURPOSE -->  
+    <context-param>
+        <param-name>flex.class.path</param-name>
+        <param-value>/WEB-INF/flex/hotfixes,/WEB-INF/flex/jars</param-value>
+    </context-param>
+
+
+	<context-param>
+		<param-name>QAFEContextFile</param-name>
+		<param-value>
+			application-config.xml
+		</param-value>
+	</context-param>
+    
+	<listener>
+		<listener-class>
+			com.qualogy.qafe.web.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<servlet>
+        <servlet-name>FlexMxmlServlet</servlet-name>
+        <servlet-class>flex.bootstrap.BootstrapServlet</servlet-class>
+        <init-param>
+            <param-name>servlet.class</param-name>
+            <param-value>flex.webtier.server.j2ee.MxmlServlet</param-value>
+        </init-param>
+        <init-param>
+            <param-name>webtier.configuration.file</param-name>
+            <param-value>/WEB-INF/flex/flex-webtier-config.xml</param-value>
+        </init-param>
+       <load-on-startup>10</load-on-startup>
+    </servlet>
+	
+    <servlet>
+        <servlet-name>FlexSwfServlet</servlet-name>
+        <servlet-class>flex.bootstrap.BootstrapServlet</servlet-class>
+        <init-param>
+            <param-name>servlet.class</param-name>
+            <param-value>flex.webtier.server.j2ee.SwfServlet</param-value>
+        </init-param>
+        <!-- SwfServlet must be initialized after MxmlServlet -->		
+        <load-on-startup>20</load-on-startup>
+    </servlet>
+
+	<servlet>
+        <servlet-name>MessageBrokerServlet</servlet-name>        
+        <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>        
+        <init-param>
+            <param-name>services.configuration.file</param-name>
+            <param-value>/WEB-INF/flex/services-config.xml</param-value>
+        </init-param>
+       <load-on-startup>2</load-on-startup>
+    </servlet>
+
+	<!-- DEMO PURPOSE -->
+    <servlet>
+        <servlet-name>FlexForbiddenServlet</servlet-name>
+        <servlet-class>flex.bootstrap.BootstrapServlet</servlet-class>
+        <init-param>
+            <param-name>servlet.class</param-name>
+            <param-value>flex.webtier.server.j2ee.ForbiddenServlet</param-value>
+        </init-param>
+    </servlet>
+
+	<!-- DEMO PURPOSE -->
+    <servlet>
+        <servlet-name>FlexInternalServlet</servlet-name>
+        <servlet-class>flex.bootstrap.BootstrapServlet</servlet-class>
+        <init-param>
+            <param-name>servlet.class</param-name>
+            <param-value>flex.webtier.server.j2ee.filemanager.FileManagerServlet</param-value>
+        </init-param>
+        <load-on-startup>10</load-on-startup>
+    </servlet>
+
+    
+    <servlet>
+        <servlet-name>FlexAppServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.flex.FlexAppServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>AirAppServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.flex.AirAppServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+    	<servlet-name>StoreServlet</servlet-name>
+    	<servlet-class>com.qualogy.qafe.web.flex.StoreServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.servlet.UploadServlet</servlet-class>
+    </servlet>
+    
+	<servlet>
+		<servlet-name>css-generator</servlet-name>
+		<servlet-class>com.qualogy.qafe.web.css.servlet.CssServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ExportServlet</servlet-name>
+		<servlet-class>com.qualogy.qafe.web.upload.DatagridDownloadServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>ImportServlet</servlet-name>
+		<servlet-class>com.qualogy.qafe.web.upload.DatagridUploadServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+    	<servlet-name>FlexAppServlet</servlet-name>
+    	<url-pattern>*.start</url-pattern>
+  	</servlet-mapping>
+
+	<!-- DEMO PURPOSE -->	
+    <servlet-mapping>
+        <servlet-name>FlexMxmlServlet</servlet-name>
+        <url-pattern>*.mxml</url-pattern>
+    </servlet-mapping>
+
+	<!-- DEMO PURPOSE -->
+    <servlet-mapping>
+        <servlet-name>FlexSwfServlet</servlet-name>
+        <url-pattern>*.swf</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>	
+        <servlet-name>MessageBrokerServlet</servlet-name>
+        <url-pattern>/messagebroker/*</url-pattern>
+    </servlet-mapping>
+
+	<!-- DEMO PURPOSE -->    
+    <servlet-mapping>
+        <servlet-name>FlexForbiddenServlet</servlet-name>
+        <url-pattern>*.as</url-pattern>
+    </servlet-mapping>
+
+	<!-- DEMO PURPOSE -->
+    <servlet-mapping>
+        <servlet-name>FlexForbiddenServlet</servlet-name>
+        <url-pattern>*.swc</url-pattern>
+    </servlet-mapping>
+
+	<!-- DEMO PURPOSE -->
+    <servlet-mapping>
+        <servlet-name>FlexInternalServlet</servlet-name>
+        <url-pattern>/flex-internal/*</url-pattern>
+    </servlet-mapping>
+         
+    <servlet-mapping>
+    	<servlet-name>FlexAppServlet</servlet-name>
+    	<url-pattern>/main</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>AirAppServlet</servlet-name>
+    	<url-pattern>/air</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+    	<servlet-name>StoreServlet</servlet-name>
+    	<url-pattern>/store</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+    
+	<servlet-mapping>
+		<servlet-name>css-generator</servlet-name>
+		<url-pattern>/css-generator</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ExportServlet</servlet-name>
+		<url-pattern>/export</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ImportServlet</servlet-name>
+		<url-pattern>/import</url-pattern>
+	</servlet-mapping>
+
+
+    <welcome-file-list>
+    	<welcome-file>main</welcome-file>
+    <!--      <welcome-file>flexapp</welcome-file>-->
+    </welcome-file-list>
+
+	<!-- DEMO PURPOSE -->
+    <jsp-config>
+	    <taglib>
+	        <taglib-uri>FlexTagLib</taglib-uri>
+	        <taglib-location>/WEB-INF/lib/flex-bootstrap-jsp.jar</taglib-location>
+	    </taglib>
+	</jsp-config>
+</web-app>

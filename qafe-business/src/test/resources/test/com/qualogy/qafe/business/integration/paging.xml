@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<business-action id="testPagingAJavaResultList">
+				<service ref="javaService" method-ref="getListOf10Strings" />
+			</business-action>
+			<business-action id="testPagingAnArrayResultList">
+				<service ref="javaService" method-ref="getArrayOf100Strings" />
+			</business-action>
+			<business-action id="testNotPagingBecauseScrollableFalse">
+				<service ref="javaService" method-ref="getArrayOf100StringsNoScroll" />
+			</business-action>
+			<business-action id="testPagingADBResultList">
+				<service ref="databaseService" method-ref="getListOf10Users" />
+			</business-action>
+			<business-action id="testADBResultListNotPagingBecauseScrollableFalse">
+				<service ref="databaseService" method-ref="getListOf10UsersNoScroll" />
+			</business-action>
+			<business-action id="dbSetup">
+				<service ref="databaseService" method-ref="setup" />
+			</business-action>
+			<business-action id="dbTearDown">
+				<service ref="databaseService" method-ref="teardown" />
+			</business-action>
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="databaseService" resource-ref="db">
+				<method id="getListOf10Users" name="getUsers" scrollable="true">
+					<out name="result"/>
+				</method>
+				<method id="getListOf10UsersNoScroll" name="getUsers" scrollable="false">
+					<out name="result"/>
+				</method>
+				<method id="setup"/>
+				<method id="teardown"/>
+			</service>
+			<service id="javaService" resource-ref="testService">
+				<method id="getListOf10Strings" name="getListOfStrings" scrollable="true">
+					<in name="0" value="10" type="int"/>
+					<out name="result"/>
+				</method>
+				<method id="getArrayOf100Strings" name="getArrayOfStrings" scrollable="true">
+					<in name="0" value="100" type="int"/>
+					<out name="result"/>
+				</method>
+				<method id="getArrayOf100StringsNoScroll" name="getArrayOfStrings" scrollable="false">
+					<in name="0" value="100" type="int"/>
+					<out name="result"/>
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="testService" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService"/>
+			<drivermanager-datasource id="db" 
+				driver-classname="org.hsqldb.jdbcDriver"
+				url="jdbc:hsqldb:mem:aname"
+				username="sa"
+				password=""
+				statements-file-url="statements.xml"/>
+		</resources>
+	</resource-tier>
+</application-mapping>

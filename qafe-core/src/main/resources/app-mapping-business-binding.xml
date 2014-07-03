@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<binding  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="binding.xsd">
+  <!-- *********************** business-tier ********************************-->
+	
+   <!-- ***********************Business action********************************-->
+	
+   <mapping class="com.qualogy.qafe.bind.business.action.BusinessAction" name="business-action" extends="com.qualogy.qafe.bind.domain.BindBase">  
+    	<namespace uri="http://qafe.com/schema"  default="elements"/> 
+    	<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		
+		<value field="id" name="id" usage="required" style="attribute" ident="def"/>
+		<value field="access" name="access" usage="optional" style="attribute" default="public"/>
+		<value name="desc" field="description" usage="optional" style="attribute"/>
+		
+		<structure field="transactionBehaviour" name="transaction" usage="optional" type="com.qualogy.qafe.bind.business.transaction.TransactionBehaviour" >
+				<value name="managed" field="management" usage="optional" style="attribute" default="global"/>
+				<value name="isolation" field="isolation" usage="optional" style="attribute" default="default"/>
+				<value name="propagation" field="propagation" usage="optional" style="attribute" default="required"/>
+				<value name="timeout" field="timeout" usage="optional" style="attribute" default="-1"/>
+		</structure>					
+		<collection  field="businessActionItems" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" ordered="false">
+			<structure name="service" type="com.qualogy.qafe.bind.integration.service.ServiceRef" pre-set="setRefId">
+				<value name="order" field="order" usage="optional" style="attribute"/>
+				<value field="ref" name="ref" usage="required" style="attribute" ident="ref" type="com.qualogy.qafe.bind.integration.service.Service"/>
+				<structure field="methodRef" type="com.qualogy.qafe.bind.integration.service.MethodRef" >
+					<value field="ref" name="method-ref" usage="required" style="attribute"/>
+			 	</structure>
+			 	
+				<collection field="input" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
+					<structure type="com.qualogy.qafe.bind.commons.type.In" usage="optional" name="in">  
+		 				<value name="name" style="attribute" field="name" usage="required"/>
+						<value name="expr" style="attribute" field="expression" usage="optional"/>
+						<value name="use-when-not-set" style="attribute" field="useWhenNotSet" usage="optional" default="true"/>
+						<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+							<value name="ref" style="attribute" field="ref"/>
+							<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+						</structure>
+						<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+						<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+						<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+							<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+							<value name="class" style="attribute" field="outputClass" usage="optional"/>
+							<value name="value" style="attribute" field="staticValue" usage="optional"/>
+						</structure>
+					</structure>
+				</collection>
+
+				<collection field="output" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.Out" usage="optional"/>
+			</structure>
+		  <structure  type="com.qualogy.qafe.bind.core.statement.ControlStatement" usage="optional"/>
+		  <structure  type="com.qualogy.qafe.bind.commons.error.ErrorHandler" usage="optional"/>
+		  <structure name="business-action" type="com.qualogy.qafe.bind.business.action.BusinessActionRef" pre-set="setRefId">
+	 			<value name="order" field="order" usage="optional" style="attribute"/>
+				<value name="description" field="description" usage="optional" style="attribute"/>  
+				<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+					<value field="value" usage="optional" style="text"/>
+				</structure>
+				<value field="ref" name="ref" usage="required" style="attribute" ident="ref" type="com.qualogy.qafe.bind.business.action.BusinessAction"/>  
+				<collection field="input" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.In" usage="optional"/>
+				<collection field="output" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.Out" usage="optional"/>
+			</structure>
+		</collection>	
+   </mapping>
+   
+   
+   
+ <mapping class="com.qualogy.qafe.bind.business.action.BusinessActionItem" abstract="true">  
+ 	<namespace uri="http://qafe.com/schema"  default="elements"/> 
+ </mapping>
+  
+
+	<!-- types -->	
+	<mapping class="com.qualogy.qafe.bind.commons.type.TypeDefinition" name="type">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="id" style="attribute" field="id" ident="def"/>
+		<value name="abstract" style="attribute" field="abstractType" usage="optional" />
+		<value name="parent" field="parent" usage="optional" style="attribute" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+		<collection field="attributes" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"  usage="optional">
+			<structure name="attribute" type="com.qualogy.qafe.bind.commons.type.TypeAttributeMapping">
+		  		<value field="name" name="name" usage="optional"/>
+				<structure field="type" usage="optional" />	
+				<value field="defaultValue" name="default" usage="optional"/>
+		  	</structure>
+		</collection>
+	</mapping>
+
+<!-- *********************** service-tier ********************************-->
+	<mapping class="com.qualogy.qafe.bind.integration.service.Service" name="service" extends="com.qualogy.qafe.bind.domain.BindBase" post-set="postset">
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		<structure field="resourceRef" type="com.qualogy.qafe.bind.resource.ResourceRef" usage="required">
+			<value field="ref" name="resource-ref" style="attribute" usage="required" ident="ref" type="com.qualogy.qafe.bind.resource.BindResource"/>
+		</structure>
+		<collection field="methods" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.integration.service.Method" usage="required">
+			<structure name="method" type="com.qualogy.qafe.bind.integration.service.Method">
+				<value name="id" style="attribute" field="id" usage="required"/>
+				<value name="name" style="attribute" field="name" usage="optional"/> 			    
+				<value name="scrollable" style="attribute" field="scrollable" default="false" usage="optional"/>
+				<value name="cache" style="attribute" field="cache" default="-1" usage="optional"/>
+				<collection field="input" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
+					<structure type="com.qualogy.qafe.bind.commons.type.In" usage="optional" name="in">  
+		 				<value name="name" style="attribute" field="name" usage="required"/>
+						<value name="expr" style="attribute" field="expression" usage="optional"/>
+						<value name="use-when-not-set" style="attribute" field="useWhenNotSet" usage="optional" default="true"/>
+						<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+							<value name="ref" style="attribute" field="ref"/>
+							<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+						</structure>
+						<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+						<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+						<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+							<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+							<value name="class" style="attribute" field="outputClass" usage="optional"/>
+							<value name="value" style="attribute" field="staticValue" usage="optional"/>
+						</structure>
+					</structure>
+				</collection>
+				<collection field="output" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.commons.type.Out" usage="optional"/>		
+			</structure> 
+		</collection>		     		     
+  </mapping>
+
+<!-- *********************** resource-tier ********************************-->  	
+	<mapping abstract="true" class="com.qualogy.qafe.bind.resource.BindResource" extends="com.qualogy.qafe.bind.domain.BindBase">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def" usage="optional"/>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.resource.SpringContextResource" name="spring" extends="com.qualogy.qafe.bind.resource.BindResource">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>		 
+		
+		<value name="use-web-config" style="attribute" field="useWebConfig" usage="optional" />
+		<value name="config-files" style="attribute" field="configFiles" usage="optional" />
+		<collection field="beans" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.resource.SpringBeanResource" usage="required" />		
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.SpringBeanResource" name="spring-bean" extends="com.qualogy.qafe.bind.resource.BindResource">
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		
+		<value name="bean" style="attribute" field="beanName" usage="required" />
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.JavaResource" name="javaclass" extends="com.qualogy.qafe.bind.resource.BindResource">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		
+		<value name="classname" style="attribute" field="className" usage="required" />
+		<structure field="jarfileLocation" usage="optional" type="com.qualogy.qafe.bind.io.FileLocation" post-set="postset">
+			<value name="jarfile-location" field="location" usage="optional" style="attribute"/>	
+		</structure>
+		<collection field="arguments" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
+			<structure name="constructor-arg" usage="optional" type="com.qualogy.qafe.bind.commons.type.Parameter">
+				<value name="name" style="attribute" field="name" usage="optional"/>
+				<value name="expr" style="attribute" field="expression" usage="optional"/>
+				<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+					<value name="ref" style="attribute" field="ref"/>
+					<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+				</structure>
+				<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+				<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+				<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+					<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+					<value name="class" style="attribute" field="outputClass" usage="optional"/>
+					<value name="value" style="attribute" field="staticValue" usage="optional"/>
+				</structure>
+			</structure>
+		</collection>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.resource.DatasourceBindResource" abstract="true" extends="com.qualogy.qafe.bind.resource.BindResource">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		<structure field="statementsFileUrl" usage="required" type="com.qualogy.qafe.bind.io.FileLocation" post-set="postset">
+			<value name="statements-file-url" field="location" usage="required" style="attribute"/>	
+		</structure>
+		<value field="dialect" style="attribute" name="dialect" usage="optional"/>
+	</mapping>
+
+	<mapping class="com.qualogy.qafe.bind.resource.DriverManagerResource" name="drivermanager-datasource" extends="com.qualogy.qafe.bind.resource.DatasourceBindResource">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		<structure field="statementsFileUrl" usage="required" type="com.qualogy.qafe.bind.io.FileLocation" post-set="postset">
+			<value name="statements-file-url" field="location" usage="required" style="attribute"/>	
+		</structure>
+		<value field="dialect" style="attribute" name="dialect" usage="optional"/>
+		
+		<value name="url" style="attribute" field="url" usage="required"/>
+		<value name="username" style="attribute" field="username"/>
+		<value name="password" style="attribute" field="password"/>
+		<value name="encrypted-password" style="attribute" field="encryptedPassword" default="false"/>
+		<value name="driver-classname" style="attribute" field="driverClassName"/>
+        <value name="proxy-connection"  field="proxyConnection" style="attribute" default="false"/>
+
+	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.resource.JNDIDatasourceResource" name="jndi-datasource" extends="com.qualogy.qafe.bind.resource.DatasourceBindResource">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="description" field="description" usage="optional" style="attribute"/>  
+		<structure usage="optional" name="comments" field="comment" type="com.qualogy.qafe.bind.domain.Comment">
+			<value field="value" usage="optional" style="text"/>
+		</structure>
+		<value name="id" style="attribute" field="id" ident="def"/>
+		<structure field="statementsFileUrl" usage="required" type="com.qualogy.qafe.bind.io.FileLocation" post-set="postset">
+			<value name="statements-file-url" field="location" usage="required" style="attribute"/>	
+		</structure>
+		<value field="dialect" style="attribute" name="dialect" usage="optional"/>
+		
+		<value name="jndiname" style="attribute" field="jndiname" usage="required"/>
+        <value name="proxy-connection"  field="proxyConnection" style="attribute" default="false"/>
+		      
+	</mapping>
+
+<!-- adapter -->	
+	<mapping class="com.qualogy.qafe.bind.commons.type.AdapterMapping" name="adapter" extends="com.qualogy.qafe.bind.commons.type.AdapterAttribute">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="id" style="attribute" field="id" ident="def" usage="optional"/>
+		<value name="adapt-all" style="attribute" field="adaptAll" default="true" usage="optional"/>
+		<value name="adapt-name" style="attribute" field="adaptName" usage="optional"/>
+		<value name="extends" style="attribute" field="parent" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+		<value name="class" style="attribute" field="outputClass" usage="optional"/>
+		<value name="type" style="attribute" field="outputType" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+		<collection field="adapterAttributes"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" ordered="false">
+			<structure name="attribute" type="com.qualogy.qafe.bind.commons.type.AttributeMapping" >
+				<value name="name" style="attribute" field="name" usage="required"/>
+				<value name="expr" style="attribute" field="expression" usage="optional"/>
+				<value name="use-when-not-set" style="attribute" field="useWhenNotSet" usage="optional" default="true"/>
+				<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+					<value name="ref" style="attribute" field="ref"/>
+					<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+				</structure>
+				<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+				<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+				<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+					<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+					<value name="class" style="attribute" field="outputClass" usage="optional"/>
+					<value name="value" style="attribute" field="staticValue" usage="optional"/>
+				</structure>
+			</structure>
+			<structure name="adapter" type="com.qualogy.qafe.bind.commons.type.AdapterMapping" >
+				<value name="class" style="attribute" field="outputClass" usage="optional"/>
+				<value name="type" style="attribute" field="outputType" usage="required" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+				<value name="attribute" style="attribute" field="typeName" usage="required"/>
+				<value name="adapt-all" style="attribute" field="adaptAll" default="false" usage="optional"/>
+				<value name="extends" style="attribute" field="parent" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+				<collection field="adapterAttributes"  factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" ordered="false" item-type="com.qualogy.qafe.bind.commons.type.AttributeMapping">
+					<structure name="attribute" type="com.qualogy.qafe.bind.commons.type.AttributeMapping" >
+						<value name="name" style="attribute" field="name" usage="required"/>
+						<value name="expr" style="attribute" field="expression" usage="optional"/>
+						<value name="use-when-not-set" style="attribute" field="useWhenNotSet" usage="optional" default="true"/>
+						<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+							<value name="ref" style="attribute" field="ref"/>
+							<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+						</structure>
+						<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+						<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+						<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+							<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+							<value name="class" style="attribute" field="outputClass" usage="optional"/>
+							<value name="value" style="attribute" field="staticValue" usage="optional"/>
+						</structure>
+					</structure>
+				</collection>
+			</structure> 
+		</collection>
+	</mapping>
+	<mapping class="com.qualogy.qafe.bind.commons.type.AdapterAttribute" name="adapter-attribute"  abstract="true">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+	</mapping>
+  	<!-- <mapping class="com.qualogy.qafe.bind.commons.type.AttributeMapping" name="attribute" extends="com.qualogy.qafe.bind.commons.type.AdapterAttribute">  
+		<namespace uri="http://qafe.com/schema"  default="elements"/> 
+		<value name="name" style="attribute" field="typeName" usage="required"/>
+		<value name="ref" style="attribute" field="serviceName" usage="required"/>
+		<value name="adapter" style="attribute" field="adapterMapping" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+	</mapping> -->
+
+</binding>

@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="testWindowId" displayname="Hello World" width="300"
+				height="250">
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<textfield id="myComponentId1">
+							<value>value1</value>
+						</textfield>
+						<textfield id="myComponentId2" />
+						<textfield id="myComponentId3" />
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="eventWithOneComponentReference">
+						<store name="myData1" ref="myComponentId1" src="component" />
+					</event>
+
+					<event id="eventWithTwoComponentReference">
+						<store name="myData1" ref="myComponentId1" src="component" />
+						<store name="myData2" ref="myComponentId2" src="component" />
+					</event>
+
+					<event id="eventWithComponentReferenceInDialog">
+						<dialog>
+							<title></title>
+							<message ref="myComponentId1" src="component"></message>
+						</dialog>
+					</event>
+					
+					<event id="eventWithComponentReferenceInSet">
+						<set component-id="comp1" ref="myComponentId1" src="component"></set>
+					</event>
+					
+					<event id="eventWithComponentReferenceInIf">
+						<if>
+							<expression expr="2==2" />
+							<results>
+								<result value="true">
+									<store name="myData1" ref="myComponentId1" src="component" />
+								</result>
+								<result value="true">
+									<store name="myData2" ref="myComponentId2" src="component" />
+								</result>
+							</results>
+						</if>
+					</event>
+
+					<event id="eventWithComponentReferenceInSwitch">
+						<switch>
+							<expression expr="1" />
+							<results>
+								<result value="1">
+									<store name="myData1" ref="myComponentId1" src="component" />
+								</result>
+								<result value="2">
+									<store name="myData2" ref="myComponentId2" src="component" />
+								</result>
+							</results>
+						</switch>
+					</event>
+					
+					<event id="eventWithComponentReferenceInBusinessActionRef">
+						<business-action ref="myBusinessAction1">
+							<in name="input1" ref="myComponentId1" src="component"></in>
+						</business-action>						
+					</event>
+					
+					<event id="eventWithComponentReferenceInIteration">
+						<iteration var="myVar" begin="0" items-ref="myComponentId1" items-src="component">
+							<store name="myData" ref="myComponentId2" src="component" />
+						</iteration>						
+					</event>
+						
+
+					<event id="eventWithComponentReferenceInNestedIf">
+						<if>
+							<expression expr="1==1" />
+							<results>
+								<result value="true">
+									<store name="myData2" ref="myComponentId1" src="component" />
+									<if>
+										<expression expr="2==2" />
+										<results>
+											<result value="true">
+												<store name="myData4" ref="myComponentId2" src="component" />
+											</result>
+											<result value="true">
+												<store name="myData5" ref="myComponentId3" src="component" />
+											</result>
+										</results>
+									</if>
+								</result>
+								<result value="false">
+									<store name="myData3" ref="myComponentId4" src="component" />
+								</result>
+							</results>
+						</if>
+						<!-- <switch> <expression expr="1==1"/> <results> <result value="true"> 
+							<if> <expression expr="2==2"/> <results> <result value="true"> <store name="myData4" 
+							ref="myComponentId1" src="component" /> </result> <result value="true"> <store 
+							name="myData5" ref="myComponentId1" src="component" /> </result> </results> 
+							</if> </result> <result value="false"> <store name="myData3" ref="myComponentId1" 
+							src="component" /> </result> </results> </switch> -->
+					</event>
+					
+					<event id="eventWithOneEventRef">
+						<store name="myData1" ref="ref1InFirstEvent" src="component" />
+						<event ref="eventWithOneComponentReference" />
+						<store name="myData2" ref="ref2InFirstEvent" src="component" />
+					</event>
+					
+					<event id="eventWithMultipleCallToSameEventRef">
+						<event ref="eventWithOneComponentReference" />
+						<store name="myData1" ref="ref1InFirstEvent" src="component" />
+						<event ref="eventWithOneComponentReference" />
+						<store name="myData2" ref="ref2InFirstEvent" src="component" />
+					</event>
+
+					<event id="eventWithMultipleCallsToSameEventRefAndAnotherEvent">
+						<event ref="eventWithOneComponentReference" />
+						<store name="myData1" ref="ref1InFirstEvent" src="component" />
+						<event ref="eventWithOneComponentReference" />
+						<event ref="eventWithComponentReferenceInDialog" />
+					</event>
+
+					<event id="eventWithEventRefCallingAnotherEvent">
+						<event ref="eventWithOneEventRef" />
+					</event>
+					
+					<event id="eventWithRecursiveCall">
+						<event ref="eventWithRecursiveCall" />
+					</event>
+						
+					<!-- FAILED TEST START --> 	
+					<event id="eventWithMultipleIndirectCallToSameEvent">
+						<store name="myData1" ref="ref1InFirstEvent" src="component" />
+						<event ref="secondEvent" />
+					</event>
+
+					<event id="secondEvent">
+						<store name="myData3" ref="ref1InSecondEvent" src="component" />
+						<event ref="thirdEvent"></event>
+						<event ref="commonEvent"></event>
+					</event>
+
+					<event id="thirdEvent">
+						<store name="myData6" ref="ref1InThirdEvent" src="component" />
+						<event ref="commonEvent"></event>
+					</event>
+
+					<event id="commonEvent">
+						<store name="myData7" ref="ref1InCommonEvent" src="component" />
+					</event>
+					
+					<!-- FAILED TEST END -->
+					
+					
+					<!--  TEST IN JIRA START -->
+					
+					<event id="eventReplicatingJiraIssue">
+						<if>
+							<expression expr="${regularOrOneTimeInvoicingValue} == 'regular'">
+								<placeholder name="regularOrOneTimeInvoicingValue" ref="regularOrOneTimeInvoicing" src="component"/>
+							</expression>
+							<results>
+								<result value="true">
+									<store name="allMonthlyCharges" ref="monthlyChargesForTheClientGridId.$$ALL" src="component"/>
+									<iteration items-ref="allMonthlyCharges" begin="0" increment="1" var="tmp" var-index="index">
+										<if>
+											<expression expr="${recordCheckBoxValue} == 'Y'"> <!-- FILTERING SELECTED MONTLY CHARGES BASED ON CHECKBOX BEING SELECTED OR NOT -->
+												<placeholder name="recordCheckBoxValue" ref="allMonthlyCharges[${index}].MONTHLYCHARGESSELECTED"/>
+											</expression>
+											<results>
+												<result value="true">
+													<store name="filteredSelectionOfMonthlyCharges" ref="allMonthlyCharges[${index}]" action="add"/>
+												</result>
+											</results>
+										</if>
+									</iteration>
+									<store name="selectedMonthlyCharges" ref="filteredSelectionOfMonthlyCharges"/>
+									<store name="allExtraCharges" ref="extraChargesForTheClientGridId.$$ALL" src="component"/>
+									<iteration items-ref="allExtraCharges" begin="0" increment="1" var="tmp" var-index="index">
+										<if>
+											<expression expr="${recordCheckBoxValue} == 'Y'"> <!-- FILTERING SELECTED EXTRA CHARGES BASED ON CHECKBOX BEING SELECTED OR NOT -->
+												<placeholder name="recordCheckBoxValue" ref="allExtraCharges[${index}].EXTRACHARGESSELECTED"/>
+											</expression>
+											<results>
+												<result value="true">
+													<store name="selectedExtraCharges" ref="allExtraCharges[${index}]" action="add"/>
+												</result>
+											</results>
+										</if>
+									</iteration>
+									<business-action ref="myBusinessAction1">
+										<in name="monthlyCharges" ref="selectedMonthlyCharges"/>
+                    					<in name="chargesData" ref="selectedExtraCharges"/>
+                    					<in name="languageId" ref="invoiceClientPreviewLanguage" src="component"/>
+                    					<out name="mergeMonthlyAndExtraChargesForAClient" ref="mergeMonthlyAndExtraChargesForAClient"/>
+									</business-action>
+									<store name="fetchedAllChargesDataOnClientsForInvoicing" ref="mergeMonthlyAndExtraChargesForAClient[0]"/>
+									<store name="fetchedAllChargesTotalOnClientsForInvoicing" ref="mergeMonthlyAndExtraChargesForAClient[1]"/>
+									<store name="fetchedSeparateVatAmount" ref="mergeMonthlyAndExtraChargesForAClient[2]"/>
+								</result>
+								<result value="false">
+									<store name="allOneTimeCharges" ref="oneTimeChargesForTheClientGridId.$$ALL" src="component"/>
+									<iteration items-ref="allOneTimeCharges" begin="0" increment="1" var="tmp" var-index="index">
+										<if>
+											<expression expr="${recordCheckBoxValue} == 'Y'"> <!-- FILTERING SELECTED EXTRA CHARGES BASED ON CHECKBOX BEING SELECTED OR NOT -->
+												<placeholder name="recordCheckBoxValue" ref="allOneTimeCharges[${index}].ONETIMECHARGESSELECTED"/>
+											</expression>
+											<results>
+												<result value="true">
+													<store name="selectedOneTimeCharges" ref="allOneTimeCharges[${index}]" action="add"/>
+												</result>
+											</results>
+										</if>
+									</iteration>
+									<business-action ref="myBusinessAction1">
+										<in name="monthlyCharges" ref="selectedMonthlyCharges"/>
+                    					<in name="chargesData" ref="selectedOneTimeCharges"/>
+                    					<in name="languageId" ref="invoiceClientPreviewLanguage" src="component"/>
+                    					<out name="mergeMonthlyAndExtraChargesForAClient" ref="mergeMonthlyAndExtraChargesForAClient"/>
+									</business-action>
+									<store name="fetchedAllChargesDataOnClientsForInvoicing" ref="mergeMonthlyAndExtraChargesForAClient[0]"/>
+									<store name="fetchedAllChargesTotalOnClientsForInvoicing" ref="mergeMonthlyAndExtraChargesForAClient[1]"/>
+									<store name="fetchedSeparateVatAmount" ref="mergeMonthlyAndExtraChargesForAClient[2]"/>
+								</result>
+							</results>
+						</if>
+						<if>
+							<expression expr="${fetchedAllChargesDataOnClientsForInvoicing} != None and len(${fetchedAllChargesDataOnClientsForInvoicing}) > 0"/>
+							<results>
+								<result value="true">
+									<business-action ref="myBusinessAction1">
+										<in name="INVNUMBER" ref="invoiceNumberForClient" src="component"/>
+										<out name="insertInvoiceIsAllowedResult" ref="insertInvoiceIsAllowedResult"/>
+									</business-action>
+									<if>
+										<expression expr="${insertInvoiceAllowedValue} == 1">
+											<placeholder name="insertInvoiceAllowedValue" ref="insertInvoiceIsAllowedResult[0].insertInvoiceIsAllowed" />
+										</expression>
+										<results>
+											<result value="true">
+												<business-action ref="myBusinessAction1">
+						                            <in name="CENTREID" ref="currentCentreId" src="user" />
+						                            <out name="fetchCentreDefault" ref="fetchCentreDefaultFromBA" />
+						                        </business-action>
+						                        <store name="selectedLanguage" ref="invoiceClientPreviewLanguage" src="component"/>
+						                        <business-action ref="myBusinessAction1">
+													<in name="clientInformation" ref="recordOfBISClient"/>
+													<in name="chargesData" ref="fetchedAllChargesDataOnClientsForInvoicing"/>
+													<in name="chargesTotalData" ref="fetchedAllChargesTotalOnClientsForInvoicing"/>
+													<in name="invoiceNumber" ref="invoiceNumberForClient" src="component"/>
+													<in name="dateOfInvoicing" ref="invoiceClientDateOfInvoice" src="component"/>
+													<in name="vatAmountSeparates" ref="fetchedSeparateVatAmount"/>
+													<in name="centreDefault" ref="fetchCentreDefault[0]"/>
+													<in name="language" ref="selectedLanguage"/>
+												</business-action>
+												<business-action ref="myBusinessAction1">
+													<in name="to" ref="invoiceClientMailToId" src="component"/>
+													<in name="from" ref="invoiceClientMailFromId" src="component"/>
+													<in name="cc" ref="invoiceClientMailCcId" src="component"/>
+													<in name="subject" ref="invoiceClientMailSubjectId" src="component"/>
+													<in name="message" ref="invoiceClientMailContentId" src="component"/>
+													<in name="type" value="invoice"/>
+													<in name="attachmentFileName" ref="invoiceNumberForClient" src="component"/>
+												</business-action>
+												<store name="dialogTitle" value="Status" target="user"/>
+												<store name="dialogMessage" value="Email Has Been Sent" target="user"/>
+												<business-action ref="myBusinessAction1">
+													<in name="dateOfInvoice" ref="invoiceClientDateOfInvoice" src="component" />
+													<out name="dueDateOfInvoice" ref="dueDateOfInvoice"/>
+												</business-action>
+												<store name="dataSize" expr="len(${fetchedAllChargesTotalOnClientsForInvoicing})"/>
+												<store name="dataIndex" expr="int(${dataSize}) - 1"/>
+												<store name="totalsOfInvoicingRecord" ref="fetchedAllChargesTotalOnClientsForInvoicing[${dataIndex}]"/>
+												<business-action ref="myBusinessAction1">
+													<in name="CENTREID" ref="currentCentreId" src="user" />
+													<in name="CLIENTID" ref="clientIdToInvoice" />
+													<in name="invoiceNumber" ref="invoiceNumberForClient" src="component"/>
+													<in name="dateOfInvoice" ref="invoiceClientDateOfInvoice" src="component" />
+													<in name="dueDateOfInvoice" ref="dueDateOfInvoice"/>
+													<in name="totalsOfInvoicing" ref="totalsOfInvoicingRecord"/>
+													<out name="fetchedLastInsertedInvoiceId" ref="fetchedLastInsertedInvoiceIdFromBA"/>
+												</business-action>
+												<if>
+													<expression expr="${regularOrOneTimeInvoicingValue} == 'regular'">
+														<placeholder name="regularOrOneTimeInvoicingValue" ref="regularOrOneTimeInvoicing" src="component"/>
+													</expression>
+													<results>
+														<result value="true">
+															<if>
+																<expression expr="${selectedExtraCharges} != None and len(${selectedExtraCharges}) &gt; 0"/>
+																<results>
+																	<result value="true">
+																		<business-action ref="myBusinessAction1">
+																			<in name="chargesData" ref="selectedExtraCharges"/>
+									                    					<out name="chargeIds" ref="chargeIds"/>
+																		</business-action>
+																		<business-action ref="myBusinessAction1">
+																			<in name="INVOICEID" ref="fetchedLastInsertedInvoiceId[0].INVOICEID"/>
+																			<in name="chargeIds" ref="chargeIds" />
+																		</business-action>
+																	</result>
+																</results>
+															</if>
+															<iteration items-ref="selectedMonthlyCharges" begin="0" increment="1" var="tmp" var-index="index">
+																<business-action ref="myBusinessAction1">
+																	<in name="BOOKINGID" ref="selectedMonthlyCharges[${index}].BOOKINGID"/>
+																	<in name="INVOICEID" ref="fetchedLastInsertedInvoiceId[0].INVOICEID"/>
+																	<in name="SELECTEDDATE" ref="bookingsOnClientForDateId" src="component"/>
+																</business-action>
+															</iteration>
+														</result>
+														<result value="false">
+															<business-action ref="myBusinessAction1">
+																<in name="chargesData" ref="selectedOneTimeCharges"/>
+						                    					<out name="chargeIds" ref="chargeIds"/>
+															</business-action>
+															<business-action ref="myBusinessAction1">
+																<in name="INVOICEID" ref="fetchedLastInsertedInvoiceId[0].INVOICEID"/>
+																<in name="chargeIds" ref="chargeIds"/>
+															</business-action>
+														</result>
+													</results>
+												</if>
+											</result>
+											<result value="false">
+												<store name="dialogTitle" value="Cannot Invoice" target="user"/>
+												<store name="dialogMessage" value="Please contact support too.support@qafe.com" target="user"/>
+											</result>
+										</results>
+									</if>
+								</result>
+								<result value="false">
+									<store name="dialogTitle" value="Cannot Invoice" target="user"/>
+									<store name="dialogMessage" value="Please Select Charges To Be Invoiced." target="user"/>
+									<set-property property="enabled" value="true">
+										<component ref="invoiceClientMailSend"/>
+									</set-property>
+								</result>
+							</results>
+						</if>
+						
+					</event>
+					
+					
+					
+					
+				</events>
+			</window>
+		</view>
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="myBusinessAction1" >
+					<service method-ref="myMethod" ref="myService">
+						<in name="input1" ref="myComponentId1"></in>	
+					</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	
+	<integration-tier>
+		<services>
+			<service resource-ref="myResource" id="myService">
+				<method id="myMethod">
+					<in name="input1" ref="myComponentId1"></in>	
+				</method>
+			</service>
+			
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass classname="Test" id="myResource"/>
+		</resources>
+	</resource-tier>
+</application-mapping> 

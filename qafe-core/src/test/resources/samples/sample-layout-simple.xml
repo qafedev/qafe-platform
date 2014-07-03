@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		  <view>
+			  <window id="window" displayname="This is my Window" icon="http://icons.iconarchive.com/icons/ruby-software/toolbar-3/help-icon.jpg"  in-dock="true">
+				    <rootpanel id="RootPanel" toolbar="maintoolbar">
+				        <verticallayout>
+						<label width="100px"  height="10px" visible="false" id="mylabel" displayname="Hell world !! (Window2)Click on me"/>
+						<button image="http://www.google.com/image.png"/>
+						<textfield id="mytextfield" format="dd/mm/yyy" tooltip="This is my Textfield" orientation="updown"><value></value></textfield>
+						<hidden id="id_record" value="11211"/>
+						<checkbox displayname="" displayname-position="right"/>
+						<panel id="buttonpanel" disclosure="true">
+							<horizontallayout>
+								<button id="mybuttonenable" displayname="Click to Enable"/>
+								<button id="mybuttondisable" displayname="Click to Disable"/>
+							</horizontallayout>
+						</panel>
+						<map id="mymap" name="mymap" image="http://www.w3schools.com/tags/planets.gif">
+							<area shape="rect" coords="0,0,82,126" alt="Sun" />
+							<area shape="circle" coords="90,58,3" alt="Mercury" />
+							<area shape="circle" coords="124,58,8" alt="Venus" />
+							
+    					</map>
+    					<tilelist id="mytilelist" name="mymap"  columns="2">
+								<button id="yahoo" displayname="hallo" group-name="x"/>
+							
+    					</tilelist>
+						<textfield id="my2ndtextfield" validation-message="Validation failed">	<regexp><![CDATA[^[a-zA-Z]+(([\'\,\.\-][a-zA-Z])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\\w[-._\w]*\w\.\w{2,4})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,4})$]]></regexp>
+				            	</textfield>
+					
+						<frame id="myframe" src="http://www.qualogy.com"  group-name="x"/>
+						<html id="myhtml" escape="true"><text>Here is some HTML code</text></html>
+						<!-- <panel id="panel2window2">
+							<borderlayout>
+								<north><label id="panel2window3label1" displayname="NORTH"/></north>
+								<south><label id="panel2window3label5" displayname="SOUTH"/></south>
+								<center><label id="panel2window3label2" displayname="CENTER"/></center>
+								<east><label id="panel2window3label3" displayname="EAST"/></east>
+								<west><label id="panel2window3label4" displayname="WEST"/></west>								
+							</borderlayout>						
+					</panel>-->
+					
+					<panel id="panelautowindow2">
+							<autolayout cols="3">
+								<label id="panelauto2window3label11" displayname="NORTH"/>
+								<label id="panelauto2window3label12" displayname="NORTH"/>
+								<label id="panelauto2window3label13" displayname="NORTH"/>
+								<label id="panelauto2window3label14" displayname="NORTH"/>
+								<label id="panelauto2window3label15" displayname="NORTH"/>
+							</autolayout>						
+					</panel>
+					<panel-ref id="My New Panel" ref="reusablepaneldef1"/>
+					<stackpanel id="stackPanel" group-name="x">
+						<stack id="stack1" displayname="U Suck"><label id="panel2window3label11" displayname="North"/></stack>
+						<stack id="stack2" displayname="This is cool"><label id="panel2window3label12" displayname="South"/></stack>
+					</stackpanel>
+					<splitpanel id="splitpanel" horizontal="false" width="4" height="4">
+						<first><panel id="left"><verticallayout><label id="splitlabelleft" displayname="Left...."/></verticallayout></panel></first>
+						<second><panel id="right"><verticallayout><label id="splitlabelright" displayname="right"/></verticallayout></panel></second>
+					</splitpanel>
+					<splitpanel id="splitpanel12" horizontal="false" width="4" height="4">
+						<first><panel-ref id="left12" ref="reusablepaneldef1"/>  </first>						
+						<second><panel-ref id="right12" ref="reusablepaneldef1"/> </second>
+					</splitpanel>
+					
+					<datagrid id="mydatagrid" pagesize="40" delete="true" add="true"  minrows="10" export="true" >
+						<column id="col1"  content="link" sortable="true"  displayname="This is column 1" editable="true"/>
+						<column id="col2" sortable="true"  displayname="This is column 2" />
+						<column id="col3" sortable="false"  displayname="This is column 3"/>
+						<column id="col4" sortable="false" static="true" displayname="This is column static 4">
+							<label id="col4label" displayname="Click me" />
+						</column>
+						<overflow id="overflowbuttonpanel">
+							<horizontallayout>
+								<button id="xxmybuttonenable" displayname="Click to Enable"/>
+								<button id="xxmybuttondisable" displayname="Click to Disable"/>
+							</horizontallayout>
+						</overflow>
+					</datagrid>
+					<link id="link" displayname="I'm a link"/>
+					</verticallayout>
+	     			   </rootpanel>
+			
+			           <events>
+					   		
+     			    		<event id="myevent">
+			            		<listeners>
+									<listenergroup>
+										<component ref="mylabel"/>
+										<component ref="mybuttonenable"/>
+			                			<listener type="onclick">
+											<listener-parameter name="mouse-button" value="right"/>
+										</listener>
+										<listener type="onkeypress">
+											<listener-parameter name="keys" value="A" />
+										 	<listener-parameter name="keys" value="CTRL-B" />									
+										</listener>
+									</listenergroup>
+		            			</listeners>
+						<business-action ref="getPerson" >
+							
+						</business-action>
+						<set group-name="mydatagroup" ref="resultset" action="add"/>
+						<set component-id="mydatagrid" ref="resultset" action="add">
+							<mapping key="col1" value="name"/>
+							<mapping key="col2" value="lastName"/>
+							<mapping key="col3" value="age"/>							
+						</set>
+						<set-panel target="splitpanel12" src="reusablepaneldef1"/>
+						<set-property property="width" value="${w}">								
+								<placeholder name="w" ref="width" src="user"/>
+								<component ref="mylabel"/>
+						
+						</set-property>
+						
+						<log>
+							<message value="Log message"/>
+						</log>
+						<set name="mydatagrid" ref="resultset">
+							<mapping key="col1" value="name"/>
+							<mapping key="col2" value="lastName"/>
+							<mapping key="col3" value="age"/>							
+						</set>
+							<set name="mydatagrid" ref="resultset"/>
+							
+							<set name="mydatagrid" ref="myinputfield"  src="component" value="Hello World, ${myinputfield}" />
+
+				<switch >
+					<expression expr="$SYSTEM.jaja"/>
+					<results>
+						<result value="4">
+							<switch>
+								<expression expr="$SYSTEM.jaja"/>
+								<results>
+									<result value="4"/>
+									<result value="5"/>
+								</results>
+							</switch>
+						</result>
+						<result value="5">
+							<business-action ref="getPerson" >
+								<in name="prefix" ref="tussenvoegsel"  src="component"/>
+								<in name="lastName" ref="achternaam"  src="component"/>
+								<out name="lastname" ref="lastname"/>
+							</business-action>
+						</result>
+						<result value="5"/>
+						<default/>
+					</results>
+				</switch>
+				<!-- if('true'==document.form.lastname_validate.value || (
+						document.form.lastname!=NULL && document.form.lastname.length>2 &&
+						document.form.prefix!=NULL && (
+							document.form.prefix.length + document.form.lastname.length) =< 100
+					)
+				)-->
+				<if >
+					<expression expr=""/>
+					<results>
+						<result value="false"/>
+							<!--<error ref="invalid.lastname"/>
+						</result>-->
+					</results>
+				</if>
+
+							            <!--<validate message="Email validation failed">
+				                	<component ref="mytextfield"/>
+				                	<regexp><![CDATA[^[a-zA-Z]+(([\'\,\.\-][a-zA-Z])?[a-zA-Z]*)*\s+<(\w[-._\w]*\w@\\w[-._\w]*\w\.\w{2,4})>$|^(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,4})$]]></regexp>
+				            	</validate>-->
+								<!-- shorter version of the validation line above this line -->
+						<validate message="Email validation failed" type="email">
+				              	<component ref="mytextfield"/>			                	
+		            	</validate>
+						
+						<dialog type="info"> 
+							<title value="Clicked"/>
+							<message value="U Suck" />
+						</dialog>
+						<dialog type="info" width="333" height="2212"> 
+							<title value="Clicked"/>
+							<message value="U Suck" />
+						</dialog>
+						
+						<copy from="fromfield" to="tofield"/>
+						<set-property  property="visible" value="true">
+							<component ref="mylabel"/>
+							<component ref="yourlabel"/>							
+						</set-property>
+						<set-property  property="visible" value="false">
+							<component ref="mylabel"/>
+							<component ref="yourlabel"/>
+						</set-property>
+						<focus ref="mylabel" />
+						<toggle>
+							<component ref="mylabel"/>
+							<component ref="yourlabel"/>							
+						</toggle>
+						<return/>
+						<openwindow>
+							<ref value="myWindow"/>
+							<title value="Window Title"/>
+							<url value="http://www.google.com"/>
+							<data-param name="myParameter1" value="1"/>
+							<data-param name="myParameter2" value="2"/>
+						</openwindow>
+						<closewindow ref="window" />
+						<set ref="mylabel" value="myLabelValue"/>
+						<set ref="mylabel" value="myLabelValueData"/>
+		       		 	</event>
+				   </events>
+				   <styles>
+				   		<style window-id="window" location="/my-qafe.less"/> 
+			      		
+				   </styles>
+<!-- 
+				<styles>
+    					<style window-id="window" location="http://www.qualogy.com/templates/qualogy/css/template_css.css"/> 
+			      		
+				</styles>
+			 -->
+			 </window>
+
+		 <!--  Mind that keyboard shortcuts + MultiLingual support is new to the Oracle Forms world (on the fly changing language was not possible) -->
+     		<menu-definition id="main_menu">
+						<menu id="file_menu" shortcut="CTRL+Y"  displayname="File">
+							<menu id="file_menu_save" shortcut="CTRL+Y"  displayname="Save"/>
+							<menu id="file_menu_save_and_proceed" shortcut="CTRL+Y"  displayname="Save and Process"/>
+							<separator/>
+							<menu id="file_menu_logon" shortcut="CTRL+Y"  displayname="Log On as Different User"/>
+							<separator/>
+							<menu id="file_menu_print" shortcut="CTRL+Y"  displayname="Print.."/>
+							<separator/>
+							<menu id="file_menu_close_form" shortcut="CTRL+Y"  displayname="Close Form"/>
+							<menu id="file_menu_close_all" shortcut="CTRL+Y"  displayname="Close All"/>
+							<separator/>
+							<menu id="file_menu_exit" shortcut="CTRL+Y"  displayname="Exit"/>
+						</menu>
+						<menu id="edit_menu" shortcut="CTRL+Y"  displayname="Edit">
+							<menu id="edit_menu_undo" shortcut="CTRL+Y"  displayname="Undo Record"/>
+							<separator/>
+							<menu id="edit_menu_cut" shortcut="CTRL+Y"  displayname="Cut"/>
+							<menu id="edit_menu_copy" shortcut="CTRL+Y"  displayname="Copy"/>
+							<menu id="edit_menu_paste" shortcut="CTRL+Y"  displayname="Paste"/>
+							<separator/>
+							<menu id="edit_menu_new_record" shortcut="CTRL+Y"  displayname="New Record"/>
+							<menu id="edit_menu_duplicate_record" shortcut="CTRL+Y"  displayname="Duplicate">
+								<menu id="edit_menu_duplicate_record_field_above" shortcut="CTRL+Y"  displayname="Field Above"/>
+								<menu id="edit_menu_duplicate_record_record_above" shortcut="CTRL+Y"  displayname="Record Above"/>
+							</menu>
+							<separator/>
+							<menu id="edit_menu_delete_record" shortcut="CTRL+Y"  displayname="Delete Record"/>
+							<separator/>
+							<menu id="edit_menu_clear" shortcut="CTRL+Y"  displayname="Clear">
+								<menu id="edit_menu_clear_field" shortcut="CTRL+Y"  displayname="Clear Field"/>
+								<menu id="edit_menu_clear_record" shortcut="CTRL+Y"  displayname="Clear Record"/>
+								<menu id="edit_menu_clear_block" shortcut="CTRL+Y"  displayname="Clear Block"/>
+								<menu id="edit_menu_clear_form" shortcut="CTRL+Y"  displayname="Clear Form"/>
+							</menu>
+							<separator/>
+							<menu id="edit_menu_select_all" shortcut="CTRL+Y"  displayname="Select All"/>
+							<menu id="edit_menu_deselect_all" shortcut="CTRL+Y"  displayname="Deselect All"/>
+							<menu id="edit_menu_list_of_values" shortcut="CTRL+Y"  displayname="List of Values"/>
+							<menu id="edit_menu_edit_field" shortcut="CTRL+Y"  displayname="Edit Field"/>
+							<menu id="edit_menu_preferences" shortcut="CTRL+Y"  displayname="Preferences">
+								<menu id="edit_menu_preferences_change_password" shortcut="CTRL+Y"  displayname="Change Password"/>
+								<menu id="edit_menu_preferences_preferences" shortcut="CTRL+Y"  displayname="Preferences"/>
+							</menu>														
+						</menu>
+						<menu id="view_menu" shortcut="CTRL+Y"  displayname="View">
+							<menu id="view_menu_find" shortcut="CTRL+Y"  displayname="Find"/>
+							<menu id="view_menu_find_all" shortcut="CTRL+Y"  displayname="Find All"/>
+							<separator/>
+							<menu id="view_menu_enter_query" shortcut="CTRL+Y"  displayname="Enter Query"/>
+							<menu id="view_menu_run_query" shortcut="CTRL+Y"  displayname="Run Query"/>
+							<menu id="view_menu_cancel_query" shortcut="CTRL+Y"  displayname="Cancel Query"/>
+							<separator/>
+							<menu id="view_menu_count_and_match" shortcut="CTRL+Y"  displayname="Count and Match Records"/>
+							<menu id="view_menu_show_last_criteria" shortcut="CTRL+Y"  displayname="Show Last Criteria"/>
+							<separator/>
+							<menu id="view_menu_record" shortcut="CTRL+Y"  displayname="Record">
+								<menu id="view_menu_record_next" shortcut="CTRL+Y"  displayname="Next Record"/>
+								<menu id="view_menu_record_previous" shortcut="CTRL+Y"  displayname="Previous Record"/>
+								<menu id="view_menu_record_first" shortcut="CTRL+Y"  displayname="First"/>
+								<menu id="view_menu_record_last" shortcut="CTRL+Y"  displayname="Last"/>
+							</menu>
+							<separator/>
+							<menu id="view_menu_order_by_currentfield" shortcut="CTRL+Y"  displayname="Order by Current Field" >
+								<menu id="view_menu_order_by_currentfield_ascending" shortcut="CTRL+Y"  displayname="Ascending"/>
+								<menu id="view_menu_order_by_currentfield_descending" shortcut="CTRL+Y"  displayname="Descending"/>								
+							</menu>
+							<separator/>
+							<menu id="view_menu_clear_orderby" shortcut="CTRL+Y"  displayname="Clear Order By"/>
+							
+						</menu>
+						<menu id="window_menu" shortcut="CTRL+Y"  displayname="Window"/>
+						<menu id="help_menu" shortcut="CTRL+Y"  displayname="Help">
+							<menu id="help_menu_help_topics" shortcut="CTRL+Y"  displayname="Help Topics"/>
+							<menu id="help_menu_whatsthis" shortcut="CTRL+Y"  displayname="What's this?"/>
+							<menu id="help_menu_keyboard_help" shortcut="CTRL+Y"  displayname="Keyboard help"/>
+							<menu id="help_menu_show_item_hint" shortcut="CTRL+Y"  displayname="Show Item Hint"/>
+							<separator/>
+   							<menu id="help_menu_diagnotics" shortcut="CTRL+Y"  displayname="Diagnostics">
+								<menu id="help_menu_diagnotics_headstart" shortcut="CTRL+Y"  displayname="Headstart Debug Mode"/>
+								<separator/>
+								<menu id="help_menu_diagnotics_displayerror" shortcut="CTRL+Y"  displayname="Display Error"/>
+								<menu id="help_menu_diagnotics_last_query" shortcut="CTRL+Y"  displayname="Last Query"/>
+								<separator/>
+								<menu id="help_menu_diagnotics_trace" shortcut="CTRL+Y"  displayname="Trace"/>
+								<menu id="help_menu_diagnotics_set_break" shortcut="CTRL+Y"  displayname="Set Break"/>
+								
+							</menu>
+							<separator/>
+							<menu id="help_menu_recordhistory" shortcut="CTRL+Y"  displayname="Record History"/>
+							<menu id="help_menu_about_this_application" shortcut="CTRL+Y"  displayname="About This Application"/>
+
+						</menu>
+						
+											
+			</menu-definition>
+			<toolbar-definition id="maintoolbar">
+				<tb-item id="tbsave" image="images/filesave.png" tooltip="Opslaan"/>
+				<tb-item id="tbdelete" image="images/delete.png" tooltip="Verwijderen"/>
+				<tb-item id="tbnew" image="images/new.png" tooltip="Nieuw"/>
+				<tb-item id="tbprint" image="images/print.png" tooltip="Print"/>
+				<tb-item id="tbrefresh" image="images/refresh.png" tooltip="Refresh"/>
+				<tb-item id="tbfirst" image="images/go-first.png" tooltip="Eerste record"/>
+				<tb-item id="tbprevious" image="images/go-previous.png" tooltip="Vorige record"/>
+				<tb-item id="tbnext" image="images/go-next.png" tooltip="Volgende record"/>
+				<tb-item id="tblast" image="images/go-last.png" tooltip="Laatste record"/>
+			</toolbar-definition>
+			<panel-definition id="reusablepaneldef1">
+                     <verticallayout>
+                            <textfield id="col1person" name="id" type="int" tooltip="ID" editable="false"/>
+                            <textfield id="col2person" name="age"  type="text" tooltip="What the age ?" />
+                            <textfield id="col3person" name="name"  type="text" tooltip="Name:"/>
+                            <textfield id="col4person" name="lastName"  type="text" tooltip="Last name:" suggest="true" suggest-chars="1"/>
+                            <datagrid id="mydatagrid" pagesize="40">
+                                <column name="id" sortable="true" displayname="ID" editable="true"/>
+                                <column name="age" sortable="true"  displayname="Age" />
+                                <column name="name" sortable="false"  displayname="Name:"/>
+                                <column name="lastName" sortable="false" displayname="Last name:"/>
+                            </datagrid>                             
+                   </verticallayout>
+              </panel-definition>
+		
+			
+			
+		</view>
+	</presentation-tier>
+		<business-tier>
+		<business-actions>
+			<business-action id="doSomething">
+				<service ref="JavaService" method-ref="doSomething" />
+			</business-action>
+			<business-action id="getPersonenList">
+				<service ref="JavaService" method-ref="getPersonenList" />
+			</business-action>
+			<business-action id="getPerson">
+				<service ref="JavaService" method-ref="getPerson" />
+			</business-action>
+		</business-actions>
+		<types>		
+		
+			
+		</types>	
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="JavaService" resource-ref="javaService">
+				<method id="doSomething" name="doSomething"/>
+				<method id="getPersonenList" name="getPersonenList">
+					<out name="persons"/>
+				</method>
+				<method id="getPerson" name="getPerson">
+					<out name="person"/>
+				</method>
+				
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<javaclass id="javaService" classname="test.com.qualogy.qpd.qafe.services.JavaService" jarfile-location="test"/>
+		</resources>
+	</resource-tier>
+</application-mapping>

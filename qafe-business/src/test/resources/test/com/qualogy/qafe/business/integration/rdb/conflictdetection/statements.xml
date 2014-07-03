@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<statements xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd">
+
+	<batch id="setUp">
+		<query sql="delete from QAFE_TEST_SELECTDB" />
+		<query sql="insert into QAFE_TEST_SELECTDB values ('E1','Binu','D1',to_date('10-12-1980','MM-DD-YYYY'),'2')" />
+		<query sql="insert into QAFE_TEST_SELECTDB values ('E2','Hallo','D1',to_date('08-12-1982','MM-DD-YYYY'),'1')" />
+	</batch>
+
+	<select id="selectConflict1" table="QAFE_TEST_SELECTDB" />
+	<select id="selectConflict2" sql="select * from QAFE_TEST_SELECTDB" />
+	<select id="selectConflict3" sql="select EMP_ID, EMP_NAME, CHILDREN from QAFE_TEST_SELECTDB" />
+	<select id="selectConflict4" sql="select EMP_ID as EMPID, EMP_NAME EMPNAME, CHILDREN from QAFE_TEST_SELECTDB" />
+
+	<update id="updateConflict1" table="QAFE_TEST_SELECTDB" where="EMP_ID=:EMP_ID"/>
+	<update id="updateConflict2" sql="update QAFE_TEST_SELECTDB set EMP_NAME=:EMP_NAME, CHILDREN=:CHILDREN where EMP_ID=:EMP_ID" />
+	<update id="updateConflict4" sql="update QAFE_TEST_SELECTDB set EMP_NAME=:EMPNAME, CHILDREN=:CHILDREN where EMP_ID=:EMPID" />
+
+	<delete id="deleteConflict1" sql="delete from QAFE_TEST_SELECTDB where EMP_ID=:pk"/>
+
+</statements>

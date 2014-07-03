@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<styles>
+			<style location="../css/demo.css" window-id="*"></style>
+		</styles>
+		<view>
+			<window id="wndTable" displayname="Table" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>						
+						<table width="-1" height="-1">
+							<header></header>
+							<row>
+								<cell>
+									<image location="images\plane.png" class="item-icon"/>
+								</cell>
+								<cell>
+									<label displayname="Plane mode" class="item-label"/>
+								</cell>
+								<cell>
+									<checkbox displayname=""/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<image location="images\wifi.png" class="item-icon"/>
+								</cell>
+								<cell>
+									<label displayname="Wi-Fi" class="item-label"/>
+								</cell>
+								<cell>
+									<label displayname="Qualogy" class="item-value"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<image id="imgVPN" location="images\vpn.png" class="item-icon"/>
+								</cell>
+								<cell>
+									<label id="lblVPN" displayname="VPN" class="item-label"/>
+								</cell>
+								<cell>
+									<label id="lblVPNValue" displayname="NA" class="item-value"/>
+								</cell>
+							</row>							
+						</table>
+						<table width="-1" height="-1">
+							<header></header>
+							<row>
+								<cell>
+									<image location="images\sound.png" class="item-icon"/>
+								</cell>
+								<cell>
+									<label displayname="Sounds" class="item-label"/>
+								</cell>
+								<cell>
+									<image location="images\arrow.png" class="item-value"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<image location="images\brightness.png" class="item-icon"/>
+								</cell>
+								<cell>
+									<label displayname="Brightness" class="item-label"/>
+								</cell>
+								<cell>
+									<image location="images\arrow.png" class="item-value"/>
+								</cell>
+							</row>
+						</table>
+					</verticallayout>
+				</rootpanel>	
+				<events>
+					<event src-id="sourceId" src-name="sourceName" src-value="sourceValue" src-listener-type="sourceListenerType">
+						<listeners>
+							<listenergroup>
+								<component ref="imgVPN"/>
+								<component ref="lblVPN"/>
+								<component ref="lblVPNValue"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<openwindow>
+							<ref value="wndVPN"/>
+						</openwindow>
+					</event>
+				</events>			
+			</window>
+			<window id="wndVPN" displayname="VPN" isparent="false">
+				<rootpanel id="myRootPanel">
+					<verticallayout>						
+						<table width="-1" height="-1">
+							<header></header>
+							<row>
+								<cell>
+									<label displayname="VPN" class="item-label"/>
+								</cell>
+								<cell>
+									<checkbox displayname=""/>
+								</cell>
+							</row>
+						</table>
+						<table width="-1" height="-1">
+							<header></header>
+							<row>
+								<cell>
+									<panel>
+										<verticallayout>
+											<label displayname="SuperVPN" class="item-label"/>
+											<label displayname="Modified" class="item-label-description"/>
+										</verticallayout>
+									</panel>
+								</cell>
+								<cell>
+									<image location="images\arrow.png" class="item-value"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<panel>
+										<verticallayout>
+											<label displayname="VPNVIP" class="item-label"/>
+											<label displayname="VPNVIP Co. Ltd." class="item-label-description"/>
+										</verticallayout>
+									</panel>
+								</cell>
+								<cell>
+									<image location="images\arrow.png" class="item-value"/>
+								</cell>
+							</row>
+							<row>
+								<cell>
+									<label displayname="Add VPN..." class="item-label"/>
+								</cell>
+								<cell>
+									<image location="images\arrow.png" class="item-value"/>
+								</cell>
+							</row>
+						</table>
+					</verticallayout>
+				</rootpanel>	
+			</window>								
+		</view>
+	</presentation-tier>	
+</application-mapping> 

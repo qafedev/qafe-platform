@@ -1,0 +1,13 @@
+Copyright 2006- 2011 Qualogy B.V.. All rights reserved.
+
+The contents of this software, QAFE Platform Form Conversion GUI Editition,
+are subject to the terms that are provided by
+Qualogy B.V. The software may not be copied or (re)distributed without
+the explicit written permission from Qualogy B.V.
+			
+For more information visit http://www.qafe.com and http://www.qualogy.com
+
+For the complete license agreement for the QAFE Platform Enterprise Editition,
+please visit this link 
+
+http://www.qafe.com/buy/license-and-services-agreement-enterprise-edition/

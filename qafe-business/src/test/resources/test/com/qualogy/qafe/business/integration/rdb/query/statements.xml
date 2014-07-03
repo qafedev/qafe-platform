@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<statements xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd">
+	<batch id="setup">
+		<query sql="create table qafe_test_query (id VARCHAR PRIMARY KEY, name VARCHAR)"/>
+		<!--<query sql="ALTER TABLE users ADD CONSTRAINT PK PRIMARY KEY (id)"/> -->
+		<insert sql="insert into qafe_test_query (id, name) values('0', 'A')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('2', 'C')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('3', 'marc')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('4', 'D')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('5', 'marc')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('6', 'marc')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('7', 'marc')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('8', 'marc8')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('9', 'Z')"/>
+		<insert sql="insert into qafe_test_query (id, name) values('1', 'B')"/>
+	</batch>
+	<batch id="teardown">
+		<query sql="drop table qafe_test_query"/>
+	</batch>
+	<query id="getUsersSqlAsAttribute" sql="select * from qafe_test_query"/>
+	<query id="getUsersSqlAsText">select * from qafe_test_query</query>	
+	<query id="getUsersSqlAsAttributeById" sql="select * from qafe_test_query where id=:id"/>	
+	<query id="getUsersSqlAsTextById">select * from qafe_test_query where id=:id</query>	
+	
+</statements>

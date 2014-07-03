@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+   <presentation-tier>
+		<view>
+			<window id="infoview" displayname="InfoView" width="300" height="200" >
+				<rootpanel id="myrootpanel">
+						<verticallayout>
+							<frame height="200" width="300" src="http://bowebm1.i002.woonsuite.local:4010/wi/bin/iswi.dll/WIGenerator/wigenerator/generator/ExecuteWIS?sWIS=DefaultCorporateFrame&amp;CORPORATE_MODE=A&amp;sCorpFilterOnCategory=____rien____&amp;sortCriterion=DocumentName&amp;sortOrder=A&amp;Refresh=Y" id="infoviewframe" />
+						</verticallayout>
+				</rootpanel>		
+			</window>
+		</view>
+   </presentation-tier>
+
+</application-mapping>

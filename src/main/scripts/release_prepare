@@ -1,0 +1,16 @@
+#!/bin/bash
+
+TIME=$(date)
+start_time=$(date +%s)
+HOST=$(hostname)
+
+echo "############# release:prepare started at [$TIME] on Host [$HOST]"
+
+mvn -s settings.xml -Pqafe-build-all clean install
+mvn -s settings.xml -Pqafe-build-all release:prepare
+
+TIME=$(date)
+finish_time=$(date +%s)
+duration_min=$(( $((finish_time - start_time)) /60 ))
+
+echo "############# release:prepare finished at [$TIME] on Host [$HOST] taking [$duration_min] minutes"

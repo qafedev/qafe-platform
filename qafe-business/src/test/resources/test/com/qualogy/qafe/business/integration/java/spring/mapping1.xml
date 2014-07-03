@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	
+	<business-tier>
+		<business-actions>
+			<business-action id="sayHello1A">
+				<service method-ref="sayHello1A" ref="myServiceBean1A"/>
+			</business-action>			
+			<business-action id="saySomething">
+				<service method-ref="saySomething" ref="myServiceBean1A"/>
+			</business-action>
+			<business-action id="sayGoodMorning">
+				<service method-ref="sayGoodMorning" ref="myServiceBean1A"/>
+			</business-action>
+			
+			<business-action id="sayGreetings2A">
+				<service method-ref="sayGreetings2A" ref="myServiceBean2A"/>
+			</business-action>
+			
+			<business-action id="sayHello1B">
+				<service method-ref="sayHello1B" ref="myServiceBean1B"/>
+			</business-action>
+			<business-action id="sayGreetings2B">
+				<service method-ref="sayGreetings2B" ref="myServiceBean2B"/>
+			</business-action>
+			
+		</business-actions>
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service resource-ref="serviceBean1A" id="myServiceBean1A">
+				<method id="sayHello1A" name="sayHello">
+					<out name="result"/>
+				</method>	
+				<method id="saySomething" name="saySomething">
+					<in name="0" ref="input"/>
+					<out name="result"/>
+				</method>
+				<method id="sayGoodMorning" name="saySomething">
+					<in name="0" value="Good Morning"/>
+					<out name="result"/>
+				</method>
+			</service>			
+			<service resource-ref="serviceBean2A" id="myServiceBean2A">
+				<method id="sayGreetings2A" name="sayGreetings">
+					<out name="result"/>
+				</method>					
+			</service>
+			
+			<service resource-ref="serviceBean1B" id="myServiceBean1B">
+				<method id="sayHello1B" name="sayHello">
+					<out name="result"/>
+				</method>	
+			</service>			
+			<service resource-ref="serviceBean2B" id="myServiceBean2B">
+				<method id="sayGreetings2B" name="sayGreetings">
+					<out name="result"/>
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	<resource-tier>
+		<resources>
+			<spring config-files="spring-context.xml">
+	      		<spring-bean id="serviceBean1A" bean="bean1"/>
+	      		<spring-bean id="serviceBean2A" bean="bean2"/>
+	      	</spring>
+	      	<spring config-files="spring-context1.xml,spring-context2.xml">
+	      		<spring-bean id="serviceBean1B" bean="bean1"/>
+	      		<spring-bean id="serviceBean2B" bean="bean2"/>
+	      	</spring>
+		</resources>
+	</resource-tier>
+</application-mapping>

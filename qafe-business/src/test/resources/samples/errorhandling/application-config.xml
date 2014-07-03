@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<applications xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
+	<application id="errorhandlingtest" name="errorhandlingtest">
+		<application-mapping>
+			<business-tier>
+				<business-actions>
+					<business-action id="testExceptionRethrow"><!-- access="private" -->
+						<transaction managed="no"/>
+						<service ref="JavaService" method-ref="throwIllegalArgument"/>
+						<error-handler id="error" error-ref="illegalargumentexception">
+		                	<service ref="JavaService" method-ref="printHello"/>
+		                </error-handler>
+					</business-action>
+					<business-action id="testExceptionSwallow">
+						<transaction managed="no"/>
+						<service ref="JavaService" method-ref="throwIllegalArgument"/>
+						<error-handler id="error" error-ref="illegalargumentexception" final-action="swallow">
+		                	<service ref="JavaService" method-ref="printHello"/>
+		                </error-handler>
+					</business-action>
+				</business-actions>
+			</business-tier>
+			<integration-tier>
+				<services>
+					<service id="JavaService" resource-ref="java-service">
+						<method id="throwIllegalArgument"/>
+						<method id="printHello"/>
+					</service>
+				</services>
+				<errors>
+		        	<error id="illegalargumentexception" exception="java.lang.IllegalArgumentException">  
+						<log>illegalargument thrown</log> 
+					</error>	
+					<error id="runtimeexception" exception="java.lang.RuntimeException"> 
+						<log>runtime thrown</log> 
+					</error>
+					<error id="throwable" exception="java.lang.Throwable"> 
+						<log>throwable thrown</log> 
+					</error>
+				</errors>
+			</integration-tier>
+			<resource-tier>
+				<resources>
+					<javaclass id="java-service" classname="test.com.qualogy.qafe.business.integration.testservices.JavaService" jarfile-location="/../../samples/test.jar"/>
+				</resources>
+			</resource-tier>
+		</application-mapping>
+	</application>
+</applications>

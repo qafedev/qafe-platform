@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<integration-tier>
+		<services>
+			<service resource-ref="DBResource" id="HDEMO65DatabaseService">
+				
+				<method id="insertData" name="insertData"/>
+				
+				<method id="testSelectToVerify" name="selectOne">
+					<out name="result"/>
+				</method>
+				
+				<method id="testSelectAllToVerify" name="selectAll">
+					<out name="result"/>
+				</method>
+				
+				<method id="testUpdateWithoutPK" name="useUpdateTagWithTableName">
+					<in name="NAME" ref="nameRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithPK" name="useUpdateTagWithTableName">
+					<in name="ID" ref="idRefVar"/>
+					<in name="NAME" ref="nameRefVar"/>
+				</method>
+				
+				<method id="testUpdateMultipleFieldsWithoutPK" name="useUpdateTagWithTableName">
+					<in name="NAME" ref="nameRefVar"/>
+					<in name="ADDRESS" ref="addressRefVar"/>
+					<in name="SALARY" ref="salaryRefVar"/>
+					<in name="ENTRY_DATE" ref="dateRefVar"/>
+				</method>
+				
+				<method id="testUpdateMultipleFieldsWithPK" name="useUpdateTagWithTableName">
+					<in name="ID" ref="idRefVar"/>
+					<in name="NAME" ref="nameRefVar"/>
+					<in name="ADDRESS" ref="addressRefVar"/>
+					<in name="SALARY" ref="salaryRefVar"/>
+				</method>
+				
+				<method id="testDateUpdateWithPK" name="useUpdateTagWithTableName">
+					<in name="ID" ref="idRefVar"/>
+					<in name="ENTRY_DATE" ref="dateRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSQLAttribute" name="updateWithSqlAttribute"/>
+				
+				<method id="testUpdateWithSqlAttributeAndInParams" name="updateWithSqlAttributeAndInParams">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="nameVar" ref="nameRefVar"/>
+					<in name="salaryVar" ref="salaryRefVar"/>
+					<in name="dateVar" ref="dateRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSqlAttributeAndInParamsAsMap" name="updateWithSqlAttributeAndInParams">
+					<in name="mapVar" ref="mapRefVar"/>
+				</method>
+				
+				<method id="testUpdateTagWithInParamsAsMap" name="useUpdateTagWithTableName">
+					<in name="mapVar" ref="mapRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSqlAttributeAndInParamsAsCollection" name="updateWithSqlAttributeAndInParams">
+					<in name="listRefVar" ref="listRefVar"/>
+				</method>
+				
+				<method id="testUpdateTagWithInParamsAsCollection" name="useUpdateTagWithTableName">
+					<in name="listRefVar" ref="listRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSqlAsText" name="updateWithSqlAsText"/>
+				
+				<method id="testUpdateWithSqlAsTextAndInParams" name="updateWithSqlAsTextAndInParams">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="nameVar" ref="nameRefVar"/>
+					<in name="salaryVar" ref="salaryRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSqlAsTextAndInParamsAsMap" name="updateWithSqlAsTextAndInParams">
+					<in name="mapVar" ref="mapRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSqlAsTextAndInParamsAsCollection" name="updateWithSqlAsTextAndInParams">
+					<in name="listRefVar" ref="listRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithAllAttributes" name="updateWithAllAttributes">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="addressVar" ref="addressRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithAllAttributesAndInParamsAsMap" name="updateWithAllAttributes">
+					<in name="mapVar" ref="mapRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithAllAttributesAndInParamsAsCollection" name="updateWithAllAttributes">
+					<in name="listRefVar" ref="listRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithTableAndSqlAttribute" name="updateWithTableAndSqlAttribute">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="addressVar" ref="addressRefVar"/>
+					<in name="salaryVar" ref="salaryRefVar"/>
+				</method>			
+				
+				<method id="testUpdateWithSqlAndWhereAttribute" name="updateWithSqlAndWhereAttribute">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="nameVar" ref="nameRefVar"/>
+					<in name="dateVar" ref="dateRefVar"/>
+				</method>				
+				
+				<method id="testUpdateWithSqlAttributeAndSqlText" name="updateWithSqlAttributeAndSqlText">
+					<in name="idVar" ref="idRefVar"/>
+					<in name="dateVar" ref="dateRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithTableAndWhereAttribute" name="updateWithTableAndWhereAttribute">
+					<in name="ID" ref="idRefVar"/>
+					<in name="NAME" ref="nameRefVar"/>
+					<in name="ADDRESS" ref="addressRefVar"/>
+					<in name="EMAIL" ref="emailRefVar"/>
+				</method>
+				
+				<method id="testUpdateWithSQLTextUsingCDATA" name="updateWithSQLTextUsingCDATA">
+					<in name="nameVar" ref="nameRefVar"/>
+					<in name="salaryVar" ref="salaryRefVar"/>
+					<in name="minIdVar" ref="minRefVar"/>
+					<in name="maxIdVar" ref="maxRefVar"/>
+				</method>
+				
+				<method id="deleteData" name="deleteData"/>
+				
+			</service>
+		</services>
+	</integration-tier>
+</application-mapping>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.1/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="wndDataGrid" displayname="DataGrid" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<datagrid id="dgEmployees">
+							<column id="dgcName" displayname="" name="name" conditional-style-ref="styleDatagridCondition"></column>
+							<column id="dgcLastName" name="lastName"></column>
+						</datagrid>
+						<button id="btnAdd" displayname="Add"/>
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="wndDataGrid"/>
+								<listener type="onload"></listener>	
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="dgEmployees" ref="result"></set>
+					</event>
+					<event id="addPersons">
+						<listeners>
+							<listenergroup>
+								<component ref="btnAdd"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<business-action ref="getPersonen">
+  							<out name="result" ref="result"></out>
+  						</business-action>
+  						<set component-id="dgEmployees" ref="result" action="add"></set>
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="dgEmployees.dgcName"/>
+								<component ref="dgEmployees.dgcLastName"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<store name="selection" src="component" ref="dgEmployees"></store>
+						<openwindow>
+							<ref value="wndDataGridRecord"></ref>
+							<data-param name="selectedRecord" ref="selection"></data-param>
+						</openwindow>
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="dgEmployees"/>
+								<listener type="onscroll-bottom"></listener>	
+							</listenergroup>
+						</listeners>
+						<event ref="addPersons"></event>
+					</event>					
+				</events>
+			</window>
+			<window id="wndDataGridRecord" displayname="DataGrid Record" isparent="false">
+				<rootpanel id="myRootPanel">
+					<autolayout cols="2">
+						<label displayname="Name"/>
+						<textfield displayname="Name" name="name" group-name="groupX"></textfield>
+						<label displayname="Last Name"/>
+						<textfield displayname="Last Name" name="lastName" group-name="groupX"></textfield>
+						<label displayname="Age"/>
+						<textfield displayname="Age" name="age" group-name="groupX"></textfield>
+						<label displayname="Registration Date"/>						
+						<textfield type="date" displayname="Registration Date" name="registrationDate" group-name="groupX"></textfield>
+						<label displayname="Comment"/>						
+						<textarea/>
+						<label displayname="HTML"/>						
+						<html>
+							<text>
+								<![CDATA[Hello <b>bold</b> Text]]>
+							</text>
+						</html>
+						<label displayname="Website"/>
+						<link id="lnkWebsite" displayname="www.qualogy.com" />
+						<hidden id="hidValue" value="A hidden value"/>
+						<button id="btnClose" displayname="Close"/>						
+					</autolayout>
+				</rootpanel>
+				<events>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="wndDataGridRecord"/>
+								<listener type="onload"></listener>	
+							</listenergroup>
+						</listeners>
+						<set group-name="groupX" src="user" ref="selectedRecord"></set>						
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="btnClose"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<closewindow ref="wndDataGridRecord"></closewindow>						
+					</event>
+					<event>
+						<listeners>
+							<listenergroup>
+								<component ref="lnkWebsite"/>
+								<listener type="onclick"></listener>	
+							</listenergroup>
+						</listeners>
+						<dialog>
+							<title value="Website" />
+							<message ref="lnkWebsite" src="component" />
+						</dialog>
+						<dialog>
+							<title value="Hidden" />
+							<message ref="hidValue" src="component" />
+						</dialog>
+						<set component-id="hidValue" value="A hidden value is changed"></set>						
+					</event>
+				</events>
+			</window>			
+		</view>
+		<styles>
+			<conditional-style id="styleDatagridCondition">		
+				<condition style="color:white;background-color:blue;" expr="[value='Hilary']"/>
+				<condition style="color:white;background-color:red;" expr="[value='Barack']"/>				
+				<condition style="color:black;background-color:green;" expr="[value='John']"/>
+			</conditional-style>			
+		</styles>
+	</presentation-tier>	
+</application-mapping> 

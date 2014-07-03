@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+<!--
+*** Presentation tier ***
+-->
+    <presentation-tier>
+        <view>
+            <window id="loginwindow" displayname="Loginscherm" width="300" height="135">
+                <rootpanel id="loginrootpanel">
+                    <autolayout cols="2">
+                        <label displayname="Naam:" />
+                        <textfield id="username" required="true" />
+                        <label displayname="Wachtwoord:" />
+                        <password id="pwd" required="true" />
+                        <label displayname=" " />
+                        <button displayname="Inloggen" id="btn_inloggen" />
+                    </autolayout>           
+                </rootpanel>
+            </window>
+        </view>
+        <events>
+            <event id="inloggen">
+                <listeners>
+                    <listenergroup>
+                        <component ref="btn_inloggen" />
+                        <listener type="onclick" />
+                    </listenergroup>
+                </listeners>
+                <business-action ref="controleerPwd">
+                    <in name="username" ref="username" src="component" />
+                    <in name="pwd" ref="pwd" src="component" />
+                    <out name="result" ref="returnResult"/>
+                </business-action>
+                
+            </event>
+        </events>
+    </presentation-tier>
+<!--
+*** Business tier ***
+-->
+    <business-tier>
+        <business-actions>
+            <business-action id="controleerPwd">
+            <transaction managed="no"/>
+        <!--     <service ref="controleerPwd2" method-ref="controleerPwd">
+                <in name="name" ref="username"/>
+                <in name="pwd" ref="pwd"/>
+                <out name="returnResult" ref="returnFromContoleerPwdQuery"/>
+            </service>-->
+            </business-action>
+        </business-actions>
+    </business-tier>
+<!--
+*** Integration tier ***
+-->
+    <!--  <integration-tier>
+        <services>
+            <service id="controleerPwd2" resource-ref="DatabaseResource">
+                <method id="controleerPwd" name="controleerPwdQuery">
+                    <in name="user_id" ref="name"/>
+                    <in name="pwd"     ref="pwd"/>
+                    <out name="returnFromContoleerPwdQuery"/>
+                </method>
+            </service>
+        </services>
+    </integration-tier>-->
+<!--
+*** Resource tier ***
+-->
+   <!--  <resource-tier>
+        <resources>
+            <drivermanager-datasource id="DatabaseResource" statements-file-url="inlogscherm-statements.xml" 
+            url="jdbc:oracle:thin:@localhost:1521:XE" username="kennisbank" password="kennisbank" 
+            driver-classname="oracle.jdbc.OracleDriver"/>
+        </resources>
+    </resource-tier>-->
+</application-mapping>

@@ -1,0 +1,8 @@
+#!/bin/bash
+FILES_TO_MATCH=$1
+TEXT_TO_MATCH=$2
+TEXT_TO_REPLACE=$3
+
+FIND_REPLACE="s/${TEXT_TO_MATCH}/${TEXT_TO_REPLACE}/g"
+
+find . -name $FILES_TO_MATCH -type f | xargs sed -i -e $FIND_REPLACE

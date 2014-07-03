@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+	test xml including:
+		- complex adpater mapping	
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<events>
+			<event id="getListOf10Maps">
+				<listeners>
+					<listenergroup>
+						<component ref="aText"/>
+						<component ref="aText"/>
+						<listener type="onclick"/>
+					</listenergroup>
+				</listeners>
+				<business-action ref="getListOf10Maps" >
+					<in name="strCar" ref="field1.value" src="component"/>
+					<out name="theCar.name" ref="field1.value" src="component"/>
+				</business-action>
+				
+			</event>
+		</events>
+		
+	</presentation-tier>
+	<business-tier>
+		<business-actions>
+			<business-action id="getListOf10Maps">
+				<transaction managed="no"/>
+				<service ref="JavaService" method-ref="getCar" >
+					<out name="car1" ref="theCar"/>
+				</service>
+				<service ref="JavaService" method-ref="getCarWithOneref" >
+					<in name="car1" ref="strCar"/><!-- ref in -->
+					<out name="car1" ref="theCar"/>
+				</service>
+				<service ref="JavaService" method-ref="getCarWithOneref" >
+					<in name="car1" ref="$SYSTEM.strCar"/><!-- system key -->
+					<out name="car1" ref="theCar"/>
+				</service>
+				<service ref="JavaService" method-ref="getCarWithOneref" >
+					<in name="car1.model" value="model1"/>
+					<in name="car1.name" value="engine1.1.23.1"/>
+					<in name="id" value="engine1.1.23.1"/>
+					<out name="car1" ref="theCar"/>
+				</service>
+			</business-action>
+			<business-action id="printCar">
+				<transaction managed="no"/>
+				<service ref="JavaService" method-ref="printCar" >
+					<in name="car1.model" value="430"/>
+					<in name="car1.name" value="Ferrari"/>
+					<in name="car1.engine.difficultnamepart1" value="fuelpump"/>
+					<in name="car1.engine.difficultnamepart2" value="bougie"/>
+				</service>	
+				<error-handler id="error" error-ref="name.already.registered">
+                	<service method-ref="getCarWithOneref"  ref="JavaService">
+	                    <in name="car1" ref="strCar"/>
+	                    <!-- ref in -->
+	                    <out name="car1" ref="theCar"/>
+	                </service>
+                </error-handler>
+			</business-action>
+		</business-actions>
+		<types>
+			<type id="Vehicle" abstract="true">
+				<attribute name="lastName" default="" type="string"/>
+					<!--<constraint />-->
+				<attribute name="firstName" default="" type="string"/>
+			</type>
+			<type id="Car" parent="Vehicle"/>
+			<type id="Boat" parent="Vehicle">
+				<attribute name="address" type="Address"/>
+				<attribute name="engine" type="Engine"/>
+			</type>
+			<type id="Engine">
+				<attribute name="part1" type="string"/>
+				<attribute name="part2" type="string"/>
+			</type>
+		</types>	
+	</business-tier>
+	<integration-tier>
+		<services>
+			<service id="JavaService" resource-ref="javaServicer">
+				<method id="getCarWithOneref" name="getCar">
+					<in name="1" ref="sid" type="string"/>
+					<in name="0" ref="car1" type="Car" adapter="CarAdpter"/>
+					<out name="car1" type="Car" adapter="CarAdapter"/>
+				</method>
+				<method id="printCar" name="printCar">
+					<in name="0" ref="car1" type="Car" adapter="CarAdpter"/>
+					<out name="success"/>
+				</method>
+				<method id="getCar" name="getCar">
+					<out name="car1" type="Car" adapter="CarAdapter"/>
+				</method>
+			</service>
+		</services>
+		<errors>
+        	<error id="name.already.registered" exception="java.lang.Exception">  
+				<log message-key="name.already.registered" solution-key="name.already.registered"/> 
+			</error>	
+			<error id="invalid.lastname" exception="java.lang.RuntimeException"> 
+				<log message-key="invalid.lastname" solution-key="invalid.lastname"/> 
+			</error>
+		</errors>
+		<adapters>
+			<adapter id="VehicleAdapter" type="Vehicle">
+				<attribute name="name" ref="name"/>
+				<!-- internal adapter, can be used to get items from different objects within the root object -->
+				<!-- only level down.. in this case meaning, none of the vehicle attrs can be reached -->
+				<adapter attribute="engine" type="Engine"  class="test.com.qualogy.qafe.business.integration.testservices.Engine"> 
+					<attribute name="part1" ref="difficultnamepart1"/>
+					<attribute name="part2" ref="difficultnamepart2"/>
+				</adapter>
+				<!-- <attribute name="carName" ref="carName"/> -->
+			</adapter>
+			<adapter id="EngineAdapter" type="Engine"><!--external adapter, notice the dif between this and the internal, cannot access other objects on same level or level above -->
+				<attribute name="part1" ref="difficultnamepart1"/>
+				<attribute name="part1" ref="difficultnamepart2"/>
+			</adapter>
+			<adapter id="CarAdpter" adapt-all="true" extends="VehicleAdapter" type="Car" class="test.com.qualogy.qafe.business.integration.testservices.Car">
+				<attribute name="model" ref="model"/>
+			</adapter>
+			 
+			<adapter id="BoatConverter" extends="VehicleAdapter" type="Boat">
+				<attribute name="address" ref="address" adapter="AddressAdapter"/>
+			</adapter>
+		</adapters>
+	</integration-tier>
+</application-mapping>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+  <business-tier>
+    <business-actions>
+      <business-action id="MyServicegetFirst">
+        <transaction/>
+        <service  ref="MyService" method-ref="getFirst"/>
+      </business-action>
+      <business-action id="MyServicegetLast">
+        <transaction/>
+        <service  ref="MyService" method-ref="getLast"/>
+      </business-action>
+      <business-action id="MyServicegetNext">
+        <transaction/>
+        <service  ref="MyService" method-ref="getNext">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </service>
+      </business-action>
+      <business-action id="MyServiceaddPerson">
+        <transaction/>
+        <service  ref="MyService" method-ref="addPerson">
+          <in name="0" ref="serviceRef0" type="com.qualogy.qafe.gwt.server.ui.service.MyServicePerson"/>
+        </service>
+      </business-action>
+      <business-action id="MyServicegetPrevious">
+        <transaction/>
+        <service  ref="MyService" method-ref="getPrevious">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </service>
+      </business-action>
+      <business-action id="MyServicedoSomething">
+        <transaction/>
+        <service  ref="MyService" method-ref="doSomething"/>
+      </business-action>
+      <business-action id="MyServicedoSomethingWithException">
+        <transaction/>
+        <service  ref="MyService" method-ref="doSomethingWithException"/>
+      </business-action>
+      <business-action id="MyServicegetPerson">
+        <transaction/>
+        <service  ref="MyService" method-ref="getPerson"/>
+      </business-action>
+      <business-action id="MyServicegetPersonWithParameter">
+        <transaction/>
+        <service  ref="MyService" method-ref="getPerson">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </service>
+      </business-action>
+      <business-action id="MyServicegetPersonen">
+        <transaction managed="local"/>
+        <service ref="MyService" method-ref="getPersonen"/>
+      </business-action>
+      <business-action id="MyServicegetPersonenList">
+        <transaction/>
+        <service  ref="MyService" method-ref="getPersonenList"/>
+      </business-action>
+      <business-action id="MyServicegetCurrentTime">
+        <transaction/>
+        <service  ref="MyService" method-ref="getCurrentTime"/>
+      </business-action>
+    </business-actions>
+  </business-tier>
+  <integration-tier>
+    <services>
+      <service id="MyService" resource-ref="_7523192893677481600">
+        <method id="getFirst" name="getFirst"/>
+        <method id="getLast" name="getLast"/>
+        <method id="getNext" name="getNext">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </method>
+        <method id="addPerson" name="addPerson">
+          <in name="0" ref="serviceRef0" type="com.qualogy.qafe.gwt.server.ui.service.MyServicePerson"/>
+        </method>
+        <method id="getPrevious" name="getPrevious">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </method>
+        <method id="doSomething" name="doSomething"/>
+        <method id="doSomethingWithException" name="doSomethingWithException"/>
+        <method id="getPerson" name="getPerson"/>
+        <method id="getPersonWithParameter" name="getPerson">
+          <in name="0" ref="serviceRef0" type="int"/>
+        </method>
+        <method id="getPersonen" name="getPersonen">
+	        <out name="personen"/>
+        </method>
+        <method id="getPersonenList" name="getPersonenList"/>
+        <method id="getCurrentTime" name="getCurrentTime"/>
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+      <javaclass id="_7523192893677481600" classname="com.qualogy.qafe.gwt.server.ui.service.MyService" />
+    </resources>
+  </resource-tier>
+</application-mapping>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+	
+		<view>
+			<!--<window id="email" title="Keep me posted">
+				<rootpanel name="emailpanel">
+					<autolayout cols="1">
+						<label displayname="Please enter your emailaddress, so that we can keep you up to date!"/> 
+						<textfield type="email" name="email"/>
+						<button displayname="Continue"/>
+					</autolayout>
+				</rootpanel>
+			</window>-->
+
+			<menu-definition id="system_menu" displayname="Start">
+				<menu id="menu_labs" shortcut="CTRL+Y" displayname="QAFE Labs">
+					<menu id="qafe_mi_reload" shortcut="CTRL+Y" displayname="Reload applications" />
+					<menu id="qafe_mi_tryme" shortcut="CTRL+Y" displayname="Try Me" />
+					<menu id="qafe_mi_tryme_forms" shortcut="CTRL+Y" displayname="Forms Conversion" />
+	
+				</menu>
+				<!--<menu id="menu_documentation" shortcut="CTRL+Y" displayname="Documentation">
+					<menu id="menu_documentation_brochure" shortcut="CTRL+Y" displayname="Brochure" />
+				</menu>-->
+
+				<menu id="qafe_menu_applications" shortcut="CTRL+Y" displayname="Programs">
+				</menu>
+				<menu id="menu_network" shortcut="CTRL+Y" displayname="Network">
+					<menu id="menu_network_googleprofile" shortcut="CTRL+Y" displayname="QAFE Profile" />
+					<menu id="menu_network_googlereader" shortcut="CTRL+Y" displayname="QAFE Google Reader" />
+					<menu id="menu_network_googlerss" shortcut="CTRL+Y" displayname="RSS" />
+				</menu>
+				<menu id="menu_support" shortcut="CTRL+Y" displayname="Support">
+					<menu id="menu_support_faq" shortcut="CTRL+Y" displayname="FAQ" />
+					<menu id="menu_support_contact" shortcut="CTRL+Y" displayname="Contact" />
+					<menu id="menu_support_stayinformed" shortcut="CTRL+Y" displayname="Receive updates" />
+				</menu>
+
+				<menu id="menu_about" shortcut="CTRL+Y" displayname="About">
+					<menu id="menu_about_qafesite" shortcut="CTRL+Y" displayname="Official QAFE Site" />
+					<!--menu id="menu_about_w3csite" shortcut="CTRL+Y" displayname="Qualogy, QAFE and W3C" /-->
+					<!--<menu id="file_google" shortcut="CTRL+Y" displayname="Google" />-->					
+					<!--	<menu id="qafe_mi_logging" shortcut="CTRL+Y" displayname="Logging" /> -->
+					<menu id="menu_about_about" shortcut="CTRL+Y" displayname="About us" />
+					<!--menu id="menu_about_stayinformed" shortcut="CTRL+Y" displayname="Stay Informed" /-->
+
+				</menu>
+			</menu-definition>
+			
+		</view>
+		<events>
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_network_googleprofile"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow external="true">
+					<params value="left=20,top=20,height=600,width=900"/>
+					<title value="QAFEGoogleProfile"/>
+					<url value="http://www.google.com/profiles/qafeframework"/>
+				</openwindow> 				
+			</event>
+	
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_network_googlereader"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow external="true">
+					<params value="left=30,top=20,height=600,width=800"/>
+					<title value="QAFEGoogleReader"/>
+					<url value="http://www.google.com/reader/shared/qafeframework"/>
+				</openwindow> 				
+			</event>
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_network_googlerss"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow external="true">
+				        <params value="left=30,top=20,height=600,width=800"/>
+					<title value="QAFE RSS"/>
+					<url value="http://www.qafe.com/feed/"/>
+				</openwindow> 				
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_about_about"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+ 					<params value="height=660,width=890"/>
+					<title value="AboutQAFE"/>
+					<url value="http://www.qafe.com/about-us/"/>
+				</openwindow> 				
+			</event>
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_support_faq"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+					<params value="height=690,width=920"/>
+					<title value="QAFEFAQ"/>
+					<url value="http://www.qafe.com/faq/"/>
+				</openwindow> 				
+			</event>
+			
+			<event>
+				<listeners>
+					<listenergroup>
+						<!--component ref="menu_about_stayinformed"/-->
+						<component ref="menu_support_stayinformed"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+ 					<params value="height=620,width=890"/>
+					<title value="QAFEGoogleProfile"/>
+					<url value="http://www.qafe.com/newsletter/"/>
+				</openwindow> 				
+			</event>
+
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_support_contact"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+ 					<params value="height=730,width=890"/>
+					<title value="Contact"/>
+					<url value="http://www.qafe.com/contact-qafe/"/>
+				</openwindow> 				
+			</event>
+
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_about_qafesite"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+					<params value="height=570,width=890"/>
+					<title value="QAFE"/>
+					<url value="http://www.qafe.com"/>
+				</openwindow> 		
+			</event>
+
+			<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_about_w3csite"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+ 					<params value="height=570,width=800"/>
+					<title value="QAFEAnnouncement@W3C"/>
+					<url value="http://www.w3c.nl/Qualogy_Qafe.html"/>
+				</openwindow> 		
+			</event>
+			<!--<event>
+				<listeners>
+					<listenergroup>
+						<component ref="file_google"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+					<title value="Google"/>
+					<url value="http://www.google.com"/>
+				</openwindow> 				
+			</event> -->
+			<!--<event>
+				<listeners>
+					<listenergroup>
+						<component ref="menu_documentation_brochure"/>
+						<listener type="onclick"/>
+					</listenergroup>					
+				</listeners>
+				<openwindow>
+					<params value="left=20,top=20,width=600,height=500,toolbar=1,resizable=1,external=1"/>
+					<title value="QAFE Brochure"/>
+					<url value="http://qafe.com/wp-content/uploads/Enterprise-Application-Framework.pdf"/>
+				</openwindow> 				
+			</event>
+			
+		-->	
+		</events>
+		
+		
+	
+	</presentation-tier>
+</application-mapping>
+
+

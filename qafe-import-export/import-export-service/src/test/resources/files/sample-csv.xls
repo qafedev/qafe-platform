@@ -1,0 +1,68 @@
+Priority	Issue ID	Assigned	Time Spent	Category	Status	Status Change Date	Last Action Date	Est. Dev. TIme	Summary	Browser	Build	Product
+Critical	526	Rokesh Jankie	0h 0m	Bug	discovery		Created: 57d 19h ago	0	event id does not have to be unique	Firefox 2.0		
+Critical	524	Rokesh Jankie	0h 0m	Bug	discovery		Created: 57d 23h ago	0	id doesn't seem to be unique per window	Firefox 2.0		
+Critical	523	Rokesh Jankie	0h 0m	Bug	discovery		Created: 57d 23h ago	0	date picker appears behind current window	Firefox 2.0		
+Critical	522	Rokesh Jankie	0h 0m	Bug	discovery		Created: 57d 23h ago	0	user created alert/ error box appears behind window	Firefox 2.0		
+High	614	Rokesh Jankie	0h 0m	Bug	discovery		Created: 7d 22h ago	0	reload is missing	Firefox 2.0		Core Framework
+High	527	Rokesh Jankie	0h 0m	Bug	discovery		Created: 57d 18h ago	0	datepicker onselect no value is set	Firefox 2.0		
+High	521	Rokesh Jankie	0h 0m	Bug	discovery		Created: 58d 22h ago	0	if event is referred to a set-builtin does not work correctly	Firefox 2.0		
+High	440	Rokesh Jankie	0h 0m	Bug	discovery		Created: 118d 20h ago	0	Placeholder don't work in out parameter	IE 6.0	-1	
+High	439	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 97d 20h ago	0	Empty application results in NullPointer	IE 6.0	-1	
+High	430	Marc van der Wurff, Rokesh Jankie	0h 0m	Bug	discovery		Created: 125d 1h ago	0	Field names must be lowercase	Firefox 2.0		
+High	426	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 97d 20h ago	0	Reload fails after exception in reload method	Firefox 2.0	-1	
+High	420	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 97d 20h ago	0	value tag in textarea is verplicht ook als default leeg	Firefox 2.0	-1	
+High	334	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 19h ago	0	Cannot create rows in empty datagrid	IE 6.0		
+High	329	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 20h ago	0	Data not set when window opened 2nd time	IE 6.0		
+High	328	Rokesh Jankie	0h 0m	Feature Request	discovery		Created: 209d 1h ago	0	Call modal window from event	IE 6.0		
+High	268	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 155d 17h ago	0	Not able to the set value in Hidden fields	IE 6.0	-1	
+High	267	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 21h ago	0	Error in behavior of dropdown control	IE 6.0	-1	
+High	203	Rokesh Jankie	0h 0m	Bug	discovery		Created: 258d 20h ago	0	Tabbing through fields gets out of scope (current Window)	IE 7.0		
+High	201	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 23h ago	0	2nd and 4e row in datagrid gives 'no data found'	IE 7.0		
+High	169	Rokesh Jankie	0h 0m	Bug	discovery		File Uploaded: 271d 21h ago	0	Datagrid in Firefox is moving...	Firefox 2.0		
+High	163	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 22h ago	0	Several windows issues	IE 7.0		
+High	108	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 190d 22h ago	0	Layout not generated correct			
+Medium	492	Rokesh Jankie	0h 0m	Bug	discovery		Created: 77d 18h ago	0	qafe xml generator doesn't generate the xml- code 	IE 7.0	-1	
+Medium	480	Rokesh Jankie	0h 0m	Bug	discovery		Created: 85d 19h ago	0	the database returns values in a list	IE 7.0	-1	
+Medium	463	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 98d 18h ago	0	column sortablilty does not work properly	IE 6.0	-1	
+Medium	458	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 97d 20h ago	0	Column editable does not work	IE 6.0	-1	
+Medium	438	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 98d 22h ago	0	gridwidth does not work!!	IE 6.0	-1	
+Medium	431	Rokesh Jankie	0h 0m	Bug	discovery		Created: 124d 23h ago	0	Button in overflow does not work	IE 7.0		
+Medium	421	Rokesh Jankie	0h 0m	Feature Request	discovery		Created: 142d 21h ago	0	minrows	Firefox 2.0	-1	
+Medium	380	Rokesh Jankie	0h 0m	Bug	discovery		Created: 188d 19h ago	0	Fields from sub-datapanels member of parent panel	IE 6.0		
+Medium	378	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 18h ago	0	Date always formatted as yyyy-mm-dd	IE 6.0		
+Medium	363	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 154d 18h ago	0	Allow on/off specification on checkbox	IE 6.0		
+Medium	362	Rokesh Jankie	0h 0m	Bug	discovery		Created: 197d 17h ago	0	Margin on datagrid causes auto-expansion	IE 6.0		
+Medium	352	Rokesh Jankie	0h 0m	Technical Issue	discovery		Created: 203d 18h ago	0	Presentation-tier issues	Firefox 2.0	-1	
+Medium	348	Rokesh Jankie	0h 0m	Feature Request	discovery		Created: 204d 21h ago	0	Styles applied to components at the style end	IE 6.0		
+Medium	347	Rokesh Jankie	0h 0m	Bug	discovery		Created: 204d 21h ago	0	Tab panel too narrow	IE 6.0		
+Medium	345	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 19h ago	0	Datagrid toolbar occupies 1st column only 	IE 6.0		
+Medium	333	Rokesh Jankie	0h 0m	Feature Request	work in progress		Updated: 154d 20h ago	0	Loosen up id requirement	IE 6.0		
+Medium	322	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 208d 21h ago	0	Windows can not be made smaller	IE 6.0		
+Medium	321	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 208d 21h ago	0	Order attribute on column tag non-functional	IE 6.0		
+Medium	320	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 154d 20h ago	0	Add mandatory attribute to column	IE 6.0		
+Medium	319	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 208d 21h ago	0	Add displayname attribute to dropdown	IE 6.0		
+Medium	308	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 22h ago	0	Invisible column still shown	IE 6.0		
+Medium	266	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 154d 21h ago	0	Handling deletion of data in datagrid control	IE 6.0	-1	
+Medium	264	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 155d 17h ago	0	Problem with display of month in Datepicker component	IE 6.0	-1	
+Medium	263	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 155d 1h ago	0	Provision for onclick event on individual tabs	IE 6.0	-1	
+Medium	262	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 23h ago	0	Displaying custom defined exceptions at the Presentation-tier	IE 6.0	-1	
+Medium	218	Rokesh Jankie	0h 0m	Technical Issue	discovery		Created: 251d 21h ago	0	Prompt label requires more space	Firefox 2.0		
+Medium	183	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 266d 23h ago	0	If statement in event result is not as expected.	IE 6.0		
+Medium	179	Rokesh Jankie	0h 0m	Bug	research		Updated: 155d 17h ago	0	Style prop. font-weight bold not working	IE 7.0		
+Medium	137	Rokesh Jankie	0h 0m	Bug	discovery		Created: 288d 18h ago	0	Windows do not open correct in Firefox			
+Medium	131	Rokesh Jankie	0h 0m	Feature Request	discovery		Updated: 190d 22h ago	1	OptionsUtilsTest			
+Medium	112	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 190d 22h ago	0	Layout of generated Tab 2 differs too much from original			
+Medium	111	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 190d 22h ago	0	Radio buttons are generated on the wrong position			
+Low	413	Rokesh Jankie	0h 0m	Bug	discovery		Created: 153d 21h ago	0	Alert title truncated for short message	IE 7.0		
+Low	377	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 18h ago	0	Hidden field prompt displayed	IE 6.0		
+Low	349	Rokesh Jankie	0h 0m	Feature Request	discovery		Created: 204d 20h ago	0	Apply styles on datagrid cells	IE 6.0		
+Low	336	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 19h ago	0	Menu separator not rendered	IE 6.0		
+Low	335	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 19h ago	0	Disale/hide of menu item does not work	IE 6.0		
+Low	332	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 154d 20h ago	0	element and cell can only contain 1 item	IE 6.0		
+Low	318	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 20h ago	0	Title attribute is mandatory	IE 6.0		
+Low	314	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 154d 20h ago	0	shortcut keys for menu operation	IE 6.0		
+Low	313	Rokesh Jankie	0h 0m	Feature Request	evaluation and testing		Updated: 154d 20h ago	0	replace openwindow/closewindow with show/hide	IE 6.0		
+Low	312	Rokesh Jankie	0h 0m	Bug	research		Updated: 154d 20h ago	0	Reference to a non existing object does not raise an error	IE 6.0		
+Low	311	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 155d 18h ago	0	Change tag/attribute names	IE 6.0		
+Low	265	Rokesh Jankie	0h 0m	Bug	evaluation and testing		Updated: 155d 17h ago	0	ID being displayed as title in the main window	IE 6.0	-1	
+Low	107	Rokesh Jankie	0h 0m	Bug	discovery		Updated: 293d 18h ago	0	script error in IE7 when generating fmb (GWT)			

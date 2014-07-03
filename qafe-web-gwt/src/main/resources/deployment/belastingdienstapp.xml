@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="Aangifte 2009" width="800" height="600" icon="images/bg/ib2008A.gif">
+			
+				<!-- #### ROOT PANEL #### -->
+				<rootpanel class="main">
+					<horizontallayout>
+						<panel class="leftpanel" >							
+							<verticallayout>
+								<panel-ref id="leftTargetPanel" ref="firstLeftPanel"/>
+							</verticallayout>
+						</panel>
+						<panel class="rightpanel">
+							<verticallayout>
+								<panel-ref id="rightTargetPanel" ref="firstRightPanel"/>
+								<panel class="submitPanel">
+									<horizontallayout>
+										<image id="goToPrevPanel" location="images/bg/previous.JPG" visible="false" />
+										<image id="goToNextPanel" location="images/bg/next.JPG" visible="false" />
+										<button id="submitButton" displayname="Akkoord" class="myButton1"/>
+									</horizontallayout>
+								</panel>
+								<panel class="buttonbar">
+								<horizontallayout>
+									<image id="stop" location="images/bg/ibpagestop.jpg" tooltip="Programma beeindigen"/>
+									<image id="settings" location="images/bg/ibpagesettings.jpg" tooltip="Programma instellingen"/>
+									<image id="calc" location="images/bg/ibpagecalc.jpg" tooltip="Rekenmachine"/>
+									<image id="help" location="images/bg/ibpagehelp.jpg" tooltip="Hulp"/>
+									<image id="print" location="images/bg/ibpageprint.jpg" tooltip="Printen van document"/>
+									<image id="open" location="images/bg/ibpageopen.jpg" tooltip="Bestand openen"/>
+								</horizontallayout>
+								</panel>		
+							</verticallayout>
+						</panel>
+					</horizontallayout>
+				</rootpanel>
+				
+				<!-- #### EVENTS #### -->
+				<events>
+								
+				<!-- Button Bar events -->
+				<event id="stopEvent">
+					<listeners>
+						<listenergroup>
+							<component ref="stop"/>
+							<listener type="onclick"/>
+						</listenergroup>
+					</listeners>
+					<closewindow ref="window1"/>
+				</event>
+				
+				<!-- First panel events -->
+					<event id="aangifteChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="aangifte"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${aangifteValue} == 'true'">
+							 	<placeholder name="aangifteValue" ref="aangifte" src="component"/>
+							 </expression>
+							<results>
+								<result value="true">
+									<set-property property="visible" value="true">
+										<component ref="q5"/>
+										<component ref="rekeningnummerBericht"/>
+										<component ref="rekeningnummerBerichtChoice"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="rekeningnummerOpgeven"/>
+										<component ref="rekeningnummerOpgevenChoice"/>
+									</set-property>
+									<!--<clear ref="rekeningnummerBerichtChoice"/>
+									<clear ref="rekeningnummerOpgevenChoice"/>
+									<set component-id="rekeningnummerValue" value=""/>
+								--></result>
+								<result value="false">
+									<set-property property="visible" value="true">
+										<component ref="rekeningnummerOpgeven"/>
+										<component ref="rekeningnummerOpgevenChoice"/>
+									</set-property>	
+									<set-property property="visible" value="false">
+										<component ref="q5"/>
+										<component ref="rekeningnummerBericht"/>
+										<component ref="rekeningnummerBerichtChoice"/>
+									</set-property>
+									<!--<set component-id="rekeningnummerValue" value=""/>
+								--></result>
+							</results> 	
+						</if>
+						<!--<set-property property="visible" value="false">
+							<component ref="q6"/>
+							<component ref="rekeningnummerText"/>
+							<component ref="rekeningnummerValue"/>
+							<component ref="q7"/>
+							<component ref="persoonlijkeSituatie"/>
+							<component ref="persoonlijkeSituatieChoice"/>
+							<component ref="q8"/>
+							<component ref="huiosgenoot"/>
+							<component ref="huiosgenootChoice"/>
+							<component ref="q9"/>
+							<component ref="getrouwdPeriode"/>
+							<component ref="getrouwdPeriodeDate"/>
+							<component ref="getrouwdPeriodeMonth"/>
+						</set-property>
+						<set component-id="persoonlijkeSituatieChoice" value=""/>
+						<clear ref="huiosgenootChoice"/>
+						<set component-id="getrouwdPeriodeDate" value=""/>
+						<set component-id="getrouwdPeriodeMonth" value=""/>
+					--></event>
+					<event id="rekeningnummerBerichtChoiceJa">
+						<listeners>
+							<listenergroup>
+								<component ref="rekeningnummerBerichtChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${rekeningnummerBerichtChoiceValue} == 'true'">
+							 	<placeholder name="rekeningnummerBerichtChoiceValue" ref="rekeningnummerBerichtChoice" src="component"/>
+							 </expression>
+							 <results>
+							 	<result value="true">
+									<set-property property="visible" value="false">
+										<component ref="q6"/>
+										<component ref="rekeningnummerText"/>
+										<component ref="rekeningnummerValue"/>
+									</set-property>
+								</result>
+								<result value="false">
+									<set-property property="visible" value="true">
+										<component ref="q6"/>
+										<component ref="rekeningnummerText"/>
+										<component ref="rekeningnummerValue"/>
+									</set-property>
+								</result>
+							</results>
+						</if>
+						<set-property property="visible" value="true">
+							<component ref="q7"/>
+							<component ref="persoonlijkeSituatie"/>
+							<component ref="persoonlijkeSituatieChoice"/>
+						</set-property>
+						<set-property property="visible" value="false">
+							<component ref="q8"/>
+							<component ref="huiosgenoot"/>
+							<component ref="huiosgenootChoice"/>
+							<component ref="q9"/>
+							<component ref="getrouwdPeriode"/>
+							<component ref="getrouwdPeriodeDate"/>
+							<component ref="getrouwdPeriodeMonth"/>
+						</set-property>
+						<!--<set component-id="rekeningnummerValue" value=""/>
+						<set component-id="persoonlijkeSituatieChoice" value=""/>
+						<clear ref="huiosgenootChoice"/>
+						<set component-id="getrouwdPeriodeDate" value=""/>
+						<set component-id="getrouwdPeriodeMonth" value=""/>
+					--></event>
+					<event id="rekeningnummerOpgevenChoiceJa">
+						<listeners>
+							<listenergroup>
+								<component ref="rekeningnummerOpgevenChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${rekeningnummerOpgevenChoiceValue} == 'true'">
+							 	<placeholder name="rekeningnummerOpgevenChoiceValue" ref="rekeningnummerOpgevenChoice" src="component"/>
+							 </expression>
+							 <results>
+							 	<result value="true">
+							 		<set-property property="visible" value="true">
+										<component ref="q6"/>
+										<component ref="rekeningnummerText"/>
+										<component ref="rekeningnummerValue"/>
+									</set-property>
+							 	</result>
+							 	<result value="false">
+							 		<set-property property="visible" value="false">
+										<component ref="q6"/>
+										<component ref="rekeningnummerText"/>
+										<component ref="rekeningnummerValue"/>
+									</set-property>
+							 	</result>
+							 </results>
+						 </if>
+						 <set-property property="visible" value="true">
+							<component ref="q7"/>
+							<component ref="persoonlijkeSituatie"/>
+							<component ref="persoonlijkeSituatieChoice"/>
+						</set-property>
+						<set-property property="visible" value="false">
+							<component ref="q8"/>
+							<component ref="huiosgenoot"/>
+							<component ref="huiosgenootChoice"/>
+							<component ref="q9"/>
+							<component ref="getrouwdPeriode"/>
+							<component ref="getrouwdPeriodeDate"/>
+							<component ref="getrouwdPeriodeMonth"/>
+						</set-property>
+						<!--<set component-id="rekeningnummerValue" value=""/>
+						<set component-id="persoonlijkeSituatieChoice" value=""/>
+						<clear ref="huiosgenootChoice"/>
+						<set component-id="getrouwdPeriodeDate" value=""/>
+						<set component-id="getrouwdPeriodeMonth" value=""/>
+					--></event>
+					<event id="persoonlijkeSituatieChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="persoonlijkeSituatieChoice"/>
+								<listener type="onchange"/>
+							</listenergroup>
+						</listeners>
+						<store name="persoonlijkeSituatieChoiceValue" src="component" ref="persoonlijkeSituatieChoice"/>
+						<!--<dialog>
+							<title value="..."/>
+							<message value="${persoonlijkeSituatieChoiceValue.id}"/>
+						</dialog>-->
+						<switch>
+							<expression expr="${persoonlijkeSituatieChoiceValue.id}"/>
+							<results>
+								<result value="getrouwd">
+									<set-property property="visible" value="false">
+										<component ref="q8"/>
+										<component ref="huiosgenoot"/>
+										<component ref="huiosgenootChoice"/>
+										<component ref="q9"/>
+										<component ref="getrouwdPeriode"/>
+										<component ref="getrouwdPeriodeDate"/>
+										<component ref="getrouwdPeriodeMonth"/>
+									</set-property>		
+								</result>
+								<result value="ongetrouwd">
+									<set-property property="visible" value="true">
+										<component ref="q8"/>
+										<component ref="huiosgenoot"/>
+										<component ref="huiosgenootChoice"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="q9"/>
+										<component ref="getrouwdPeriode"/>
+										<component ref="getrouwdPeriodeDate"/>
+										<component ref="getrouwdPeriodeMonth"/>
+									</set-property>		
+								</result>
+								<result value="eenDeel">
+									<set-property property="visible" value="true">
+										<component ref="q9"/>
+										<component ref="getrouwdPeriode"/>
+										<component ref="getrouwdPeriodeDate"/>
+										<component ref="getrouwdPeriodeMonth"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="q8"/>
+										<component ref="huiosgenoot"/>
+										<component ref="huiosgenootChoice"/>
+									</set-property>		
+								</result>
+							</results>
+						</switch>
+						<!--<clear ref="huiosgenootChoice"/>
+						<set component-id="getrouwdPeriodeDate" value=""/>
+						<set component-id="getrouwdPeriodeMonth" value=""/>	
+					--></event>
+					<event id="huiosgenootChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="huiosgenootChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${huiosgenootChoiceValue} == 'true'">
+							 	<placeholder name="huiosgenootChoiceValue" ref="huiosgenootChoice" src="component"/>
+							 </expression>
+							 <results>
+							 	<result value="true">
+							 		<set-property property="visible" value="true">
+										<component ref="q9"/>
+										<component ref="getrouwdPeriode"/>
+										<component ref="getrouwdPeriodeDate"/>
+										<component ref="getrouwdPeriodeMonth"/>
+									</set-property>
+							 	</result>
+							 	<result value="false">
+							 		<set-property property="visible" value="false">
+										<component ref="q9"/>
+										<component ref="getrouwdPeriode"/>
+										<component ref="getrouwdPeriodeDate"/>
+										<component ref="getrouwdPeriodeMonth"/>
+									</set-property>
+							 	</result>
+							 </results>
+						 </if>
+						<!--<set component-id="getrouwdPeriodeDate" value=""/>
+						<set component-id="getrouwdPeriodeMonth" value=""/>
+					--></event>
+					<!-- Second panel events -->
+					<event id="ontvangenAangifteChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="ontvangenAangifteChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${ontvangenAangifteChoiceValue} == 'true'">
+							 	<placeholder name="ontvangenAangifteChoiceValue" ref="ontvangenAangifteChoice" src="component"/>
+							 </expression>
+							 <results>
+							 	<result value="true">
+							 		<set-property property="visible" value="true">
+										<component ref="q4"/>
+										<component ref="aangifteProgramma"/>
+										<component ref="aangifteProgrammaChoice"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="q5"/>
+										<component ref="echtgenootAangifte"/>
+										<component ref="echtgenootAangifteChoice"/>
+									</set-property>
+							 	</result>
+							 	<result value="false">
+							 		<set-property property="visible" value="true">
+										<component ref="q5"/>
+										<component ref="echtgenootAangifte"/>
+										<component ref="echtgenootAangifteChoice"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="q4"/>
+										<component ref="aangifteProgramma"/>
+										<component ref="aangifteProgrammaChoice"/>
+									</set-property>
+							 	</result>
+							 </results>
+						</if>
+			 			<set-property property="visible" value="false">
+		 					<component ref="q6"/>
+							<component ref="rekeningnummerJuist"/>
+							<component ref="rekeningnummerJuistChoice"/>
+							<component ref="q7"/>
+							<component ref="echtgenootRekeningnummerText"/>
+							<component ref="echtgenootRekeningnummerValue"/>
+							<component ref="echtgenootRekeningnummer"/>
+							<component ref="echtgenootRekeningnummerChoice"/>
+							<component ref="q8"/>
+							<component ref="echtgenootInkomen"/>
+							<component ref="echtgenootInkomenChoice"/>
+							<component ref="letOp"/>
+							<component ref="doenAllebeiAangifte"/>
+							<component ref="aangifteIndienen"/>
+							<component ref="gemeenschappelijke"/>
+							<component ref="nietSamen"/>
+							<component ref="geenAangifte"/>
+							<component ref="kiesHelp"/>
+					 	</set-property>
+						<clear ref="aangifteProgrammaChoice"/>
+						<clear ref="echtgenootAangifteChoice"/>
+						<clear ref="rekeningnummerJuistChoice"/>
+						<clear ref="echtgenootRekeningnummerChoice"/>
+						<clear ref="echtgenootInkomenChoice"/>
+						<set component-id="echtgenootRekeningnummerValue" value=""/>
+					</event>
+					<event id="aangifteProgrammaChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="aangifteProgrammaChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<store action="set" name="ontvangenAangifteChoiceVal" ref="ontvangenAangifteChoice" src="component"/>
+						<if>
+							<expression expr="${aangifteProgrammaChoiceValue} == 'true'">
+							 	<placeholder name="aangifteProgrammaChoiceValue" ref="aangifteProgrammaChoice" src="component"/>
+							 </expression>
+							 <results>
+							 	<result value="true">
+									<if>
+										<expression expr="${ontvangenAangifteChoiceVal} == 'true'"/>
+										<results>
+											<result value="true">
+												<set-property property="visible" value="true">
+													<component ref="q6"/>
+													<component ref="rekeningnummerJuist"/>
+													<component ref="rekeningnummerJuistChoice"/>
+												</set-property>
+												<set-property property="visible" value="false">
+													<component ref="q5"/>
+													<component ref="echtgenootAangifte"/>
+													<component ref="echtgenootAangifteChoice"/>
+												</set-property>
+												<clear ref="echtgenootAangifteChoice"/>
+												<clear ref="echtgenootRekeningnummerChoice"/>
+											</result>
+											<result value="false">
+												<set-property property="visible" value="true">
+													<component ref="q5"/>
+													<component ref="echtgenootAangifte"/>
+													<component ref="echtgenootAangifteChoice"/>
+													<component ref="echtgenootRekeningnummer"/>
+													<component ref="echtgenootRekeningnummerChoice"/>
+												</set-property>
+												<set-property property="visible" value="false">
+													<component ref="q6"/>
+													<component ref="rekeningnummerJuist"/>
+													<component ref="rekeningnummerJuistChoice"/>
+												</set-property>
+												<clear ref="echtgenootRekeningnummerChoice"/>
+											</result>
+										</results>
+									</if>
+									<set-property property="visible" value="false">
+										<component ref="q7"/>
+										<component ref="echtgenootRekeningnummerText"/>
+										<component ref="echtgenootRekeningnummerValue"/>
+										<component ref="letOp"/>
+										<component ref="doenAllebeiAangifte"/>
+										<component ref="aangifteIndienen"/>
+										<component ref="gemeenschappelijke"/>
+										<component ref="nietSamen"/>
+										<component ref="kiesHelp"/>
+									</set-property>
+									<set component-id="echtgenootRekeningnummerValue" value=""/>
+							 	</result>
+							 	<result value="false">
+							 		<if>
+							 			<expression expr="${ontvangenAangifteChoiceVal} == 'true'"/>
+										<results>
+											<result value="true">
+												<set-property property="visible" value="true">
+													<component ref="letOp"/>
+													<component ref="aangifteIndienen"/>
+													<component ref="gemeenschappelijke"/>
+													<component ref="nietSamen"/>
+													<component ref="kiesHelp"/>
+												</set-property>
+												<set-property property="visible" value="false">
+												<component ref="q6"/>
+													<component ref="rekeningnummerJuist"/>
+													<component ref="rekeningnummerJuistChoice"/>
+													<component ref="q7"/>
+													<component ref="echtgenootRekeningnummerText"/>
+													<component ref="echtgenootRekeningnummerValue"/>
+													<component ref="doenAllebeiAangifte"/>
+												</set-property>
+												<set component-id="echtgenootRekeningnummerValue" value=""/>
+												<clear ref="rekeningnummerJuistChoice"/>
+											</result>
+											<result value="false">
+												<set-property property="visible" value="true">
+													<component ref="letOp"/>
+													<component ref="aangifteIndienen"/>
+													<component ref="gemeenschappelijke"/>
+													<component ref="nietSamen"/>
+													<component ref="kiesHelp"/>
+												</set-property>
+												<set-property property="visible" value="false">
+													<component ref="echtgenootRekeningnummer"/>
+													<component ref="echtgenootRekeningnummerChoice"/>
+													<component ref="doenAllebeiAangifte"/>
+												</set-property>
+												<clear ref="echtgenootRekeningnummer"/>
+												<clear ref="echtgenootRekeningnummerChoice"/>
+											</result>
+										</results>
+							 		</if>
+							 	</result>
+							 </results>
+						 </if>
+					</event>
+					<event id="rekeningnummerJuistChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="rekeningnummerJuistChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${rekeningnummerJuistChoiceValue} == 'true'">
+								<placeholder name="rekeningnummerJuistChoiceValue" ref="rekeningnummerJuistChoice" src="component"/>
+							</expression>
+							<results>
+								<result value="true">
+									<set-property property="visible" value="false">
+										<component ref="q7"/>
+										<component ref="echtgenootRekeningnummerText"/>
+										<component ref="echtgenootRekeningnummerValue"/>
+									</set-property>
+								</result>
+								<result value="false">
+									<set-property property="visible" value="true">
+										<component ref="q7"/>
+										<component ref="echtgenootRekeningnummerText"/>
+										<component ref="echtgenootRekeningnummerValue"/>
+									</set-property>
+								</result>
+							</results>
+						</if>
+						<set-property property="visible" value="true">
+							<component ref="letOp"/>
+							<component ref="doenAllebeiAangifte"/>
+							<component ref="kiesHelp"/>
+						</set-property>
+						<set component-id="echtgenootRekeningnummerValue" value=""/>
+					</event>
+					<event id="echtgenootAangifteChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="echtgenootAangifteChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${echtgenootAangifteChoiceValue} == 'true'">
+								<placeholder name="echtgenootAangifteChoiceValue" ref="echtgenootAangifteChoice" src="component"/>
+							</expression>
+							<results>
+								<result value="true">
+									<set-property property="visible" value="true"> 
+										<component ref="q4"/>
+										<component ref="aangifteProgramma"/>
+										<component ref="aangifteProgrammaChoice"/>
+									</set-property>
+									<set-property property="visible" value="false"> 
+										<component ref="q8"/>
+										<component ref="echtgenootInkomen"/>
+										<component ref="echtgenootInkomenChoice"/>
+									</set-property>
+								</result>
+								<result value="false">
+									<set-property property="visible" value="true">
+										<component ref="q8"/>
+										<component ref="echtgenootInkomen"/>
+										<component ref="echtgenootInkomenChoice"/>
+									</set-property>
+									<set-property property="visible" value="false"> 
+										<component ref="q4"/>
+										<component ref="aangifteProgramma"/>
+										<component ref="aangifteProgrammaChoice"/>
+										<component ref="echtgenootRekeningnummer"/>
+										<component ref="echtgenootRekeningnummerChoice"/>
+									</set-property>
+									<clear ref="echtgenootRekeningnummerChoice"/>
+								</result>
+							</results>
+						</if>
+						<set-property property="visible" value="false"> 
+							<component ref="q7"/>
+							<component ref="echtgenootRekeningnummerText"/>
+							<component ref="echtgenootRekeningnummerValue"/>
+							<component ref="letOp"/>
+							<component ref="aangifteIndienen"/>
+							<component ref="gemeenschappelijke"/>
+							<component ref="doenAllebeiAangifte"/>
+							<component ref="nietSamen"/>
+							<component ref="geenAangifte"/>
+							<component ref="kiesHelp"/>
+						</set-property>
+						<clear ref="aangifteProgrammaChoice"/>
+						<clear ref="echtgenootInkomenChoice"/>
+					</event>
+					<event id="echtgenootRekeningnummerChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="echtgenootRekeningnummerChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<if>
+							<expression expr="${echtgenootRekeningnummerChoiceValue} == 'true'">
+								<placeholder name="echtgenootRekeningnummerChoiceValue" ref="echtgenootRekeningnummerChoice" src="component"/>
+							</expression>
+							<results>
+								<result value="true">
+									<set-property property="visible" value="true">
+										<component ref="q7"/>
+										<component ref="echtgenootRekeningnummerText"/>
+										<component ref="echtgenootRekeningnummerValue"/>
+									</set-property>
+								</result>
+								<result value="false">
+									<set-property property="visible" value="false">
+										<component ref="q7"/>
+										<component ref="echtgenootRekeningnummerText"/>
+										<component ref="echtgenootRekeningnummerValue"/>
+									</set-property>
+								</result>
+							</results>
+						</if>
+						<set-property property="visible" value="true">
+							<component ref="letOp"/>
+							<component ref="doenAllebeiAangifte"/>
+							<component ref="kiesHelp"/>
+						</set-property>
+					</event>
+					<event id="echtgenootInkomenChoiceEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="echtgenootInkomenChoice"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<set-property property="visible" value="true">
+							<component ref="letOp"/>
+							<component ref="geenAangifte"/>
+							<component ref="kiesHelp"/>
+						</set-property>
+					</event>
+					<!-- Third panel events -->
+					<event id="fooienCheckEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="fooien"/>
+								<component ref="vrijgestelde"/>
+								<component ref="pensioen"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<store action="set" name="fooienCheckboxValue" ref="fooien" src="component"/>
+						<store action="set" name="vrijgesteldeCheckboxValue" ref="vrijgestelde" src="component"/>
+						<store action="set" name="pensioenCheckboxValue" ref="pensioen" src="component"/>
+						<if>
+							<expression expr="${fooienCheckboxValue} == 'true' or ${vrijgesteldeCheckboxValue} == 'true' or ${pensioenCheckboxValue} == 'true'"/>
+							<results>
+								<result value="true">
+									<set-property property="visible" value="true">
+										<component ref="q5"/>
+										<component ref="reisaftrek"/>
+									</set-property>
+								</result>
+								<result value="false">
+									<set-property property="visible" value="false">
+										<component ref="q5"/>
+										<component ref="reisaftrek"/>
+									</set-property>
+									<clear ref="reisaftrek"/>
+								</result>
+							</results>
+						</if>
+					</event>
+					<event id="submitPanelEvent">
+						<listeners>
+							<listenergroup>
+								<component ref="submitButton"/>
+								<component ref="pg3"/>
+								<component ref="pg5"/>
+								<component ref="goToNextPanel"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<store name="submittedPanel" ref="panelIdentifier" src="component"/>
+						<if>
+							<expression expr="${submittedPanel} == 'firstPanel'"/>
+							<results>
+								<result value="true">
+									<business-action ref="submitFirstPage">
+										<in name="userinfo" ref="userinfo" src="component" />
+										<out name="outputResult" ref="returnResult" />
+									</business-action>
+									<switch>
+										<expression expr="${outputResult.persoonlijkeSituatieChoice}"/>
+										<results>
+											<result value="getrouwd">
+												<set-panel target="rightTargetPanel" src="secondRightPanel" />
+												<set-panel target="leftTargetPanel" src="secondLeftPanel" />
+												<set component-id="pg2" value="Persoonlijke gegevens : ${outputResult.naam}"/>
+												<set component-id="naam" value="${outputResult.naam}"/>
+												<set component-id="bsn" value="${outputResult.bsn}"/>
+												<set component-id="geboorteDatum" ref="outputResult.geboorteDatum"/>
+											 </result>
+											<result value="ongetrouwd">
+												<set-panel target="rightTargetPanel" src="thirdRightPanel" />
+												<set-panel target="leftTargetPanel" src="thirdLeftPanel" />
+											</result>
+											<result value="eendeel">
+											</result>
+										</results>
+									</switch>
+									<set-property property="visible" value="true">
+										<component ref="goToPrevPanel"/>
+									</set-property>
+									<set-property property="visible" value="false">
+										<component ref="goToNextPanel"/>
+									</set-property>
+								</result>
+							</results>
+						</if>
+						<if>
+							<expression expr="${submittedPanel} == 'secondPanel'"/>
+							<results>
+								<result value="true">
+									<dialog>
+										<title value="Result"/>
+										<message value="Thats all for now ! "/>
+									</dialog>
+								</result>
+							</results>
+						</if>
+						<change-style>
+							<component ref="submitButton"/>
+							<style-action action="set" style="myButton1 myButton3"/>
+						</change-style>
+					</event>
+					<event id="goToPrevPanelEvent"> 
+						<listeners>
+							<listenergroup>
+								<component ref="goToPrevPanel"/>
+								<component ref="pg2"/>
+								<component ref="pg4"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<set-panel target="rightTargetPanel" src="firstRightPanel" />
+						<set name="userinfo" ref="userDetails" src="user"/>
+						
+						<set-property property="visible" value="true">
+							<component ref="goToNextPanel"/>
+						</set-property>
+						<set-property property="visible" value="false">
+							<component ref="goToPrevPanel"/>
+						</set-property>
+						<store name="submittedPanel" ref="panelIdentifier" src="component"/>
+						<switch>
+							<expression expr="${submittedPanel}"/>
+							<results>
+								<result value="secondPanel">
+									<change-style>
+										<component ref="pg2"/>
+										<style-action action="set" style="leftPanel-text leftPanel-textBG leftpanel-textTopMargin"/>
+									</change-style>
+									<change-style>
+										<component ref="pg3"/>
+										<style-action action="set" style="leftPanel-text"/>
+									</change-style>
+								</result>
+								<result value="thirdPanel">
+									<change-style>
+										<component ref="pg4"/>
+										<style-action action="set" style="leftPanel-text leftPanel-textBG leftpanel-textTopMargin"/>
+									</change-style>
+									<change-style>
+										<component ref="pg5"/>
+										<style-action action="set" style="leftPanel-text"/>
+									</change-style>
+								</result>
+							</results>							
+						</switch>
+					</event>
+				</events>
+			</window>
+			
+			<!-- #### PANEL DEFINITIONS #### -->
+			<!-- LEFT PANEL 1 -->
+			<panel-definition id="firstLeftPanel">
+				<autolayout>
+					<label id="pg1" displayname="Persoonlijke gegevens" class="leftpanel-text leftpanel-textBG leftpanel-textTopMargin"/>
+				</autolayout>
+			</panel-definition>
+			<!-- RIGHT PANEL 1 -->
+			<panel-definition id="firstRightPanel" name="userinfo">
+				<verticallayout>
+					<panel>
+						<autolayout>
+							<label displayname="Persoonlijke gegevens" class="rightpanel-title" />
+						</autolayout>
+					</panel>
+					<panel>
+						<gridlayout>
+						    <!-- Naam -->
+							<element x="1" y="1"><label displayname=" Naam" class="rightpanel-text rightpanel-text1" /></element>
+							<element x="2" y="1"><textfield id="naam" name="naam" type="text" min-length="2" tooltip="Naam van persoon"	class="panel-textfield" width="280px"/>	</element>
+							
+							<!-- Telefoonnummer -->
+							<element x="1" y="2"><label displayname=" Telefoonnummer" class="rightpanel-text rightpanel-text1" /></element>
+							<element x="2" y="2"><textfield id="telefoonnummer" name="telefoonnummer" type="int" min-length="10" max-length="14" tooltip="Telefoonnummer"	class="panel-textfield" width="110px"/>	</element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- BSN -->
+							<element x="0" y="3"><image id="q1" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="3"><label displayname="Burgerservicenummer/sofinummer" class="rightpanel-text rightpanel-text2"/></element>
+							<element x="2" y="3" ><textfield id="bsn" name="bsn" type="int" min-length="9" max-length="9" tooltip="Burgerservicenummer/sofinummer" class="panel-textfield-bsn" width="70px"/></element>
+							
+							<!-- Geboortedatum -->
+							<element x="0" y="4"><image id="q2" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="4"><label displayname="Geboortedatum" class="rightpanel-text rightpanel-text2"/></element>
+							<element x="2" y="4"><textfield id="geboorteDatum" type="date" name="geboorteDatum" min-length="8" max-length="8" tooltip="Datum invoerveld, 8 cijfers DD/MM/JJJJ " class="panel-textfield" width="70px"/></element>
+							
+							<!-- Nummer Belastingconsulent -->
+							<element x="0" y="5"><image id="q3" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="5"><label displayname="Nummer Belastingconsulent" class="rightpanel-text rightpanel-text2" /></element>
+							<element x="2" y="5"><textfield id="nummerconsulent" name="nummerconsulent" type="int" min-length="6" max-length="6" tooltip="Nummer Belastingconsulent" class="panel-textfield" width="70px"/></element>
+							
+							<!-- Hebt u van ons bericht ontvangen om aangifte te doen? -->
+							<element x="0" y="6"><image id="q4" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="6"><label displayname="Hebt u van ons bericht ontvangen om aangifte te doen?" class="rightpanel-text"/></element>
+							<element x="2" y="6">
+								<choice id="aangifte" name="aangifte" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true"/>
+									<choice-item displayname="Nee" selected="false" value="false"/>
+								</choice>
+							</element>
+							
+							<!-- Staat er een juist rekeningnummer op ons bericht? -->
+							<element x="0" y="7"><image id="q5" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="7"><label id="rekeningnummerBericht" visible="false" displayname="Staat er een juist rekeningnummer op ons bericht?" class="rightpanel-text" /></element>
+							<element x="2" y="7">
+								<choice id="rekeningnummerBerichtChoice" name="rekeningnummerBerichtChoice" visible="false" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true"/>
+									<choice-item displayname="Nee" selected="false" value="false"/>
+								</choice>
+							</element>
+							
+							<!-- Wilt u een rekeningnummer opgeven of wijzigen? -->
+							<element x="1" y="8"><label id="rekeningnummerOpgeven" visible="false" displayname="Wilt u een rekeningnummer opgeven of wijzigen?" class="rightpanel-text" /></element>
+							<element x="2" y="8">
+								<choice id="rekeningnummerOpgevenChoice" name="rekeningnummerOpgevenChoice" visible="false"  class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true"/>
+									<choice-item displayname="Nee" selected="false" value="false"/>
+								</choice>
+							</element>
+							
+							<!-- Staat er een juist rekeningnummer op ons bericht? -->
+							<element x="0" y="9"><image id="q6" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="9"><label id="rekeningnummerText" visible="false" displayname="Rekeningnummer" class="rightpanel-text" /></element>
+							<element x="2" y="9"><textfield id="rekeningnummerValue" name="rekeningnummerValue" type="int" visible="false" min-length="6" max-length="6" tooltip="rekeningnummer" class="panel-textfield" width="70px"/></element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Uw persoonlijke situatie in 2008 -->
+							<element x="0" y="10"><image id="q7" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="10"><label id="persoonlijkeSituatie" visible="false" displayname="Uw persoonlijke situatie in 2009" class="rightpanel-text rightpanel-text3" /></element>
+							<element x="2" y="10">
+								<dropdown id="persoonlijkeSituatieChoice" name="persoonlijkeSituatieChoice" visible="false" class="panel-textfield">
+									<item displayname="" value=""/>
+									<item displayname="Heel 2009 Getrouwd" value="getrouwd"/>
+									<item displayname="Heel 2009 Ongetrouwd" value="ongetrouwd"/>
+									<item displayname="Een deel van 2009 Ongetrouwd" value="eenDeel"/>
+								</dropdown>
+							</element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Woonde u samen met een huisgenoot, bijvoorbeeld met uw vriend(in) of een kind van 27 jaar of ouder? -->
+							<element x="0" y="11"><image id="q8" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="11"><label id="huiosgenoot" visible="false" displayname="Woonde u samen met een huisgenoot, bijvoorbeeld met uw vriend(in) of een kind van 27 jaar of ouder?" class="rightpanel-text rightpanel-text4" /></element>
+							<element x="2" y="11">
+								<choice id="huiosgenootChoice" name="huiosgenootChoice" visible="false" class="rightpanel-text rightpanel-text4">
+									<choice-item displayname="Ja" selected="false" value="true"/>
+									<choice-item displayname="Nee" selected="false" value="false"/>
+								</choice>
+							</element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Periode dat u getrouwd was in 2008  -->  
+							<element x="0" y="12"><image id="q9" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="12"><label id="getrouwdPeriode" visible="false" displayname="Periode dat u getrouwd was in 2009" class="rightpanel-text rightpanel-text2" /></element>
+							<element x="2" y="12"><textfield id="getrouwdPeriodeDate" name="getrouwdPeriodeDate" type="int" visible="false" min-length="2" max-length="2" tooltip="getrouwdPeriodeDate" class="panel-textfield" width="25px"/></element>
+							<element x="3" y="12"><textfield id="getrouwdPeriodeMonth" name="getrouwdPeriodeMonth" type="int" visible="false" min-length="2" max-length="2" tooltip="getrouwdPeriodeMonth" class="panel-textfield" width="25px"/></element>
+							<element x="4" y="12"><hidden id="panelIdentifier" value="firstPanel"/></element>						
+						</gridlayout>
+					</panel>
+				</verticallayout>
+			</panel-definition>
+			
+			<!-- LEFT PANEL 2 -->
+			<panel-definition id="secondLeftPanel">
+				<autolayout>
+					<label id="pg2" displayname="Persoonlijke gegevens" class="leftpanel-text leftpanel-textTopMargin"/>
+					<label id="pg3" displayname="Persoonlijke gegevens" class="leftpanel-text leftpanel-textBG"/>
+				</autolayout>
+			</panel-definition>
+			<!-- RIGHT PANEL 2 -->
+			<panel-definition id="secondRightPanel">
+				<verticallayout>
+					<panel>
+						<autolayout>
+							<label displayname="Persoonlijke gegevens van uw echtgenoot" class="rightpanel-title" />
+						</autolayout>
+					</panel>
+
+					<panel>
+						<gridlayout>
+							<!-- Naam -->
+							<element x="1" y="1"><label displayname="Naam" class="rightpanel-text rightpanel-text1 rightpanel-text5"/></element>
+							<element x="2" y="1"><textfield id="naam" name="naam" type="text" min-length="2" tooltip="Naam van persoon" class="panel-textfield" width="280px"/></element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- BSN -->
+							<element x="0" y="2" class="helpcolumn"><image id="q1" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="2"><label displayname="Burgerservicenummer/sofinummer" class="rightpanel-text rightpanel-text2" /></element>
+							<element x="2" y="2" ><textfield id="bsn" name="bsn" type="int" min-length="9" max-length="9" tooltip="Burgerservicenummer/sofinummer" class="panel-textfield" width="70px"/></element>
+
+							<!-- Geboortedatum -->
+							<element x="0" y="3" class="helpcolumn"><image id="q2" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="3"><label displayname="Geboortedatum" class="rightpanel-text rightpanel-text2" /></element>
+							<element x="2" y="3"><textfield id="geboorteDatum" type="date" name="geboorteDatum" min-length="8" max-length="8" tooltip="geboortedatum" class="panel-textfield" width="70px"/></element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Heeft uw echtgenoot van ons bericht ontvangen om aangifte te doen? -->
+							<element x="0" y="4" class="helpcolumn"><image id="q3" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="4"><label id="ontvangenAangifte" displayname="Heeft uw echtgenoot van ons bericht ontvangen om aangifte te doen?" class="rightpanel-text rightpanel-text7" /></element>
+							<element x="2" y="4">
+								<choice id="ontvangenAangifteChoice" name="ontvangenAangifteChoice" class="rightpanel-text">
+									<choice-item displayname="Ja" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+							
+							<!-- Wilt u samen aangifte doen met dit programma? -->
+							<element x="0" y="6" class="helpcolumn"><image id="q4" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="6"><label id="aangifteProgramma" visible="false" displayname="Wilt u samen aangifte doen met dit programma?" class="rightpanel-text" /></element>
+							<element x="2" y="6">
+								<choice id="aangifteProgrammaChoice" name="aangifteProgrammaChoice" visible="false" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" selected="false" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+													<!-- OR -->
+															
+							<!-- Doet uw echtgenoot over 2008 aangifte? -->
+							<element x="0" y="5" class="helpcolumn"><image id="q5" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="5"><label id="echtgenootAangifte" visible="false" displayname="Doet uw echtgenoot over 2009 aangifte?" class="rightpanel-text" /></element>
+							<element x="2" y="5">
+								<choice id="echtgenootAangifteChoice" name="echtgenootAangifteChoice" visible="false" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" selected="false" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+							
+							<!-- Had uw echtgenoot in 2008 inkomen? -->
+							<element x="0" y="7" class="helpcolumn"><image id="q8" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="7"><label id="echtgenootInkomen" visible="false" displayname="Had uw echtgenoot in 2009 inkomen?" class="rightpanel-text" /></element>
+							<element x="2" y="7">
+								<choice id="echtgenootInkomenChoice" name="echtgenootInkomenChoice" visible="false">
+									<choice-item displayname="Ja" selected="false" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" selected="false" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+							
+							<!-- Staat er een juist rekeningnummer op ons bericht? -->
+							<element x="0" y="8" class="helpcolumn"><image id="q6" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="8"><label id="rekeningnummerJuist" visible="false" displayname="Staat er een juist rekeningnummer op ons bericht?" class="rightpanel-text" /></element>
+							<element x="2" y="8">
+								<choice id="rekeningnummerJuistChoice" name="rekeningnummerJuistChoice" visible="false" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" selected="false" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+							
+							<!-- Wilt u voor uw echtgenoot een rekeningnummer opgeven of wijzigen? -->
+							<element x="1" y="9"><label id="echtgenootRekeningnummer" visible="false" displayname="Wilt u voor uw echtgenoot een rekeningnummer opgeven of wijzigen?" class="rightpanel-text" /></element>
+							<element x="2" y="9">
+								<choice id="echtgenootRekeningnummerChoice" name="echtgenootRekeningnummerChoice" visible="false" class="rightpanel-text">
+									<choice-item displayname="Ja" selected="false" value="true" class="rightpanel-text"/>
+									<choice-item displayname="Nee" selected="false" value="false" class="rightpanel-text"/>
+								</choice>
+							</element>
+							
+							<!-- Rekeningnummer van uw echtgenoot -->
+							<element x="0" y="10" class="helpcolumn"><image id="q7" visible="false" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="10"><label id="echtgenootRekeningnummerText" visible="false" displayname="Rekeningnummer van uw echtgenoot" class="rightpanel-text" /></element>
+							<element x="2" y="10" ><textfield id="echtgenootRekeningnummerValue" visible="false" name="echtgenootRekeningnummerValue" type="int" min-length="9" max-length="9" tooltip="Rekeningnummer van uw echtgenoot" class="panel-textfield" width="70px"/></element>
+						</gridlayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Labels -->
+							<element x="1" y="13" gridwidth="30"><label id="letOp" visible="false" displayname="Let op!" class="rightpanel-boldtext"/></element>
+							<element x="1" y="14" gridwidth="30"><label id="aangifteIndienen" visible="false" displayname="Uw echtgenoot moet de aangifte apart indienen" class="rightpanel-boldtext"/></element>
+							<element x="1" y="15" gridwidth="30"><label id="doenAllebeiAangifte" visible="false" displayname="U en uw wchtgenoot doen allebei aangifte met dit programma. U moet van een aantal inkomenbestanddelen en aftrekposten het totaal van u en uw echtgenoot invullen." class="rightpanel-text rightpanel-text6"/></element>
+							<element x="1" y="16" gridwidth="30"><label id="nietSamen" visible="false" displayname="Uw echtgenoot doet namelijk niet samen met u aangifte met dit programma." class="rightpanel-text rightpanel-text6"/></element>
+							<element x="1" y="18" gridwidth="30"><label id="gemeenschappelijke" visible="false" displayname="U moet bij een aantal gemeenschappelijke inkomensbestanddelen en aftrekposten ook het deel van uw echtgenoot aangeven, ook al doet u ieder apart aangifte." class="rightpanel-text rightpanel-text6"/></element>
+							<element x="1" y="19" gridwidth="30"><label id="geenAangifte" visible="false" displayname="Uw echtgenoot doet geen aangifte. Meer bij een aantal inkomensbestanddelen en aftrekposten moet u ook het deel van uw echtgenoot aangeven, ook al doet u ieder apart aangifte." class="rightpanel-text rightpanel-text6"/></element>
+							<element x="1" y="20" gridwidth="30"><label id="kiesHelp" visible="false" displayname="Kies 'Help' of 'F1' voor meer informatie." class="rightpanel-text rightpanel-text6"/> </element>
+							<element x="4" y="12"><hidden id="panelIdentifier" value="secondPanel"/></element>
+							</gridlayout>
+						</panel>
+					</verticallayout>
+			</panel-definition>
+			
+			<!-- LEFT PANEL 3 -->
+			<panel-definition id="thirdLeftPanel">
+				<autolayout>
+					<label id="pg4" displayname="Persoonlijke gegevens" class="leftpanel-text leftpanel-textTopMargin"/>
+					<label displayname="........................................................................" class="leftpanel-text dottedLine"/>
+					<label id="pg5" displayname="Box 1: Werk en woning" class="leftpanel-text leftpanel-textBG"/>
+					<label displayname="Box 1: andere inkomsten" class="leftpanel-text"/>
+					<label displayname="Box 1: premies lijfrenten e.d." class="leftpanel-text"/>
+					<label displayname="Box 2: aanmerkelijk belang" class="leftpanel-text"/>
+					<label displayname="Box 3: sparen en beleggen" class="leftpanel-text"/>
+					<label displayname="........................................................................" class="leftpanel-text dottedLine"/>
+					<label displayname="Aftrekposten" class="leftpanel-text"/>
+					<label displayname="Vrijstellingen en verminderingen" class="leftpanel-text"/>
+					<label displayname="Bijzondere situaties" class="leftpanel-text"/>
+					<label displayname="Te verrekenen bedragen" class="leftpanel-text"/>
+					<label displayname="........................................................................" class="leftpanel-text dottedLine"/>
+					<label displayname="Heffingskortingen" class="leftpanel-text"/>
+					<label displayname="........................................................................" class="leftpanel-text dottedLine"/>
+					<label displayname="Overzicht" class="leftpanel-text"/>
+					<label displayname="........................................................................" class="leftpanel-text dottedLine"/>
+					<label displayname="Naar onderteken met DigiD " class="leftpanel-text leftpanel-textColor"/>
+				</autolayout>
+			</panel-definition>
+			<!-- RIGHT PANEL 3 -->
+			<panel-definition id="thirdRightPanel">
+				<verticallayout>
+					<panel>
+						<autolayout>
+							<label displayname="Box 1: Werk en woning" class="rightpanel-title" />
+							<html><text><![CDATA[<br>]]></text></html>
+						</autolayout>
+					</panel>
+					<panel>
+						<autolayout>
+							<label displayname="Kies de onderwerpen die in 2009 van toepassing waren." class="rightpanel-text rightpanel-text6" />
+						</autolayout>
+					</panel>
+					<panel>
+						<gridlayout>
+							<!-- Loon, fooien, Ziektewetuitkeringen en dergelijke -->
+							<element x="0" y="2" class="helpcolumn"><image id="q1" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="2"><checkbox id="fooien" displayname="Loon, fooien, Ziektewetuitkeringen en dergelijke" class="rightpanel-text"/></element>
+							
+							<!-- AOW, pensioen, WAO, WIA, WW, Anw, bijstand, of een andere uitkering, zoals lijfrente-uitkeringen of afkoopsommen die onder de loonheffing vielen -->
+							<element x="0" y="3" class="helpcolumn"><image id="q2" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="3"><checkbox id="aow" displayname="AOW, pensioen, WAO, WIA, WW, Anw, bijstand, of een andere uitkering, zoals lijfrente-uitkeringen of afkoopsommen die onder de loonheffing vielen" class="rightpanel-text rightpanel-text8" /></element>
+							
+							<!-- Vrijgestelde inkomsten als functionaris bij een internationale organisatie, zoals de EU, de VN of de NAVO -->
+							<element x="0" y="4" class="helpcolumn"><image id="q3" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="4"><checkbox id="vrijgestelde" displayname="Vrijgestelde inkomsten als functionaris bij een internationale organisatie, zoals de EU, de VN of de NAVO" class="rightpanel-text" /></element>
+							
+							<!-- Loon, pensioen en uitkeringen uit het buitenland -->
+							<element x="0" y="5" class="helpcolumn"><image id="q4" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="5"><checkbox id="pensioen" displayname="Loon, pensioen en uitkeringen uit het buitenland" class="rightpanel-text" /></element>
+							
+							<!-- Reisaftrek openbaar vervoer -->
+							<element x="0" y="6" class="helpcolumn"><image id="q5" tooltip="help" visible="false" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="6"><checkbox id="reisaftrek" displayname="Reisaftrek openbaar vervoer" visible="false" class="rightpanel-text" /></element>
+							
+							<!-- Eigen woning -->
+							<element x="0" y="7" class="helpcolumn"><image id="q6" tooltip="help" location="images/bg/ibpagequestion.jpg"/></element>
+							<element x="1" y="7"><checkbox id="eigen" displayname="Eigen woning" class="rightpanel-text" /></element>
+							
+							<element x="4" y="12"><hidden id="panelIdentifier" value="thirdPanel"/></element>
+						</gridlayout>
+					</panel>
+				</verticallayout>
+			</panel-definition>
+		</view>
+		<styles>
+			<style location="../css/belastingdienst.css" window-id="window1"/>
+		</styles>
+	</presentation-tier>
+	
+	<!-- #### BUSINESS TIER #### -->
+	<business-tier>
+		<business-actions>
+			<business-action id="submitFirstPage">
+				<service ref="BDservice" method-ref="submitCredentials">
+					<in name="0" ref="userinfo"/>
+					<out name="returnResult" ref="returnFromSubmitCredentials"/>
+				</service>
+			</business-action>
+		</business-actions>
+	</business-tier>
+	
+	<!-- #### INTEGRATION TIER #### -->
+	<integration-tier>
+		<services>
+			<service resource-ref="belastingdienstApp" id="BDservice">
+				<method id="submitCredentials" name="submitCredentials">
+					<in name="0" ref="userinfo"  class="com.belastingdienst.bussiness.service.UserDetails"/>
+				    <out name="returnFromSubmitCredentials" class="com.belastingdienst.bussiness.service.UserDetails"/>
+				</method>
+			</service>
+		</services>
+	</integration-tier>
+	
+	<!-- #### RESOURCE TIER #### -->
+	<resource-tier>
+		<resources>
+			<javaclass id="belastingdienstApp" classname="com.belastingdienst.bussiness.service.BelastingdienstService"/>
+		</resources>
+	</resource-tier>
+</application-mapping> 

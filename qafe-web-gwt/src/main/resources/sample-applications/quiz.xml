@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+  <presentation-tier>
+
+    <view>
+
+      <window id="mywindow" displayname="Quiz" width="600" height="450">
+        <rootpanel id="myrootpanel">
+          <verticallayout>
+            <panel-ref id="targetpanel" ref="mainpanel" />
+          </verticallayout>
+        </rootpanel>
+        <events>
+
+          <!--
+            <event id="onload"> <listeners> <listenergroup> <component ref="mywindow" /> <listener
+            type="onload" /> </listenergroup> </listeners> <store name="state" value="1"
+            action="set" /> <set component-id="question" value="Wat is reflection ?" /> <set
+            name="answer1" value="Weet ik niet" /> <set name="answer2" value="Vrijdag" /> <set
+            name="answer3" value="Eetbaar" /> <set name="answer4" value="Manier om in objecten te
+            kijken." /> <dialog type="info"> <title value="State value" /> <message value="State =
+            ${state}"> <placeholder name="state" ref="state" src="user" /> </message> </dialog>
+            </event>
+          -->
+          <event id="my event">
+            <listeners>
+              <listenergroup>
+                <component ref="next" />
+                <listener type="onclick" />
+              </listenergroup>
+            </listeners>
+            <dialog>
+              <title value="Choice made " />
+              <message ref="answer" src="component" />
+            </dialog>
+            <if>
+              <expression expr="not ${a}">
+                <placeholder name="a" ref="answer" src="component" />
+              </expression>
+              <results>
+                <result value="true">
+                  <switch>
+
+                    <expression expr="${state}">
+                      <placeholder name="state" ref="state" src="user" />
+                    </expression>
+                    <results>
+                      <result value="1">
+                        <set component-id="question" value="Wat is reflection ?" />
+                        <set name="answer1" value="Weet ik niet" />
+                        <set name="answer2" value="Vrijdag" />
+                        <set name="answer3" value="Eetbaar" />
+                        <set name="answer4" value="Manier om in objecten te kijken." />
+                        <store name="state" value="2" action="set" />
+                      </result>
+                      <result value="2">
+                        <set component-id="question" value="Wat is een abstract class ?" />
+                        <set name="answer1" value="Weet ik niet" />
+                        <set name="answer2" value="Donderdag" />
+                        <set name="answer3" value="Niet cool" />
+                        <set name="answer4" value="Een class waar je geen instantie van kan maken" />
+                        <store name="state" value="3" action="set" />
+                      </result>
+                      <result value="3">
+
+                      </result>
+                    </results>
+                  </switch>
+                </result>
+                <result value="false">
+                  <dialog type="error">
+                    <title value="No choice made" />
+                    <message value="Please select on of the answers" />
+                  </dialog>
+                </result>
+              </results>
+            </if>
+            <dialog type="info">
+              <title value="State value" />
+              <message value="State = ${state}">
+                <placeholder name="state" ref="state" src="user" />
+              </message>
+
+            </dialog>
+          </event>
+        </events>
+      </window>
+
+      <panel-definition id="mainpanel">
+        <autolayout cols="2">
+          <label displayname="Naam:" />
+          <textfield id="username" required="true" />
+          <label displayname="Email:" />
+          <textfield id="email" type="email" required="true" />
+          <button displayname="Start" id="start" />
+        </autolayout>
+      </panel-definition>
+
+      <panel-definition id="questions">
+        <verticallayout>
+          <label id="question" displayname="Hoeveel jaar bestaat Java" />
+          <choice horizontal="false" id="answer">
+            <choice-item name="answer1" value="a" displayname="4" />
+            <choice-item name="answer2" value="b" displayname="6" />
+            <choice-item name="answer3" value="c" displayname="8" />
+            <choice-item name="answer4" value="d" displayname="10" />
+          </choice>
+          <button id="next" displayname="Volgende vraag" />
+        </verticallayout>
+      </panel-definition>
+
+    </view>
+    
+    <events>
+      <event id="startup">
+        <listeners>
+          <listenergroup>
+            <component ref="start" />
+            <listener type="onclick" />
+          </listenergroup>
+        </listeners>
+
+        <business-action ref="insertParticipant">
+          <in name="name" ref="username" src="component" />
+          <in name="email" ref="email" src="component" />
+        </business-action>
+
+        <store name="state" value="1" action="set" />
+        <set-panel src="questions" target="targetpanel" />
+      </event>
+    </events>
+
+  </presentation-tier>
+
+</application-mapping>

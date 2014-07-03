@@ -1,0 +1,124 @@
+#!/bin/bash
+# Author: Hallo Khaznadar
+# this script requires auto_release.sh and ./release_prepare ./release_perform ./release_editions to be located in the same directory
+# in order to use this script to make a release of the qafe platform or any of its extensions 
+# you need to change the values of the variables below holding the "CHANGE_ME" to the desireable values
+# for your release.
+# platform
+#        |_trunk
+#        |     |_target
+#        |            |_checkout
+#        |_editions
+######################################################################################################################################
+
+MODE=$1 # can be ["" | no-dependency-release | prepare | perform]
+
+if [ "${MODE}" == "help" ]; then
+  echo "usage: ["" | no-dependency-release | prepare | perform]"
+  exit 0
+fi
+
+date2stamp () {
+    date --utc --date "$1" +%Y_%m_%d_%s
+}
+
+stamp=$(date2stamp $(date))
+# CHANGE_ME section
+RELEASE_VER="1.3-rc2" # example: 1.3-rc2
+RELEASE_TAG="platform-1.3-rc2" # example: platform-1.3-rc2
+NEW_DEV_VER="1.3-rc3-SNAPSHOT" # example: 1.3-rc3-SNAPSHOT
+CURRENT_VER="1.3-rc2-SNAPSHOT" # for release candidates RELEASE_VER-SNAPSHOT
+
+SVNURL_BASE="svn+ssh://tomcat@192.168.140.32/u01/svnreps/qualogy/qafe/platform" # example: svn+ssh://tomcat@192.168.130.30/u01/svnreps/qualogy/qafe/platform
+CHECKOUT_DIR="trunk" # example: trunk
+
+EDITIONS_BUILD_BASE_DIR="../../../editions" # example: ../../../editions
+#EDITIONS_TO_CREATE="qafe-enterprise-edition,qafe-enterprise-gae-edition,qafe-demo-edition,qafe-demo-gae-edition,qafe-license-registration-edition,qafe-forms-conversion-gui-edition"
+EDITIONS_TO_CREATE="qafe-enterprise-edition,qafe-demo-edition,qafe-forms-conversion-gui-edition"
+
+DEBUG_EDITIONS_TO_CREATE="qafe-enterprise-edition"
+# CHANGE_ME section
+
+SVNURL_TRUNK="${SVNURL_BASE}/trunk"
+SVNURL_TAGS="${SVNURL_BASE}/tags"
+SVNURL_RELEASE_TAG="${SVNURL_TAGS}/${RELEASE_TAG}"
+
+SNAPSHOT="SNAPSHOT"
+
+TIME=$(date2stamp $(date))
+TARGET="target"
+CHECKOUT_DIR_TAG="checkout"
+
+if [ "${MODE}" != "perform" ]; then
+  if [ -d "${CHECKOUT_DIR}" ]; then
+     echo "# WARNING ${CHECKOUT_DIR} will be deleted first !"
+    rm -rf ${CHECKOUT_DIR}
+  fi
+  svn co ${SVNURL_TRUNK} ${CHECKOUT_DIR}
+  cd ${CHECKOUT_DIR}
+  ../auto_release.sh $RELEASE_VER $RELEASE_TAG $NEW_DEV_VER > ../release_prepare_${TIME}.log
+  if [ "${MODE}" == "prepare" ]; then
+    cd ..
+    exit 0
+  fi
+else
+  if [ "${MODE}" == "perform" ]; then
+    cd ${CHECKOUT_DIR}
+  fi
+fi
+
+cd ${TARGET}
+
+svn co ${SVNURL_RELEASE_TAG} ${CHECKOUT_DIR_TAG}
+
+cd ${CHECKOUT_DIR_TAG}
+
+# Following if clause is to replace current veriosn with release version in target/checkout directory for release perform of tag and commit
+if [ "${MODE}" != "perform" ]; then
+  FILES_TO_MATCH="pom.xml"
+  TEXT_TO_MATCH="${CURRENT_VER}"
+  TEXT_TO_REPLACE="${RELEASE_VER}"
+  if [ "${TEXT_TO_MATCH}" != "${TEXT_TO_REPLACE}" ]; then
+    FIND_REPLACE="s/${TEXT_TO_MATCH}/${TEXT_TO_REPLACE}/g"
+    find . -name $FILES_TO_MATCH -type f | xargs sed -i -e $FIND_REPLACE
+    svn commit -m "[fixfor-maven-release-plugin] prepare release ${RELEASE_TAG}"
+  fi
+fi
+
+mvn -s settings.xml -Pqafe-build-all clean install
+
+cd ..
+
+rm -rf ${CHECKOUT_DIR_TAG}
+
+cd ..
+
+../release_perform > ../release_perform_${TIME}.log
+
+# Following if clause is to replace the current version with new development verion in trunk directory and commit
+if [ "${MODE}" != "perform" ]; then
+  FILES_TO_MATCH="pom.xml"
+  TEXT_TO_MATCH="${CURRENT_VER}"
+  TEXT_TO_REPLACE="${NEW_DEV_VER}"
+  if [ "${TEXT_TO_MATCH}" != "${TEXT_TO_REPLACE}" ]; then
+    FIND_REPLACE="s/${TEXT_TO_MATCH}/${TEXT_TO_REPLACE}/g"
+    find . -name $FILES_TO_MATCH -type f | xargs sed -i -e $FIND_REPLACE
+    svn commit -m "[fixfor-maven-release-plugin] prepare for next development iteration"
+  fi
+fi
+
+
+if [ "${MODE}" != "no-dependency-release" ]; then
+  echo "#############################################################################################################################"
+  echo "# The main artifacts of the current project has been released and they are available in the locally hosted maven repository #"
+  echo "# This is the moment in time that you need to release other dependent projects required for making editions                 #"
+  echo "# When you are done with releasing all required projects press any key to continue ...                                      #"
+  read PRESSANYKEY
+  echo "#############################################################################################################################"
+fi
+cd ${TARGET}/${CHECKOUT_DIR_TAG}
+
+../../../release_editions $EDITIONS_BUILD_BASE_DIR $RELEASE_VER $RELEASE_TAG $EDITIONS_TO_CREATE > ../../../release_editions_${TIME}.log
+../../../release_editions $EDITIONS_BUILD_BASE_DIR $RELEASE_VER $RELEASE_TAG $DEBUG_EDITIONS_TO_CREATE "true" >> ../../../release_editions_${TIME}.log
+
+cd ../../..

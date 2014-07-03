@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<business-tier>
+		<business-actions>
+			<!-- In memory db (tables created)-->
+			<business-action id="setupInMemory">
+				<service ref="databaseServiceInMemory" method-ref="setup" />
+			</business-action>
+			<business-action id="teardownInMemory">
+				<service ref="databaseServiceInMemory" method-ref="teardown" />
+			</business-action>
+			<business-action id="getUsersSqlAsAttributeInMemory">
+				<service ref="databaseServiceInMemory" method-ref="getUsersSqlAsAttribute" />
+			</business-action>
+			<business-action id="getUsersSqlAsTextInMemory">
+				<service ref="databaseServiceInMemory" method-ref="getUsersSqlAsText" />
+			</business-action>
+			<business-action id="getUsersSqlAsAttributeByIdInMemory">
+				<service ref="databaseServiceInMemory" method-ref="getUsersSqlAsAttributeById" />
+			</business-action>
+			<business-action id="getUsersSqlAsTextByIdInMemory">
+				<service ref="databaseServiceInMemory" method-ref="getUsersSqlAsTextById" />
+			</business-action>
+
+			<!-- Oracle db (tables available)-->
+			<business-action id="getUsersSqlAsAttribute">
+				<service ref="databaseService" method-ref="getUsersSqlAsAttribute" />
+			</business-action>
+			<business-action id="getUsersSqlAsText">
+				<service ref="databaseService" method-ref="getUsersSqlAsText" />
+			</business-action>
+			<business-action id="getUsersSqlAsAttributeById">
+				<service ref="databaseService" method-ref="getUsersSqlAsAttributeById" />
+			</business-action>
+			<business-action id="getUsersSqlAsTextById">
+				<service ref="databaseService" method-ref="getUsersSqlAsTextById" />
+			</business-action>
+		</business-actions>
+	</business-tier>
+</application-mapping>

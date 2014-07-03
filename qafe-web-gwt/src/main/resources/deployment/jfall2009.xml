@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+
+	<presentation-tier>
+		<styles>
+			<!--style location="../css/ah.css" window-id="window1"/-->
+		</styles>
+		<view>
+			<window id="window1" displayname="Score Board" width="690" height="780" >
+				<rootpanel id="myRootPanel">
+					<verticallayout>
+						<panel height="100">
+							<horizontallayout>
+	 							<image id="qlogo" location="images/jfall/qlogo.png"/>
+								<label displayname="Score Board" style="color:#580C0C; fontSize:78;"/>
+							</horizontallayout>				
+						</panel>			
+						<panel>
+							<horizontallayout>
+
+								<panel id="pnlInsertScore" name="score">
+									<gridlayout>
+										<element x="0" y="0"><label displayname=" "/></element>
+										<element x="0" y="1"><label displayname=" "/></element>
+										<element x="0" y="2"><label displayname="Naam" message-key="mybundle.name"/></element>
+										<element x="1" y="2"><textfield id="nameId" name="NAME"/></element>
+										<element x="0" y="3"><label displayname="Email" message-key="mybundle.email"/></element>
+										<element x="1" y="3"><textfield type="email" id="emailId" name="EMAIL"/></element>
+										<element x="0" y="4"><label displayname="Telefoon" message-key="mybundle.phone"/></element>
+										<element x="1" y="4"><textfield id="phoneId" name="PHONE"/></element>
+										<element x="0" y="5"><label displayname="Score" message-key="mybundle.score"/></element>
+										<element x="1" y="5"><textfield type="spinner" min-value="0" max-value="15" id="scoreId" name="SCORE"/></element>
+										<element x="1" y="6">
+											<panel>
+												<horizontallayout>
+													<button id="save" displayname="Add" message-key="mybundle.save"/>
+													<button id="reset" displayname="Reset" message-key="mybundle.reset"/>
+												</horizontallayout>				
+											</panel>
+										</element>	
+	
+										<!--element x="1" y="7">
+											<panel>
+												<horizontallayout>
+													<tree  message-key="mybundle.name" displayname="Showcase samples" id="components" width="400" height="400">			
+														<tree-item message-key="mybundle.email" displayname="Buttons" >									
+														</tree-item>
+														<tree-item message-key="mybundle.phone" displayname="Imaging">
+															<tree-item message-key="mybundle.score" id="image" displayname="Image" />		
+														</tree-item>
+													</tree>
+												</horizontallayout>				
+											</panel>
+										</element-->		
+
+									</gridlayout>
+								</panel>			
+								<panel>
+									<verticallayout>
+										<label displayname="Hoogste Scores" style="color:#912D2D; fontSize:18"/>
+										<tilelist id="scores" columns="1" width="410" height="610">
+											<panel height="75">
+												<gridlayout>
+													<element x="0" y="0"><label displayname="Score" message-key="mybundle.score"/></element>
+													<element x="1" y="0"><label name="SCORE"/></element>
+													<element x="0" y="1"><label displayname="Naam" message-key="mybundle.name"/></element>
+													<element x="1" y="1"><label name="NAME"/></element>
+													<element x="0" y="2"><label displayname="Email" message-key="mybundle.email"/></element>
+													<element x="1" y="2"><label name="EMAIL"/></element>
+													<element x="2" y="2"><label displayname="Telefoon" message-key="mybundle.phone"/></element>
+													<element x="3" y="2"><label name="PHONE"/></element>
+												</gridlayout>
+											</panel>
+    										</tilelist>	
+									</verticallayout>
+								</panel>
+							</horizontallayout>				
+						</panel>		
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="evtWindow1">
+						<listeners>
+							<listenergroup>
+								<component ref="window1" />
+								<listener type="onload" />
+							</listenergroup>
+						</listeners>						
+						<event ref="evtLoadScores"/>
+					</event>				
+					<event id="evtSave">
+						<listeners>
+							<listenergroup>
+								<component ref="save" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<business-action ref="InsertScore" >
+						    <in name="name"  ref="nameId"  src="component"/>
+						    <in name="email" ref="emailId" src="component"/>
+						    <in name="phone" ref="phoneId" src="component"/>
+						    <in name="score" ref="scoreId" src="component"/>
+  						</business-action>
+						<event ref="evtLoadScores"/>
+					</event>			
+					<event id="evtLoadScores">
+						<business-action ref="SelectScores" >
+  							<out name="data" ref="result"/>
+  						</business-action>
+						<set component-id="scores" ref="data"/> 												
+					</event>			
+					<event id="evtReset">
+						<listeners>
+							<listenergroup>
+								<component ref="reset" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>						
+						<clear ref="pnlInsertScore"/>
+						<focus ref="nameId"/>
+					</event>
+				</events>
+			</window>	
+
+			<!--menu-definition id="menu" displayname="Start" message-key="mybundle.name">
+				<menu id="menu_qafe" shortcut="CTRL+Y" displayname="QAFE" message-key="mybundle.name">
+					<menu id="file_open_qafesite" shortcut="CTRL+Y" displayname="Open QAFE Site" message-key="mybundle.email"/>
+				</menu>
+				<menu id="menu_labs" shortcut="CTRL+Y" displayname="QAFE Labs" message-key="mybundle.phone">
+ 					<menu id="qafe_mi_reload" shortcut="CTRL+Y" displayname="Reload applications" message-key="mybundle.score"/>
+				</menu>
+			</menu-definition-->
+					
+		</view>
+	</presentation-tier>
+
+  <business-tier>
+    <business-actions>
+      <business-action id="SelectScores">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="SelectScores">
+          <out name="result" ref="result"/>
+        </service>
+      </business-action>
+      <business-action id="InsertScore">
+        <transaction managed="no"/>
+        <service ref="hsd_business_relations" method-ref="InsertScore">
+	    <in name="name"  ref="name"/>
+	    <in name="email" ref="email"/>
+	    <in name="phone" ref="phone"/>
+	    <in name="score" ref="score" type="int"/>
+        </service>
+      </business-action>
+    </business-actions>
+  </business-tier>
+
+  <integration-tier>
+    <services>
+      <service id="hsd_business_relations" resource-ref="DatabaseResource">
+          <method id="SelectScores" name="SelectScores">
+          <out name="result"/>
+        </method>
+	  <method id="InsertScore" name="InsertScore">
+	    <in name="name"  ref="name"/>
+	    <in name="email" ref="email"/>
+	    <in name="phone" ref="phone"/>
+	    <in name="score" ref="score" type="int"/>
+        </method>
+      </service>
+    </services>
+  </integration-tier>
+  <resource-tier>
+    <resources>
+      <drivermanager-datasource id="DatabaseResource" statements-file-url="jfall2009-statements.xml" url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV1" username="QAFE_DEMOS" password="QAFE_DEMOS" driver-classname="oracle.jdbc.OracleDriver"/>
+    </resources>
+  </resource-tier>
+</application-mapping> 

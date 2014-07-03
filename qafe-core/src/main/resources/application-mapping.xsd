@@ -1,0 +1,3264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://qafe.com/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://qafe.com/schema" elementFormDefault="qualified">
+	<xs:element name="application-mapping" type="applicationMappingType">
+		<xs:annotation>
+			<xs:documentation>
+
+				DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
+
+				Copyright 2006- 2010 Qualogy B.V.. All rights reserved.
+
+				The contents of this file are subject to the terms that are provided by
+				Qualogy B.V. The file may not be copied or (re)distributed without
+				the explicit written permission from Qualogy B.V.
+				
+				For more information visit http://www.qafe.com
+                     
+      
+    		</xs:documentation>
+		
+		
+			<xs:documentation>This is the root of any of the tiers. The
+				application mapping is as the word says it: The mapping of an
+				application.
+				The several tiers can form an application. The tiers are
+				the logical tiers that are known from n-tier application
+				development.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="applicationMappingType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="presentation-tier" type="PresentationTierType"
+				minOccurs="0" />
+			<xs:element name="business-tier" type="BusinessTierType"
+				minOccurs="0" />
+			<xs:element name="integration-tier" type="IntegrationTierType"
+				minOccurs="0" />
+			<xs:element name="resource-tier" type="ResourceTierType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ComponentType" abstract="true">
+		<xs:annotation>
+			<xs:documentation>The root object for all the components.
+
+				All the
+				components share a "style" property and a class property.
+
+				These are
+				CSS like attributes just like in HTML.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="style" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The style attribute is similar to the style
+					attribute in HTML elements.
+					The value of the style needs to be
+					camelcased,
+
+					For example: the css property margin-top, would in this
+					case be marginTop.
+
+					so
+
+					style="marginTop:20px"
+
+					Multiple style properties
+					can be added, as long as they are separated by
+					the ';'
+
+
+					style="marginTop:20px;background:white;"</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="class" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The class attribute is similar to the class
+					attribute in HTML elements.
+					The value of the css is a string
+					containing the CSS element from an
+					external css file.
+
+
+					class="myButton"
+
+					where the css style definition ".myButton" can be
+					found in an external CSS file.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+			<xs:attribute name="group-name" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>
+				Group names are to group the components together even when they are in the same panel.
+				It's a finer grained mechanism to group components together than for example a named panel.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="EditableComponentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ComponentType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PresentationTierType">
+		<xs:choice minOccurs="0" maxOccurs="3">
+			<xs:element name="view" type="ViewUIType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="styles" type="StyleSetType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="events" type="EventsType" minOccurs="0"
+				maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="BusinessTierType">
+		<xs:choice minOccurs="0" maxOccurs="2">
+			<xs:element name="business-actions" type="business-actionsType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="types" type="typesType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="IntegrationTierType">
+		<xs:choice minOccurs="0" maxOccurs="3">
+			<xs:element name="services" type="servicesType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="errors" type="ErrorsType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="adapters" type="adaptersType" minOccurs="0"
+				maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ResourceTierType">
+		<xs:choice minOccurs="0" maxOccurs="1">
+			<xs:element name="resources" type="ResourcesType"
+				minOccurs="0" maxOccurs="1" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ViewUIType">
+		<xs:sequence>
+			<!--
+				<xs:element name="rootpanel" type="RootPanelType" minOccurs="0" />
+			-->
+			<xs:element name="window" type="WindowType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="menu-definition" type="MenuItemType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="toolbar-definition" type="ToolbarType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="panel-definition" type="PanelType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="title" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="business-actionsType">
+		<xs:sequence>
+			<xs:element name="business-action" type="BusinessActionType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusinessActionType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="transaction" type="TransactionBehaviourType"
+						minOccurs="0" />
+					<xs:sequence minOccurs="0" maxOccurs="unbounded">
+						<xs:group ref="businessActionCallGroup" minOccurs="0"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="access" use="optional" default="public">
+					<xs:annotation>
+						<xs:documentation>This is the access level for the business
+							actions.
+							This is used when the the business actions are published
+							beyond the scope
+							of your application as for example a webservice.
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="public">
+								<xs:annotation>
+									<xs:documentation>
+										The "public" denotes that the business action
+										is callable from the events or as a webservice.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="private">
+								<xs:annotation>
+									<xs:documentation>
+										The "private" denotes that the business
+										action is NOT callable from the events and that it cannot be
+										used as a webservice.
+								</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="statementGroup">
+		<xs:sequence>
+			<xs:element name="if" type="IfStatementType" minOccurs="0" />
+			<xs:element name="switch" type="SwitchStatementType"
+				minOccurs="0" />
+			<xs:element name="iteration" type="IterationType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="businessActionCallGroup">
+		<xs:sequence>
+			<xs:element name="service" type="ServiceRefType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:group ref="statementGroup" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:element name="business-action" type="BusinessActionRefType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="error-handler" type="ErrorHandlerType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="BindBaseType" abstract="true">
+		<xs:sequence minOccurs="0" maxOccurs="1">
+			<xs:element name="comments" type="xs:string" />
+		</xs:sequence>
+		<xs:attribute name="description" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="BusinessActionRefType">
+		<xs:sequence>
+			<xs:element name="comments" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="in" type="InType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="out" type="OutType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="ref" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="BuiltInFunctionType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="EventItemType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="component" type="componentType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TransactionBehaviourType">
+		<xs:attribute name="managed" default="global">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="no" />
+					<xs:enumeration value="local" />
+					<xs:enumeration value="global" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="isolation" default="default">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="default" />
+					<xs:enumeration value="read_uncommited" />
+					<xs:enumeration value="read_commited" />
+					<xs:enumeration value="repeatable_read" />
+					<xs:enumeration value="serializable" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="propagation" default="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="required" />
+					<xs:enumeration value="supported" />
+					<xs:enumeration value="mandatory" />
+					<xs:enumeration value="requires_new" />
+					<xs:enumeration value="not_supported" />
+					<xs:enumeration value="never" />
+					<xs:enumeration value="nested" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="timeout" type="xs:string" default="-1" />
+	</xs:complexType>
+	<xs:complexType name="ServiceRefType">
+		<xs:sequence>
+			<xs:element name="in" type="InType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="out" type="OutType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+
+		<xs:attribute name="ref" type="xs:string" use="required" />
+		<xs:attribute name="method-ref" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="adaptersType">
+		<xs:sequence>
+			<xs:element name="adapter" type="AdapterMappingType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdapterMappingType">
+		<xs:complexContent>
+			<xs:extension base="AdapterAttributeType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="attribute" type="AttributeMappingType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="adapter" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="NestedAdapterMappingType">
+									<xs:attribute name="attribute" type="xs:string"
+										use="required" />
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="adapt-all" type="xs:string"	default="true" />
+				<xs:attribute name="adapt-name" type="xs:string" />
+				<xs:attribute name="extends" type="xs:string" />
+				<xs:attribute name="class" type="xs:string" />
+				<xs:attribute name="type" type="xs:string" use="optional" />
+			</xs:extension>
+			<!--
+				<xs:simpleType> <xs:restriction base="xs:string"> <xs:enumeration
+				value="boolean"/> <xs:enumeration value="character"/>
+				<xs:enumeration value="char"/> <xs:enumeration value="double"/>
+				<xs:enumeration value="string"/> <xs:enumeration value="int"/>
+				<xs:enumeration value="integer"/> <xs:enumeration value="long"/>
+				</xs:restriction> </xs:simpleType> </xs:attribute>
+			-->
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="NestedAdapterMappingType">
+		<xs:complexContent>
+			<xs:extension base="AdapterAttributeType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="attribute" type="AttributeMappingType"
+						minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="adapter" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="NestedAdapterMappingType">
+									<xs:attribute name="attribute" type="xs:string"
+										use="required" />
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="adapt-all" type="xs:string"
+					default="false" />
+				<xs:attribute name="extends" type="xs:string" />
+				<xs:attribute name="class" type="xs:string" />
+				<xs:attribute name="type" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AdapterAttributeType" abstract="true" />
+	<xs:complexType name="ReferenceType">
+		<xs:attribute name="ref" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="AdapterType">
+		<xs:attribute name="id" type="xs:string" />
+		<xs:attribute name="adapt-all" type="xs:string" default="false" />
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="attribute" type="xs:string" use="required" />
+		<xs:attribute name="class" type="xs:string" />
+		<xs:attribute name="extends" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="ValueType">
+		<xs:sequence>
+			<xs:element name="type" type="TypeDefinitionType"
+				minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="typesType">
+		<xs:sequence>
+			<xs:element name="type" type="TypeDefinitionType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeDefinitionType">
+		<xs:sequence>
+			<xs:element name="attribute" type="TypeAttributeMappingType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="abstract" type="xs:string" />
+		<xs:attribute name="parent" type="xs:string" use="optional" />
+		<xs:attribute name="class" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="TypeAttributeMappingType">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="type" type="xs:string" />
+		<xs:attribute name="default" type="xs:string" />
+		<xs:attribute name="class" type="xs:string" use="optional" />
+		<xs:attribute name="ref" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="AttributeMappingType">
+		<xs:complexContent>
+			<xs:extension base="AdapterAttributeType">
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="ref" type="xs:string" use="required" />
+				<xs:attribute name="adapter" type="xs:string" use="optional" />
+				<xs:attribute name="default" type="xs:string" />
+				<xs:attribute name="type" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="componentType">
+		<xs:annotation>
+			<xs:documentation> *** Components *** </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ref" type="xs:string" use="optional" />
+		<xs:attribute name="name" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="WindowType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="rootpanel" type="RootPanelType" />
+					<xs:element name="events" type="EventsType" minOccurs="0" />
+					<xs:element name="styles" type="StyleSetType" minOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<!--xs:attribute name="title" type="xs:string" use="required" /-->
+				<xs:attribute name="displayname" type="xs:string" use="required" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="resizable" type="xs:boolean"
+					default="true" />
+				<xs:attribute name="isparent" type="xs:boolean" use="optional"
+					default="true" />
+				<xs:attribute name="closable" type="xs:boolean"
+					default="true" />
+				<xs:attribute name="minimizable" type="xs:boolean"
+					default="true" />
+				<xs:attribute name="maximizable" type="xs:boolean"
+					default="true" />
+				<xs:attribute name="draggable" type="xs:boolean"
+					default="true" />
+				<xs:attribute name="width" type="xs:nonNegativeInteger" default="200"/>
+				<xs:attribute name="height" type="xs:nonNegativeInteger" default="200"/>
+				<xs:attribute name="icon" type="xs:string" />
+				<xs:attribute name="authentication-required" type="xs:boolean"
+					default="false" />
+				<xs:attribute name="icon-style" type="xs:string" />
+				<xs:attribute name="top" type="xs:unsignedInt" />
+				<xs:attribute name="left" type="xs:unsignedInt" />
+				<xs:attribute name="in-dock" type="xs:boolean" default="false" />
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PanelType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:choice>
+					<xs:element name="horizontallayout" type="HorizontalLayoutType" />
+					<xs:element name="verticallayout" type="VerticalLayoutType" />
+					<xs:element name="gridlayout" type="GridLayoutType" />
+					<xs:element name="borderlayout" type="BorderLayoutType" />
+					<xs:element name="absolutelayout" type="AbsoluteLayoutType" />
+					<xs:element name="autolayout" type="AutoLayoutType" />
+				</xs:choice>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<!--xs:attribute name="title" type="xs:string" /-->
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="toolbar" type="xs:string" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="disabled" type="xs:boolean"
+					default="false" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="disclosure" type="xs:boolean"
+					default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RootPanelType">
+		<xs:complexContent>
+			<xs:extension base="PanelType">
+				<xs:attribute name="menu" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OverflowPanelType">
+		<xs:complexContent>
+			<xs:extension base="PanelType">
+				<!--xs:attribute name="menu" type="xs:string" /-->
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatagridToolbarType">
+		<xs:complexContent>
+			<xs:extension base="PanelType">
+				<!--xs:attribute name="menu" type="xs:string" /-->
+				<xs:attribute name="placement" default="bottom">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="top">
+								<xs:annotation>
+									<xs:documentation>
+										The position of the controlbar is above the datagrid. 										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>		
+							<xs:enumeration value="left">
+								<xs:annotation>
+									<xs:documentation>
+										The position of the controlbar is on the left side of the datagrid. 										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="bottom">
+								<xs:annotation>
+									<xs:documentation>
+										The position of the controlbar is below the datagrid. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="right">
+								<xs:annotation>
+									<xs:documentation>
+										The position of the controlbar is on the right side of the datagrid. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>	
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventsType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="event" type="EventType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="builtInGroup">
+		<xs:choice>
+
+			<xs:element name="dialog" type="DialogType" minOccurs="0" />
+			<xs:element name="store" type="LocalStoreType" minOccurs="0" />
+			<xs:element name="set" type="SetValueType" minOccurs="0" />
+			<xs:element name="set-panel" type="SetPanelType"
+				minOccurs="0" />
+			<xs:element name="set-property" type="SetPropertyType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="store-clear" type="LocalDeleteType"
+				minOccurs="0" />
+			<xs:element name="event" type="EventRefType" minOccurs="0" />
+			<xs:element name="return" type="ReturnBuiltinType" minOccurs="0"/>
+			<xs:element name="toggle" type="ToggleType" minOccurs="0" />
+			<xs:element name="clear" type="ClearType" minOccurs="0" />
+			<xs:element name="openwindow" type="OpenWindowType"
+				minOccurs="0" />
+			<xs:element name="closewindow" type="CloseWindowType"
+				minOccurs="0" />
+			<xs:element name="change-style" type="ChangeStyleType"
+				minOccurs="0" />
+			<xs:element name="focus" type="FocusType" minOccurs="0" />
+			<xs:element name="copy" type="CopyType" minOccurs="0" />
+			<xs:element name="validate" type="RegExpValidateType"
+				minOccurs="0" />
+			<xs:element name="business-action" type="BusinessActionRefType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<!--
+				<xs:element name="set-property" type="SetPropertyType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			-->
+			<xs:element name="if" type="IfStatementType" minOccurs="0" />
+			<xs:element name="switch" type="SwitchStatementType"
+				minOccurs="0" />
+			<xs:element name="iteration" type="IterationType"
+				minOccurs="0" />
+			<xs:element name="error-handler" type="ErrorHandlerType"
+				minOccurs="0" />
+			<xs:element name="authenticate" type="AuthenticateType"
+				minOccurs="0" />
+			<xs:element name="logout" type="LogoutType" minOccurs="0" />
+			<xs:element name="log" type="LogFunctionType" minOccurs="0" />
+			<!--
+				<xs:element name="builtin-function" type="BuiltInFunctionType"
+				minOccurs="0" maxOccurs="unbounded"/>
+			-->
+			<xs:element name="show-panel" type="ShowPanelType" minOccurs="0" />
+			<xs:element name="close-panel" type="ClosePanelType" minOccurs="0" />
+		</xs:choice>
+	</xs:group>
+
+	<xs:group name="itemsGroup">
+		<xs:annotation>
+			<xs:documentation>
+				all items possible with event and business action
+			</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+
+			<xs:element name="dialog" type="DialogType" minOccurs="0" />
+			<xs:element name="store" type="LocalStoreType" minOccurs="0" />
+			<xs:element name="set" type="SetValueType" minOccurs="0" />
+			<xs:element name="set-property" type="SetPropertyType"
+				minOccurs="0" />
+			<xs:element name="set-panel" type="SetPanelType"
+				minOccurs="0" />
+			<xs:element name="store-clear" type="LocalDeleteType"
+				minOccurs="0" />
+			<xs:element name="event" type="EventRefType" minOccurs="0" />
+			<xs:element name="return" type="ReturnBuiltinType" minOccurs="0"/>
+			<xs:element name="toggle" type="ToggleType" minOccurs="0" />
+			<xs:element name="clear" type="ClearType" minOccurs="0" />
+			<xs:element name="openwindow" type="OpenWindowType"
+				minOccurs="0" />
+			<xs:element name="closewindow" type="CloseWindowType"
+				minOccurs="0" />
+			<xs:element name="change-style" type="ChangeStyleType"
+				minOccurs="0" />
+			<xs:element name="focus" type="FocusType" minOccurs="0" />
+			<xs:element name="copy" type="CopyType" minOccurs="0" />
+			<xs:element name="validate" type="RegExpValidateType"
+				minOccurs="0" />
+			<xs:element name="business-action" type="BusinessActionRefType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="service" type="ServiceRefType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="if" type="IfStatementType" minOccurs="0" />
+			<xs:element name="switch" type="SwitchStatementType"
+				minOccurs="0" />
+			<xs:element name="iteration" type="IterationType"
+				minOccurs="0" />
+			<xs:element name="error-handler" type="ErrorHandlerType"
+				minOccurs="0" />
+			<xs:element name="logout" type="LogoutType" minOccurs="0" />
+			<xs:element name="log" type="LogFunctionType" minOccurs="0" />
+			<xs:element name="show-panel" type="ShowPanelType" minOccurs="0" />
+			<xs:element name="close-panel" type="ClosePanelType" minOccurs="0" />
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="EventType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="listeners" minOccurs="0" type="listenersType" />
+					<xs:group ref="builtInGroup" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" use="optional" />
+				<xs:attribute name="src-name" use="optional" />
+				<xs:attribute name="src-id" use="optional" />
+				<xs:attribute name="src-value" use="optional" />
+				<xs:attribute name="src-listener-type" use="optional" /> 
+				<xs:attribute name="components" type="xs:string" use="optional"/>
+				<xs:attribute name="listener-types" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventItemType" abstract="true" />
+
+	<xs:complexType name="StyleSetType">
+		<xs:sequence>
+			<xs:element name="style" type="StyleType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="conditional-style" type="ConditionalStyleType" minOccurs="0"
+				maxOccurs="unbounded" />				
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StyleType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:attribute name="window-id" type="xs:string" use="required" />
+				<xs:attribute name="location" type="xs:string" use="required" />
+				<!-- <xs:attribute name="kind" type="xs:string" use="optional" default="css"/> -->
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="ConditionalStyleType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="condition" minOccurs="0" maxOccurs="unbounded" type="ConditionType" />					
+				</xs:sequence>
+				<xs:attribute name="id" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="ConditionType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:attribute name="style" type="xs:string" />
+				<xs:attribute name="class" type="xs:string" />
+				<xs:attribute name="expr" type="xs:string" use="required"/>				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="StylePropertyType">
+		<xs:attribute name="key" type="xs:string" use="required" />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ErrorsType">
+		<xs:sequence>
+			<xs:element name="error" type="ErrorType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ErrorType">
+		<xs:sequence minOccurs="0" maxOccurs="1">
+			<xs:element name="log" type="logErrorType" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="exception" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="logErrorType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="message-key" type="xs:string" use="optional" />
+				<xs:attribute name="solution-key" type="xs:string" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+
+	</xs:complexType>
+
+	<xs:complexType name="ErrorHandlerType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="itemsGroup" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="error-ref" type="xs:string" use="required" />
+		<xs:attribute name="final-action" default="rethrow">
+			<xs:simpleType>
+				<xs:annotation>
+					<xs:documentation>
+						Action that should be taken after all resultitems
+						are processed.
+						Choose rethrow if exception must be rethrown (error
+						path continues) or
+						swallow if exception should be ignored in the
+						rest of the flow.
+						Note: swallowing an exception will not result in
+						an rollback in
+						case of a managed (with transaction)
+						business-action, where a
+						rethrow will cause the transaction to
+						rollback in these
+						circumstances. 
+					
+					</xs:documentation>
+				</xs:annotation>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="swallow">
+						<xs:annotation>
+							<xs:documentation>
+								When an exception occurs one has the option to
+								silenty allow the exception. That is done when
+								swallow is
+								selected.					 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+					<xs:enumeration value="rethrow">
+						<xs:annotation>
+							<xs:documentation>
+								When an exception occurs one has the option to
+								rethrow the exception.					 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="LayoutType" abstract="true">
+		<xs:attribute name="menu" type="xs:string" />
+		<xs:attribute name="id" use="prohibited" />
+	</xs:complexType>
+	<xs:complexType name="HorizontalLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="componentGroup" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AutoLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="componentGroup" />
+				</xs:sequence>
+				<xs:attribute name="cols" type="xs:integer" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VerticalLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="componentGroup" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GridLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="element" type="ElementType" minOccurs="0"
+						maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BorderLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="north" type="northType" minOccurs="0" />
+					<xs:element name="south" type="southType" minOccurs="0" />
+					<xs:element name="center" type="centerType" minOccurs="0" />
+					<xs:element name="east" type="eastType" minOccurs="0" />
+					<xs:element name="west" type="westType" minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AbsoluteLayoutType">
+		<xs:complexContent>
+			<xs:extension base="LayoutType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="element" type="AbsoluteLayoutElementType"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="northType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="componentGroup" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="southType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="componentGroup" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="centerType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="componentGroup" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="eastType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="componentGroup" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="westType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="componentGroup" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="listenersType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="listenergroup" type="listenerGroupType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="listenerGroupType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="component" type="componentType"
+				maxOccurs="unbounded" />
+			<xs:element name="listener" type="ListenerType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="ListenerType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="listener-parameter" type="ListenerParameterType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="type" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="onfetchdata">
+						<xs:annotation>
+							<xs:documentation>					
+								This is used for sorting and paging of a datagrid component.			
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onscroll-top">
+						<xs:annotation>
+							<xs:documentation>					
+								This is used for scrolling up of a datagrid component.			
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onscroll-bottom">
+						<xs:annotation>
+							<xs:documentation>					
+								This is used for scrolling down of a datagrid component.			
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onclick">
+						<xs:annotation>
+							<xs:documentation>
+								When onclick is selected, the component will
+								react on single mouse click.
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ondblclick">
+						<xs:annotation>
+							<xs:documentation>
+								When ondbclick is selected, the component will
+								react on double mouse click.
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onenter">
+						<xs:annotation>
+							<xs:documentation>
+								When onenter is selected, the component will
+								react the keyboard press of the "ENTER" key. 
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onexit">
+						<xs:annotation>
+							<xs:documentation>
+								When onexit is selected, the component will
+								react when the current component loses focus (by keyboard input
+								or mouse!). 
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onchange">
+						<xs:annotation>
+							<xs:documentation>
+								When onchange is selected, the component will
+								react when value is changed of the component. This is through
+								user input
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onfocus">
+						<xs:annotation>
+							<xs:documentation>
+								When onfocus is selected, the component will
+								react when is gets the focus either by mouse or by keyboard.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onkeydown">
+						<xs:annotation>
+							<xs:documentation>
+								When onkeydown is selected, the keyboard input
+								will trigger an event when the key is down.
+								An additional
+								listener parameters can be added to listen to a specific
+								by doing
+								the following in the body of the listener:
+								
+									&lt;listener-parameter name="key" value="KEY_UP" /&gt;
+						 
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onkeypress" >
+								<xs:annotation>
+							<xs:documentation>
+								When onkeypress is selected, the keyboard input will trigger an event when the key (printable char) is pressed.
+								An additional listener parameters can be added to listen to a specific 
+								by doing the following in the body of the listener:
+								
+									&lt;listener-parameter name="key" value="A" /&gt;
+						 
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onkeyup" >
+					<xs:annotation>
+							<xs:documentation>
+								When onkeyup is selected, the keyboard input will trigger an event when the key is released
+								An additional listener parameters can be added to listen to a specific 
+								by doing the following in the body of the listener:
+								
+									&lt;listener-parameter name="key" value="KEY_UP" /&gt;
+						 
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					
+					<xs:enumeration value="onload" >
+						<xs:annotation>
+							<xs:documentation>
+								When the onload is selected, the window will execute this event.
+								This only works on windows, so the component ref should refer to a window, otherwise this onload event 
+								doesn't have any effect.	 
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onmouse-down" >
+						<xs:annotation>
+								<xs:documentation>
+									When the onmouse-down is selected, the event will be triggered on pressing the mouse button
+										 
+								</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onmouse-move" >
+					<xs:annotation>
+								<xs:documentation>
+									When the onmouse-move is selected, the event will be triggered on moving  the mouse.
+										 
+								</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="onmouse-exit" >
+						<xs:annotation>
+							<xs:documentation>
+									When the onmouse-exit is selected, the event will be triggered when the mouse exits the boundaries of the component.
+										 
+							</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					
+					<xs:enumeration value="onmouse-enter" >
+						<xs:annotation>
+							<xs:documentation>
+									When the onmouse-enter is selected, the event will be triggered when the mouse enters the boundaries of the component.
+										 
+							</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					
+					<xs:enumeration value="onmouse-up" >
+						<xs:annotation>
+							<xs:documentation>
+									When the onmouse-up is selected, the event triggered when the mouse button is released.
+										 
+							</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					
+					<xs:enumeration value="onunload" >
+						<xs:annotation>
+							<xs:documentation>
+									When the onunload is selected, the event will be triggered when the window closes.
+									This listener type only applies to windows. See also "onload".
+										 
+							</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					
+					<xs:enumeration value="onfinish" >
+						<xs:annotation>
+							<xs:documentation>
+								Not yet Supported.					 
+							</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="ontimer" >
+						<xs:annotation>
+								<xs:documentation>
+									When the ontimer is slected, the event will be triggered when the time-out parameter, specified in milliseconds, is reached.
+									The following parameters can be used:
+										- time-out (milliseconds): execute the event when this parameter is reached
+										- repeat (integer): 0 means repeat continuously, 1 means repeat only once; default is 1
+								</xs:documentation>
+							</xs:annotation>
+					</xs:enumeration>					
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ListenerParameterType">
+		<xs:attribute name="name" type="xs:string" use="required" />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="LabelType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="displayname" type="xs:string" use="optional" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="visible" type="xs:boolean" default="true"/>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false"/>
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TextFieldType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" />
+					<xs:element name="regexp" type="xs:string" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="type" use="optional" default="text">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="text">
+								<xs:annotation>
+									<xs:documentation>
+										When text is selected, the value of this textfield can be anything.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="int">
+								<xs:annotation>
+									<xs:documentation>
+										When int is selected, the value of this textfield can only be integer valued.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="date">
+								<xs:annotation>
+									<xs:documentation>
+										When date is selected, the value of this textfield can only be a date value. The textfiels is rendered with a datacomponent in this case.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="signed_int">
+								<xs:annotation>
+									<xs:documentation>
+										When signed_int is selected, the value of this textfield can only be a positive (>=0) value.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="double">
+								<xs:annotation>
+									<xs:documentation>
+										When double is selected, the value of this textfield can be a decimal.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="chars">
+								<xs:annotation>
+									<xs:documentation>
+										When chars is selected, the value of this textfield can only be characters (no numbers are allowed).
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="email">
+								<xs:annotation>
+									<xs:documentation>
+										When email is selected, the value of this textfield can only be the format of an email address. http://en.wikipedia.org/wiki/E-mail_address#RFC_specification
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="spinner">
+								<xs:annotation>
+									<xs:documentation>
+										When spinner is selected, the value of this textfield can only be an integer which is dependent on the min-value and max-value. The valid values are to be
+										found within min-value and max-value.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="conditional-style-ref" type="xs:string"/>
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="required-class" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="validation-message-key" type="xs:string" />
+				<xs:attribute name="validation-message" type="xs:string" />
+				<xs:attribute name="validation-title-key" type="xs:string" />
+				<xs:attribute name="validation-title" type="xs:string" />
+				<xs:attribute name="required-validation-title" type="xs:string" />
+				<xs:attribute name="required-validation-title-key" type="xs:string" />
+				<xs:attribute name="required-validation-message" type="xs:string" />
+				<xs:attribute name="required-validation-message-key" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				
+				<xs:attribute name="orientation" default="leftright">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="updown">
+								<xs:annotation>
+									<xs:documentation>
+										When the updown value is selected, the prompt is placed above the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="leftright">
+								<xs:annotation>
+									<xs:documentation>
+										When the leftright value is selected, the prompt is placed left the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="format" type="xs:string" default="dd/MM/yyyy">
+					<xs:annotation>
+						<xs:documentation>
+							The format is only taken into account when the type is date.
+
+							Patterns
+							Symbol Meaning Presentation Example
+							G era designator Text AD
+							y year Number 1996
+							M month in year Text or Number July (or) 07
+							d day in month Number 10
+							h hour in am/pm (1-12) Number 12
+							H hour in day (0-23) Number 0
+							m minute in hour Number 30
+							s second in minute Number 55
+							S fractional second Number 978
+							E day of week Text Tuesday
+							a am/pm marker Text PM
+							k hour in day (1-24) Number 24
+							K hour in am/pm (0-11) Number 0
+							z time zone Text Pacific Standard Time(see comment)
+							Z time zone (RFC 822) Text -0800(See comment)
+							v time zone id Text America/Los_Angeles(See comment) 
+						
+					</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="min-length" type="xs:integer" />
+				<xs:attribute name="max-length" type="xs:integer" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="suggest" type="xs:boolean" default="false" />
+				<xs:attribute name="suggest-chars" type="xs:unsignedInt" default="3" />
+				<xs:attribute name="min-value" type="xs:unsignedInt" default="0" />
+				<xs:attribute name="max-value" type="xs:unsignedInt" default="20" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TextAreaType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="value" type="xs:string" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="rows" type="xs:string" default="1" />
+				<xs:attribute name="cols" type="xs:string"/>
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="rich" type="xs:boolean" default="false" />
+				<xs:attribute name="min-length" type="xs:integer" />
+				<xs:attribute name="max-length" type="xs:integer" />
+				<xs:attribute name="orientation" default="leftright">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="updown">
+								<xs:annotation>
+									<xs:documentation>
+										When the updown value is selected, the prompt is placed above the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="leftright">
+								<xs:annotation>
+									<xs:documentation>
+										When the leftright value is selected, the prompt is placed left the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PasswordTextFieldType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="value" type="xs:string" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="required-class" type="xs:string" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="orientation" default="leftright">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="updown">
+								<xs:annotation>
+									<xs:documentation>
+										When the updown value is selected, the prompt is placed above the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="leftright">
+								<xs:annotation>
+									<xs:documentation>
+										When the leftright value is selected, the prompt is placed left the field.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="password-mask" type="xs:string" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CheckBoxType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="displayname" type="xs:string" use="required" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="checked" type="xs:boolean" default="false" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="checked-value" type="xs:string" />
+				<xs:attribute name="unchecked-value" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="displayname-position" default="right">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="right">
+								<xs:annotation>
+									<xs:documentation>
+										When right is selected, the displayname for the checkbox will appear on the right side.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="left">
+								<xs:annotation>
+									<xs:documentation>
+										When left is selected, the displayname for the checkbox will appear on the left side.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChoiceType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence>
+					<xs:element name="choice-item" type="ChoiceItemType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="value" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="horizontal" type="xs:boolean" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChoiceItemType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="selected" type="xs:boolean" default="false" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" />
+				<xs:attribute name="value" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TreeType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="tree-item" type="TreeItemType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TreeItemType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="tree-item" type="TreeItemType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="value" type="xs:string" />
+				<xs:attribute name="expand" type="xs:boolean" default="false" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DropDownType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="item" type="DropDownItemType" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+				<xs:attribute name="required-class" type="xs:string" />
+				<xs:attribute name="empty-item-displayname" type="xs:string" />
+				<xs:attribute name="empty-item-value" type="xs:string" />
+				<xs:attribute name="empty-item-message-key" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DropDownItemType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" use="optional" />
+				<xs:attribute name="selected" type="xs:boolean" default="false" />
+				<xs:attribute name="value" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--
+		<xs:complexType name="MapComponentType" > <xs:complexContent >
+		<xs:extension base="ComponentType"> <xs:choice> <xs:element
+		name="area" type="AreaType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice> <xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="image" type="xs:string" use="required"/>
+		<xs:attribute name="disabled" type="xs:string" default="false"/>
+		<xs:attribute name="visible" type="xs:string" default="true"/>
+		<xs:attribute name="tooltip" type="xs:string"/> <xs:attribute
+		name="name" type="xs:string"/> </xs:extension> </xs:complexContent>
+		</xs:complexType>
+	-->
+	<xs:complexType name="ImageType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="location" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ButtonType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" use="optional" />
+				<xs:attribute name="image" type="xs:string" use="optional" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="key" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SliderType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="min-ticks" type="xs:string" />
+				<xs:attribute name="max-ticks" type="xs:string" />
+				<xs:attribute name="ticksize" type="xs:string" />
+				<xs:attribute name="tick-labels" >
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="2"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<!--  <xs:attribute name="orientation" default="horizontal">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="horizontal" />
+							<xs:enumeration value="vertical" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>-->
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MapComponentType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="area" type="AreaType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="image" type="xs:string" use="required" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AreaType">
+		<xs:attribute name="shape" type="xs:string" use="required" />
+		<xs:attribute name="coords" type="xs:string" use="required" />
+		<xs:attribute name="alt" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="ListBoxType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="item" type="DropDownItemType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="nr-visible-items" type="xs:positiveInteger" />
+				<xs:attribute name="multiple-select" type="xs:boolean" default="false" />
+				<xs:attribute name="required" type="xs:boolean" default="false" />
+
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MenuItemType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="menu" type="MenuItemType" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="separator" type="MenuItemSeparatorType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="shortcut" type="xs:string" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MenuItemSeparatorType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType" />
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<!--
+		<xs:complexType name="ContextMenuItemType" > <xs:complexContent >
+		<xs:extension base="MenuItemType"> <xs:sequence minOccurs="0">
+		<xs:element name="menu" type="MenuItemType" minOccurs="0"
+		maxOccurs="unbounded"/> </xs:sequence> </xs:extension>
+		</xs:complexContent> </xs:complexType>
+	-->
+	<xs:complexType name="TileListType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:group ref="componentGroup" minOccurs="0" maxOccurs="1" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" use="optional" />
+				<xs:attribute name="tooltip" type="xs:string" use="optional" />
+				<xs:attribute name="width" type="xs:string" use="optional" />
+				<xs:attribute name="height" type="xs:string" use="optional" />
+				<xs:attribute name="columns" type="xs:integer" use="optional" default="1" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DataGridType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence>
+					<xs:element name="column" type="DataGridColumnType" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="overflow" type="OverflowPanelType" minOccurs="0" />
+					<xs:element name="controlbar" type="DatagridToolbarType" minOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="editable" type="xs:boolean" default="false" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<!--Deprecated  
+					<xs:attribute name="maxrows" type="xs:string" default="-1"/>
+				-->
+				<xs:attribute name="minrows" type="xs:string" default="5" />
+				<xs:attribute name="pagesize" default="-1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="-1|[1-9]([0-9])*"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="page-scroll" type="xs:boolean" default="false" />
+				<xs:attribute name="currentpage" type="xs:string" default="0" />
+				<xs:attribute name="delete" type="xs:boolean" default="false" />
+				<xs:attribute name="add" type="xs:boolean" default="false" />
+				<xs:attribute name="export" type="xs:boolean" default="false" />
+				<xs:attribute name="export-formats" type="xs:string" default="excel,pdf,csv,xml" />
+				
+				<xs:attribute name="import" type="xs:boolean" default="false" />
+				<xs:attribute name="name" type="xs:string" use="optional" />
+				<xs:attribute name="tooltip" type="xs:string" use="optional" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="multiple-select" type="xs:boolean" default="false" />
+				<xs:attribute name="row-colors" type="xs:string"/>
+				<xs:attribute name="select-first-row" type="xs:boolean" default="false" />
+				<xs:attribute name="save" type="xs:boolean" default="true" />
+				<xs:attribute name="cancel" type="xs:boolean" default="true" />
+				<xs:attribute name="refresh" type="xs:boolean" default="true"/>
+				<xs:attribute name="overflow-group" type="xs:string" use="optional"/>
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DataGridColumnType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:group ref="componentGroup" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="editable" type="xs:boolean" default="true" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" use="optional" />
+				<xs:attribute name="sortable" type="xs:boolean" default="false" />
+				<xs:attribute name="static" type="xs:boolean" default="false" use="optional" />
+				<xs:attribute name="idfield" type="xs:boolean" default="false" use="optional" />
+				<xs:attribute name="required" type="xs:boolean" default="false" use="optional" />
+				<xs:attribute name="content" default="string">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="string">
+								<xs:annotation>
+									<xs:documentation>
+										When string is selected for this field, the contents will be rendered as "label"	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="html">
+								<xs:annotation>
+									<xs:documentation>
+										When html is selected for this field, the contents will accept HTML contents and render that accordingly.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="checkbox">
+								<xs:annotation>
+									<xs:documentation>
+										When checkbox is selected and the data is of type boolean(true/false), the checkbox is rendered	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="link">
+								<xs:annotation>
+									<xs:documentation>
+										When link is selected the item will be rendered as link. When clicking on this link, the data that is shown
+										is sent to the server.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="displayname" type="xs:string" use="optional" />
+				<xs:attribute name="message-key" type="xs:string" use="optional" />
+				<xs:attribute name="name" type="xs:string" use="optional" />
+				<xs:attribute name="tooltip" type="xs:string" use="optional" />
+				<xs:attribute name="width" type="xs:int" use="optional" />
+				<xs:attribute name="height" type="xs:int" use="optional" />
+				<xs:attribute name="conditional-style-ref" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TableType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="header" type="TableHeaderType" minOccurs="0" />
+					<xs:sequence>
+						<xs:element name="row" type="TableRowType" minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<!--xs:attribute name="editable" type="xs:boolean" default="true" /-->
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<!--xs:attribute name="maxrows" type="xs:string" default="-1" /-->
+				<!--xs:attribute name="pagesize" type="xs:string" default="-1" /-->
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" use="required"/>
+				<xs:attribute name="height" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TableHeaderType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence>
+					<xs:element name="cell" type="TableCellType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<!--xs:attribute name="editable" type="xs:boolean" default="true" /-->
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TableRowType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence>
+					<xs:element name="cell" type="TableCellType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<!--xs:attribute name="editable" type="xs:boolean" default="true" /-->
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TableCellType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:group ref="componentGroup" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TabPanelType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="tab" type="TabType" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TabType">
+		<xs:complexContent>
+			<xs:extension base="PanelType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SplitPanelType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="first" type="FirstComponentType" minOccurs="0" />
+					<xs:element name="second" type="SecondComponentType" minOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="horizontal" type="xs:boolean" default="true" />
+				<xs:attribute name="width" type="xs:string" use="required" />
+				<xs:attribute name="height" type="xs:string" use="required" />
+				<xs:attribute name="position" type="xs:string" use="optional" default="50%" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FirstComponentType">
+		<xs:choice>
+				
+			<xs:group ref="componentGroup" />		
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="SecondComponentType">
+		<xs:choice>
+			<xs:group ref="componentGroup" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="StackPanelType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="stack" type="StackType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StackType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:group ref="componentGroup" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<!--xs:attribute name="title" type="xs:string" use="required" /-->
+				<xs:attribute name="displayname" type="xs:string" use="required" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToolbarType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="tb-item" type="ToolbarItemType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="item-height" type="xs:string" use="optional" default="16px" />
+				<xs:attribute name="item-width" type="xs:string" use="optional" default="16px" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToolbarItemType">
+		<xs:complexContent>
+			<xs:extension base="EditableComponentType">
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="image" type="xs:string" use="required" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FileUploadType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="editable" type="xs:boolean" default="true"/>
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LinkType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HiddenType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="value" type="xs:string" use="optional" />
+				<xs:attribute name="name" type="xs:string" use="optional" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ChartComponentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="category-axis" type="CategoryAxisType" />					
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="legend" default="right">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="top">
+								<xs:annotation>
+									<xs:documentation>
+										The position of legend is above the chart. 										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>		
+							<xs:enumeration value="left">
+								<xs:annotation>
+									<xs:documentation>
+										The position of legend is on the left side of the chart. 										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="bottom">
+								<xs:annotation>
+									<xs:documentation>
+										The position of legend is below the chart. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="right">
+								<xs:annotation>
+									<xs:documentation>
+										The position of legend is on the right side of the chart. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="none">
+								<xs:annotation>
+									<xs:documentation>
+										No legend. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="LinearChartComponentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ChartComponentType">
+				<xs:sequence>
+					<xs:element name="linear-axis" type="LinearAxisType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AxisComponentType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+		
+	<xs:complexType name="CategoryAxisType">
+		<xs:complexContent>
+			<xs:extension base="AxisComponentType">
+				<xs:attribute name="name" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="LinearAxisType">
+		<xs:complexContent>
+			<xs:extension base="AxisComponentType">
+				<xs:attribute name="name" type="xs:string" use="optional" />
+				<xs:attribute name="min-value" type="xs:string" />
+				<xs:attribute name="max-value" type="xs:string" />
+				<xs:attribute name="ticksize" type="xs:string" />
+			</xs:extension>	
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="ChartItemType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="disabled" type="xs:boolean" default="false" />
+				<xs:attribute name="visible" type="xs:boolean" default="true" />
+				<xs:attribute name="displayname" type="xs:string" />
+				<xs:attribute name="message-key" type="xs:string" />
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="tooltip" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="LineChartType">
+		<xs:complexContent>
+			<xs:extension base="LinearChartComponentType">
+				<xs:sequence>
+					<xs:element name="chart-item" type="ChartItemType" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>				
+			</xs:extension>				
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="BarChartType">
+		<xs:complexContent>
+			<xs:extension base="LinearChartComponentType">
+				<xs:sequence>
+					<xs:element name="chart-item" type="ChartItemType" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>				
+			</xs:extension>	
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="ColumnChartType">
+		<xs:complexContent>
+			<xs:extension base="LinearChartComponentType">
+				<xs:sequence>
+					<xs:element name="chart-item" type="ChartItemType" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>				
+			</xs:extension>	
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="PlotChartType">
+		<xs:complexContent>
+			<xs:extension base="LinearChartComponentType">
+				<xs:sequence>
+					<xs:element name="chart-item" type="ChartItemType" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>				
+			</xs:extension>	
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="PieChartType">
+		<xs:complexContent>
+			<xs:extension base="ChartComponentType">
+				<xs:sequence>
+					<xs:element name="chart-item" type="ChartItemType" minOccurs="1" maxOccurs="unbounded" />
+				</xs:sequence>				
+			</xs:extension>	
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="AbsoluteLayoutElementType">
+		<xs:choice minOccurs="0">
+			<xs:group ref="componentGroup" />
+		</xs:choice>
+		<xs:attribute name="x" type="xs:integer" use="required" />
+		<xs:attribute name="y" type="xs:integer" use="required" />
+		<xs:attribute name="id" use="prohibited" />
+	</xs:complexType>
+	<xs:complexType name="ElementType">
+		<xs:choice minOccurs="0">
+			<xs:group ref="componentGroup" />
+		</xs:choice>
+		<xs:attribute name="x" type="xs:integer" use="required" />
+		<xs:attribute name="y" type="xs:integer" use="required" />
+		<xs:attribute name="gridwidth" type="xs:string" />
+		<xs:attribute name="gridheight" type="xs:string" />
+		<xs:attribute name="style" type="xs:string" />
+		<xs:attribute name="class" type="xs:string" />
+		<xs:attribute name="id" use="prohibited" />
+	</xs:complexType>
+	<xs:complexType name="servicesType">
+		<xs:choice minOccurs="0">
+			<xs:element name="service" type="ServiceType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ServiceType">
+		<xs:complexContent>
+			<xs:extension base="BindBaseType">
+				<xs:sequence>
+					<xs:element name="method" type="methodType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="required" />
+				<xs:attribute name="resource-ref" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ResourcesType">
+		<xs:choice maxOccurs="unbounded" minOccurs="1">
+			<xs:element name="spring" type="SpringContextResourceType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="javaclass" type="JavaClassResourceType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="drivermanager-datasource" type="DriverManagerResourceType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="jndi-datasource" type="JNDIDatasourceResourceType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ResourceType">
+		<xs:attribute name="id" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="SpringContextResourceType">
+		<xs:sequence>
+			<xs:element name="spring-bean" type="SpringBeanResourceType" minOccurs="1" maxOccurs="unbounded" />			
+		</xs:sequence>
+		<xs:attribute name="use-web-config" type="xs:boolean" use="optional" default="false" />
+		<xs:attribute name="config-files" type="xs:string" use="optional" />
+	</xs:complexType>
+	<xs:complexType name="SpringBeanResourceType">
+		<xs:complexContent>
+			<xs:extension base="ResourceType">
+				<xs:attribute name="bean" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>		
+	</xs:complexType>
+	<xs:complexType name="JavaClassResourceType">
+		<xs:complexContent>
+			<xs:extension base="ResourceType">
+				<!-- //TODO: constructor args 
+				<xs:sequence>
+					<xs:element name="constructor-arg" type="NamefullAbstractParameterType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				 -->
+				<xs:attribute name="classname" type="xs:string" use="required" />
+				<xs:attribute name="jarfile-location" type="xs:string" use="optional" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatasourceResourceType">
+		<xs:complexContent>
+			<xs:extension base="ResourceType">
+				<xs:attribute name="statements-file-url" type="xs:string" use="required" />
+                <xs:attribute name="proxy-connection" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="dialect" use="optional" default="oracle">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="oracle" />
+							<xs:enumeration value="mysql" />
+							<xs:enumeration value="db2" />
+							<xs:enumeration value="mssqlserver" />
+							<xs:enumeration value="hsqldb" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DriverManagerResourceType">
+		<xs:complexContent>
+			<xs:extension base="DatasourceResourceType">
+				<xs:attribute name="url" type="xs:string" use="required" />
+				<xs:attribute name="driver-classname" type="xs:string" use="required" />
+				<xs:attribute name="username" type="xs:string" use="optional" />
+				<xs:attribute name="password" type="xs:string" use="optional" />
+				<xs:attribute name="encrypted-password" type="xs:boolean" use="optional" default="false" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="JNDIDatasourceResourceType">
+		<xs:complexContent>
+			<xs:extension base="DatasourceResourceType">
+				<xs:attribute name="jndiname" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="methodType">
+		<xs:sequence>
+			<xs:element name="in" type="InType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="out" type="OutType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="scrollable" type="xs:string" default="false" />
+		<xs:attribute name="cache" type="xs:long" default="-1" />
+	</xs:complexType>
+
+	<xs:group name="componentGroup">
+		<xs:choice>
+			<xs:element name="label" type="LabelType" minOccurs="0" />
+			<xs:element name="textfield" type="TextFieldType" minOccurs="0" />
+			<xs:element name="textarea" type="TextAreaType" minOccurs="0" />
+			<xs:element name="checkbox" type="CheckBoxType" minOccurs="0" />
+			<xs:element name="choice" type="ChoiceType" minOccurs="0" />
+			<xs:element name="table" type="TableType" minOccurs="0" />
+			<xs:element name="datagrid" type="DataGridType" minOccurs="0" />
+			<xs:element name="tree" type="TreeType" minOccurs="0" />
+			<xs:element name="button" type="ButtonType" minOccurs="0" />
+			<xs:element name="listbox" type="ListBoxType" minOccurs="0" />
+			<!--<xs:element name="contextmenu" type="MenuItemType" minOccurs="0"/>-->
+			<xs:element name="slider" type="SliderType" minOccurs="0" />
+			<xs:element name="map" type="MapComponentType" minOccurs="0" />
+			<xs:element name="image" type="ImageType" minOccurs="0" />
+			<xs:element name="fileupload" type="FileUploadType" minOccurs="0" />
+			<xs:element name="dropdown" type="DropDownType" minOccurs="0" />
+			<xs:element name="password" type="PasswordTextFieldType" minOccurs="0" />
+			<xs:element name="hidden" type="HiddenType" minOccurs="0" />
+			<xs:element name="panel" type="PanelType" minOccurs="0" />
+			<xs:element name="tabpanel" type="TabPanelType" minOccurs="0" />
+			<xs:element name="splitpanel" type="SplitPanelType" minOccurs="0" />
+			<xs:element name="stackpanel" type="StackPanelType" minOccurs="0" />
+			<xs:element name="link" type="LinkType" minOccurs="0" />
+			<xs:element name="panel-ref" type="PanelRefType" minOccurs="0" />
+			<xs:element name="frame" type="FrameType" minOccurs="0" />
+			<xs:element name="html" type="HTMLType" minOccurs="0" />
+			<xs:element name="tilelist" type="TileListType" minOccurs="0" />
+			<xs:element name="linechart" type="LineChartType" minOccurs="0" />
+			<xs:element name="barchart" type="BarChartType" minOccurs="0" />
+			<xs:element name="columnchart" type="ColumnChartType" minOccurs="0" />
+			<xs:element name="plotchart" type="PlotChartType" minOccurs="0" />
+			<xs:element name="piechart" type="PieChartType" minOccurs="0" />
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="MessageDialogType" abstract="true">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChangeStyleActionType">
+		<xs:annotation>
+			<xs:documentation> *** Functions *** </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="key" type="xs:string" />
+		<xs:attribute name="value" type="xs:string" />
+		<xs:attribute name="action" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="set">
+						<xs:annotation>
+							<xs:documentation>
+								When set is selected, the key-value pair will be added as inline style information for the component	
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="remove">
+						<xs:annotation>
+							<xs:documentation>
+								When remove is selected, the key-value pair will be removed from the inline style information of the component	
+									</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+
+		<xs:attribute name="style" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="ChangeStyleType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:sequence>
+					<!--	<xs:element name="component" type="componentType" minOccurs="0" maxOccurs="unbounded"/>-->
+					<xs:element name="style-action" type="ChangeStyleActionType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ShowType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OpenWindowType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:sequence>
+					<xs:element name="ref" type="NamelessAbstractParameterType" minOccurs="0" />
+					<xs:element name="params" type="NamelessAbstractParameterType" minOccurs="0" >
+							<xs:annotation>
+						<xs:documentation>
+							parameters - Comma seperated string of parameters. There should be no spaces in this list. Any parameters left out will be displayed by default. 
+							Basic format is parameter1=value1,parameter2=value2,etc.... If the parameter is specified, but no value is assigned, it will default to yes, 
+							this rules does not apply to parameters that need values such as width, height, etc.
+
+							The following parameters can be used for internal windows:
+							- height: Height of the content of the window in pixels.
+							- width: Width of the content of the window in pixels.
+							- left: The horizontal window position in pixels from the left of the browser window.
+							- top: The vertical window position in pixels from the top of the browser window.
+							- modal: This will disabled other opened windows, (true or false).
+							
+							The following parameters can be used for external windows:
+							- height: Height of the content of the window in pixels. This does not include menubar/statusbar.
+							- width: Width of the content of the window in pixels.
+							- left (use screenX for Netscape 4): The horizontal window position in pixels from the left of your monitor screen.
+							- top (use screenY for Netscape 4): The vertical window position in pixels from the top of your monitor screen.
+							- menubar: Specifies if the menubar (File, Edit, View, etc) is displayed, (yes or no).
+							- scrollbars: Specifies if the scrollbars are displayed, (yes or no).
+							- toolbar: Specifies if the button images (back, forward, reload, stop, etc) bar is displayed, (yes or no).
+							- status: Specifies if the status bar is displayed, (yes or no).							
+							- resizable: Specifies if the window is resizable, (yes or no). Watch for spelling, many people mistankingly use "resizeable" instead, which will not work.
+						</xs:documentation>
+					</xs:annotation>
+					</xs:element>					
+					<xs:element name="title" type="NamelessAbstractParameterType" minOccurs="0" />
+					<xs:element name="url" type="NamelessAbstractParameterType" minOccurs="0" />
+					<xs:element name="data-param" type="NamefullAbstractParameterType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>	
+				
+				<xs:attribute name="placement" default="cascade">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="cascade">
+								<xs:annotation>
+									<xs:documentation>
+										The opening of the window will be arranged in cascade style. 
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>		
+							<xs:enumeration value="center-cascade">
+								<xs:annotation>
+									<xs:documentation>
+										The opening of the window will be arranged in cascade style starting from the center of the screen. 
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="tiled">
+								<xs:annotation>
+									<xs:documentation>
+										The opening of the window will be arranged in tiling style. No overlap of windows (if possible) 
+										 
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="external" type="xs:boolean" default="false">
+				<xs:annotation>
+					<xs:documentation>
+						When external="true" is specified, the openwindow results in a new browser window
+						where it will start the URL or Window.
+					</xs:documentation>
+				</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EventRefType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="ref" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ReturnBuiltinType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+			
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LocalStoreType">
+		<xs:complexContent>
+			<xs:extension base="NamefullAbstractParameterType">
+				<xs:attribute name="field" type="xs:string" />
+				<xs:attribute name="target" default="pipe">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="pipe">
+								<xs:annotation>
+									<xs:documentation>
+										When pipe is selected, the target storage is the "datastore/pipeline". Be aware that the lifetime of the pipe is only for the duration of the event.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="user">
+								<xs:annotation>
+									<xs:documentation>
+										When user is selected, the target storage is the "localstore". The values will be available until the window is closed (or the browser window).	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="global">
+								<xs:annotation>
+									<xs:documentation>
+										When global is selected, The values will be available until the all windows of the application is closed (or the browser window).	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="action" default="set">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="delete">
+								<xs:annotation>
+									<xs:documentation>
+										When delete is selected, the data will be deleted from the localstore (target="user") or datastore(target="pipe"). The delete suggests that we are dealing with
+										a list where the data is stored in. The "field" attribute is required to find the match with the data. 
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="add">
+								<xs:annotation>
+									<xs:documentation>
+										When add is selected, the data will be add to the localstore (target="user") or datastore(target="pipe"). The add suggests that we are dealing with
+										a list where the data is stored in.  
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="set">
+								<xs:annotation>
+									<xs:documentation>
+										When set is selected, the data will be stored in the localstore (target="user") or datastore(target="pipe"). If there a variable already with
+										that name in localstore (target="user") or datastore(target="pipe"), then the data will be overwritten. 
+										
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LocalDeleteType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="target" default="user">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="pipe">
+								<xs:annotation>
+									<xs:documentation>
+										When pipe is selected, the target storage to clear the variable from is the "datastore/pipeline". Be aware that the lifetime of the pipe is only for the duration of the event.	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="user">
+								<xs:annotation>
+									<xs:documentation>
+										When user is selected, the target storage to clear the variable from is the "localstore". The values will be available until the window is closed (or the browser window).	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="global">
+								<xs:annotation>
+									<xs:documentation>
+										When global is selected, the target storage to clear the variable from is the "localstore". The values will be available until the window is closed (or the browser window).	
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<!--<xs:attribute name="scope" default="local">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="local">
+								<xs:annotation>
+									<xs:documentation>
+										When local (default) is selected, only the data of the localestore for the calling window will be deleted.
+										This is based on data stored in the localstore per window. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="global">
+								<xs:annotation>
+									<xs:documentation>
+										When global is selected,the data from the localstore will all be deleted within this application context.
+										So over all the windows defined in the application context, the data from the localstore will be deleted. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>-->
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CloseWindowType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="ref" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToggleType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="HideType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SetPanelType">
+		<xs:attribute name="src" type="xs:string" />
+		<xs:attribute name="target" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="ShowPanelType">
+		<xs:attribute name="src" type="xs:string" use="required"/>
+		<xs:attribute name="auto-hide" type="xs:boolean" default="true"/>
+		<xs:attribute name="modal" type="xs:boolean" />
+		<xs:attribute name="x" type="xs:integer" />
+		<xs:attribute name="y" type="xs:integer" />
+		<xs:attribute name="position">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="center">
+						<xs:annotation>
+							<xs:documentation>
+								The position where the show-panel need to pop-up. X and Y attributes gets preference if specified.	
+							</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ClosePanelType">
+		<xs:attribute name="ref" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="SetValueType">
+		<xs:complexContent>
+			<xs:extension base="NamefullAbstractParameterType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="mapping" type="SetValueMappingType" />
+				</xs:sequence>
+				<xs:attribute name="component-id" type="xs:string" />
+				<xs:attribute name="group-name" type="xs:string" use="optional"/>
+				<xs:attribute name="action" default="set">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="set">
+								<xs:annotation>
+									<xs:documentation>
+										When the value set (default) is selected, the action is always to overwrite the
+										value that can be found in the localstore with "name" attribute.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+
+							<xs:enumeration value="add">
+								<xs:annotation>
+									<xs:documentation>
+										When the value add is selected, the action is add the value in a list so that
+										instead of overwriting the value. This is very convenient for example for
+										shopping carts. In The localstore a list will be saved. If there was
+										no list, then automatically one is created with the "name" attribute.									
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SetValueMappingType">
+		<xs:attribute name="key" type="xs:string" use="required" />
+		<xs:attribute name="value" type="xs:string" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="LogFunctionType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:sequence>
+					<xs:element name="message" type="NamelessAbstractParameterType" />					
+				</xs:sequence>
+				<xs:attribute name="delay" default="2000" type="xs:integer"/>
+				<xs:attribute name="class" type="xs:string"/>
+				<xs:attribute name="style" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DialogType">
+		<xs:complexContent>
+			<xs:extension base="MessageDialogType">
+				<xs:sequence>
+					<!--					<xs:element name="ref" type="ReferenceType" minOccurs="0"/>
+					<xs:element name="value" type="ValueType" minOccurs="0"/> -->
+					<xs:element name="title" type="NamelessAbstractParameterType" />
+					<xs:element name="message" type="NamelessAbstractParameterType" />
+				</xs:sequence>
+				<xs:attribute name="type" default="info">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="info">
+								<xs:annotation>
+									<xs:documentation>
+										The info property shows a simple dialog with an OK button.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="alert">
+
+								<xs:annotation>
+									<xs:documentation>
+										The alert property shows a dialog with an exclamation mark.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="error">
+								<xs:annotation>
+									<xs:documentation>
+										The error property shows a dialog with an error mark.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthenticateType">
+		<xs:sequence>
+			<xs:element name="username" type="NamelessAbstractParameterType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="password" type="NamelessAbstractParameterType" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="business-action-ref" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="LogoutType">
+		<xs:attribute name="confirmation-required" type="xs:boolean" default="false" />
+	</xs:complexType>
+
+	<xs:complexType name="SetPropertyType">
+		<xs:complexContent>
+			<xs:extension base="NamefullAbstractParameterType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="component" type="componentType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="property">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="editable">
+								<xs:annotation>
+									<xs:documentation>
+										The editable property will make the component either editable (true) or readonly (false).
+										The component is checked to be editable. If not applicable, nothing happens.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="enabled">
+								<xs:annotation>
+									<xs:documentation>
+										The enabled property will make the component either enabled (true) or disabled (false).
+										The component is checked to be enabled. If not applicable, nothing happens.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="visible">
+								<xs:annotation>
+									<xs:documentation>
+										The visible property will make the component either visible (true) or invisible (false).
+										This is a property for all the components (except window)
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+
+							<xs:enumeration value="width">
+								<xs:annotation>
+									<xs:documentation>
+										The width property will set the width of the component.
+										This is a property for all the components. These are the possible units: http://www.w3.org/TR/REC-CSS1/#units
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="height">
+								<xs:annotation>
+									<xs:documentation>
+										The height property will set the height of the component.
+										This is a property for all the components. These are the possible units: http://www.w3.org/TR/REC-CSS1/#units
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="title">
+								<xs:annotation>
+									<xs:documentation>
+										The title property will be set the title for a panel which has a title. This only applies to
+										panels with a title.									
+									</xs:documentation>
+								</xs:annotation>
+
+							</xs:enumeration>
+							<xs:enumeration value="tooltip">
+								<xs:annotation>
+									<xs:documentation>
+										The tooltip property will be set the tooltip for the component. This applies to all the components
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="displayname">
+								<xs:annotation>
+									<xs:documentation>
+										The display property will set the displayname for the component. This applies to all the components having a displayname
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="currentpage">
+								<xs:annotation>
+									<xs:documentation>
+										Note: Only for datagrid. The currentpage property will set the currentpage for the component. This applies to all the components having a currentpage
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="selected-row">
+								<xs:annotation>
+									<xs:documentation>
+										Note: Only for datagrid. The selected row can be defined (the value must be an positive integer value). The first row has rownumber 0. This property only applies to a datagrid. 
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="selected">
+								<xs:annotation>
+									<xs:documentation>
+										Only for radio buttons, choice. If the value of "selected" equals to "true", the value will be selected, otherwise ("false") deselected.  
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="pagesize">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Note: Only for datagrid. The pagesize property will set the pagesize for the component. This applies to all the components having a pagesize
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                            <xs:enumeration value="max-ticks">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Note: Only for Slider. The max-ticks property will set the max-ticks for the component.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                            <xs:enumeration value="min-ticks">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Note: Only for Slider. The min-ticks property will set the min-ticks for the component.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                            <xs:enumeration value="ticksize">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Note: Only for Slider. The min-ticks property will set the min-ticks for the component.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                            <xs:enumeration value="tick-labels">
+                                <xs:annotation>
+                                    <xs:documentation>
+                                        Note: Only for Slider. The tick-labels property is the number of tick labels for the component.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FocusType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="ref" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ClearType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="ref" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CopyType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:attribute name="from" type="xs:string" use="required" />
+				<xs:attribute name="to" type="xs:string" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DisableType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EnableType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RegExpValidateType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="regexp" type="xs:string" />
+				</xs:sequence>
+				<xs:attribute name="message" type="xs:string" />
+
+				<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="int">
+								<xs:annotation>
+									<xs:documentation>When type="int" is selected, the value of the component to validate has to be integer valued. If this is not the case, the "message" will be shown. </xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="signed_int">
+
+								<xs:annotation>
+									<xs:documentation>When type="signed_int" is selected, the value of the component to validate has to be a positive integer (incl 0) value. If this is not the case, the "message" will be shown. </xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+
+							<xs:enumeration value="double">
+								<xs:annotation>
+									<xs:documentation>When type="double" is selected, the value of the component to validate has to be a decimal/double value. The decimal separation symbol is a ".", i.e., the value could be "3.5". If this is not the case, the "message" will be shown. </xs:documentation>
+								</xs:annotation>
+
+							</xs:enumeration>
+							<xs:enumeration value="chars">
+								<xs:annotation>
+									<xs:documentation>When type="chars" is selected, the value of the component to validate has to be a set of characters [a..z,A..Z]. If this is not the case, the "message" will be shown. </xs:documentation>
+								</xs:annotation>
+
+							</xs:enumeration>
+							<xs:enumeration value="email">
+								<xs:annotation>
+									<xs:documentation>When type="email" is selected, the value of the component to validate has to be a proper email address format. See http://tools.ietf.org/html/rfc2822#section-3.4.1 for more information. If this is not the case, the "message" will be shown. </xs:documentation>
+								</xs:annotation>
+
+
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InheritedStyleType">
+		<xs:attribute name="style" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="SelectionStatementType" abstract="true">
+		<xs:annotation>
+			<xs:documentation> *** Selection Statements *** </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="expression" type="ControlExpressionType" minOccurs="0" />
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<xs:complexType name="ControlExpressionType">
+		<xs:complexContent>
+			<xs:extension base="NamelessAbstractParameterType" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SwitchSelectionResultType">
+		<xs:sequence>
+			<xs:element name="result" type="SwitchResultItemType" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="default" type="DefaultSwitchResultItemType" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DefaultSwitchResultItemType">
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="itemsGroup" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SwitchResultItemType">
+		<xs:complexContent>
+			<xs:extension base="NamelessAbstractParameterType">
+				<xs:sequence minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="itemsGroup" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IfSelectionResultType">
+		<xs:sequence>
+			<xs:element name="result" type="IfResultItemType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="IfResultItemType">
+
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="itemsGroup" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:boolean" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="IfStatementType">
+		<xs:complexContent>
+			<xs:extension base="SelectionStatementType">
+				<xs:sequence>
+					<xs:element name="results" type="IfSelectionResultType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="SwitchStatementType">
+		<xs:complexContent>
+			<xs:extension base="SelectionStatementType">
+				<xs:sequence>
+					<xs:element name="results" type="SwitchSelectionResultType" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="IterationType">
+		<xs:complexContent>
+			<xs:extension base="SelectionStatementType">
+				<xs:sequence>
+					<xs:group ref="itemsGroup" minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+				<xs:attribute name="begin" type="xs:string" default="-1" />
+				<xs:attribute name="end" type="xs:string" default="-1" />
+				<xs:attribute name="increment" type="xs:string" default="-1" />
+				<xs:attribute name="condition" type="xs:string" />
+				<xs:attribute name="var" type="xs:string" use="required" />
+				<xs:attribute name="items-ref" type="xs:string" />
+				<xs:attribute name="items-src" default="pipe">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="pipe">
+								<xs:annotation>
+									<xs:documentation>
+										The pipe (default) is in fact the pipeline (aka Datastore) which the store where this variable is referenced from.
+										The lifetime of a variable in the pipe is starting with the start of an event and all the data in the pipeline
+										is discarded when the events ends (normally or by exception).
+										This applies to the "ref" attribute.
+								</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+
+							<xs:enumeration value="component">
+								<xs:annotation>
+									<xs:documentation>
+										The src="component" denotes that the value of the variable can be found in the GUI.
+										This attribute value for src-attribute is only applicable in the context of an event (i.e., in the body of an event).
+										This applies to the "ref" attribute.								
+								</xs:documentation>
+								</xs:annotation>
+
+							</xs:enumeration>
+							<xs:enumeration value="user">
+								<xs:annotation>
+									<xs:documentation>
+										The src="user" denotes that the value of the variable can be found in the localstore. The localstore
+										can be seen as what we know in the tradional web application as the "session". The lifetime of the store is
+										until the user closes the application (either actively closing the QAFE MDI window or the Browser Window).
+										This attribute value for the src-attribute can be used in any tier.
+										This applies to the "ref" attribute. 								
+								</xs:documentation>
+								</xs:annotation>
+
+							</xs:enumeration>
+							<xs:enumeration value="message">
+								<xs:annotation>
+									<xs:documentation>
+										The src="messages" denotes that the value of the variable can be found in the messages which is in fact the
+										i18n mapping from keys to specific language.
+										This applies to the "ref" attribute.  								
+								</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="var-index" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!--  /***  Parameters  ***  -->
+	<xs:complexType name="NamelessAbstractParameterType">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="placeholder" type="NamefullAbstractParameterType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="adapter" />
+		<xs:attribute name="ref" type="xs:string" />
+		<xs:attribute name="value" type="xs:string" />
+		<xs:attribute name="class" type="xs:string" />
+		<xs:attribute name="type" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Supported types by the PredefinecClassTypeConvert are:
+					integer, int, long, double, character, char, boolean and string.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="expr" type="xs:string" />
+		<xs:attribute name="src" default="pipe">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="pipe">
+						<xs:annotation>
+							<xs:documentation>
+								The pipe (default) is in fact the pipeline (aka Datastore) which the store where this variable is referenced from.
+								The lifetime of a variable in the pipe is starting with the start of an event and all the data in the pipeline
+								is discarded when the events ends (normally or by exception).
+								This applies to the "ref" attribute.
+								</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+
+					<xs:enumeration value="component">
+						<xs:annotation>
+							<xs:documentation>
+								The src="component" denotes that the value of the variable can be found in the GUI.
+								This attribute value for src-attribute is only applicable in the context of an event (i.e., in the body of an event).
+								This applies to the "ref" attribute.								
+								</xs:documentation>
+						</xs:annotation>
+
+					</xs:enumeration>
+					<xs:enumeration value="user">
+						<xs:annotation>
+							<xs:documentation>
+								The src="user" denotes that the value of the variable can be found in the localstore. The localstore
+								can be seen as what we know in the tradional web application as the "session". The lifetime of the store is
+								until the user closes the application (either actively closing the QAFE MDI window or the Browser Window).
+								This attribute value for the src-attribute can be used in any tier.
+								This applies to the "ref" attribute. 								
+								</xs:documentation>
+						</xs:annotation>
+
+					</xs:enumeration>
+					<xs:enumeration value="message">
+						<xs:annotation>
+							<xs:documentation>
+								The src="messages" denotes that the value of the variable can be found in the messages which is in fact the
+								i18n mapping from keys to specific language.
+								This applies to the "ref" attribute.  								
+								</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="global">
+						<xs:annotation>
+							<xs:documentation>
+								The src="global" denotes that the value of the variable can be found in the localstore. The localstore
+								can be seen as what we know in the tradional web application as the "session". The lifetime of the store is
+								until the user closes the application (either actively closing the QAFE MDI window or the Browser Window).
+								This attribute value for the src-attribute can be used in any tier.
+								This applies to the "ref" attribute. 								
+								</xs:documentation>
+						</xs:annotation>
+
+					</xs:enumeration>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NamefullAbstractParameterType">
+		<xs:complexContent>
+			<xs:extension base="NamelessAbstractParameterType">
+				<xs:attribute name="name" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="InType">
+		<xs:complexContent>
+			<xs:extension base="NamefullAbstractParameterType">
+				<xs:attribute name="use-when-not-set" type="xs:boolean" default="true" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="OutType">
+		<xs:complexContent>
+			<xs:extension base="NamefullAbstractParameterType" />
+		</xs:complexContent>
+	</xs:complexType>
+	<!--  ***  Parameters  ***/  -->
+
+	<xs:complexType name="PanelRefType">
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="ref" type="xs:string" use="required" />
+	</xs:complexType>
+	<xs:complexType name="HTMLType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:sequence>
+					<xs:element name="text" type="xs:string" />
+				</xs:sequence>
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="escape" type="xs:boolean" default="false" />
+				<xs:attribute name="preformat" type="xs:boolean" default="false" />
+				
+						
+				<xs:attribute name="visible" type="xs:boolean" default="true"/>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />
+				
+				<xs:attribute name="disabled" type="xs:boolean" default="false"/>
+				
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FrameType">
+		<xs:complexContent>
+			<xs:extension base="ComponentType">
+				<xs:attribute name="id" type="xs:string" use="optional" />
+				<xs:attribute name="name" type="xs:string" />
+				<xs:attribute name="src" type="xs:string" use="required" />
+				<xs:attribute name="width" type="xs:string" />
+				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="visible" type="xs:boolean" default="true"/>
+				<xs:attribute name="tooltip" type="xs:string" />
+				<xs:attribute name="contextmenu" type="xs:string" />			
+				<xs:attribute name="disabled" type="xs:boolean" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InheritType">
+		<xs:attribute name="style" type="xs:string" />
+	</xs:complexType>
+</xs:schema>

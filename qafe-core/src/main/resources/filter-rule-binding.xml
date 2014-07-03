@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<binding>
+	<mapping name="filter-rules" class="com.qualogy.qafe.bind.rules.FilterRules">
+        <namespace uri="http://qafe.com/schema"  default="elements"/>
+        <collection  field="rules" item-type="com.qualogy.qafe.bind.rules.FilterRule" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional"/>
+	</mapping>
+
+    <mapping name="filter-rule" class="com.qualogy.qafe.bind.rules.FilterRule" ordered="false" >
+		 <namespace uri="http://qafe.com/schema"  default="elements"/>
+        <value name="node" field="node" style="attribute" usage="optional"/>
+         <collection  field="expressions" factory="org.jibx.runtime.Utility.arrayListFactory"   type="java.util.List" usage="optional">
+        	<structure  name="expression" usage="required" type="com.qualogy.qafe.bind.commons.type.Parameter">
+			    <value name="expr" style="attribute" field="expression" usage="optional"/>
+			    <structure field="ref" type="com.qualogy.qafe.bind.commons.type.Reference"  usage="optional">
+                    <value name="ref" style="attribute" field="ref"/>
+                    <value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+	    		</structure>
+		    	<value name="adapter" style="attribute" field="adapter" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.AdapterMapping"/>
+			    <collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+                <structure field="value" type="com.qualogy.qafe.bind.commons.type.Value" usage="optional">
+                    <value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+                    <value name="class" style="attribute" field="outputClass" usage="optional"/>
+                    <value name="value" style="attribute" field="staticValue" usage="optional"/>
+                </structure>
+    		</structure>
+        </collection>
+	</mapping>
+
+</binding>

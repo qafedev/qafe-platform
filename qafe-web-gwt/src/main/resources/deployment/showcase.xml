@@ -1,0 +1,1901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	<presentation-tier>
+		<view>
+			<window id="showcase" displayname="QAFE Showcase" width="870" height="520" icon="images/qafe_icons_48x48.png" icon-style="color:white">
+				<rootpanel id="rootPanel" toolbar="oracle-forms-toolbar"  menu="main_menu">
+					<verticallayout>
+
+						<splitpanel horizontal="true" width="860" position="25%" height="450">
+							<first>								
+								<panel displayname="Components" width="200">
+									<verticallayout>
+										<tree  displayname="Showcase samples" id="components" width="195" height="410">
+											<tree-item displayname="Components"  >
+												<tree-item displayname="Buttons" >
+													<tree-item id="simpleButton" displayname="SimpleButton" />
+													<tree-item id="radioButton" displayname="RadioButton" />
+													<tree-item id="checkBox" displayname="Checkbox" />
+												</tree-item>
+												<tree-item displayname="Imaging">
+													<tree-item id="image" displayname="Image" />
+													<tree-item id="map" displayname="Map" />
+												</tree-item>
+												<tree-item displayname="Textfields">
+													<tree-item id="simpletextfield" displayname="Simple Textfield" />
+													<tree-item id="requiredtextfield" displayname="Required Textfield" />
+													<tree-item id="datetextfield" displayname="Datefield" />
+													<tree-item id="regexptextfield" displayname="Regular Expression field" />
+													<tree-item id="predefinedtextfield" displayname="Predefined field" />
+												</tree-item>
+												<tree-item displayname="Lists">
+													<tree-item id="simplelist" displayname="Simple List" />
+													<tree-item id="simpledropdown" displayname="Simple  DropDown" />
+	
+												</tree-item>
+												<tree-item displayname="Embedded items">
+													<tree-item id="embed" displayname="Sample Embed" />
+													<tree-item id="iframe" displayname="External Page" />
+												</tree-item>
+												<tree-item displayname="DataGrid">
+													<tree-item id="simpleDatagrid" displayname="Simple Datagrid" />
+													<tree-item id="customColumnsDatagrid" displayname="Simple Datagrid with Custom columns" />
+													<tree-item id="customColumnsDatagridOverflow" displayname="Overflow Datagrid with Custom columns" />
+												</tree-item>
+												<tree-item displayname="Panels">
+													<tree-item displayname="Simple Panels">
+														<tree-item id="panelhorizontal" displayname="Horizontal Layout" />
+														<tree-item id="panelvertical" displayname="Vertical Layout" />
+														<tree-item id="panelborder" displayname="BorderLayout Layout" />
+														<tree-item id="panelabsolute" displayname="Absolute Layout" />
+														<tree-item id="panelgrid" displayname="Grid Layout" />
+														<tree-item id="panelauto" displayname="Auto Layout" />
+													</tree-item>
+													<tree-item id="tabpanel" displayname="TabPanel" />
+													<tree-item id="splitpanel" displayname="SplitPanel" />
+													<tree-item id="stackpanel" displayname="StackPanel" />
+	
+												</tree-item>
+												<tree-item id="dialogs" displayname="Dialogs"/>
+													
+												<tree-item displayname="Other components">
+													<tree-item id="simpletable" displayname="Tables" />
+													<tree-item id="simpletree" displayname="Trees" />
+													<tree-item id="simpleslider" displayname="Slider" />
+													<!-- <tree-item id="simplefileupload" displayname="File Upload" />-->
+													<tree-item id="simplehidden" displayname="Hidden fields" />
+													<tree-item id="simplelink" displayname="Links" />
+												    <tree-item id="simpletoolbar" displayname="Toolbar" />
+												    <tree-item id="simplemenu" displayname="Menu" />
+												</tree-item>
+											</tree-item>
+											<tree-item displayname="Events" id="events">
+												<tree-item displayname="Builtins">
+													<tree-item id="show_hide" displayname="Show and Hide" />
+												
+												</tree-item>												
+											</tree-item>
+										</tree>
+										
+									</verticallayout>
+								</panel>
+							</first>
+							<second>
+								<panel-ref id="targetpanel" ref="emptypanel" />
+							</second>
+						</splitpanel>
+
+					</verticallayout>
+				</rootpanel>
+				<events>
+					<event id="treelistener" src-value="item" src-id="c">
+						<listeners>
+							<listenergroup>
+								<component ref="show_hide" />
+								<component ref="dialogs" />
+								
+								<component ref="simpleButton" />
+								<component ref="radioButton" />
+								<component ref="checkBox" />
+								<component ref="simpleDatagrid" />
+								<component ref="customColumnsDatagrid" />
+								<component ref="customColumnsDatagridOverflow" />
+								<component ref="image" />
+								<component ref="map" />
+								<component ref="simpletextfield" />
+								<component ref="requiredtextfield" />
+								<component ref="datetextfield" />
+								<component ref="regexptextfield" />
+								<component ref="predefinedtextfield" />
+								<component ref="simplelist" />
+								<component ref="simpledropdown" />
+								<component ref="embed" />
+								<component ref="iframe" />
+								<component ref="panelhorizontal" />
+								<component ref="panelvertical" />
+								<component ref="panelborder" />
+								<component ref="panelabsolute" />
+								<component ref="panelgrid" />
+								<component ref="panelauto" />
+								<component ref="tabpanel" />
+								<component ref="splitpanel" />
+								<component ref="stackpanel" />
+								<component ref="simpletable" />
+								<component ref="simpletree" />
+								<component ref="simpleslider" />
+								<component ref="simplehidden" />
+								<component ref="simplelink" />
+								<component ref="simpletoolbar" />
+								<component ref="simplemenu" />
+								<component ref="simpleBtn" />
+								<component ref="radioBtn" />
+								<component ref="check" />
+								
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						
+						<switch>
+							<expression expr="${c}" />
+							<results>
+							
+							<result value="dialogs">
+									<set-panel target="targetpanel" src="dialogspanel" />
+
+								</result>
+							<result value="show_hide">
+									<set-panel target="targetpanel" src="showandhidepanel" />
+
+								</result>
+								<result value="components">
+									<set-panel target="targetpanel" src="emptypanel" />
+
+								</result>
+								<result value="simpleButton">
+									<set-panel target="targetpanel" src="simplebuttonpanel" />
+
+								</result>
+								<result value="simpleBtn">
+									<set-panel target="targetpanel" src="simplebuttonpanel" />
+
+								</result>
+								<result value="radioButton">
+									<set-panel target="targetpanel" src="simpleradiobuttonpanel" />
+								</result>
+								<result value="radioBtn">
+									<set-panel target="targetpanel" src="simpleradiobuttonpanel" />
+								</result>
+								<result value="simpleDatagrid">
+									<set-panel target="targetpanel" src="simpledatagridpanel" />
+									<business-action ref="MyServicegetPersonen" />
+									<set component-id="simpledatagridtable" ref="personen" />
+
+								</result>
+								<result value="customColumnsDatagrid">
+									<set-panel target="targetpanel" src="customColumnsdatagridpanel" />
+									<business-action ref="MyServicegetPersonen" />
+									<set component-id="customColumnsdatagridtable" ref="personen" />
+
+								</result>
+								<result value="customColumnsDatagridOverflow">
+									<set-panel target="targetpanel" src="customColumnsdatagridOverflowpanel" />
+									<business-action ref="MyServicegetPersonen" />
+									<set component-id="customColumnsdatagridOverflowtable" ref="personen" />
+
+								</result>
+								<result value="checkBox">
+									<set-panel target="targetpanel" src="simplecheckboxpanel" />
+								</result>
+								<result value="check">
+									<set-panel target="targetpanel" src="simplecheckboxpanel" />
+								</result>
+								<result value="image">
+									<set-panel target="targetpanel" src="simpleimagepanel" />
+								</result>
+								<result value="map">
+									<set-panel target="targetpanel" src="simplemappanel" />
+								</result>
+
+								<result value="simpletextfield">
+									<set-panel target="targetpanel" src="simpletextfieldpanel" />
+								</result>
+
+								<result value="requiredtextfield">
+									<set-panel target="targetpanel" src="requiredtextfieldpanel" />
+								</result>
+
+								<result value="datetextfield">
+									<set-panel target="targetpanel" src="datetexttextfieldpanel" />
+								</result>
+
+								<result value="regexptextfield">
+									<set-panel target="targetpanel" src="regexptextfieldpanel" />
+								</result>
+
+								<result value="predefinedtextfield">
+									<set-panel target="targetpanel" src="predefinedtextfieldpanel" />
+								</result>
+
+								<result value="simplelist">
+									<set-panel target="targetpanel" src="simplelistpanel" />
+								</result>
+								<result value="simpledropdown">
+									<set-panel target="targetpanel" src="simpledropdownpanel" />
+								</result>
+								<result value="embed">
+									<set-panel target="targetpanel" src="embedpanel" />
+								</result>
+								<result value="iframe">
+									<set-panel target="targetpanel" src="framepanel" />
+								</result>
+								<result value="panelhorizontal">
+									<set-panel target="targetpanel" src="panelhorizontalpanel" />
+								</result>
+								<result value="panelvertical">
+									<set-panel target="targetpanel" src="panelverticalpanel" />
+								</result>
+								<result value="panelborder">
+									<set-panel target="targetpanel" src="panelborderpanel" />
+								</result>
+								<result value="panelabsolute">
+									<set-panel target="targetpanel" src="panelabsolutepanel" />
+								</result>
+								<result value="panelgrid">
+									<set-panel target="targetpanel" src="panelgridpanel" />
+								</result>
+								<result value="panelauto">
+									<set-panel target="targetpanel" src="panelautopanel" />
+								</result>
+								<result value="tabpanel">
+									<set-panel target="targetpanel" src="tabpanelpanel" />
+								</result>
+								<result value="splitpanel">
+									<set-panel target="targetpanel" src="splitpanelpanel" />
+								</result>
+								<result value="stackpanel">
+									<set-panel target="targetpanel" src="stackpanelpanel" />
+								</result>
+								<result value="simpletable">
+									<set-panel target="targetpanel" src="simpletablepanel" />
+								</result>
+								<result value="simpletree">
+									<set-panel target="targetpanel" src="simpletreepanel" />
+								</result>
+								<result value="simpleslider">
+									<set-panel target="targetpanel" src="simplesliderpanel" />
+								</result>
+								<result value="simplehidden">
+									<set-panel target="targetpanel" src="simplehiddenpanel" />
+								</result>
+								<result value="simplelink">
+									<set-panel target="targetpanel" src="simplelinkpanel" />
+								</result>
+								<result value="simpletoolbar">
+									<set-panel target="targetpanel" src="simpletoolbarpanel" />
+								</result>
+									<result value="simplemenu">
+									<set-panel target="targetpanel" src="simplemenupanel" />
+								</result>
+							</results>
+
+						</switch>
+
+					</event>
+					<event id="exit">
+						<listeners>
+							<listenergroup>
+								<component ref="rootPanel.file_menu_exit"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						<dialog>
+							<title value="exit clicked"/>
+							<message value="You just clicked on the exit button"/>
+						</dialog>
+					</event>
+					
+				</events>
+			</window>
+<menu-definition id="main_menu">
+				<menu id="file_menu" shortcut="CTRL+Y"
+					displayname="File">
+					<menu id="file_menu_save" shortcut="CTRL+Y"
+						displayname="Save" />
+					<menu id="file_menu_save_and_proceed"
+						shortcut="CTRL+Y" displayname="Save as.." />
+					<separator />
+				
+					<menu id="file_menu_print" shortcut="CTRL+Y"
+						displayname="Print.." />
+					<separator />
+					<menu id="file_menu_close_all" shortcut="CTRL+Y"
+						displayname="Close All" />
+					<separator />
+					<menu id="file_menu_exit" shortcut="CTRL+Y"
+						displayname="Exit" />
+				</menu>
+				<menu id="edit_menu" shortcut="CTRL+Y"
+					displayname="Edit">
+					<menu id="edit_menu_undo" shortcut="CTRL+Y"
+						displayname="Undo" />
+					<separator />
+					<menu id="edit_menu_cut" shortcut="CTRL+Y"
+						displayname="Cut" />
+					<menu id="edit_menu_copy" shortcut="CTRL+Y"
+						displayname="Copy" />
+					<menu id="edit_menu_paste" shortcut="CTRL+Y"
+						displayname="Paste" />
+					<separator />					
+				</menu>			
+			</menu-definition>
+			
+<!-- ******************************************************************* -->								
+			<panel-definition id="showandhidepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label id="showandhidelabel" displayname="Here is a label"/>
+								<panel>
+									<horizontallayout>
+										<button id="showandhide-show" displayname="Show" />
+										<button id="showandhide-hide"  displayname="Hide"/>	
+									</horizontallayout>
+								</panel>
+								
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%"  preformat="true" style="font-size:smaller;">
+									<text><![CDATA[
+<event id="showandhideevent" src-id="c">
+	<listeners>
+		<listenergroup>
+			<component ref="showandhide-show"/>
+			<component ref="showandhide-hide"/>
+			<listener type="onclick"/>
+		</listenergroup>
+	</listeners>
+	<switch>
+		<expression expr="${c}" />
+		<results>
+			<result value="showandhide-show">
+				<set-property  property="visible" value="true">
+					<component ref="showandhidelabel"/>										
+				</set-property>
+			</result>
+			<result value="showandhide-hide">
+				<set-property  property="visible" value="false">
+					<component ref="showandhidelabel"/>										
+				</set-property>
+			</result>
+		</results>
+	</switch>
+</event>												]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>			
+<!-- ******************************************************************* -->								
+								
+<panel-definition id="dialogspanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<button id="dialoginfo" displayname="Info dialog"/>
+								<button id="dialogalert" displayname="Alert dialog"/>
+								<button id="dialogerror" displayname="Error dialog"/>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true" style="font-size:smaller;">
+									<text><![CDATA[
+<event id="dialogsevent" src-id="c">
+	<listeners>
+		<listenergroup>
+			<component ref="dialoginfo"/>
+			<component ref="dialogerror"/>
+			<component ref="dialogalert"/>
+			<listener type="onclick"/>
+		</listenergroup>
+	</listeners>
+	
+	<switch>
+		<expression expr="${c}" />
+		<results>
+			<result value="dialoginfo">
+				<dialog type="info">
+					<title value="Info dialog"/>										
+					<message value="You just clicked on a Info dialog"/>										
+				</dialog>										
+			</result>
+			<result value="dialogalert">
+				<dialog type="alert">
+					<title value="Alert dialog"/>										
+					<message value="You just clicked on a Alert dialog"/>										
+				</dialog>										
+			</result>
+			<result value="dialogerror">
+				<dialog type="error">
+					<title value="Error dialog"/>										
+					<message value="You just clicked on a Error dialog"/>										
+				</dialog>										
+			</result>
+		</results>
+	</switch>
+</event>
+											]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>											
+	
+<!-- ******************************************************************* -->								
+			<panel-definition id="simpletoolbarpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<html width="600" height="300" >
+									<text><![CDATA[ See on top of this window. There is a toolbar which can be reused by other windows. The toolbar is a global defintion which can be referenced by the rootpanel (the first panel of each window) by using attribute "toolbar" to the id of the toolbar-definition.<br/>
+									The code would be someting like this 
+									<pre>
+&lt;rootpanel toolbar="oracle-forms-toolbar"&gt;
+.....
+&lt;/rootpanel&gt;									
+									</pre>
+									]]></text>
+								</html>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true" style="font-size:smaller;">
+									<text><![CDATA[
+  
+<toolbar-definition id="oracle-forms-toolbar" item-width="20px" item-height="20px">
+	<tb-item id="save" image="images/forms/save.png" tooltip="Save any pending changes"/>
+	<tb-item id="saveAndProceed" image="images/forms/accept.gif" tooltip="Save and Proceed"/>
+	<tb-item id="print" image="images/forms/print.gif" tooltip="Print"/>
+	<tb-item id="undo" image="images/forms/undo.png" tooltip="Undo"/>
+	<tb-item id="newRecord" image="images/forms/insertrow.gif" tooltip="New Record"/>
+	<tb-item id="deleteRecord" image="images/forms/deleterow.gif" tooltip="Delete Record"/>
+	<tb-item id="clearRecord" image="images/forms/clearrow.png" tooltip="Clear Record"/>
+	<tb-item id="clearForm" image="images/forms/clearall.gif" tooltip="Clear Form"/>
+	<tb-item id="listOfValues" image="images/forms/list.gif" tooltip="List of Values"/>
+	<tb-item id="editField" image="images/forms/edit.gif" tooltip="Edit Field"/>
+	<tb-item id="find" image="images/forms/find.png" tooltip="Find"/>
+	<tb-item id="enterQuery" image="images/forms/enterquery.png" tooltip="Enter Query"/>
+	<tb-item id="runQuery" image="images/forms/executequery.png" tooltip="Run Query"/>
+	<tb-item id="cancelQuery" image="images/forms/cancelquery.gif" tooltip="Cancel Query"/>
+	<tb-item id="previousRecord" image="images/forms/left.gif" tooltip="Previous Record"/>
+	<tb-item id="nextRecord" image="images/forms/right.gif" tooltip="Next Record"/>											
+</toolbar-definition>											]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>		
+
+<!-- ******************************************************************* -->								
+			<panel-definition id="simplemenupanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<html width="600" height="300" >
+									<text><![CDATA[ See on top of this window. There is a menu which can be reused by other windows. The menu is a global defintion which can be referenced by the rootpanel (the first panel of each window) by using attribute "menu" to the id of the menu-definition.<br/>
+										The code would be someting like this 
+									<pre>
+&lt;rootpanel menu="main_menu"&gt;
+.....
+&lt;/rootpanel&gt;									
+														
+									</pre>]]></text>
+								</html>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true" style="font-size:smaller;">
+									<text><![CDATA[
+  
+<menu-definition id="main_menu">
+	<menu id="file_menu" shortcut="CTRL+Y"
+		displayname="File">
+		<menu id="file_menu_save" shortcut="CTRL+Y"
+			displayname="Save" />
+		<menu id="file_menu_save_and_proceed"
+			shortcut="CTRL+Y" displayname="Save as.." />
+		<separator />
+	
+		<menu id="file_menu_print" shortcut="CTRL+Y"
+			displayname="Print.." />
+		<separator />
+		<menu id="file_menu_close_all" shortcut="CTRL+Y"
+			displayname="Close All" />
+		<separator />
+		<menu id="file_menu_exit" shortcut="CTRL+Y"
+			displayname="Exit" />
+	</menu>
+	<menu id="edit_menu" shortcut="CTRL+Y"
+		displayname="Edit">
+		<menu id="edit_menu_undo" shortcut="CTRL+Y"
+			displayname="Undo" />
+		<separator />
+		<menu id="edit_menu_cut" shortcut="CTRL+Y"
+			displayname="Cut" />
+		<menu id="edit_menu_copy" shortcut="CTRL+Y"
+			displayname="Copy" />
+		<menu id="edit_menu_paste" shortcut="CTRL+Y"
+			displayname="Paste" />
+		<separator />					
+	</menu>			
+</menu-definition>								]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>		
+							
+<!-- ******************************************************************* -->								
+			<panel-definition id="simplelinkpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="Here is a link"/>
+								<link displayname="Hyperlink" />
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="Here is a link"/>
+<link displayname="Hyperlink" />												]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>			
+								
+								
+<!-- ******************************************************************* -->								
+			<panel-definition id="simplehiddenpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="You won't see, but there is a hidden component here"/>
+								<hidden value="hiddenValue"/>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="You won't see, but there is a hidden component here"/>
+<hidden value="hiddenValue"/>												]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>			
+
+
+<!-- ******************************************************************* -->								
+			<panel-definition id="simplesliderpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="Simple Horizontal Slider"/>
+								<slider max-ticks="100" min-ticks="0" ticksize="10"  width="300px"/>
+								<!-- <label displayname="Simple Vertical Slider"/>
+								<slider maxTicks="100" minTicks="0" tickSize="10" orientation="vertical" width="300px"/>
+								-->
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="Simple Horizontal Slider"/>
+
+<slider max-ticks="100" min-ticks="0" tick-size="10" width="300px"/>
+
+												]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>								
+
+								
+<!-- ******************************************************************* -->								
+			<panel-definition id="simpletreepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="Simple tree"/>
+								<tree  displayname="Components" width="160">
+
+									<tree-item displayname="Buttons" value="buttons">
+										<tree-item id="simpleBtn" displayname="SimpleButton" />
+										<tree-item id="radioBtn" displayname="RadioButton" />
+										<tree-item id="check" displayname="Checkbox" />
+									</tree-item>
+								</tree>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<tree value="root" displayname="Components">
+	<tree-item displayname="Buttons" value="buttons">
+		<tree-item id="simpleBtn" displayname="SimpleButton" />
+		<tree-item id="radioBtn" displayname="RadioButton" />
+		<tree-item id="check" displayname="Checkbox" />
+	</tree-item>
+</tree>							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->								
+			<panel-definition id="simpletablepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+
+								<label displayname="Simple Table" />
+								<table>
+									<header>
+											<cell><label displayname="header 1"/></cell>
+											<cell><label displayname="header 2"/></cell>
+									</header>
+									<row>
+											<cell><button displayname="button row 1"/></cell>
+											<cell><button displayname="second button row 1"/></cell>
+									</row>
+									<row>
+											<cell><button displayname="button row 2"/></cell>
+											<cell><button displayname="second button row 2"/></cell>
+									</row>
+								</table>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="Simple Table" />
+<table>
+	<header>
+			<cell><label displayname="header 1"/></cell>
+			<cell><label displayname="header 2"/></cell>
+	</header>
+	<row>
+			<cell><button displayname="button row 1"/></cell>
+			<cell><button displayname="second button row 1"/></cell>
+	</row>
+	<row>
+			<cell><button displayname="button row 2"/></cell>
+			<cell><button displayname="second button row 2"/></cell>
+	</row>
+</table>							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+			
+
+<!-- ******************************************************************* -->								
+			<panel-definition id="stackpanelpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+
+								<label displayname="Simple StackPanel" />
+								<stackpanel>
+									<stack displayname="Stack one">
+										<button displayname="Stack one"/>										
+									</stack>
+									<stack displayname="Stack two">
+										<label displayname="Stack two"/>										
+									</stack>
+									<stack displayname="Stack three">
+										<checkbox displayname="Stack three"/>										
+									</stack>
+								</stackpanel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="Simple StackPanel" />
+<stackpanel>
+	<stack displayname="Stack one">
+		<button displayname="Stack one"/>										
+	</stack>
+	<stack displayname="Stack two">
+		<label displayname="Stack two"/>										
+	</stack>
+	<stack displayname="Stack three">
+		<checkbox displayname="Stack three"/>										
+	</stack>
+</stackpanel>							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+								
+<!-- ******************************************************************* -->								
+			<panel-definition id="splitpanelpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+
+								<label displayname="Horizontal SplitPanel" />
+								<splitpanel width="200" height="300" >
+									<first><panel>  <autolayout>  <label displayname="Left"/>   </autolayout> </panel></first>
+									<second><panel> <autolayout> <label displayname="Right"/> </autolayout> </panel></second>
+								</splitpanel>
+								<label displayname="Vertical SplitPanel" />
+								<splitpanel width="200" height="300" horizontal="false">
+									<first><panel>  <autolayout>  <label displayname="Top"/>   </autolayout> </panel></first>
+									<second><panel> <autolayout> <label displayname="Bottom"/> </autolayout> </panel></second>
+								</splitpanel>
+									
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="Horizontal SplitPanel" />
+<splitpanel width="200" height="300" >
+	<first><panel>  <autolayout>  <label displayname="Top"/>   </autolayout> </panel></first>
+	<second><panel> <autolayout> <label displayname="Bottom"/> </autolayout> </panel></second>
+</splitpanel>
+<label displayname="Vertical SplitPanel" />
+<splitpanel width="200" height="300" horizontal="false">
+	<left><panel>  <autolayout>  <label displayname="Top"/>   </autolayout> </panel></left>
+	<right><panel> <autolayout> <label displayname="Bottom"/> </autolayout> </panel></right>
+</splitpanel>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+											
+<!-- ******************************************************************* -->								
+			<panel-definition id="tabpanelpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+
+								<label displayname="TabPanel" />
+								<tabpanel>
+									<tab displayname="One">
+										<autolayout>
+											<label displayname="Tab 1 body"/>
+										</autolayout>
+									</tab>
+									<tab displayname="Two">
+										<autolayout>
+											<label displayname="Tab 2 body"/>
+										</autolayout>
+									</tab>
+									<tab displayname="Three">
+										<autolayout>
+											<label displayname="Tab 3 body"/>
+										</autolayout>
+									</tab>
+								</tabpanel>
+									
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="TabPanel" />
+<tabpanel>
+	<tab displayname="One">
+		<autolayout>
+			<label displayname="Tab 1 body"/>
+		</autolayout>
+	</tab>
+	<tab displayname="Two">
+		<autolayout>
+			<label displayname="Tab 2 body"/>
+		</autolayout>
+	</tab>
+	<tab displayname="Three">
+		<autolayout>
+			<label displayname="Tab 3 body"/>
+		</autolayout>
+	</tab>
+</tabpanel>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+
+<!-- ******************************************************************* -->
+			<panel-definition id="panelautopanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is an Auto Panel (with breaks on 2)"/>
+								 <panel>
+								 	<autolayout cols="2">
+								 		<label displayname="A" width="30px"/>
+								 		<label displayname="B" width="30px"/>
+								 		<label displayname="C" width="30px"/>
+								 		<label displayname="D" width="30px"/>
+								 		
+								 	</autolayout>								 	
+								 </panel>
+								<label displayname="This is an Auto Panel (with breaks on 1)"/>
+								 <panel>
+								 	<autolayout cols="1">
+								 		<label displayname="A" width="30px"/>
+								 		<label displayname="B" width="30px"/>
+								 		<label displayname="C" width="30px"/>
+								 		<label displayname="D" width="30px"/>
+								 		
+								 	</autolayout>								 	
+								 </panel> 
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is an Auto Panel (with breaks on 2)"/>
+<panel>
+ 	<autolayout cols="2">
+ 		<label displayname="A" width="30px"/>
+ 		<label displayname="B" width="30px"/>
+ 		<label displayname="C" width="30px"/>
+ 		<label displayname="D" width="30px"/>
+ 		
+ 	</autolayout>								 	
+</panel>
+<label displayname="This is an Auto Panel (with breaks on 1)"/>
+ <panel>
+ 	<autolayout cols="1">
+ 		<label displayname="A" width="30px"/>
+ 		<label displayname="B" width="30px"/>
+ 		<label displayname="C" width="30px"/>
+ 		<label displayname="D" width="30px"/>
+ 		
+ 	</autolayout>								 	
+</panel> 																							
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>		
+										
+								
+								
+<!-- ******************************************************************* -->
+			<panel-definition id="panelgridpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a Grid (x,y) Panel"/>
+								 <panel>
+								 	<gridlayout>
+								 		<element x="0" y="0"><label displayname="Element (0,0)" width="30px"/></element>
+								 		<element x="1" y="0"><label displayname="Element (1,0)" width="30px"/></element>
+								 		<element x="1" y="1"><label displayname="Element (1,1)" width="30px"/></element>
+								 		<element x="0" y="1"><label displayname="Element (0,1)" width="30px"/></element>
+								 	</gridlayout>
+								 </panel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is a Grid (x,y) Panel"/>
+<panel>
+	<gridlayout>
+		<element x="0" y="0"><label displayname="Element (0,0)" width="30px"/></element>
+		<element x="1" y="0"><label displayname="Element (1,0)" width="30px"/></element>
+		<element x="1" y="1"><label displayname="Element (1,1)" width="30px"/></element>
+		<element x="0" y="1"><label displayname="Element (0,1)" width="30px"/></element>
+	</gridlayout>
+</panel>																								
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>		
+											
+
+<!-- ******************************************************************* -->
+			<panel-definition id="panelabsolutepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a Absolute Panel"/>
+								 <panel>
+								 	<absolutelayout>
+								 		<element x="10" y="40"><label displayname="A Label on a position(10,40)" width="30px"/></element>								 		
+								 	</absolutelayout>
+								 </panel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is a Absolute Panel"/>
+<panel>
+	<absolutelayout>
+		<element x="10" y="40"><label displayname="A Label on a position(10,40)" width="30px"/></element>								 		
+	</absolutelayout>
+</panel>																								
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>		
+								
+<!-- ******************************************************************* -->
+			<panel-definition id="panelborderpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a Border Panel"/>
+								 <panel>
+								 	<borderlayout>
+								 		<north><label displayname="North" width="30px"/></north>
+								 		<center><label displayname="Center" width="30px"/></center>
+								 		<east><label displayname="East" width="30px"/></east>
+								 		<west><label displayname="West" width="30px"/></west>
+								 		<south><label displayname="South" width="30px"/></south>
+								 	
+								 	</borderlayout>
+								 </panel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is a Border Panel"/>
+ <panel>
+ 	<borderlayout>
+ 		<north><label displayname="North" width="30px"/></north>
+ 		<center><label displayname="Center" width="30px"/></center>
+ 		<east><label displayname="East" width="30px"/></east>
+ 		<west><label displayname="West" width="30px"/></west>
+ 		<south><label displayname="South" width="30px"/></south>
+ 	
+ 	</borderlayout>
+ </panel>																								
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>								
+								
+<!-- ******************************************************************* -->
+			<panel-definition id="panelverticalpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a Vertical Panel"/>
+								 <panel>
+								 	<verticallayout>
+								 		<button displayname="1" width="30px"/>
+								 		<button displayname="2" width="30px"/>
+								 		<button displayname="3" width="30px"/>
+								 	</verticallayout>
+								 </panel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is a Vertical Panel"/>
+ <panel>
+ 	<verticallayout>
+ 		<button displayname="1" width="30px"/>
+ 		<button displayname="2" width="30px"/>
+ 		<button displayname="3" width="30px"/>
+ 	</verticallayout>
+ </panel>																								
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+
+
+
+<!-- ******************************************************************* -->
+			<panel-definition id="panelhorizontalpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a Horizontal Panel"/>
+								 <panel>
+								 	<horizontallayout>
+								 		<button displayname="1" width="30px"/>
+								 		<button displayname="2" width="30px"/>
+								 		<button displayname="3" width="30px"/>
+								 	</horizontallayout>
+								 </panel>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<label displayname="This is a Horizontal Panel"/>
+ <panel>
+ 	<horizontallayout>
+ 		<button displayname="1" width="30px"/>
+ 		<button displayname="2" width="30px"/>
+ 		<button displayname="3" width="30px"/>
+ 	</horizontallayout>
+ </panel>																								
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simplelistpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="Simple list" />
+								<listbox>
+									<item displayname="List item 1" />
+									<item displayname="List item 2" />
+									<item displayname="List item 3" />
+									<item displayname="List item 4" />
+									<item displayname="List item 5" />
+								</listbox>
+								<label displayname="Multiple Select list" />
+								<listbox multiple-select="true">
+									<item displayname="List item a" />
+									<item displayname="List item b" />
+									<item displayname="List item c" />
+									<item displayname="List item d" />
+									<item displayname="List item e" />
+								</listbox>
+								<label displayname="List with 3 visible elements" />
+								<listbox nr-visible-items="3" width="100">
+									<item displayname="List item a" />
+									<item displayname="List item b" />
+									<item displayname="List item c" />
+									<item displayname="List item d" />
+									<item displayname="List item e" />
+									<item displayname="List item f" />
+									<item displayname="List item g" />
+									<item displayname="List item h" />
+									<item displayname="List item i" />
+									<item displayname="List item j" />
+								</listbox>
+
+
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true"
+									style="font-size:smaller;">
+									<text><![CDATA[	
+<label displayname="Simple list"/>
+<listbox>
+	<item displayname="List item 1"/>
+	<item displayname="List item 2"/>
+	<item displayname="List item 3"/>
+	<item displayname="List item 4"/>
+	<item displayname="List item 5"/>
+</listbox>
+<label displayname="Multiple Select list"/>
+<listbox multiple-select="true">
+	<item displayname="List item a"/>
+	<item displayname="List item b"/>
+	<item displayname="List item c"/>
+	<item displayname="List item d"/>
+	<item displayname="List item e"/>
+</listbox>
+<label displayname="List with 3 visible elements"/>
+<listbox nr-visible-items="3">
+	<item displayname="List item a"/>
+	<item displayname="List item b"/>
+	<item displayname="List item c"/>
+	<item displayname="List item d"/>
+	<item displayname="List item e"/>
+	<item displayname="List item f"/>
+	<item displayname="List item g"/>
+	<item displayname="List item h"/>
+	<item displayname="List item i"/>									
+	<item displayname="List item j"/>
+</listbox>																	
+							
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simpledropdownpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+
+								<label displayname="Simple dropdown" />
+								<dropdown>
+									<item displayname="Item 1" />
+									<item displayname="Item 2" />
+									<item displayname="Item 3" />
+									<item displayname="Item 4" />
+
+								</dropdown>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true">
+									<text><![CDATA[
+<dropdown >
+	<item  displayname="Item 1"/>
+	<item  displayname="Item 2"/>
+	<item  displayname="Item 3"/>
+	<item  displayname="Item 4"/>
+	
+</dropdown>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+
+			<panel-definition id="embedpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<html width="480" height="295">
+									<text><![CDATA[<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/4jVOrUrvi1M&amp;hl=en&amp;fs=1&amp;rel=0&amp;color1=0x2b405b&amp;color2=0x6b8ab6"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/4jVOrUrvi1M&amp;hl=en&amp;fs=1&amp;rel=0&amp;color1=0x2b405b&amp;color2=0x6b8ab6" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed></object>	]]></text>
+								</html>
+
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[		<html><text>![CDATA[<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/4jVOrUrvi1M&hl=en&fs=1&rel=0&color1=0x2b405b&color2=0x6b8ab6"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/4jVOrUrvi1M&hl=en&fs=1&rel=0&color1=0x2b405b&color2=0x6b8ab6" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed></object>	\]\]></text></html>
+							
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="framepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<frame id="xxx" src="http://www.qafe.com" height="400"
+									width="600" />
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[	<frame src="http://www.qafe.com" height="400" width="400"/>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="predefinedtextfieldpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout cols="2">
+								<label displayname="This is a textfield" />
+								<textfield type="text">
+									<value>text</value>
+								</textfield>
+
+								<label displayname="This textfield can only contains characters" />
+								<textfield type="chars">
+									<value>chars</value>
+								</textfield>
+
+								<label displayname="This textfield can only contain doubles" />
+								<textfield type="double">
+									<value>2.5</value>
+								</textfield>
+
+								<label displayname="This textfield can only contain integers" />
+								<textfield type="int">
+									<value>-100</value>
+								</textfield>
+
+								<label displayname="This textfield can only contain signed integers" />
+								<textfield type="signed_int">
+									<value>100</value>
+								</textfield>
+
+
+
+								<label displayname="This is an email textfield" />
+								<textfield type="email">
+									<value>info@qafe.com</value>
+								</textfield>
+
+								<label
+									displayname="This is an email textfield with custom format format yyyyMMdd " />
+								<textfield type="date" format="yyyyMMdd">
+									<value></value>
+								</textfield>
+
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true"
+									style="font-size:smaller;">
+
+									<text><![CDATA[		
+<label displayname="This is a textfield"/>
+<textfield type="text"><value>text</value></textfield>
+
+<label displayname="This textfield can only contains characters"/>
+<textfield type="chars"><value>chars</value></textfield>
+
+<label displayname="This textfield can only contain doubles"/>
+<textfield type="double"><value>2.5</value></textfield>
+
+<label displayname="This textfield can only contain integers"/>
+<textfield type="int"><value>-100</value></textfield>
+
+<label displayname="This textfield can only contain signed integers"/>
+<textfield type="signed_int"><value>100</value></textfield>
+
+
+
+<label displayname="This is an email textfield"/>
+<textfield type="email"><value>info@qafe.com</value></textfield>
+	
+<label displayname="This is an email textfield with custom format format yyyyMMdd "/>
+<textfield type="date" format="yyyyMMdd"><value></value></textfield>									
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="regexptextfieldpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout cols="1">
+								<html width="600" height="300" escape="true">
+									<text><![CDATA[
+									 User name check with regular expression
+									 <br/>
+										First start with a user name check. In case of a registration form you may want to control available user names a bit. Let's suppose you don't want to allow any special character in the name except "_.-" and of course letters and numbers. Besides this you may want to control the length of the user name to be between 4 and 20.
+First we need to define the available characters. This can be realised with the following code:
+<br/>
+[a-zA-Z0-9_.-] 
+<br/>
+After that we need to limit the number of characters with the following code:
+<br/>
+{4,20}
+<br/>
+At least we need to put it together:
+<br/>
+^[a-zA-Z-0-9_.-]{4,20}$]]></text>
+								</html>
+								<textfield
+									validation-message="Please check input. The length of the username must between 4 and 20">
+									<value></value>
+									<regexp><![CDATA[^[a-zA-Z-0-9_.-]{4,20}$]]></regexp>
+								</textfield>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" preformat="true"
+									style="font-size:smaller;">
+									<text><![CDATA[
+
+<html ><text><![CDATA[
+User name check with regular expression
+
+First start with a user name check. In case 
+of a registration form you may want to control 
+available user names a bit. Let's suppose you 
+don't want to allow any special character in the 
+name except "_.-" and of course letters and numbers. 
+Besides this you may want to control the length of
+the user name to be between 4 and 20.
+First we need to define the available characters. 
+This can be realised with the following code:
+
+[a-zA-Z0-9_.-] 
+
+After that we need to limit the number of characters with the following code:
+
+{4,20}
+
+At least we need to put it together:
+
+^[a-zA-Z-0-9_.-]{4,20}$ 
+ \]\]></text></html>
+<textfield validation-message="Please check input. The length of the username must between 4 and 20">
+	<value></value>
+    <regexp><![CDATA[^[a-zA-Z-0-9_.-]{4,20}$\]\]></regexp>
+</textfield>
+
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="datetexttextfieldpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<textfield type="date" format="dd/MM/yyyy">
+									<value></value>
+								</textfield>
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[	<textfield type="date" format="dd/MM/yyyy"><value></value></textfield>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="requiredtextfieldpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<textfield required="true">
+									<value>This is a required textfield</value>
+								</textfield>
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[	<textfield required="true"><value>This is a required textfield</value></textfield>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->			
+			<panel-definition id="simpletextfieldpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<autolayout>
+								<label displayname="This is a textfield" />
+								<textfield>
+									<value></value>
+								</textfield>
+								<label displayname="This is a passwordfield" />
+								<password></password>
+								<label displayname="This is a text area" />
+								<textarea rows="10">
+									<value>This is a textarea</value>
+								</textarea>
+								<label displayname="This is a rich text area" />
+								<textarea rows="10" rich="true">
+									<value>This is a textarea</value>
+								</textarea>
+							</autolayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true"
+									style="font-size:smaller;" preformat="true">
+									<text><![CDATA[	
+<label displayname="This is a textfield"/>
+<textfield><value></value></textfield>
+<label displayname="This is a passwordfield"/>
+<password></password>
+<label displayname="This is a text area"/>
+<textarea rows="10" ><value>This is a textarea</value></textarea>
+<label displayname="This is a rich text area"/>
+<textarea rows="10"  rich="true"><value>This is a textarea</value></textarea>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->			
+			<panel-definition id="emptypanel">
+				<verticallayout>
+					<html style="overflow:hidden;" width="625" height="450"><text><![CDATA[<span style="font-family: Helvetica,Arial,sans-serif;"><span style="font-family: Helvetica,Arial,sans-serif;"></span></span><p style="font-family: Helvetica,Arial,sans-serif;">This is the QAFE Showcase.</p><p style="font-family: Helvetica,Arial,sans-serif;"> In here you can see several samples and their source code.&nbsp;</p><p style="font-family: Helvetica,Arial,sans-serif;"><br>The tree contains a component tree and an events, which is a collection of builtin-functions used in QAFE event processing.</p><p style="font-family: Helvetica,Arial,sans-serif;">In the main menu, check if the "QAFE labs" menu is available. If so, you can use the "Try Me" feature.</p><p style="font-family: Helvetica,Arial,sans-serif;">Also checkout&nbsp; this <a href="http://www.qafe.com/2009/01/26/qafe-demo-try-me-part-1/" target="_self">link</a> for more information.</p><p style="font-family: Helvetica,Arial,sans-serif; width: 600px;"></p>	]]></text></html>
+								
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="customColumnsdatagridOverflowpanel" displayname="Overflow Data Grid with Custom Columns">
+				<verticallayout>
+					<tabpanel id="sample">
+						<tab id="example" displayname="Example">
+							<verticallayout>
+								<datagrid id="customColumnsdatagridOverflowtable"  width="500px" height="200px">
+									<column  id="lastname" name="lastName" />
+									<column  id="age" name="age" />
+										<overflow id="overflow" displayname="Overflow panel" >
+													<autolayout cols="2">
+														<label displayname="ID"/>
+														<textfield name="id"/>
+														<label displayname="Name"/>
+														<textfield name="name"/>
+														<label displayname="LastName"/>
+														<textfield name="lastName"/>
+														<label displayname="Age"/>
+														<textfield name="age"/>
+													</autolayout>
+										</overflow>
+								</datagrid>
+							</verticallayout>
+						</tab>
+						<tab id="sourcecode" displayname="Source code">
+							<verticallayout>
+								<html id="sourcecodetext" height="100%" width="100%"
+									escape="true" 
+									style="font-size:smaller;" preformat="true">
+									<text><![CDATA[
+<datagrid id="customColumnsdatagridOverflowtable"  width="300" >
+  <column  id="lastname" name="lastname" />
+  <column  id="age" name="age" />
+  <overflow id="overflow" displayname="Overflow panel" >
+    <autolayout cols="2">
+      <label displayname="ID"/>
+      <textfield name="id"/>
+      <label displayname="Name"/>
+      <textfield name="name"/>
+      <label displayname="LastName"/>
+      <textfield name="lastname"/>
+      <label displayname="Age"/>
+      <textfield name="age"/>
+    </autolayout>
+  </overflow>
+</datagrid>									
+]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+
+			
+<!-- ******************************************************************* -->
+			<panel-definition id="customColumnsdatagridpanel" displayname="Simple Data Grid with Custom Columns">
+				<verticallayout>
+					<tabpanel id="sample">
+						<tab id="example" displayname="Example">
+							<verticallayout>
+								<datagrid id="customColumnsdatagridtable" width="500px" height="300px">
+									<column  id="lastname" name="lastName" />
+									<column  id="age" name="age" />
+								</datagrid>
+							</verticallayout>
+						</tab>
+						<tab id="sourcecode" displayname="Source code">
+							<verticallayout>
+								<html id="sourcecodetext" height="100%" width="100%"
+									escape="true" 
+									style="font-size:small;" preformat="true">
+									<text><![CDATA[
+<datagrid id="customColumnsdatagridtable" >
+	<column  id="lastname" name="lastname" />
+	<column  id="age" name="age" />
+</datagrid>]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simpledatagridpanel" displayname="Simple Data Grid Sample">
+				<verticallayout>
+					<tabpanel id="sample">
+						<tab id="example" displayname="Example">
+							<verticallayout>
+								<datagrid id="simpledatagridtable" width="500px" height="300px"/>
+							</verticallayout>
+						</tab>
+						<tab id="sourcecode" displayname="Source code">
+							<verticallayout>
+								<html id="sourcecodetext" height="100%" width="100%"
+									escape="true">
+									<text><![CDATA[<datagrid id="simpledatagridtable"/>]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simplebuttonpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<button displayname="Simple Button" />
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[<button  displayname="Simple Button" />]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->			
+			<panel-definition id="simplecheckboxpanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<checkbox displayname="Simple Checkbox" />
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[<checkbox   displayname="Simple Checkbox" />]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simpleimagepanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<image location="http://www.google.com/intl/en_ALL/images/logo.gif"
+									tooltip="This is an external image" />
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true">
+									<text><![CDATA[	<image location="http://www.google.com/intl/en_ALL/images/logo.gif"  tooltip="This is an external image"/>
+							]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->
+			<panel-definition id="simplemappanel">
+				<verticallayout>
+					<tabpanel>
+						<tab displayname="Example">
+							<verticallayout>
+								<label displayname="Map example" />
+								<map id="mymap" name="mymap"
+									image="http://www.w3schools.com/tags/planets.gif">
+									<area shape="rect" coords="0,0,82,126" alt="Sun" />
+									<area shape="circle" coords="90,58,3" alt="Mercury" />
+									<area shape="circle" coords="124,58,8" alt="Venus" />
+								</map>
+							</verticallayout>
+						</tab>
+						<tab displayname="Source code">
+							<verticallayout>
+								<html height="100%" width="100%" escape="true" preformat="true"
+									style="font-size:smaller;">
+									<text><![CDATA[
+<label displayname="Map example"/>
+<map id="mymap" name="mymap" image="http://www.w3schools.com/tags/planets.gif">
+	<area shape="rect" coords="0,0,82,126" alt="Sun"/>
+	<area shape="circle" coords="90,58,3" alt="Mercury"/>
+	<area shape="circle" coords="124,58,8" alt="Venus"/>								
+</map>									
+									]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+
+<!-- ******************************************************************* -->
+
+			<panel-definition id="simpleradiobuttonpanel">
+				<verticallayout>
+					<tabpanel id="sample">
+						<tab id="example" displayname="Example">
+							<verticallayout>
+								<choice id="simpleRadio">
+									<choice-item id="choice1" displayname="Choice 1" />
+									<choice-item id="choice2" displayname="Choice 2" />
+								</choice>
+							</verticallayout>
+						</tab>
+						<tab id="sourcecode" displayname="Source code">
+							<verticallayout>
+								<html id="sourcecodetext" height="100%" width="100%"
+									escape="true" preformat="true" style="font-size:smaller;">
+									<text><![CDATA[
+<choice id="simpleRadio">
+	<choice-item id="choice1" displayname="Choice 1" />
+	<choice-item id="choice2" displayname="Choice 2" />
+</choice>]]></text>
+								</html>
+
+
+							</verticallayout>
+						</tab>
+					</tabpanel>
+				</verticallayout>
+			</panel-definition>
+<!-- ******************************************************************* -->	
+		</view>
+	<events>
+	<event id="showandhideevent" src-id="c">
+						<listeners>
+							<listenergroup>
+								<component ref="showandhide-show"/>
+								<component ref="showandhide-hide"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						
+						<switch>
+							<expression expr="${c}" />
+							<results>
+								<result value="showandhide-show">
+									<set-property  property="visible" value="true">
+										<component ref="showandhidelabel"/>										
+									</set-property>
+								</result>
+								<result value="showandhide-hide">
+									<set-property  property="visible" value="false">
+										<component ref="showandhidelabel"/>	
+										
+									</set-property>
+								</result>
+							</results>
+						</switch>
+					</event>
+					<event id="dialogsevent" src-id="c">
+						<listeners>
+							<listenergroup>
+								<component ref="dialoginfo"/>
+								<component ref="dialogerror"/>
+								<component ref="dialogalert"/>
+								<listener type="onclick"/>
+							</listenergroup>
+						</listeners>
+						
+						<switch>
+							<expression expr="${c}" />
+							<results>
+								<result value="dialoginfo">
+									<dialog type="info">
+										<title value="Info dialog"/>										
+										<message value="You just clicked on a Info dialog"/>										
+									</dialog>										
+								</result>
+								<result value="dialogalert">
+									<dialog type="alert">
+										<title value="Alert dialog"/>										
+										<message value="You just clicked on a Alert dialog"/>										
+									</dialog>										
+								</result>
+								<result value="dialogerror">
+									<dialog type="error">
+										<title value="Error dialog"/>										
+										<message value="You just clicked on a Error dialog"/>										
+									</dialog>										
+								</result>
+							</results>
+						</switch>
+					</event>
+	</events>
+	
+<!-- ******************************************************************* -->	
+	</presentation-tier>
+<!-- 	<resource-tier>
+		<resources>
+			<drivermanager-datasource driver-classname="oracle.jdbc.driver.OracleDriver"
+				id="database" statements-file-url="showcase-statements.xml"
+				url="jdbc:oracle:thin:@localhost:1521:XE" dialect="oracle" password="hr"
+				username="hr" />
+		</resources>
+
+	</resource-tier>-->
+</application-mapping> 

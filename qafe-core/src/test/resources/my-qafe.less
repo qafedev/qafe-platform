@@ -1,0 +1,193 @@
+
+/*
+ * Qafe style sheet
+ *
+ * Author: Martin de Boer
+ * Date: 24-1-2012
+ *  
+ * Design goals:
+ * - Create a theme / style that can be customized by a settings values for a small number of base variables
+ * - Other variables are set relative to the base values (but can be changed if needed)
+ * 		- Use lighten and darken functions to set colors relative to base color
+ * 		- Use em to set spacing relative to base font size
+ * - Create a compact and readable style sheet
+ * - Separate color scheme, typography, user interface and layout.
+ *
+ * Notes:
+ * - Compile less to css with lessc (linux) or lesscss.app (osx)
+ *
+ */
+
+//
+// Color scheme
+
+//  Background colors
+@gmailLikeBackgroundColor: #F5F5F5 ;  // very-light-blue
+@extgwtLikeBackgroundColor: #DFE8F6 ;    // light-blue
+
+@baseBackgroundColor: @gmailLikeBackgroundColor ;
+
+@panelBackgroundColor: @baseBackgroundColor ;
+@textFieldBackgroundColor: lighten( @baseBackgroundColor, 20% ) ;
+@buttonBackgroundColor: white ;   		// lighten( @baseBackgroundColor, 10% ) ;
+
+// Border colors
+ @requiredBorderColor: #D46060 ; // red
+
+// Text colors
+@baseTextColor: black ;
+
+@labelTextColor: lighten( @baseTextColor, 20% ) ;
+@textFieldTextColor: @baseTextColor ;
+@buttonTextColor: lighten( @baseTextColor, 20% ) ;
+
+
+//
+// Typography
+
+@baseFont:  verdana, arial, helvetica, sans-serif ;
+@baseFontSize: 80%;
+
+@labelFontSIze: @baseFontSize - 5 ;
+@textfieldFontSize: @baseFontSize ;
+@buttonFontSize: @baseFontSize - 5 ;
+
+
+//
+// Generics
+
+.qafe_font ( @size: @baseFontSize, @weigth: normal ) {
+  font-family: @baseFont ;
+  font-size: @size ;
+  font-weight: @weigth ;
+}
+
+.qafe_borderRounded( @radius: 0.5em ) {
+  border-radius: @radius ;
+  -webkit-border-radius: @radius ;
+  -moz-border-radius: @radius ;
+}
+
+.qafe_border( lowered, @color, @p: 10% ) {
+  border: solid 1px;  
+  border-top-color: darken( @color, @p ) ;
+  border-bottom-color: lighten( @color, @p ) ;
+  border-left-color: darken( @color, @p ) ;
+  border-right-color: lighten( @color, @p ) ;
+}
+
+.qafe_border( raised, @color, @p: 10% ) {
+  border: solid 1px ;  
+  border-top-color: lighten( @color, @p ) ;
+  border-bottom-color: darken( @color, @p ) ;
+  border-left-color: lighten( @color, @p ) ;
+  border-right-color: darken( @color, @p ) ;  
+}
+
+.qafe_background( gradient, @from, @to ) {
+  background: @from;
+  background: -webkit-gradient( linear, left top, left bottom, from(@from), to(@to) );
+  background: -moz-linear-gradient( top,  @from,  @to );
+  /* filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='@color', endColorstr='darken(@color, @p)); */	
+}
+
+//
+// Interface
+
+// Panels
+.qafe_panel {
+  background: @panelBackgroundColor ;
+  .qafe_border( raised, @panelBackgroundColor ) ;
+}
+
+.qafe_tabpanel {
+	.qafe_panel ;
+}
+
+// Tabs
+.qafe_tab {
+	background: darken( @panelBackgroundColor, 10% ) ;
+	padding-top: 2px;
+}
+
+.qafe_tabbaritem {
+	.qafe_font( @labelFontSIze, normal ) ;
+	background: darken( @panelBackgroundColor, 5% ) ;
+}
+
+.qafe_tabbaritem_selected {
+	.qafe_font( @labelFontSIze, bold ) ;
+	background: @panelBackgroundColor ;
+}
+
+
+// Labels
+.qafe_label {
+  .qafe_font( @labelFontSIze, bold ) ;
+  padding: 0.5em 1em 0.5em ;
+  color: @labelTextColor ;
+}
+
+// Textfields
+.qafe_textfield {
+  .qafe_font( @textfieldFontSize );
+  background-color: @textFieldBackgroundColor ;
+  margin-bottom: 0.25em;
+  display: block;
+  .qafe_border( lowered, @panelBackgroundColor ) ;
+  .qafe_borderRounded( 0em ) ;
+}
+
+.qafe_textfieldRequired {
+  .qafe_textfield ;
+  .qafe_border( lowered, @requiredBorderColor ) ;
+}
+
+.qafe_password {
+  .qafe_textfield ;
+}
+
+
+// Buttons 
+.qafe_buttonLarge {
+  padding: .5em 2em .55em;
+}
+
+.qafe_buttonMedium {
+  padding: 0.4em 1.5em 0.4em;
+}
+
+.qafe_buttonSmall {
+  padding: .2em 1em .275em;
+}
+
+.qafe_button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  .qafe_font( @buttonFontSize ) ;
+  .qafe_buttonMedium;
+  .qafe_borderRounded ;
+  /* Shadow */
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  /* Colors and gradient */
+  color: @buttonTextColor;
+  border: solid 1px #b7b7b7;
+  .qafe_background( gradient, @buttonBackgroundColor, darken(@buttonBackgroundColor, 10%) ) ;
+}
+
+.qafe_button:hover {
+  text-decoration: none;
+  .qafe_background( gradient, darken(@buttonBackgroundColor, 5%), darken(@buttonBackgroundColor, 15%) ) ;
+}
+
+.qafe_button:active {
+  position: relative;
+  top: 1px;
+  color: lighten( @buttonTextColor, 20% ) ;
+  .qafe_background( gradient, darken(@buttonBackgroundColor, 20%), @buttonBackgroundColor ) ;
+}
+
