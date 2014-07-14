@@ -16,63 +16,56 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.qualogy.qafe</groupId>
-		<artifactId>platform</artifactId>
-		<version>3.0-rc2-SNAPSHOT</version>
-	</parent>
-	<groupId>com.qualogy.qafe.platform</groupId>
-	<artifactId>qafe-distribution</artifactId>
-	<version>3.0-rc2-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>Qafe Distribution</name>
-	<description>Qafe Distribution</description>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.qualogy.qafe</groupId>
+        <artifactId>platform</artifactId>
+        <version>3.0-rc2-SNAPSHOT</version>
+    </parent>
+    <groupId>com.qualogy.qafe.platform</groupId>
+    <artifactId>qafe-distribution</artifactId>
+    <packaging>pom</packaging>
+    <name>Qafe Distribution</name>
+    <description>Qafe Distribution</description>
 
-    <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-distribution</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-distribution</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-distribution</url>
-    </scm>
-    
     <properties>
-    	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
     </properties>
 
-	<modules>
-		<module>api</module>
-		<module>standard</module>
-    	<module>gae</module>
-    	<module>weblogic</module>
-	</modules>
+    <modules>
+        <module>api</module>
+        <module>standard</module>
+        <module>gae</module>
+        <module>weblogic</module>
+    </modules>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<workingDirectory>${basedir}/target/test-classes</workingDirectory>
-					<trimStackTrace>false</trimStackTrace>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <workingDirectory>${basedir}/target/test-classes</workingDirectory>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -24,41 +24,40 @@
   </parent>
   <groupId>com.qualogy.qafe.platform.editions</groupId>
   <artifactId>weblogic-edition</artifactId>
-  <version>2.6-rc1-SNAPSHOT</version>
   <packaging>ear</packaging>
   <name>weblogic edition</name>
   <description>weblogic edition</description>
-  
+
   <profiles>
-  	<profile>
-			<id>qafe-weblogic-ear-edition</id>
-			<build>
-				<plugins>
-					<plugin>
-				        <groupId>org.apache.maven.plugins</groupId>
-				        <artifactId>maven-ear-plugin</artifactId>
-				        <version>2.6</version>
-				        <configuration>
-				          <modules>
-				          	<webModule>
-				          		<groupId>com.qualogy.qafe.platform</groupId>
-				          		<artifactId>qafe-web-gwt</artifactId>
-				          		<contextRoot>qafe-web-gwt</contextRoot>				          		
-				          	</webModule>				          	
-				          </modules>
-				          
-				        </configuration>
-			      	</plugin>				        
-				</plugins>
-			</build>
-			<dependencies>
-				<dependency>
-					<groupId>com.qualogy.qafe.platform</groupId>
-				    <artifactId>qafe-web-gwt</artifactId>
-				    <version>${project.version}</version>
-				    <type>war</type>				    				    
-				</dependency>
-			</dependencies>			
-		</profile>
-	</profiles>	
+    <profile>
+            <id>qafe-weblogic-ear-edition</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-ear-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                          <modules>
+                            <webModule>
+                                <groupId>com.qualogy.qafe.platform</groupId>
+                                <artifactId>qafe-web-gwt</artifactId>
+                                <contextRoot>qafe-web-gwt</contextRoot>
+                            </webModule>
+                          </modules>
+
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>com.qualogy.qafe.platform</groupId>
+                    <artifactId>qafe-web-gwt</artifactId>
+                    <version>${project.version}</version>
+                    <type>war</type>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

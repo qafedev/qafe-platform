@@ -25,19 +25,12 @@
     </parent>
     <groupId>com.qualogy.qafe.platform</groupId>
     <artifactId>qafe-core</artifactId>
-    <version>3.0-rc2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Qafe Core</name>
     <description>Core layer for the Qafe Framework</description>
 
-    <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-core</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-core</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-core</url>
-    </scm>
-    
     <properties>
-    	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
     </properties>
 
     <build>
@@ -211,19 +204,4 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>Qualogy Maven Repository</name>
-            <releases>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>http://192.168.110.241:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
 </project>

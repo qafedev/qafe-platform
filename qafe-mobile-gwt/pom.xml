@@ -7,7 +7,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    	http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,23 +25,16 @@
     </parent>
     <groupId>com.qualogy.qafe.platform</groupId>
     <artifactId>qafe-mobile-gwt</artifactId>
-    <version>3.0-rc2-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>QAFE Mobile GWT </name>
     <description>Mobile frontend application for QAFE</description>
 
     <properties>
-       	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
         <gwtversion>2.4.0</gwtversion>
         <platform.module.version>${project.version}</platform.module.version> <!-- Used in profiles -->
         <runTarget>index.jsp</runTarget>
     </properties>
-
-    <scm>
-      <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-mobile-gwt/</connection>
-    <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-mobile-gwt</developerConnection>
-    <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-mobile-gwt</url>
-  </scm>
 
     <build>
         <extensions>
@@ -217,22 +210,22 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-core</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-business</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-web</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-presentation</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -263,7 +256,7 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>standard</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <!--  <scope>provided</scope>  -->
         </dependency>
     </dependencies>

@@ -25,24 +25,17 @@
     </parent>
     <groupId>com.qualogy.qafe.platform</groupId>
     <artifactId>qafe-web-gwt</artifactId>
-    <version>3.0-rc2-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Qafe Web GWT</name>
     <description>GWT frontend library for QAFE</description>
 
-    <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-web-gwt</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-web-gwt</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-web-gwt</url>
-    </scm>
-
     <!-- Global properties specific for qafe-web-gwt build -->
     <properties>
-    	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>    	
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
         <com.google.gwt>2.4.0</com.google.gwt>
         <org.mortbay.jetty>6.1.11</org.mortbay.jetty>
     </properties>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -293,28 +286,28 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-core</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-business</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-presentation</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform</groupId>
             <artifactId>qafe-web</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
             <artifactId>import-export-library-servlet</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>xml-apis</groupId>
@@ -329,7 +322,7 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>standard</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

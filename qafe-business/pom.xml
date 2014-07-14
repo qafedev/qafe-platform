@@ -7,7 +7,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    	http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,21 +25,14 @@
     </parent>
     <groupId>com.qualogy.qafe.platform</groupId>
     <artifactId>qafe-business</artifactId>
-    <version>3.0-rc2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Qafe Business</name>
     <description>Business layer for the Qafe Framework</description>
 
-    <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-business</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-business</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-business</url>
-    </scm>
-
-	<properties>
-    	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
+    <properties>
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
     </properties>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -177,29 +170,13 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>api</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>standard</artifactId>
-            <version>3.0-rc2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>Qualogy Maven Repository</name>
-            <releases>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>http://192.168.110.241:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
 </project>

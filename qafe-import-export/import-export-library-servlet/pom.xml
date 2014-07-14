@@ -16,107 +16,84 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>qafe-import-export</artifactId>
-		<groupId>com.qualogy.qafe.platform</groupId>
-		<version>3.0-rc2-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
-	<artifactId>import-export-library-servlet</artifactId>
-	<version>3.0-rc2-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>Qafe Import Export Library Servlet</name>
-	<description>This project is used by the web service for document export and import</description>
-	
-    <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-import-export/import-export-library-servlet</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-import-export/import-export-library-servlet</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-import-export/import-export-library-servlet</url>
-    </scm>
-	
-	<properties>
-    	<fileHeaderBaseDir>${project.parent.parent.basedir}</fileHeaderBaseDir>
+    <parent>
+        <artifactId>qafe-import-export</artifactId>
+        <groupId>com.qualogy.qafe.platform</groupId>
+        <version>3.0-rc2-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
+    <artifactId>import-export-library-servlet</artifactId>
+    <packaging>jar</packaging>
+    <name>Qafe Import Export Library Servlet</name>
+    <description>This project is used by the web service for document export and import</description>
+
+    <properties>
+        <fileHeaderBaseDir>${project.parent.parent.basedir}</fileHeaderBaseDir>
     </properties>
-    
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<workingDirectory>${basedir}/target/test-classes</workingDirectory>
-					<trimStackTrace>false</trimStackTrace>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-	
-	<dependencies>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.qualogy.qafe.platform</groupId>
-			<artifactId>qafe-web</artifactId>
-			<version>3.0-rc2-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
-			<artifactId>import-export-api</artifactId>
-			<version>3.0-rc2-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
-			<artifactId>import-export-service</artifactId>
-			<version>3.0-rc2-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
-	
-	<repositories>
-        <repository>
-            <id>public</id>
-            <name>Qualogy Maven Repository</name>
-            <releases>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>http://192.168.110.241:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <workingDirectory>${basedir}/target/test-classes</workingDirectory>
+                    <trimStackTrace>false</trimStackTrace>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.qualogy.qafe.platform</groupId>
+            <artifactId>qafe-web</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
+            <artifactId>import-export-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
+            <artifactId>import-export-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
