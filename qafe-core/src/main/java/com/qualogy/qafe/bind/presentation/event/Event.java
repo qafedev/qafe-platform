@@ -43,10 +43,34 @@ public class Event extends BindBase implements PostProcessing {
 
     private List<ListenerGroup> listeners = new ArrayList<ListenerGroup>();
     private List<ListenerGroup> listenerGroupsDefinedAsEventAttribute = new ArrayList<ListenerGroup>();
+    private String id;
+    private String sourceName;
+    private String sourceId;
+    private String sourceValue;
+    private String sourceListenerType;
+    private String components;
+    private String listenerTypes;
+    private String windowId;
+    private List<EventItem> eventItems = new ArrayList<EventItem>();
+    private List<InputVariable> input;
+
+    public Event() {
+        super();
+    }
     
-  
-    protected String id;
-    
+    public Event(String id, List<EventItem> eventItems){
+    	this.id= id;
+    	this.eventItems = eventItems;
+	}
+
+    public String getWindowId() {
+		return windowId;
+	}
+
+	public void setWindowId(String windowId) {
+		this.windowId = windowId;
+	}
+	
     public String getSourceName() {
 		return sourceName;
 	}
@@ -78,7 +102,6 @@ public class Event extends BindBase implements PostProcessing {
 	public void setSourceListenerType(String sourceListenerType) {
 		this.sourceListenerType = sourceListenerType;
 	}
-	
 	
 	public void setComponents(String components) {
 		this.components = components;
@@ -145,27 +168,6 @@ public class Event extends BindBase implements PostProcessing {
 			}
 		}
 		return listenerTypeList;
-	}
-
-	protected String sourceName;
-    protected String sourceId;
-    protected String sourceValue;
-    protected String sourceListenerType;
-    protected String components;
-    protected String listenerTypes;
-
-    protected List<EventItem> eventItems = new ArrayList<EventItem>();
-
-    protected List<InputVariable> input;
-    
-
-    public Event() {
-        super();
-    }
-    
-    public Event(String id, List<EventItem> eventItems){
-    	this.id=id;
-    	this.eventItems = eventItems;
 	}
 
     /**

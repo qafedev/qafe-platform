@@ -331,8 +331,10 @@ public class ApplicationMapping implements Serializable, PostProcessing{
 			if (windowList != null) {
 				for(Window window : windowList) {
 					if (window.getEvents() != null) {
+						String windowId = window.getId();
 						for (Event event : window.getEvents()) {
-							this.getEvents().put(window.getId()+event.getId(), event);
+							event.setWindowId(windowId);
+							this.getEvents().put(windowId+event.getId(), event);
 						}
 					}
 				}

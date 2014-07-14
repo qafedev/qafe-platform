@@ -20,50 +20,37 @@ import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 
 public class SetPanelGVO extends BuiltInFunctionGVO {
 
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO";
+	
 	private BuiltInComponentGVO builtInComponentGVO;
 	private String target;
 	private ComponentGVO src;
-
 	
 	public BuiltInComponentGVO getBuiltInComponentGVO() {
 		return builtInComponentGVO;
 	}
 
-
 	public void setBuiltInComponentGVO(BuiltInComponentGVO builtInComponentGVO) {
 		this.builtInComponentGVO = builtInComponentGVO;
 	}
-
 
 	public String getTarget() {
 		return target;
 	}
 
-
 	public void setTarget(String target) {
 		this.target = target;
 	}
-
 
 	public ComponentGVO getSrc() {
 		return src;
 	}
 
-
 	public void setSrc(ComponentGVO src) {
 		this.src = src;
 	}
 
-
-
-
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO";
+		return CLASS_NAME;
 	}
-
-	
-
-	
-
-
 }

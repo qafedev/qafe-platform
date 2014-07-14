@@ -30,6 +30,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
@@ -48,9 +49,10 @@ public class EventHandler {
 
     private EventHandler() {
         BUILTIN_MAP.put(OpenWindowGVO.CLASS_NAME, new OpenWindowHandler());
-        BUILTIN_MAP.put(LocalStoreGVO.CLASS_NAME, new StoreHandler());
+        BUILTIN_MAP.put(LocalStoreGVO.CLASS_NAME, new LocalStoreHandler());
         BUILTIN_MAP.put(BusinessActionRefGVO.CLASS_NAME, new BusinessActionRefHandler());
         BUILTIN_MAP.put(SetValueGVO.CLASS_NAME, new SetValueHandler());
+        BUILTIN_MAP.put(SetPanelGVO.CLASS_NAME, new SetPanelHandler());
     }
 
     public static EventHandler getInstance() {
@@ -116,14 +118,14 @@ public class EventHandler {
     }
 
     private void storeOutputVariables(String eventSessionId, GEventItemDataObject output) {
-        StoreHandler storeHandler = new StoreHandler();
+        LocalStoreHandler localStoreHandler = new LocalStoreHandler();
         HashMap<String, Object> outputValues = output.getOutputValues();
         if (outputValues == null) {
             return;
 
         }
         for (Map.Entry<String, Object> outputValue : outputValues.entrySet()) {
-            storeHandler.storeData(eventSessionId, outputValue.getKey(), outputValue.getValue());
+            localStoreHandler.storeData(eventSessionId, outputValue.getKey(), outputValue.getValue());
         }
     }
 

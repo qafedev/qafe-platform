@@ -20,7 +20,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
-public class StoreHandler extends AbstractBuiltInHandler {
+public class LocalStoreHandler extends AbstractBuiltInHandler {
 
     public boolean handleBuiltIn(UIObject sender, String listenerType, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
         LocalStoreGVO localStoreGVO = (LocalStoreGVO) builtInFunctionGVO;
