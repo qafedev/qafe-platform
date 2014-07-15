@@ -24,12 +24,11 @@
   </parent>
   <groupId>com.qualogy.qafe.platform.editions</groupId>
   <artifactId>demo</artifactId>
-  <version>2.6-rc1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>editions demo</name>
   <modules>
-  	<module>common</module>
-  	<module>flex</module>
-  	<module>gae</module>
+    <module>common</module>
+    <module>flex</module>
+    <module>gae</module>
   </modules>
 </project>

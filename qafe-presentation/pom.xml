@@ -18,95 +18,71 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.qualogy.qafe</groupId>
-		<artifactId>platform</artifactId>
-		<version>3.0-rc2-SNAPSHOT</version>
-	</parent>
-	<groupId>com.qualogy.qafe.platform</groupId>
-	<artifactId>qafe-presentation</artifactId>
-	<version>3.0-rc2-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>Qafe Presentation</name>
-	<description>Presentation layer for the Qafe Framework</description>
-	
-	<scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-presentation</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-presentation</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/qafe-presentation</url>
-    </scm>
-	
-	<properties>
-    	<fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
+    <parent>
+        <groupId>com.qualogy.qafe</groupId>
+        <artifactId>platform</artifactId>
+        <version>3.0-rc2-SNAPSHOT</version>
+    </parent>
+    <groupId>com.qualogy.qafe.platform</groupId>
+    <artifactId>qafe-presentation</artifactId>
+    <packaging>jar</packaging>
+    <name>Qafe Presentation</name>
+    <description>Presentation layer for the Qafe Framework</description>
+
+    <properties>
+        <fileHeaderBaseDir>${project.parent.basedir}</fileHeaderBaseDir>
     </properties>
-    
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-			</plugin>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
             </plugin>
-		</plugins>
-	</build>
-	
-	<dependencies>
+        </plugins>
+    </build>
+
+    <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>		
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.1</version>
-        </dependency>		
-		<dependency>
-			<groupId>com.qualogy.qafe.platform</groupId>
-			<artifactId>qafe-core</artifactId>
-			<version>3.0-rc2-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.qualogy.qafe.platform</groupId>
-			<artifactId>qafe-business</artifactId>
-			<version>3.0-rc2-SNAPSHOT</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>Qualogy Maven Repository</name>
-            <releases>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <checksumPolicy>ignore</checksumPolicy>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>http://192.168.110.241:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+        </dependency>
+        <dependency>
+            <groupId>com.qualogy.qafe.platform</groupId>
+            <artifactId>qafe-core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.qualogy.qafe.platform</groupId>
+            <artifactId>qafe-business</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
-	

@@ -24,14 +24,13 @@
   </parent>
   <groupId>com.qualogy.qafe.platform</groupId>
   <artifactId>editions</artifactId>
-  <version>2.6-rc1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>editions</name>
   <modules>
-  	<module>common</module>
-  	<module>demo</module>
-  	<module>enterprise</module>
-  	<module>weblogic-edition</module>
+    <module>common</module>
+    <module>demo</module>
+    <module>enterprise</module>
+    <module>weblogic-edition</module>
   </modules>
- 	
+
 </project>

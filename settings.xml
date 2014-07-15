@@ -7,7 +7,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    	http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,10 @@
     limitations under the License.
 
 -->
-    <!--
-        Prototype settings file for Qualogy QAFE builds. Copy this file to you
-        profile under .m2/settings.xml or run mvn with the -s switch.
-    -->
+<!--
+    Prototype settings file for Qualogy QAFE builds. Copy this file to you
+    profile under .m2/settings.xml or run mvn with the -s switch.
+-->
 <settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
@@ -28,17 +28,7 @@
         Make sure it's not part of the windows profile!
     -->
 
-    <localRepository>C:\svn\qafe\platform\maven-repository</localRepository>
-
-    <!--
-        ActiveProfiles
-    -->
-    <!--<activeProfiles>
-        <activeProfile>local</activeProfile>
-        <activeProfile>qafe-build-all</activeProfile>
-        <activeProfile>qafe-enterprise-edition</activeProfile>
-        <activeProfile>qafe-demo-edition</activeProfile>
-    </activeProfiles>-->
+    <localRepository>C:\git\qafe\platform\maven-repository</localRepository>
 
     <!--
         Profiles
@@ -59,30 +49,6 @@
                 <qafe.gwt.permutation.workers>4</qafe.gwt.permutation.workers>
             </properties>
         </profile>
-        <!--<profile>
-            <id>local</id>
-            <properties>
-                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
-            </properties>
-        </profile>
-        <profile>
-            <id>qafe-build-all</id>
-            <properties>
-                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
-            </properties>
-        </profile>
-        <profile>
-            <id>qafe-enterprise-edition</id>
-            <properties>
-                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
-            </properties>
-        </profile>
-        <profile>
-            <id>qafe-demo-edition</id>
-            <properties>
-                <qafe.flexsdk.home>/home/tomcat/flex_sdk_3.4</qafe.flexsdk.home>
-            </properties>
-        </profile>-->
         <profile>
             <id>sonar</id>
             <activation>
@@ -160,19 +126,19 @@
         <mirror>
             <id>public</id>
             <name>Qualogy Maven Repository</name>
-            <url>http://dev031.qualogy.com:8080/nexus/content/groups/public/</url>
+            <url>http://repository.qafe.qualogy.com:8081/nexus/content/groups/public/</url>
             <mirrorOf>central,thirdparty,apache-snapshots,codehaus-snapshots</mirrorOf>
         </mirror>
         <mirror>
             <id>snapshots</id>
             <name>Qualogy Maven SNAPSHOT Repository</name>
-            <url>http://dev031.qualogy.com:8080/nexus/content/repositories/qafe.snapshots/</url>
+            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.snapshots/</url>
             <mirrorOf>qafe.snapshots</mirrorOf>
         </mirror>
         <mirror>
             <id>releases</id>
             <name>Qualogy Maven Releases Repository</name>
-            <url>http://dev031.qualogy.com:8080/nexus/content/repositories/qafe.releases/</url>
+            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.releases/</url>
             <mirrorOf>qafe.releases</mirrorOf>
         </mirror>
     </mirrors>

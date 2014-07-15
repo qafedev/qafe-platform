@@ -6,7 +6,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    	http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@
     <version>3.0-rc2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Qafe Platform</name>
-    <description>TODO.. add desciption</description>
+    <description>TODO... add desciption</description>
     <url>http://www.qafe.com/</url>
     <inceptionYear>2007</inceptionYear>
 
@@ -42,19 +42,19 @@
     </developers>
 
     <scm>
-        <connection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/</connection>
-        <developerConnection>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/</developerConnection>
-        <url>scm:svn:http://dev030n.qualogy.com/svnrepos/platform/trunk/</url>
+        <connection>scm:git:git@github.com:qafedev/qafe-platform.git</connection>
+        <developerConnection>scm:git:git@github.com:qafedev/qafe-platform.git</developerConnection>
+        <url>http://github.com/qafedev/qafe-platform</url>
     </scm>
 
     <!-- Global properties specific for the entire Qafe platform build -->
     <properties>
-    	<maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
-    	<currentYear>${maven.build.timestamp}</currentYear>
-    	<inceptionYear>2008</inceptionYear>
-  		<copyrightOwner>Qualogy Solutions B.V.</copyrightOwner>
-  		<fileHeaderBaseDir>${project.basedir}</fileHeaderBaseDir>
-  		
+        <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
+        <currentYear>${maven.build.timestamp}</currentYear>
+        <inceptionYear>2008</inceptionYear>
+        <copyrightOwner>Qualogy Solutions B.V.</copyrightOwner>
+        <fileHeaderBaseDir>${project.basedir}</fileHeaderBaseDir>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-jibx-plugin.version>1.1.a</maven-jibx-plugin.version>
         <org.apache.poi.version>3.6</org.apache.poi.version>
@@ -179,7 +179,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.0</version>
+                    <version>2.5</version>
                     <configuration>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
                     </configuration>
@@ -197,46 +197,52 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.6</version>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-        	<plugin>
-				<groupId>com.mycila</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<!-- Template location -->
-					<header>${fileHeaderBaseDir}/src/main/resources/file-header.txt</header>
-					<!-- You can set this flag to false if you do not want the build to fail when some headers are missing -->
-					<failIfMissing>true</failIfMissing>
-					<!-- Values to be substituted in template -->
-					<properties>
-						<h_inceptionYear>${inceptionYear}</h_inceptionYear>
-						<h_currentYear>${currentYear}</h_currentYear>						
-						<h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
-					</properties>
-					<strictCheck>true</strictCheck>
-					<!-- Custom mapping for unknown file extensions -->
-					<mapping>
-					    <qaml>XML_STYLE</qaml>
-					</mapping>
-					<includes>
-						<include>**/*.java</include>
-						<include>**/*.xml</include>
-						<include>**/*.qaml</include>
-						<include>**/*.properties</include>						
-					</includes>					
-				</configuration>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>format</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <!-- Template location -->
+                    <header>${fileHeaderBaseDir}/src/main/resources/file-header.txt</header>
+                    <!-- You can set this flag to false if you do not want the build to fail when some headers are missing -->
+                    <failIfMissing>true</failIfMissing>
+                    <!-- Values to be substituted in template -->
+                    <properties>
+                        <h_inceptionYear>${inceptionYear}</h_inceptionYear>
+                        <h_currentYear>${currentYear}</h_currentYear>
+                        <h_copyrightOwner>${copyrightOwner}</h_copyrightOwner>
+                    </properties>
+                    <strictCheck>true</strictCheck>
+                    <!-- Custom mapping for unknown file extensions -->
+                    <mapping>
+                        <qaml>XML_STYLE</qaml>
+                    </mapping>
+                    <includes>
+                        <include>**/*.java</include>
+                        <include>**/*.xml</include>
+                        <include>**/*.qaml</include>
+                        <include>**/*.properties</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.jibx</groupId>
                 <artifactId>maven-jibx-plugin</artifactId>
@@ -291,15 +297,15 @@
                 <artifactId>commons-logging</artifactId>
                 <version>1.1</version>
             </dependency>
-            <!-- 
-            	Log4j is being used in commons-logging and spring-web
-            	See Jira issue: QAFE-882
+            <!--
+                Log4j is being used in commons-logging and spring-web
+                See Jira issue: QAFE-882
              -->
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.13</version>
-			</dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.13</version>
+            </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
@@ -552,11 +558,6 @@
     </modules>
 
     <pluginRepositories>
-    	<pluginRepository>
-			<id>Central Repository</id>
-			<name>Maven Central Repository</name>
-			<url>http://repo1.maven.org/maven2</url>
-		</pluginRepository>
         <pluginRepository>
             <id>public</id>
             <url>http://repository.qafe.qualogy.com:8081/nexus/content/groups/public/</url>
