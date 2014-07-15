@@ -26,6 +26,7 @@ import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 
+@Deprecated
 public class SetPanelExecute implements ExecuteCommand {
 
 	public void execute(BuiltInFunctionGVO builtInFunction) {

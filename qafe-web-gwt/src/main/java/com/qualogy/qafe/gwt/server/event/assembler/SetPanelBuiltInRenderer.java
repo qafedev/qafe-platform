@@ -31,6 +31,7 @@ import com.qualogy.qafe.gwt.server.helper.ApplicationAssembler;
 import com.qualogy.qafe.gwt.server.ui.assembler.ComponentUIAssembler;
 import com.qualogy.qafe.web.util.SessionContainer;
 
+@Deprecated
 public class SetPanelBuiltInRenderer extends AbstractEventRenderer implements EventAssembler {
 
 	public BuiltInFunctionGVO convert(EventItem eventItem, EventDataGVO eventData,ApplicationContext context, SessionContainer sc) {
