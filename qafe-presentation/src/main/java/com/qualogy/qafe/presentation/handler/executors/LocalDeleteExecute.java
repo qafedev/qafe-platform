@@ -38,22 +38,20 @@ public class LocalDeleteExecute extends AbstractEventItemExecute implements
 		
 		String localDeleteName = localDelete.getName();
 		String localDeleteTarget = localDelete.getTarget();
-		if (Reference.SOURCE_DATASTORE_ID.equals(localDeleteTarget) && DataStore.getDataStore(dataId).containsKey(localDeleteName)) {
+		if (Reference.SOURCE_DATASTORE_ID.equals(localDeleteTarget)) {
 			// target = "pipe"
 			DataStore.getDataStore(dataId).remove(localDeleteName);
 		} else {
-			final String storeId;			
+			String storeId = null;			
 			if (Reference.SOURCE_APP_LOCAL_STORE_ID.equals(localDeleteTarget)) {
 				// target = "user"
 			    storeId = generateLocalStoreId(eventData.getWindowSession(), context, eventData.getWindowId());
 			} else if (Reference.SOURCE_APP_GLOBAL_STORE_ID.equals(localDeleteTarget)) {
 				// target = "global"
 				storeId = generateGlocalStoreId(eventData.getWindowSession(), context);
-			} else {
-			    throw new IllegalStateException("Unknown local delete target: " + localDeleteTarget);
- 			}
+			}
 			
-			if ((localDeleteName != null) && (localDeleteName.length() > 0)) {
+ 			if ((localDeleteName != null) && (localDeleteName.length() > 0)) {
 				ApplicationLocalStore.getInstance().delete(storeId, localDeleteName);
 			} else {			
 				ApplicationLocalStore.getInstance().deleteAll(storeId);				

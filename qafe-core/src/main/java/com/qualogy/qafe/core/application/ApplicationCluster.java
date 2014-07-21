@@ -362,7 +362,7 @@ public class ApplicationCluster {
 	
 	public Boolean isClientSideEventEnabled() {
 	    String clientSideEventEnabled = getConfigurationItem(Configuration.CLIENTSIDE_EVENT_ENABLED);
-        if ((clientSideEventEnabled == null) || Boolean.parseBoolean(clientSideEventEnabled)) {
+        if (Boolean.parseBoolean(clientSideEventEnabled)) {
             return true;
         }
         return false;
