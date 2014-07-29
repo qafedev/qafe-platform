@@ -15,9 +15,12 @@
  */
 package com.qualogy.qafe.gwt.client.vo.functions.dialog;
 
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
+
 public class GenericDialogGVO extends MessageDialogBuiltInGVO {
 
 	private String message;
+	private ParameterGVO messageGVO;
 	private String parent;
 	public final static String TYPE_INFO = "info";
 	public final static String TYPE_ERROR = "error";
@@ -39,6 +42,14 @@ public class GenericDialogGVO extends MessageDialogBuiltInGVO {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public ParameterGVO getMessageGVO() {
+		return messageGVO;
+	}
+
+	public void setMessageGVO(ParameterGVO messageGVO) {
+		this.messageGVO = messageGVO;
 	}
 
 	public String getParent() {

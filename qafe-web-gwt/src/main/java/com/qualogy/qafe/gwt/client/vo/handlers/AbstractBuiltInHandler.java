@@ -67,7 +67,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             }
         } else if (parameterGVO.getReference() != null) {
             final String source = parameterGVO.getSource();
-            final String reference = parameterGVO.getReference();
+            final String reference = resolveVariables(parameterGVO.getReference(), placeHolderValues, eventSessionId);
 
             if (BuiltInFunctionGVO.SOURCE_COMPONENT_ID.equals(source)) {
                 value = getComponentValue(sender, reference, appId, windowId);
