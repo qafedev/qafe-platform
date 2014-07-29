@@ -15,6 +15,8 @@
  */
 package com.qualogy.qafe.gwt.client.ui.renderer.events;
 
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
@@ -48,7 +50,7 @@ public class EventCallbackHandler {
         return hanlder;
     }
 
-    final public static AsyncCallback<?> createEventCallBack(final UIObject sender, final String listenerType,
+    final public static AsyncCallback<?> createEventCallBack(final UIObject sender, final String listenerType, final Map<String, String> mouseInfo,
             final EventItemDataGVO eventItemDataGVO, final String appId, final String windowId,
             final String eventSessionId) {
         ServiceDefTarget endpoint = (ServiceDefTarget) rpcService;
@@ -60,7 +62,7 @@ public class EventCallbackHandler {
 
                 public void onSuccess(Object result) {
                     GEventItemDataObject output = (GEventItemDataObject) result;
-                    EventHandler.getInstance().handleEventItems(sender, listenerType, appId, windowId, eventSessionId, output);
+                    EventHandler.getInstance().handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId, output);
                 }
 
                 public void onFailure(Throwable caught) {
@@ -79,10 +81,10 @@ public class EventCallbackHandler {
         return callback;
     }
 
-    final public static void invokeService(final UIObject sender, final String listenerType, 
+    final public static void invokeService(final UIObject sender, final String listenerType, final Map<String, String> mouseInfo,
             final EventItemDataGVO eventItemDataGVO, final String appId, final String windowId,
             final String eventSessionId) {
-        callback = createEventCallBack(sender, listenerType, eventItemDataGVO, appId, windowId, eventSessionId);
+        callback = createEventCallBack(sender, listenerType, mouseInfo, eventItemDataGVO, appId, windowId, eventSessionId);
         try {
             rpcService.executeEventItem(eventItemDataGVO, callback);
         } catch (Exception e) {

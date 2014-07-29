@@ -19,6 +19,8 @@ import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 
 public class ShowPanelGVO extends BuiltInFunctionGVO {
 
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO";
+	
 	private BuiltInComponentGVO builtInComponentGVO;
 	private ComponentGVO src;
 	private boolean autoHide;
@@ -27,11 +29,6 @@ public class ShowPanelGVO extends BuiltInFunctionGVO {
 	private int top;
 	private String position;
 	
-	@Override
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO";
-	}
-
 	public BuiltInComponentGVO getBuiltInComponentGVO() {
 		return builtInComponentGVO;
 	}
@@ -88,4 +85,8 @@ public class ShowPanelGVO extends BuiltInFunctionGVO {
 		this.position = position;
 	}
 
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 }

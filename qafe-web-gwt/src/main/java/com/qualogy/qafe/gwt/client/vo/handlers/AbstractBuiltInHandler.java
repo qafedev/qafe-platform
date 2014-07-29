@@ -21,13 +21,16 @@ import java.util.Map;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.user.client.ui.Widget;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
+import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
@@ -259,6 +262,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return RendererHelper.isNamedComponent(uiObject);
     }
 
+    protected UIObject renderComponent(ComponentGVO componentGVO, String appId, String windowId, String eventSessionId) {
+    	return AnyComponentRenderer.getInstance().render(componentGVO, eventSessionId, windowId, appId);    	
+    }
+    
     protected void log(String message) {
         ClientApplicationContext.getInstance().log(message);
     }

@@ -15,6 +15,8 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
+import java.util.Map;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
@@ -28,7 +30,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 public class OpenWindowHandler extends AbstractBuiltInHandler {
 
     // CHECKSTYLE.OFF: CyclomaticComplexity
-    public boolean handleBuiltIn(UIObject sender, String listenerType, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
+    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
         if (builtInFunctionGVO instanceof OpenWindowGVO) {
             OpenWindowGVO openWindow = (OpenWindowGVO) builtInFunctionGVO;
             if (openWindow.getWindow() != null && openWindow.getWindow().length() != 0) {
