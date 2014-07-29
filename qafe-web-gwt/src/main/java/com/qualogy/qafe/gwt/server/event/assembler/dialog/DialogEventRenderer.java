@@ -25,7 +25,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO;
 import com.qualogy.qafe.gwt.server.event.assembler.AbstractEventRenderer;
 import com.qualogy.qafe.gwt.server.event.assembler.EventAssembler;
 import com.qualogy.qafe.web.util.SessionContainer;
-
+@Deprecated
 public class DialogEventRenderer extends AbstractEventRenderer implements EventAssembler {
 
 	public BuiltInFunctionGVO convert(EventItem eventItem, EventDataGVO eventData, ApplicationContext context, SessionContainer sc) {

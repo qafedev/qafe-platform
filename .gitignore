@@ -71,3 +71,8 @@ qafe-webapps/qafe-gwt-weblogic-webapp/.settings
 qafe-webapps/qafe-gwt-weblogic-webapp/target
 qafe-webapps/target
 /target
+qafe-mobile-gwt/.classpath
+qafe-mobile-gwt/.project
+qafe-mobile-gwt/.settings/.jsdtscope
+.settings
+qafe-webapps/.project
