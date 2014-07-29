@@ -24,14 +24,13 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.table.client.overrides.FlexTable;
 import com.qualogy.qafe.gwt.client.component.ShowPanelComponent;
-import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
-import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.handlers.BuiltinHandlerHelper;
 
+@Deprecated
 public class ShowPanelExecute implements ExecuteCommand {
 
 	private static final Object CENTER_POSITION = "center";
