@@ -224,8 +224,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     protected void storeData(String dataId, String name, Object data) {
         DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
         dataStorage.storeData(dataId, name, data);
-
-        log("dataId1=" + dataId + " - " + name + "=" + data);
+        log(dataId, name, data);
     }
 
     protected Object getData(String dataId, String name) {
@@ -259,6 +258,14 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return RendererHelper.isNamedComponent(uiObject);
     }
 
+    protected void log(String dataId, String name, Object data) {
+    	String logMessage = "dataId=" + dataId + " - " + name;
+    	if (data != null) {
+    		logMessage += "=" + data.toString();
+    	}
+        log(logMessage);
+    }
+    
     protected void log(String message) {
         ClientApplicationContext.getInstance().log(message);
     }

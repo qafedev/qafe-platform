@@ -18,6 +18,8 @@ package com.qualogy.qafe.gwt.client.vo.functions.dialog;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class GenericDialogGVO extends MessageDialogBuiltInGVO {
+	
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO";
 
 	private String message;
 	private ParameterGVO messageGVO;
@@ -60,8 +62,8 @@ public class GenericDialogGVO extends MessageDialogBuiltInGVO {
 		this.parent = parent;
 	}
 
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO";
-	}
-
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
 }
