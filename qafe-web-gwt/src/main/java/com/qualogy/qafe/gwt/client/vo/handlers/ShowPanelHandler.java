@@ -15,7 +15,6 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,9 +42,10 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
     }
     
     private void showPanel(ShowPanelGVO showPanelGVO, Map<String, String> mouseInfo, String appId, String windowId, String eventSessionId) {
-    	closeOpenedPanelDefinition(showPanelGVO, appId, windowId, eventSessionId);
-		
     	final ComponentGVO panelDefGVO = showPanelGVO.getSrc();
+    	final String panelDefId = panelDefGVO.getId();
+    	BuiltinHandlerHelper.closeOpenedPanelDefinition(panelDefId, appId, windowId, eventSessionId);
+    	
     	final boolean autoHide = showPanelGVO.isAutoHide();
     	final boolean modal = showPanelGVO.isModal();    	
     	int left = showPanelGVO.getLeft();
@@ -82,8 +82,7 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
 		panel.setWidget(1, 0, panelDef);
 		showPanel.setWidget(panel);
 		
-		String panelDefId = panelDefGVO.getId();
-		String panelDefKey = generatePanelDefinitionKey(panelDefId, appId, windowId);
+		String panelDefKey = BuiltinHandlerHelper.generatePanelDefinitionKey(panelDefId, appId, windowId);
 		String windowKey =  RendererHelper.generateId(windowId, windowId, appId);
 		showPanel.setId(panelDefKey);
 		showPanel.setWindow(windowId);		
@@ -102,21 +101,6 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
 		}		
     }
     
-    private void closeOpenedPanelDefinition(ShowPanelGVO showPanelGVO, String appId, String windowId, String eventSessionId) {
-		// We have to make sure that all other showPanels using the same panel-definition is cleared
-    	String panelDefinitionKey = null; //generatePanelDefinitionKey(panelDefinitionId, appId, windowId, eventSessionId);
-		List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(panelDefinitionKey);
-		if(uiObjects != null){
-			UIObject uiObject = uiObjects.iterator().next();
-			if (uiObject instanceof ShowPanelComponent) {
-				ShowPanelComponent showPanelComponent = (ShowPanelComponent)uiObject;
-				
-				// This will call showPanelComponent.onDetach()
-				showPanelComponent.hide();
-			}
-		}    	
-    }
-    
 	private void handleMask(ShowPanelGVO showPanelGVO, String panelDefKey, String windowKey, String windowId) {
 		BuiltinHandlerHelper.handleMask(showPanelGVO, panelDefKey, windowKey, windowId);
 	}
@@ -128,8 +112,4 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
 	private void handleSize(ShowPanelGVO showPanelGVO, ShowPanelComponent showPanel, UIObject container) {
 		BuiltinHandlerHelper.handleSize(showPanelGVO, showPanel, container);
 	}
-	
-	private String generatePanelDefinitionKey(String panelDefinitionId, String appId, String windowId) {
-    	return "showPanel_" + RendererHelper.generateId(panelDefinitionId, windowId, appId);
-    }
 }

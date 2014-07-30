@@ -17,6 +17,8 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class ClosePanelGVO extends BuiltInFunctionGVO {
 
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO";
+	
 	private BuiltInComponentGVO builtInComponentGVO;
 	private String ref;
 	
@@ -36,7 +38,6 @@ public class ClosePanelGVO extends BuiltInFunctionGVO {
 
 	@Override
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO";
+		return CLASS_NAME;
 	}
-
 }
