@@ -729,4 +729,23 @@ public class BuiltinHandlerHelper {
 			showPanel.setWidth(width);
 		}
 	}
+    
+	public static String generatePanelDefinitionKey(String panelDefId, String appId, String windowId) {
+    	return "showPanel_" + RendererHelper.generateId(panelDefId, windowId, appId);
+    }
+	
+	public static void closeOpenedPanelDefinition(String panelDefId, String appId, String windowId, String eventSessionId) {
+		// We have to make sure that all other showPanels using the same panel-definition is cleared
+    	String panelDefinitionKey = generatePanelDefinitionKey(panelDefId, appId, windowId);
+		List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(panelDefinitionKey);
+		if(uiObjects != null){
+			UIObject uiObject = uiObjects.iterator().next();
+			if (uiObject instanceof ShowPanelComponent) {
+				ShowPanelComponent showPanelComponent = (ShowPanelComponent)uiObject;
+				
+				// This will call showPanelComponent.onDetach()
+				showPanelComponent.hide();
+			}
+		}    	
+    }	
 }
