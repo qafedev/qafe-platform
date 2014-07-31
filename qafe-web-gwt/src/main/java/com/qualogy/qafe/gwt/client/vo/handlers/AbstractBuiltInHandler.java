@@ -21,7 +21,6 @@ import java.util.Map;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
-import com.google.gwt.user.client.ui.Widget;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
@@ -234,7 +233,17 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
         return dataStorage.getData(dataId, name);
     }
-
+    
+    protected void removeData(String dataId) {
+        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
+        dataStorage.removeData(dataId);
+    }
+    
+    protected void removeData(String dataId, String name) {
+        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
+        dataStorage.removeData(dataId, name);
+    }
+    
     protected String generateDataId(String sourceOrTarget, String appId, String windowId,
             String eventSessionId) {
         if (BuiltInFunctionGVO.SOURCE_DATASTORE_ID.equals(sourceOrTarget)) {
