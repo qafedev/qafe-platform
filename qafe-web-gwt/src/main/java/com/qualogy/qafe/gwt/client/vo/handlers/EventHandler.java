@@ -34,6 +34,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ToggleGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
@@ -59,6 +60,7 @@ public class EventHandler {
         BUILTIN_MAP.put(SetPanelGVO.CLASS_NAME, new SetPanelHandler());
         BUILTIN_MAP.put(ShowPanelGVO.CLASS_NAME, new ShowPanelHandler());
         BUILTIN_MAP.put(ClosePanelGVO.CLASS_NAME, new ClosePanelHandler());
+        BUILTIN_MAP.put(ToggleGVO.CLASS_NAME, new ToggleHandler());
     }
 
     public static EventHandler getInstance() {

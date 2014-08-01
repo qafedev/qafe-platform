@@ -23,11 +23,24 @@ import com.qualogy.qafe.bind.commons.type.Parameter;
 import com.qualogy.qafe.bind.commons.type.Reference;
 import com.qualogy.qafe.bind.commons.type.Value;
 import com.qualogy.qafe.bind.core.messages.PlaceHolder;
+import com.qualogy.qafe.bind.presentation.event.Component;
 import com.qualogy.qafe.bind.presentation.event.function.SetValueMapping;
+import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractEventItemAssembler implements EventItemAssembler {
     
+	protected BuiltInComponentGVO assembleBuiltInComponent(Component component) {
+        if (component == null) {
+            return null;
+        }
+		
+		BuiltInComponentGVO builtInComponentGVO = new BuiltInComponentGVO();
+		builtInComponentGVO.setComponentId(component.getComponentId());
+		builtInComponentGVO.setComponentName(component.getComponentName());
+		return builtInComponentGVO;		
+	}
+	
     protected ParameterGVO assembleParameter(Parameter parameter) {
         if (parameter == null) {
             return null;
