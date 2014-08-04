@@ -86,6 +86,7 @@ import com.qualogy.qafe.gwt.client.component.QRootPanel;
 import com.qualogy.qafe.gwt.client.component.QSuggestBox;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.factory.MainFactoryActions;
+import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataI;
@@ -374,7 +375,9 @@ public class EventFactory {
 						ClientApplicationContext.getInstance().fireWindowClose(uuid, windowGVO.getId());
 						ClientApplicationContext.getInstance().getWindows().remove(sender);
 						ClientApplicationContext.getInstance().removeFromMapOfWindows(uuid, windowGVO.getId());
-						MainFactoryActions.removeWindowsEventData(windowSession, windowGVO.getId());
+						if (!ClientApplicationContext.getInstance().isClientSideEventEnabled()) {
+							MainFactoryActions.removeWindowsEventData(windowSession, windowGVO.getId());
+						}
 						manageGloballyStoredData(windowGVO, windowSession);
 					}
 
@@ -393,7 +396,9 @@ public class EventFactory {
 						}
 						if(removeGloballyStoredData) { // Will happen when last window is closed.
 							// Removing data stored with target = "global".
-							MainFactoryActions.removeGloballyStoredData(windowSession, windowGVO.getContext());
+							if (!ClientApplicationContext.getInstance().isClientSideEventEnabled()) {
+								MainFactoryActions.removeGloballyStoredData(windowSession, windowGVO.getContext());
+							}
 						}
 					}
 				});

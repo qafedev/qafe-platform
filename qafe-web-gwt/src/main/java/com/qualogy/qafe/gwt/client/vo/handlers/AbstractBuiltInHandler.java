@@ -258,7 +258,11 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     
     protected String getUUId(UIObject sender) {
     	return RendererHelper.getUUId(sender);
-    }    
+    }
+    
+    protected String getAppId(final UIObject sender) {
+        return RendererHelper.getComponentContext(sender);
+    }
 
     protected boolean isNamedComponent(final UIObject uiObject) {
         return RendererHelper.isNamedComponent(uiObject);

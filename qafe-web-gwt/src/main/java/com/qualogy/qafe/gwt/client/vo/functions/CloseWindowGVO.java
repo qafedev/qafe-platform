@@ -18,10 +18,10 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class CloseWindowGVO extends OpenWindowGVO  {
 
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO";	
 	
-
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO";
+		return CLASS_NAME;
 	}
 
 }
