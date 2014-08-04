@@ -30,6 +30,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
@@ -61,6 +62,7 @@ public class EventHandler {
         BUILTIN_MAP.put(ShowPanelGVO.CLASS_NAME, new ShowPanelHandler());
         BUILTIN_MAP.put(ClosePanelGVO.CLASS_NAME, new ClosePanelHandler());
         BUILTIN_MAP.put(ToggleGVO.CLASS_NAME, new ToggleHandler());
+        BUILTIN_MAP.put(LogFunctionGVO.CLASS_NAME, new LogHandler());
     }
 
     public static EventHandler getInstance() {

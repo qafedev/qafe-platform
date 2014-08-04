@@ -21,7 +21,6 @@ import java.util.Map;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
-import com.google.gwt.user.client.ui.Widget;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
@@ -256,6 +255,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     protected String getComponentName(final UIObject uiObject) {
         return RendererHelper.getNamedComponentName(uiObject);
     }
+    
+    protected String getUUId(UIObject sender) {
+    	return RendererHelper.getUUId(sender);
+    }    
 
     protected boolean isNamedComponent(final UIObject uiObject) {
         return RendererHelper.isNamedComponent(uiObject);

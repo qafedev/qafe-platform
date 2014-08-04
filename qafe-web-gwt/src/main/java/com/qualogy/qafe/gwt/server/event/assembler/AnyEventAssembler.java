@@ -25,6 +25,7 @@ import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
 import com.qualogy.qafe.bind.presentation.event.function.LocalStore;
+import com.qualogy.qafe.bind.presentation.event.function.LogFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
 import com.qualogy.qafe.bind.presentation.event.function.SetPanel;
 import com.qualogy.qafe.bind.presentation.event.function.SetValue;
@@ -49,6 +50,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(ShowPanel.class, new ShowPanelAssembler());
         ASSEMBLER_MAP.put(ClosePanel.class, new ClosePanelAssembler());
         ASSEMBLER_MAP.put(Toggle.class, new ToggleAssembler());
+        ASSEMBLER_MAP.put(LogFunction.class, new LogAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {

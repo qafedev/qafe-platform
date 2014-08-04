@@ -531,6 +531,10 @@ public class RendererHelper {
 			}
 		}
 	}
+	
+	public static String getUUId(UIObject ui) {
+		return DOM.getElementProperty(ui.getElement(), "uuid");
+	}
 
 	public static String getComponentContext(UIObject ui) {
 		return DOM.getElementAttribute(ui.getElement(), "app-context");
