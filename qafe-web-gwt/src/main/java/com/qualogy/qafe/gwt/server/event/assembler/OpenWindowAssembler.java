@@ -15,14 +15,17 @@
  */
 package com.qualogy.qafe.gwt.server.event.assembler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.qualogy.qafe.bind.commons.type.Parameter;
-import com.qualogy.qafe.bind.commons.type.Value;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class OpenWindowAssembler extends AbstractEventItemAssembler {
 
@@ -36,26 +39,26 @@ public class OpenWindowAssembler extends AbstractEventItemAssembler {
     }
     
     private void assembleAttributes(OpenWindowGVO eventItemGVO, OpenWindow eventItem, Event event, ApplicationContext applicationContext) {
-        String appId = applicationContext.getId().toString();
-        eventItemGVO.setUuid(appId);
-        eventItemGVO.setContext(appId);
+        ParameterGVO windowGVO = assembleParameter(eventItem.getWindow());
+        ParameterGVO urlGVO = assembleParameter(eventItem.getUrl());
+        ParameterGVO titleGVO = assembleParameter(eventItem.getTitle());
+        ParameterGVO paramsGVO = assembleParameter(eventItem.getParams());
         
-        String invokeWindowId = eventItem.getWindowData();
-        if (invokeWindowId == null) {
-            Parameter reference = eventItem.getWindow();
-            if (reference != null) {
-                Value value = reference.getValue();
-                if (value != null) {
-                    invokeWindowId = value.getStaticValue();        
-                }
-            }
-        }
-        eventItemGVO.setWindow(invokeWindowId);
-        
-        eventItemGVO.setUrl(eventItem.getUrlData());      
-        eventItemGVO.setTitle(eventItem.getTitleData());
-        eventItemGVO.setParams(eventItem.getParamsData());
+        eventItemGVO.setWindowGVO(windowGVO);
+        eventItemGVO.setUrlGVO(urlGVO);      
+        eventItemGVO.setTitleGVO(titleGVO);
+        eventItemGVO.setParamsGVO(paramsGVO);
         eventItemGVO.setExternal(eventItem.getExternal());
         eventItemGVO.setPlacement(eventItem.getPlacement());   
+        
+        List<Parameter> dataParams = eventItem.getDataParameters();
+        if (dataParams != null) {
+            List<ParameterGVO> dataParamGVOs = new ArrayList<ParameterGVO>();
+            for (Parameter dataParam : dataParams) {
+                ParameterGVO dataParamGVO = assembleParameter(dataParam);
+                dataParamGVOs.add(dataParamGVO);
+            }
+            eventItemGVO.setDataParamGVOList(dataParamGVOs);
+        }
     }
 }
