@@ -24,7 +24,6 @@ import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
 
 public class StoreClearAssembler extends AbstractEventItemAssembler {
 
-    @Override
     public final BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
         StoreClearGVO eventItemGVO = null;
         if (eventItem instanceof LocalDelete) {

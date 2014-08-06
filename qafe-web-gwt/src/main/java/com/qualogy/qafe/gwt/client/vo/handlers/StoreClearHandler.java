@@ -23,7 +23,6 @@ import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
 
 public class StoreClearHandler extends AbstractBuiltInHandler {
 
-	@Override
 	public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId,
 			String windowId, String eventSessionId) {
 		StoreClearGVO storeClear = (StoreClearGVO)builtInFunctionGVO;
@@ -31,7 +30,7 @@ public class StoreClearHandler extends AbstractBuiltInHandler {
 		return false;
 	}
 	
-	   /**
+	/**
      * Clears the value of a store
      * 
      * @param name the name of the store to clear

@@ -15,23 +15,15 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.gwt.mosaic.ui.client.WindowPanel;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.component.DialogComponent;
 import com.qualogy.qafe.gwt.client.component.QWindowPanel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
-import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
-import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.execute.FunctionsExecutor;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class LogHandler extends AbstractBuiltInHandler {
