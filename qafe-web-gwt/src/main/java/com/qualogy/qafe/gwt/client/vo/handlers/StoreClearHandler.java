@@ -40,12 +40,13 @@ public class StoreClearHandler extends AbstractBuiltInHandler {
         String name = storeClearGVO.getName();
         String target = storeClearGVO.getTarget();
         String dataId = generateDataId(target, appId, windowId, eventSessionId);
-        if ((dataId != null) && (dataId.length() > 0)) {
-            removeData(dataId, name);
-            log("Cleared data for dataId=" + dataId + " name="+name);
-        } else {            
+        
+        if (name == null || name.length() == 0) {
             removeData(dataId);
-            log("Cleared all (locally) stored data for dataId="+dataId);
+            log("Cleared all stored data for dataId=" + dataId + " target=" + target);
+        } else {
+            removeData(dataId, name);
+            log("Cleared data for dataId=" + dataId + " name=" + name + " target="+target);
         }
     }
 }
