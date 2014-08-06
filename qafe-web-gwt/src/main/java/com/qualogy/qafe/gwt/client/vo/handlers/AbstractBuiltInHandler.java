@@ -233,7 +233,17 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
         return dataStorage.getData(dataId, name);
     }
-
+    
+    protected void removeData(String dataId) {
+        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
+        dataStorage.removeData(dataId);
+    }
+    
+    protected void removeData(String dataId, String name) {
+        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
+        dataStorage.removeData(dataId, name);
+    }
+    
     protected String generateDataId(String sourceOrTarget, String appId, String windowId,
             String eventSessionId) {
         if (BuiltInFunctionGVO.SOURCE_DATASTORE_ID.equals(sourceOrTarget)) {

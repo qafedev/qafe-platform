@@ -27,6 +27,7 @@ import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
@@ -56,6 +57,7 @@ public class EventHandler {
     private EventHandler() {
         BUILTIN_MAP.put(OpenWindowGVO.CLASS_NAME, new OpenWindowHandler());
         BUILTIN_MAP.put(LocalStoreGVO.CLASS_NAME, new LocalStoreHandler());
+        BUILTIN_MAP.put(StoreClearGVO.CLASS_NAME, new StoreClearHandler());
         BUILTIN_MAP.put(BusinessActionRefGVO.CLASS_NAME, new BusinessActionRefHandler());
         BUILTIN_MAP.put(GenericDialogGVO.CLASS_NAME, new GenericDialogHandler());
         BUILTIN_MAP.put(SetValueGVO.CLASS_NAME, new SetValueHandler());
