@@ -5,49 +5,49 @@
 | activation-1.0.2.jar| Oracle Binary Code License | http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html |
 | antlr-2.7.6.jar |  BSD License | http://www.antlr.org/license.html |
 | aopalliance-1.0.jar | Public Domain | http://aopalliance.sourceforge.net/ |
-| api-3.0.0.jar | Apache 2.0 (QAFE) | 
+| api-3.0.0.jar | Apache Licence 2.0 | QAFE | 
 | asm-3.3.jar   | Project License/INRIA France| http://asm.ow2.org/license.html |
 | asm-attrs-1.5.3.jar | Project License/INRIA France | http://asm.ow2.org/asmdex-license.html |
 | aspectjrt-1.6.2.jar | EPL v1.0 | https://github.com/ChristianWulf/CSharpKDMDiscoverer/blob/master/lib/aspectjrt-1.6.12.LICENSE |
-|avalon-framework-4.1.3.jar | Apache 2.0 | http://avalon.apache.org/closed.html|
-|avalon-framework-api-4.3.1.jar | Apache 2.0 | http://avalon.apache.org/closed.html|
-|avalon-framework-impl-4.3.1.jar| Apache 2.0 |  http://avalon.apache.org/closed.html|
-|batik-anim-1.7.jar | Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-awt-util-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-bridge-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-css-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-dom-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-ext-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-extension-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-gvt-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-parser-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-script-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-svg-dom-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-svggen-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-transcoder-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-util-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
-|batik-xml-1.7.jar| Apache 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|avalon-framework-4.1.3.jar | Apache License 2.0 | http://avalon.apache.org/closed.html|
+|avalon-framework-api-4.3.1.jar | Apache License 2.0 | http://avalon.apache.org/closed.html|
+|avalon-framework-impl-4.3.1.jar| Apache License 2.0 |  http://avalon.apache.org/closed.html|
+|batik-anim-1.7.jar | Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-awt-util-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-bridge-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-css-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-dom-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-ext-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-extension-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-gvt-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-parser-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-script-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-svg-dom-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-svggen-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-transcoder-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-util-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
+|batik-xml-1.7.jar| Apache License 2.0 | http://xmlgraphics.apache.org/batik/license.html|
 |c3p0-0.9.1.jar | LGPL/EPL| http://www.mchange.com/projects/c3p0/ |
-|cglib-2.1_3.jar | Apache v1.1| http://cglib.sourceforge.net/license.html|
+|cglib-2.1_3.jar | Apache License 1.1| http://cglib.sourceforge.net/license.html|
 |client-1.0.0.jar | QAFE Binaries| QAFE |
 |common-1.0.0.jar | QAFE Binaries| QAFE |
-|commons-codec-1.3.jar | Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-collections-3.2.1.jar| | Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-dbcp-1.2.2.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-discovery-20040218.194635.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-fileupload-1.2.1.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-httpclient-3.1.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-io-1.3.1.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-lang-2.3.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-lang3-3.0.1.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-logging-1.1.jar| Apache v2.0 | http://www.apache.org/licenses/| 
-|commons-pool-1.3.jar| Apache v2.0 | http://www.apache.org/licenses/| 
+|commons-codec-1.3.jar | Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-collections-3.2.1.jar| | Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-dbcp-1.2.2.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-discovery-20040218.194635.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-fileupload-1.2.1.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-httpclient-3.1.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-io-1.3.1.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-lang-2.3.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-lang3-3.0.1.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-logging-1.1.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
+|commons-pool-1.3.jar| Apache License 2.0 | http://www.apache.org/licenses/| 
 |css-all-1.0beta.jar | QAFE Binaries |QAFE |
 |dom4j-1.6.1.jar | BSD License |http://dom4j.sourceforge.net/dom4j-1.6.1/license.html |
-|ehcache-1.2.3.jar |Apache 2.0 | http://ehcache.org/about/license |
-|ehcache-core-2.5.1.jar|Apache 2.0 | http://ehcache.org/about/license |
-|ehcache-terracotta-2.5.1.jar|Apache 2.0 | http://ehcache.org/about/license |
-|fop-0.95-1.jar | Apache 2.0 | http://xmlgraphics.apache.org/fop/license.html|
+|ehcache-1.2.3.jar |Apache License 2.0 | http://ehcache.org/about/license |
+|ehcache-core-2.5.1.jar|Apache License 2.0 | http://ehcache.org/about/license |
+|ehcache-terracotta-2.5.1.jar|Apache License 2.0 | http://ehcache.org/about/license |
+|fop-0.95-1.jar | Apache License 2.0 | http://xmlgraphics.apache.org/fop/license.html|
 |geronimo-spec-jta-1.0.1B-rc4.jar| Apache License 2.0|  http://vmgump.apache.org/gump/public/jta/geronimo-spec-jta/index.html|
 |geronimo-stax-api_1.0_spec-1.0.jar|Apache License 2.0|  http://vmgump.apache.org/gump/public/jta/geronimo-spec-jta/index.html|
 |gson-2.1.jar | Apache License 2.0 | https://code.google.com/p/google-gson/source/browse/trunk/gson/LICENSE?r=369 |
@@ -72,7 +72,7 @@
 | log4j-1.2.13.jar | Apache License 2.0 | https://logging.apache.org/log4j/1.2/license.html|
 |logkit-1.0.1.jar  | Apache License 2.0 | https://logging.apache.org/log4j/1.2/license.html |
 |mail-1.4.jar      | CDDL, GPLv2 | https://java.net/projects/javamail/pages/License|
-|ojdbc5-11.1.0.7.0.jar | Oracle License | http://www.oracle.com/technetwork/licenses/distribution-license-152002.html |
+cen|ojdbc5-11.1.0.7.0.jar | Oracle License | http://www.oracle.com/technetwork/licenses/distribution-license-152002.html |
 |opencsv-2.0.jar | Apache License 2.0 | http://opencsv.sourceforge.net/license.html|
 |orai18n-11.2.0.3.jar |Oracle License | http://www.oracle.com/technetwork/licenses/distribution-license-152002.html |
 |poi-3.6.jar | Apache License 2.0 | http://www.apache.org/licenses/ |
