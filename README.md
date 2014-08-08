@@ -1,7 +1,8 @@
 qafe-platform
 =============
 
-
+| Library      | Summary  | Link |
+|---------------|------|---------|
 | activation-1.0.2.jar| Oracle Binary Code License | http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html |
 
 
