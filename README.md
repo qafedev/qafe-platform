@@ -4,9 +4,6 @@ qafe-platform
 | Library      | Summary  | Link |
 |---------------|------|---------|
 | activation-1.0.2.jar| Oracle Binary Code License | http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html |
-
-
-
 | antlr-2.7.6.jar |  BSD License | http://www.antlr.org/license.html |
 | aopalliance-1.0.jar | Public Domain | http://aopalliance.sourceforge.net/ |
 | api-3.0.0.jar | Apache 2.0 (QAFE) | 
