@@ -31,71 +31,110 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
-public class OpenWindowHandler extends AbstractBuiltInHandler {
-    
+/**
+ * 
+ */
+public final class OpenWindowHandler extends AbstractBuiltInHandler {
+
+    private static final Map<String, String> NORMALIZE_OPTIONS = new HashMap<String, String>();
+
+    static {
+        NORMALIZE_OPTIONS.put("yes", "yes");
+        NORMALIZE_OPTIONS.put("true", "yes");
+        NORMALIZE_OPTIONS.put("1", "yes");
+        NORMALIZE_OPTIONS.put("no", "no");
+        NORMALIZE_OPTIONS.put("false", "no");
+        NORMALIZE_OPTIONS.put("0", "no");
+    }
+
     private static final String WIDTH = "width";
+
     private static final String HEIGHT = "height";
+
     private static final String LEFT = "left";
+
     private static final String TOP = "top";
+
     private static final String SCREEN_X = "screenX";
+
     private static final String SCREEN_Y = "screenY";
+
     private static final String MENUBAR = "menubar";
+
     private static final String SCROLLBARS = "scrollbars";
+
     private static final String TOOLBAR = "toolbar";
+
     private static final String STATUS = "status";
+
     private static final String RESIZABLE = "resizable";
+
     private static final String RESIZE = "resize";
+
     private static final String MODAL = "modal";
+
     private static final String SCREENX = "screenX";
+
     private static final String SCREENY = "screenY";
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        OpenWindowGVO openWindowGVO = (OpenWindowGVO) builtInFunctionGVO;
+    public boolean handleBuiltIn(final UIObject sender, final String listenerType,
+            final Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInFunctionGVO,
+            final String appId, final String windowId, final String eventSessionId) {
+        final OpenWindowGVO openWindowGVO = (OpenWindowGVO) builtInFunctionGVO;
         showWindow(sender, openWindowGVO, appId, windowId, eventSessionId);
         return false;
     }
-    
-    private void showWindow(UIObject sender, OpenWindowGVO openWindowGVO, String appId, String windowId, String eventSessionId) {
+
+    private void showWindow(final UIObject sender, final OpenWindowGVO openWindowGVO, final String appId,
+            final String windowId, final String eventSessionId) {
         if (openWindowGVO.getWindowGVO() != null) {
             openWindow(sender, openWindowGVO, appId, windowId, eventSessionId);
         } else if (openWindowGVO.getUrlGVO() != null) {
             openUrl(sender, openWindowGVO, appId, windowId, eventSessionId);
-        }    
+        }
     }
-    
-    private void openWindow(UIObject sender, OpenWindowGVO openWindowGVO, String appId, String windowId, String eventSessionId) {
-        String openWindowId = (String) getValue(sender, openWindowGVO.getWindowGVO(), appId, windowId, eventSessionId);
+
+    private void openWindow(final UIObject sender, final OpenWindowGVO openWindowGVO, final String appId,
+            final String windowId, final String eventSessionId) {
+        final String openWindowId =
+            (String) getValue(sender, openWindowGVO.getWindowGVO(), appId, windowId, eventSessionId);
         closeOpenedWindow(openWindowId, appId, appId);
-        List<ParameterGVO> dataParamGVOs = openWindowGVO.getDataParamGVOList();
+        final List<ParameterGVO> dataParamGVOs = openWindowGVO.getDataParamGVOList();
         storeDataParams(sender, openWindowId, dataParamGVOs, appId, windowId, eventSessionId);
         MainFactoryActions.getUIByUUID(appId, openWindowId);
     }
-    
-    private void storeDataParams(UIObject sender, String openWindowId, List<ParameterGVO> dataParamGVOs, String appId, String windowId, String eventSessionId) {
+
+    private void storeDataParams(final UIObject sender, final String openWindowId,
+            final List<ParameterGVO> dataParamGVOs, final String appId, final String windowId,
+            final String eventSessionId) {
         if (dataParamGVOs == null) {
             return;
         }
-        String target = BuiltInFunctionGVO.SOURCE_APP_LOCAL_STORE_ID;
-        for (ParameterGVO dataParamGVO : dataParamGVOs) {
-            String dataId = generateDataId(target, appId, openWindowId, eventSessionId);
-            String name = dataParamGVO.getName();
-            Object value = getValue(sender, dataParamGVO, appId, windowId, eventSessionId);
+        final String target = BuiltInFunctionGVO.SOURCE_APP_LOCAL_STORE_ID;
+        for (final ParameterGVO dataParamGVO : dataParamGVOs) {
+            final String dataId = generateDataId(target, appId, openWindowId, eventSessionId);
+            final String name = dataParamGVO.getName();
+            final Object value = getValue(sender, dataParamGVO, appId, windowId, eventSessionId);
             storeData(dataId, name, value);
         }
     }
-    
-    private void openUrl(UIObject sender, OpenWindowGVO openWindowGVO, String appId, String windowId, String eventSessionId) {
-        String windowUrl = (String) getValue(sender, openWindowGVO.getUrlGVO(), appId, windowId, eventSessionId);
-        String windowParams = (String) getValue(sender, openWindowGVO.getParamsGVO(), appId, windowId, eventSessionId);
-        Map<String, String> paramMap = parseParams(windowParams);
-        
+
+    private void openUrl(final UIObject sender, final OpenWindowGVO openWindowGVO, final String appId,
+            final String windowId, final String eventSessionId) {
+        final String windowUrl =
+            (String) getValue(sender, openWindowGVO.getUrlGVO(), appId, windowId, eventSessionId);
+        final String windowParams =
+            (String) getValue(sender, openWindowGVO.getParamsGVO(), appId, windowId, eventSessionId);
+        final Map<String, String> paramMap = parseParams(windowParams);
+
         if (!hasPosition(paramMap)) {
             calculatePosition(paramMap, openWindowGVO);
         }
         if (openWindowGVO.getExternal()) {
             openUrlExternal(windowUrl, paramMap);
         } else {
-            String windowTitle = (String) getValue(sender, openWindowGVO.getTitleGVO(), appId, windowId, eventSessionId);
+            String windowTitle =
+                (String) getValue(sender, openWindowGVO.getTitleGVO(), appId, windowId, eventSessionId);
             if (windowTitle == null) {
                 windowTitle = windowUrl;
             } else {
@@ -105,63 +144,63 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
     }
 
-    private void openUrlInternal(String title, String url, Map<String, String> paramMap) {
-        boolean resizable = isResizable(paramMap, true);
-        boolean modal = isModal(paramMap, false);
-        boolean centered = false;  
-        int height = getHeight(paramMap, 450);
-        int width = getWidth(paramMap, 600);
-        int left = getLeft(paramMap, 0);
-        int top = getTop(paramMap, 0);
+    private void openUrlInternal(final String title, final String url, final Map<String, String> paramMap) {
+        final boolean resizable = isResizable(paramMap, true);
+        final boolean modal = isModal(paramMap, false);
+        final boolean centered = false;
+        final int height = getHeight(paramMap, 450);
+        final int width = getWidth(paramMap, 600);
+        final int left = getLeft(paramMap, 0);
+        final int top = getTop(paramMap, 0);
         MainFactory.createWindowWithUrl(title, url, width, height, resizable, centered, top, left, modal);
         ClientApplicationContext.getInstance().internalWindowCount++;
     }
-    
-    private void openUrlExternal(String url, Map<String, String> paramMap) {           
+
+    private void openUrlExternal(final String url, final Map<String, String> paramMap) {
         // Set the title to "" when open a window externally, the title will not be shown anyway,
-        // in IE this will give an exception when title is not empty          
-        String title = "";
-        String features = toCommaSeperated(paramMap);
+        // in IE this will give an exception when title is not empty
+        final String title = "";
+        final String features = toCommaSeperated(paramMap);
         Window.open(url, title, features);
         ClientApplicationContext.getInstance().externalWindowCount++;
     }
-    
-    private void closeOpenedWindow(String windowId, String context, String uuid) {
+
+    private void closeOpenedWindow(final String windowId, final String context, final String uuid) {
         if (ClientApplicationContext.getInstance().isMDI()) {
             ClientApplicationContext.getInstance().removeWindow(windowId, context, uuid);
         } else {
             WindowFactory.clearWidgetFromMainPanel();
         }
     }
-    
-    private void calculatePosition(Map<String, String> paramMap, OpenWindowGVO openWindowGVO) {       
-        String placement = openWindowGVO.getPlacement();
-        boolean external = openWindowGVO.getExternal();
-        
+
+    private void calculatePosition(final Map<String, String> paramMap, final OpenWindowGVO openWindowGVO) {
+        final String placement = openWindowGVO.getPlacement();
+        final boolean external = openWindowGVO.getExternal();
+
         if (OpenWindowGVO.PLACEMENT_CASCADE.equals(placement)) {
             calculateCascade(paramMap, external);
         } else if (OpenWindowGVO.PLACEMENT_CENTER_CASCADE.equals(placement)) {
-            calculateCenterCascade(paramMap, external);  
+            calculateCenterCascade(paramMap, external);
         } else if (OpenWindowGVO.PLACEMENT_TILED.equals(placement) && !external) {
             calculateTiled(paramMap);
         }
-    }    
-        
-    private void calculateCascade(Map<String, String> paramMap, boolean external) {
+    }
+
+    private void calculateCascade(final Map<String, String> paramMap, final boolean external) {
         calculateCascadePosition(paramMap, 20, 20, external);
     }
-    
-    private void calculateCenterCascade(Map<String, String> paramMap, boolean external) {
-        int width = getWidth(paramMap, 0);        
-        int height = getHeight(paramMap, 0);
-        int startLeft = ((Window.getClientWidth() - width) /2);
-        int startTop = ((Window.getClientHeight() - height) /2);
+
+    private void calculateCenterCascade(final Map<String, String> paramMap, final boolean external) {
+        final int width = getWidth(paramMap, 0);
+        final int height = getHeight(paramMap, 0);
+        final int startLeft = ((Window.getClientWidth() - width) / 2);
+        final int startTop = ((Window.getClientHeight() - height) / 2);
         calculateCascadePosition(paramMap, startLeft, startTop, external);
     }
-    
-    private void calculateTiled(Map<String, String> paramMap) {
-        int width = getWidth(paramMap, 0);        
-        int height = getHeight(paramMap, 0);
+
+    private void calculateTiled(final Map<String, String> paramMap) {
+        final int width = getWidth(paramMap, 0);
+        final int height = getHeight(paramMap, 0);
         int top = 30;
         int left = 0;
         if (ClientApplicationContext.getInstance().internalWindowCount > 0) {
@@ -197,8 +236,9 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         paramMap.put(LEFT, String.valueOf(left));
         paramMap.put(TOP, String.valueOf(top));
     }
-    
-    private void calculateCascadePosition(Map<String, String> paramMap, int startLeft, int startTop, boolean external) {
+
+    private void calculateCascadePosition(final Map<String, String> paramMap, final int startLeft,
+            final int startTop, final boolean external) {
         int left = startLeft;
         int top = startTop;
         int windowCount = ClientApplicationContext.getInstance().internalWindowCount;
@@ -206,21 +246,21 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
             windowCount = ClientApplicationContext.getInstance().externalWindowCount;
         }
         if (windowCount > 0) {
-            for (int i=0; i<windowCount; i++) {
+            for (int i = 0; i < windowCount; i++) {
                 left = left + 20;
                 top = top + 20;
-            }   
+            }
         }
         paramMap.put(LEFT, String.valueOf(left));
         paramMap.put(TOP, String.valueOf(top));
     }
-    
+
     private String toCommaSeperated(final Map<String, String> paramMap) {
-        StringBuilder sb = new StringBuilder();
-        Iterator<Entry<String, String>> it = paramMap.entrySet().iterator();
+        final StringBuilder sb = new StringBuilder();
+        final Iterator<Entry<String, String>> it = paramMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
-            
+            final Map.Entry<String, String> pairs = it.next();
+
             if (LEFT.equals(pairs.getKey())) {
                 sb.append(SCREENX);
             } else if (TOP.equals(pairs.getKey())) {
@@ -228,7 +268,7 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
             } else {
                 sb.append(pairs.getKey());
             }
-          
+
             sb.append("=");
             sb.append(pairs.getValue());
             if (it.hasNext()) {
@@ -237,105 +277,97 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return sb.toString();
     }
-        
-    private Map<String, String> parseParams(String windowParams) { 
-        Map<String, String> paramMap = new HashMap<String, String>();
+
+    static void addParameter(final Map<String, String> paramMap, final String key, final String value,
+            final String defaultValue) {
+
+        final String checkValue;
+        if ("".equals(value)) {
+            checkValue = null;
+        } else {
+            checkValue = value;
+        }
+
+        String normalizedValue = normalizeParam(checkValue, defaultValue);
+        // Fall-back to source value if normalized to nothing
+        if (normalizedValue == null) {
+            normalizedValue = checkValue;
+        }
+
+        if (normalizedValue != null) {
+            paramMap.put(key, normalizedValue);
+        }
+    }
+
+    private static String normalizeParam(final String value, final String defaultValue) {
+
+        final String normalizedValue = NORMALIZE_OPTIONS.get(value);
+
+        if (normalizedValue == null) {
+            return defaultValue;
+        }
+
+        return normalizedValue;
+    }
+
+    Map<String, String> parseParams(final String windowParams) {
+        final Map<String, String> paramMap = new HashMap<String, String>();
         if (windowParams != null && windowParams.length() != 0) {
-            String[] paramArr = windowParams.split(",");
-            
-            String temp = null;
+            final String[] paramArr = windowParams.split(",");
+
             for (int i = 0; i < paramArr.length; i++) {
+                final String value = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
+
                 if (paramArr[i].indexOf(WIDTH) > -1) {
-                    String width = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    if (width != null) {
-                        paramMap.put(WIDTH, width);
-                    }
+                    addParameter(paramMap, WIDTH, value, null);
                 } else if (paramArr[i].indexOf(HEIGHT) > -1) {
-                    String height = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    if (height != null) {
-                        paramMap.put(HEIGHT, height);
-                    }
+                    addParameter(paramMap, HEIGHT, value, null);
                 } else if (paramArr[i].indexOf(LEFT) > -1) {
-                    String left = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    if (left != null) {
-                        paramMap.put(LEFT, left);
-                    }
+                    addParameter(paramMap, LEFT, value, null);
                 } else if (paramArr[i].indexOf(TOP) > -1) {
-                    String top = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    if (top != null) {
-                        paramMap.put(TOP, top);
-                    }
+                    addParameter(paramMap, TOP, value, null);
                 } else if (paramArr[i].indexOf(MENUBAR) > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String menubar = "no";
-                    if(temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("true") || temp.equals("1")){
-                        menubar = "yes";
-                    }
-                    paramMap.put(MENUBAR, menubar);
+                    addParameter(paramMap, MENUBAR, value, "no");
                 } else if (paramArr[i].indexOf(SCROLLBARS) > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String scrollbars = "no";
-                    if(temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("true") || temp.equals("1")){
-                        scrollbars = "yes";
-                    }
-                    paramMap.put(SCROLLBARS, scrollbars);
+                    addParameter(paramMap, SCROLLBARS, value, "no");
                 } else if (paramArr[i].indexOf(TOOLBAR) > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String toolbar = "no";
-                    if(temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("true") || temp.equals("1")){
-                        toolbar = "yes";
-                    } 
-                    paramMap.put(TOOLBAR, toolbar);
+                    addParameter(paramMap, TOOLBAR, value, "no");
                 } else if (paramArr[i].indexOf(STATUS) > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String status = "no";
-                    if(temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("true") || temp.equals("1")){
-                        status = "yes";
-                    } 
-                    paramMap.put(STATUS, status);
+                    addParameter(paramMap, STATUS, value, "no");
                 } else if (paramArr[i].indexOf(RESIZABLE) > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String resize = "yes";
-                    if(temp.equalsIgnoreCase("no") || temp.equalsIgnoreCase("false") || temp.equals("0")){
-                        resize = "no";
-                    }
-                    paramMap.put(RESIZABLE, resize);
+                    addParameter(paramMap, RESIZABLE, value, "yes");
                 } else if (paramArr[i].indexOf("modal") > -1) {
-                    temp = paramArr[i].substring(paramArr[i].indexOf("=") + 1);
-                    String modal = "No";
-                    if(temp.equalsIgnoreCase("yes") || temp.equalsIgnoreCase("true") || temp.equals("1")){
-                        modal = "yes";
-                    }
-                    paramMap.put(MODAL, modal);
+                    addParameter(paramMap, MODAL, value, "no");
                 }
             }
         }
         return paramMap;
     }
-    
-    private boolean hasPosition(Map<String, String> params) {
-        if ((params.containsKey(LEFT) && params.containsKey(TOP)) || (params.containsKey(SCREEN_X) && params.containsKey(SCREEN_Y))) {
+
+    private boolean hasPosition(final Map<String, String> params) {
+        if ((params.containsKey(LEFT) && params.containsKey(TOP))
+                || (params.containsKey(SCREEN_X) && params.containsKey(SCREEN_Y))) {
             return true;
         }
         return false;
     }
-    
-    private boolean hasAttribute(Map<String, String> map, String key) {
+
+    private boolean hasAttribute(final Map<String, String> map, final String key) {
         if (map.containsKey(key)) {
             return true;
         }
         return false;
     }
-    
-    private String getAttribute(Map<String, String> map, String key) {
+
+    private String getAttribute(final Map<String, String> map, final String key) {
         return map.get(key);
     }
-    
-    private boolean isResizable(Map<String, String> map, boolean defaultValue) {
+
+    private boolean isResizable(final Map<String, String> map, final boolean defaultValue) {
         boolean resizable = true;
         if (hasAttribute(map, RESIZE)) {
-            String resize = getAttribute(map, RESIZE);
-            if(resize.equals("")|| resize.equals("no")){
+            final String resize = getAttribute(map, RESIZE);
+            if (resize.equals("") || resize.equals("no")) {
                 resizable = false;
             }
         } else {
@@ -343,12 +375,12 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return resizable;
     }
-    
-    private boolean isModal(Map<String, String> map, boolean defaultValue) {
+
+    private boolean isModal(final Map<String, String> map, final boolean defaultValue) {
         boolean isModal = false;
         if (hasAttribute(map, MODAL)) {
-            String modal = getAttribute(map, MODAL);
-            if(modal.equals("yes")){
+            final String modal = getAttribute(map, MODAL);
+            if (modal.equals("yes")) {
                 isModal = true;
             }
         } else {
@@ -356,8 +388,8 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return isModal;
     }
-    
-    private int getWidth(Map<String, String> paramMap, int defaultValue) {
+
+    private int getWidth(final Map<String, String> paramMap, final int defaultValue) {
         int width = 0;
         if (hasAttribute(paramMap, WIDTH)) {
             width = Integer.parseInt(getAttribute(paramMap, WIDTH));
@@ -366,8 +398,8 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return width;
     }
-    
-    private int getHeight(Map<String, String> paramMap, int defaultValue) {
+
+    private int getHeight(final Map<String, String> paramMap, final int defaultValue) {
         int height = 0;
         if (hasAttribute(paramMap, HEIGHT)) {
             height = Integer.parseInt(getAttribute(paramMap, HEIGHT));
@@ -376,8 +408,8 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return height;
     }
-    
-    private int getLeft(Map<String, String> paramMap, int defaultValue) {
+
+    private int getLeft(final Map<String, String> paramMap, final int defaultValue) {
         int left = 0;
         if (hasAttribute(paramMap, LEFT)) {
             left = Integer.parseInt(getAttribute(paramMap, LEFT));
@@ -386,8 +418,8 @@ public class OpenWindowHandler extends AbstractBuiltInHandler {
         }
         return left;
     }
-    
-    private int getTop(Map<String, String> paramMap, int defaultValue) {
+
+    private int getTop(final Map<String, String> paramMap, final int defaultValue) {
         int top = 0;
         if (hasAttribute(paramMap, TOP)) {
             top = Integer.parseInt(getAttribute(paramMap, TOP));

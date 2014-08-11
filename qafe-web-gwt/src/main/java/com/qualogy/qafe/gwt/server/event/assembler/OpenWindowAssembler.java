@@ -27,22 +27,30 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
+
+/**
+ * 
+ * @author jroosing
+ *
+ */
 public class OpenWindowAssembler extends AbstractEventItemAssembler {
 
-    public BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
+    public final BuiltInFunctionGVO assemble(final EventItem eventItem,
+            final Event event, final ApplicationContext applicationContext) {
         OpenWindowGVO eventItemGVO = null;
         if (eventItem instanceof OpenWindow) {
             eventItemGVO = new OpenWindowGVO();
-            assembleAttributes(eventItemGVO, (OpenWindow)eventItem, event, applicationContext);
+            assembleAttributes(eventItemGVO, (OpenWindow) eventItem, event, applicationContext);
         }
         return eventItemGVO;
     }
     
-    private void assembleAttributes(OpenWindowGVO eventItemGVO, OpenWindow eventItem, Event event, ApplicationContext applicationContext) {
-        ParameterGVO windowGVO = assembleParameter(eventItem.getWindow());
-        ParameterGVO urlGVO = assembleParameter(eventItem.getUrl());
-        ParameterGVO titleGVO = assembleParameter(eventItem.getTitle());
-        ParameterGVO paramsGVO = assembleParameter(eventItem.getParams());
+    private void assembleAttributes(final OpenWindowGVO eventItemGVO, final OpenWindow eventItem, 
+            final Event event, final ApplicationContext applicationContext) {
+        final ParameterGVO windowGVO = assembleParameter(eventItem.getWindow());
+        final ParameterGVO urlGVO = assembleParameter(eventItem.getUrl());
+        final ParameterGVO titleGVO = assembleParameter(eventItem.getTitle());
+        final ParameterGVO paramsGVO = assembleParameter(eventItem.getParams());
         
         eventItemGVO.setWindowGVO(windowGVO);
         eventItemGVO.setUrlGVO(urlGVO);      
@@ -51,11 +59,11 @@ public class OpenWindowAssembler extends AbstractEventItemAssembler {
         eventItemGVO.setExternal(eventItem.getExternal());
         eventItemGVO.setPlacement(eventItem.getPlacement());   
         
-        List<Parameter> dataParams = eventItem.getDataParameters();
+        final List<Parameter> dataParams = eventItem.getDataParameters();
         if (dataParams != null) {
-            List<ParameterGVO> dataParamGVOs = new ArrayList<ParameterGVO>();
+            final List<ParameterGVO> dataParamGVOs = new ArrayList<ParameterGVO>();
             for (Parameter dataParam : dataParams) {
-                ParameterGVO dataParamGVO = assembleParameter(dataParam);
+                final ParameterGVO dataParamGVO = assembleParameter(dataParam);
                 dataParamGVOs.add(dataParamGVO);
             }
             eventItemGVO.setDataParamGVOList(dataParamGVOs);
