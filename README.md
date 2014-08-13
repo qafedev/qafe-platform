@@ -48,4 +48,5 @@ The build time is about 10 minutes. The skiptests in included since database tes
 
 
 How to run a sample application
-@TODO add steps
+**TODO** add steps for running and browser tests.
+
