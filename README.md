@@ -33,13 +33,17 @@ brew install maven
 ```
 For other platforms, see [this link](http://maven.apache.org/download.cgi)
 
-2. THe location of the local maven repository needs to be changed
+2. The location of the local maven repository needs to be changed. In the qafe-platform/settings.xml locate the <localRepository> tag. By doing this you won't harm other maven projects on your system. Check it to for example:
+```
+<localRepository>/Users/johndoe/develop/qafe/m2/</localRepository>
+``` 
 
-How to check out platform
-@TODO add steps
+3. If this is done, you can start the following command to build the platform:
+```
+mvn -Pbuildall clean install -DskipTests
+```
+The build time is about 10 minutes. The skiptests in included since database testing using a real database needs to be skipped.
 
-How to build it
-@TODO add steps
 
 How to run a sample application
 @TODO add steps
