@@ -15,14 +15,16 @@ Initialize the directory
 ```
 git init
 ```
-Checkout the source from git
+Checkout the source for the development branch from git
 
 ```
-git clone https://github.com/qafedev/qafe-platform.git
+git clone -b develop https://github.com/qafedev/qafe-platform.git
+
 ```
 
 The source code can be found in qafe-platform directory
 (so /Users/johndoe/develop/qafe/qafe-platform/
+
 
 ## Building QAFE Platform
 Before building a couple things need to be checked:
