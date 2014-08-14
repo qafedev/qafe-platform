@@ -49,6 +49,7 @@ The build time is about 10 minutes. The skiptests in included since database tes
 **Note**: The Oracle JDBC driver is not allowed to be distributed by maven repositories. For this follow [this link](http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/) to make it work. 
 
 
-How to run a sample application
+## Running QAFE Platform applications
+
 **TODO** add steps for running and browser tests.
 
