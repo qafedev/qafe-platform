@@ -40,7 +40,7 @@ For other platforms, see [this link](http://maven.apache.org/download.cgi)
 
 1. If this is done, you can start the following command to build the platform:
 ```
-mvn -Pbuildall clean install -DskipTests
+mvn clean install -DskipTests
 ```
 The build time is about 10 minutes. The skiptests in included since database testing using a real database needs to be skipped.
 
