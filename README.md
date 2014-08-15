@@ -22,7 +22,7 @@ First create a directory in which you going to develop
 mkdir -p /Users/johndoe/develop/qafe/
 ```
 
-Initialize the directory
+Initialize local repository
 
 ```
 git init
@@ -42,7 +42,7 @@ The source code can be found in qafe-platform directory
 ## Building QAFE Platform
 Maven version 3.x is used as a project management tool for the QAFE Platform. Maven is an open-source project freely distributed by the Apache Software Foundation. The tool is necessary to be able to build the platform. Before building, make sure that the following tasks are done:
 
-1. Make sure that Maven is installed on your machine. On OSX Mavericks, Maven is not shipped automatically. For this the following can work:
+1. Make sure that Maven is installed on your machine. On Mac OS X Mavericks, Maven is not shipped automatically. To install Maven on OS X, the following command should work:
 ```
 brew install maven
 ```
@@ -61,52 +61,58 @@ The build time should be approximately 10 minutes on a modern machine. The skipt
 
 **Note**: The Oracle JDBC driver is not allowed to be distributed by maven repositories. For this follow [this link](http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/) to make it work. 
 
+## Modifying QAFE Platform
+The QAFE Platform project can be imported in each IDE supporting Maven. Import the pom.xml in the folder *qafe-platform* in your IDE of choice as an existing Maven project. The code including the proper dependencies should be ready to use.  
 
 ## Running QAFE Platform applications
+The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. This file contains the platform and a basic Hello World application. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application-folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
 
-**TODO** add steps for running and browser tests.
-
-## Sample Code
+The link to the application is dependent on the port number specified in your web server and the filename of the WAR-file without the extension. For example, if the port number is 8080 (standard for Tomcat) and the filename is qafe-web-gwt.war, then the link would be:
 
 ```
-<application-mapping xmlns="http://qafe.com/schema"	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+http://localhost:8080/qafe-web-gwt/
+```
+
+## Sample Code
+The sample code underneath is a simple Hello World application which includes a window with a button and a textfield inside. When the user clicks on the button, a dialog panel will show up containing "Hello World" as the title and the content of the textfield as a message.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<application-mapping xmlns="http://qafe.com/schema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
 	<presentation-tier>
 		<view>
-			<window id="window1" displayname="Hello World" width="300"  height="250" >
+			<window id="window1" displayname="Hello World" width="300"
+				height="250">
 				<rootpanel id="myRootPanel">
 					<verticallayout>
-						<button id="mylabel" displayname="Hello World" />
-						<label id="sourcecode" displayname="Click here for the source code" />
-						<panel id="sourcecodepanel" visible="false">
-							<autolayout>	
-						 <textarea rows="30" height="400px" width="800px" editable="false">
-									<value/>
-								</textarea>
-							</autolayout>
-						</panel>
+						<textfield id="myTextfield"/>
+						<button id="myButton" displayname="Hello World" />
 					</verticallayout>
 				</rootpanel>
 				<events>
 					<event id="sourceCodeEvent">
-	  					<listeners>
-	  						<listenergroup>
-	  							<component ref="sourcecode"/>
-	  							<listener type="onclick"/>
-	  						</listenergroup>
-	  					</listeners>
-	  					<toggle>
-	  						<component ref="sourcecodepanel"/>
-	  					</toggle>  					
-  					</event>
+						<listeners>
+							<listenergroup>
+								<component ref="myButton" />
+								<listener type="onclick" />
+							</listenergroup>
+						</listeners>
+						<dialog>
+							<title value="Hello World"/>
+							<message ref="myTextfield" src="component"/>
+						</dialog>
+					</event>
 				</events>
 			</window>
 		</view>
 	</presentation-tier>
-</application-mapping> 
+</application-mapping>  
 ```
 
 ## Further Reading
-Further information regarding the QAML documentation and Forms Conversion can be found on our [Developer Docs](http://www.qafe.com/developer-docs/ "QAFE Developer Docs")
+Further information regarding the QAML documentation and Forms Conversion can be found on our [QAFE Developer Documentation](https://github.com/qafedev/qafedev.github.io/blob/master/README.md "QAFE Developer Documentation")
 
 ## Licenses
 Information regarding the licenses used in the QAFE Platform can be found on the [Depedencies page](https://github.com/qafedev/qafe-platform/blob/master/dependencies.md "QAFE dependencies") on GitHub. 
