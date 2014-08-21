@@ -15,15 +15,19 @@
  */
 package com.qualogy.qafe.gwt.client.vo.functions;
 
-
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class LogFunctionGVO extends BuiltInFunctionGVO {
-
-
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO";
+	
 	private String windowId = null;
 	private Boolean debug=Boolean.TRUE;
-
-	private String styleClass;	
+	private ParameterGVO messageGVO;
+	private String message;
+	private String styleClass;
+	private String[][] styleProperties;
+	private Integer delay=2000;
+	
 	public String getStyleClass() {
 		return styleClass;
 	}
@@ -31,8 +35,6 @@ public class LogFunctionGVO extends BuiltInFunctionGVO {
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
 	}
-
-	
 
 	public Integer getDelay() {
 		return delay;
@@ -42,7 +44,6 @@ public class LogFunctionGVO extends BuiltInFunctionGVO {
 		this.delay = delay;
 	}
 
-	protected String[][] styleProperties;
 	public String[][] getStyleProperties() {
 		return styleProperties;
 	}
@@ -50,8 +51,6 @@ public class LogFunctionGVO extends BuiltInFunctionGVO {
 	public void setStyleProperties(String[][] styleProperties) {
 		this.styleProperties = styleProperties;
 	}
-
-	private Integer delay=2000;
 	
 	public Boolean getDebug() {
 		return debug;
@@ -69,12 +68,6 @@ public class LogFunctionGVO extends BuiltInFunctionGVO {
 		this.windowId = windowId;
 	}
 
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO";
-	}
-
-	private String message;
-
 	public String getMessage() {
 		return message;
 	}
@@ -82,5 +75,16 @@ public class LogFunctionGVO extends BuiltInFunctionGVO {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
+	public ParameterGVO getMessageGVO() {
+		return messageGVO;
+	}
+
+	public void setMessageGVO(ParameterGVO messageGVO) {
+		this.messageGVO = messageGVO;
+	}
 	
+	public String getClassName() {
+		return CLASS_NAME;
+	}	
 }

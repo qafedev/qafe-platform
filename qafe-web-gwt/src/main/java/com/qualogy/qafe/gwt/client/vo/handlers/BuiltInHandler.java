@@ -15,9 +15,11 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
+import java.util.Map;
+
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 
 public interface BuiltInHandler {
-    boolean handleBuiltIn(UIObject sender, String listenerType, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId);
+    boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId);
 }

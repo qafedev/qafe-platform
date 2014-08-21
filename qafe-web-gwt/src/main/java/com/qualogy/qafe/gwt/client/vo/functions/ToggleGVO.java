@@ -18,10 +18,9 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class ToggleGVO extends BuiltInFunctionGVO {
 
-	
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ToggleGVO";
 
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.ToggleGVO";
+		return CLASS_NAME;
 	}
-
 }

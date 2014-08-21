@@ -17,6 +17,9 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 import java.util.List;
 
+import com.qualogy.qafe.gwt.client.vo.ui.WindowGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
+
 public class OpenWindowGVO extends BuiltInFunctionGVO {
 
     public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO";
@@ -25,6 +28,7 @@ public class OpenWindowGVO extends BuiltInFunctionGVO {
     public static final String PLACEMENT_CENTER_CASCADE = "center-cascade";
     public static final String PLACEMENT_TILED = "tiled";
     
+    private ParameterGVO windowGVO;
 	private String window;
 	private String url;
 	private String title;
@@ -87,6 +91,14 @@ public class OpenWindowGVO extends BuiltInFunctionGVO {
 
 	public void setWindow(String window) {
 		this.window = window;
+	}
+
+	public ParameterGVO getWindowGVO() {
+		return windowGVO;
+	}
+
+	public void setWindowGVO(ParameterGVO windowGVO) {
+		this.windowGVO = windowGVO;
 	}
 
 	@Override

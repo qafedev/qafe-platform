@@ -27,11 +27,17 @@ import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ToggleGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
 
@@ -51,8 +57,14 @@ public class EventHandler {
         BUILTIN_MAP.put(OpenWindowGVO.CLASS_NAME, new OpenWindowHandler());
         BUILTIN_MAP.put(LocalStoreGVO.CLASS_NAME, new LocalStoreHandler());
         BUILTIN_MAP.put(BusinessActionRefGVO.CLASS_NAME, new BusinessActionRefHandler());
+        BUILTIN_MAP.put(GenericDialogGVO.CLASS_NAME, new GenericDialogHandler());
         BUILTIN_MAP.put(SetValueGVO.CLASS_NAME, new SetValueHandler());
         BUILTIN_MAP.put(SetPanelGVO.CLASS_NAME, new SetPanelHandler());
+        BUILTIN_MAP.put(ShowPanelGVO.CLASS_NAME, new ShowPanelHandler());
+        BUILTIN_MAP.put(ClosePanelGVO.CLASS_NAME, new ClosePanelHandler());
+        BUILTIN_MAP.put(ToggleGVO.CLASS_NAME, new ToggleHandler());
+        BUILTIN_MAP.put(LogFunctionGVO.CLASS_NAME, new LogHandler());
+        BUILTIN_MAP.put(CloseWindowGVO.CLASS_NAME, new CloseWindowHandler());
     }
 
     public static EventHandler getInstance() {
@@ -62,7 +74,7 @@ public class EventHandler {
         return instance;
     }
 
-    public void handleEvent(final UIObject sender, String listenerType, EventListenerGVO eventListenerGVO) {
+    public void handleEvent(final UIObject sender, String listenerType, EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo) {
         String appId = getAppId(sender);
         String windowId = getWindowId(sender);
         UIGVO applicationGVO = ClientApplicationContext.getInstance().getApplication(appId);
@@ -81,7 +93,7 @@ public class EventHandler {
 
         collectEventItems(eventSessionId, eventGVO);
 
-        handleEventItems(sender, listenerType, appId, windowId, eventSessionId);
+        handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
 
     }
 
@@ -95,7 +107,7 @@ public class EventHandler {
         eventItemsToExecute.put(eventSessionId, eventItemsStack);
     }
 
-    public void handleEventItems(final UIObject sender, final String listenerType, final String appId,
+    public void handleEventItems(final UIObject sender, final String listenerType, final Map<String, String> mouseInfo, final String appId,
             final String windowId, final String eventSessionId) {
         final Stack<BuiltInFunctionGVO> eventItems = eventItemsToExecute.get(eventSessionId);
         if (isAllEventItemsProcessed(eventItems)) {
@@ -104,17 +116,17 @@ public class EventHandler {
         }
 
         final BuiltInFunctionGVO eventItemGVO = eventItems.pop();
-        handleEventItem(sender, listenerType, appId, windowId, eventSessionId, eventItemGVO);
+        handleEventItem(sender, listenerType, mouseInfo, appId, windowId, eventSessionId, eventItemGVO);
 
         if (isClientSideEventItem(eventItemGVO)) {
-            handleEventItems(sender, listenerType, appId, windowId, eventSessionId);
+            handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
         }
     }
 
-    public void handleEventItems(final UIObject sender, final String listenerType, final String appId, final String windowId,
+    public void handleEventItems(final UIObject sender, final String listenerType, final Map<String, String> mouseInfo, final String appId, final String windowId,
             final String eventSessionId, GEventItemDataObject output) {
         storeOutputVariables(eventSessionId, output);
-        handleEventItems(sender, listenerType, appId, windowId, eventSessionId);
+        handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
     }
 
     private void storeOutputVariables(String eventSessionId, GEventItemDataObject output) {
@@ -142,11 +154,11 @@ public class EventHandler {
         return !(eventItemGVO instanceof BusinessActionRefGVO);
     }
 
-    private void handleEventItem(final UIObject sender, final String listenerType, final String appId,
+    private void handleEventItem(final UIObject sender, final String listenerType, final Map<String, String> mouseInfo, final String appId,
             final String windowId, final String eventSessionId, BuiltInFunctionGVO eventItemGVO) {
         final BuiltInHandler builtInHandler = (BuiltInHandler) BUILTIN_MAP.get(eventItemGVO.getClassName());
         if (builtInHandler != null) {
-            builtInHandler.handleBuiltIn(sender, listenerType, eventItemGVO, appId, windowId, eventSessionId);
+            builtInHandler.handleBuiltIn(sender, listenerType, mouseInfo, eventItemGVO, appId, windowId, eventSessionId);
         }
     }
 

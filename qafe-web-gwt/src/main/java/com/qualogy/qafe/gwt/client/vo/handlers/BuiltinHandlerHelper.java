@@ -44,6 +44,7 @@ import com.qualogy.qafe.gwt.client.component.MapWidget;
 import com.qualogy.qafe.gwt.client.component.QDatePicker;
 import com.qualogy.qafe.gwt.client.component.QPagingScrollTable;
 import com.qualogy.qafe.gwt.client.component.QRadioButton;
+import com.qualogy.qafe.gwt.client.component.ShowPanelComponent;
 import com.qualogy.qafe.gwt.client.component.Tiles;
 import com.qualogy.qafe.gwt.client.component.TitledComponent;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
@@ -54,6 +55,8 @@ import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.execute.SetMaskHelper;
 import com.qualogy.qafe.gwt.client.vo.ui.CheckBoxGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.TextFieldGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.InputVariableGVO;
@@ -674,4 +677,75 @@ public class BuiltinHandlerHelper {
         }
         return dataContainerObject;
     }
+    
+    public static void handleMask(ShowPanelGVO showPanelGVO, String panelDefKey, String windowKey, String windowId) {
+		if(showPanelGVO.isModal()) {
+			List<String> panelDefsOpened = ClientApplicationContext.getInstance().getPanelDefinitionsOpened(windowId);
+			if(panelDefsOpened != null && panelDefsOpened.size() > 0) {
+				//add mask on the panel from which showpanel is called .
+				String lastPanelDefOpened = panelDefsOpened.get(panelDefsOpened.size() - 1);
+				SetMaskHelper.setMask(lastPanelDefOpened, RendererHelper.QAFE_GLASS_PANEL_STYLE, true);
+			} else {
+				// if the show-panel is called for first time then do mask on the window.
+				SetMaskHelper.setMask(windowKey, RendererHelper.QAFE_GLASS_PANEL_STYLE, true);
+			}
+			ClientApplicationContext.getInstance().addPanelDefinitionsOpened(windowId, panelDefKey);
+		}
+	}
+    
+    public static void handleStyle(ShowPanelGVO showPanelGVO, ShowPanelComponent showPanel, UIObject widget) {
+		String styleClass = showPanelGVO.getSrc().getStyleClass();
+		if (styleClass != null) {
+			// The popup panel inherits the styleClass of the panel-definition
+			// to avoid a white area on the right and bottom
+			showPanel.addStyleName(styleClass);
+			widget.removeStyleName(styleClass);
+		}
+	}
+	
+    public static void handleSize(ShowPanelGVO showPanelGVO, ShowPanelComponent showPanel, UIObject container) {
+		// Obtained these values by measuring
+		int intVScrollbarWidth = 16;
+		int intHScrollbarHeight = 16;
+		int offsetWidth = 34;
+		int offsetHeight = 38;
+					
+		
+		String height = showPanelGVO.getSrc().getHeight();
+		if (height != null) {
+			// The height of the panel-definition inside the container,
+			// so the height of the popup panel should be bigger to avoid unnecessary scrollbar  
+			int intHeight = Integer.valueOf(height);
+			height = String.valueOf(intHeight + intHScrollbarHeight + offsetHeight);
+			showPanel.setHeight(height);	
+		}
+		
+		String width = showPanelGVO.getSrc().getWidth();
+		if (width != null) {
+			// The width of the panel-definition inside the container,
+			// so the width of the popup panel should be bigger to avoid unnecessary scrollbar
+			int intWidth = Integer.valueOf(width);
+			width = String.valueOf(intWidth + intVScrollbarWidth + offsetWidth);
+			showPanel.setWidth(width);
+		}
+	}
+    
+	public static String generatePanelDefinitionKey(String panelDefId, String appId, String windowId) {
+    	return "showPanel_" + RendererHelper.generateId(panelDefId, windowId, appId);
+    }
+	
+	public static void closeOpenedPanelDefinition(String panelDefId, String appId, String windowId, String eventSessionId) {
+		// We have to make sure that all other showPanels using the same panel-definition is cleared
+    	String panelDefinitionKey = generatePanelDefinitionKey(panelDefId, appId, windowId);
+		List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(panelDefinitionKey);
+		if(uiObjects != null){
+			UIObject uiObject = uiObjects.iterator().next();
+			if (uiObject instanceof ShowPanelComponent) {
+				ShowPanelComponent showPanelComponent = (ShowPanelComponent)uiObject;
+				
+				// This will call showPanelComponent.onDetach()
+				showPanelComponent.hide();
+			}
+		}    	
+    }	
 }

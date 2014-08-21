@@ -16,10 +16,12 @@
 package com.qualogy.qafe.gwt.client.vo.functions.dialog;
 
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class MessageDialogBuiltInGVO extends BuiltInFunctionGVO {
 
 	private String title;
+	private ParameterGVO titleGVO;
 	private String width;
 	
 	public String getWidth() {
@@ -48,6 +50,15 @@ public abstract class MessageDialogBuiltInGVO extends BuiltInFunctionGVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public ParameterGVO getTitleGVO() {
+		return titleGVO;
+	}
+
+	public void setTitleGVO(ParameterGVO titleGVO) {
+		this.titleGVO = titleGVO;
+	}
+
 		
 
 	

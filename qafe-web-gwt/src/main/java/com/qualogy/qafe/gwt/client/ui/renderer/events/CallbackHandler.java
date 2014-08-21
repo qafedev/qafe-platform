@@ -100,7 +100,7 @@ public class CallbackHandler {
 	final public static void createCallBack(final UIObject sender, final String listenerType, final EventListenerGVO eventGVO, List<InputVariableGVO> listOfInputVariables, Map<String,Object> internalVariables, Map<String,String> mouseInfo) {
 	    if (ClientApplicationContext.getInstance().isClientSideEventEnabled()) {
 	        EventCallbackHandler.setRpcService(service);
-	        EventHandler.getInstance().handleEvent(sender, listenerType, eventGVO);
+	        EventHandler.getInstance().handleEvent(sender, listenerType, eventGVO, mouseInfo);
 	        ClientApplicationContext.getInstance().log("Sender: " + sender + " - " + listenerType);
 	        return;
 	    }

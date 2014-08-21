@@ -38,7 +38,7 @@
 			<window id="welcome" displayname="Welcome to QAFE Demo" width="1030" height="805">
 				<rootpanel id="welcomeRootPanel">
 					<verticallayout>
-						<frame src="http://www.qafe.com/static/demo-welcome-page/qafe-demo.htm" height="800px" width="1024px"/>
+						<frame src="http://www.qafe.com/solutions/platform/" height="800px" width="1024px"/>
 					</verticallayout>
 				</rootpanel>
 			</window>

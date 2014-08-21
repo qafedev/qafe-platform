@@ -23,11 +23,13 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
+import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
@@ -67,7 +69,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             }
         } else if (parameterGVO.getReference() != null) {
             final String source = parameterGVO.getSource();
-            final String reference = parameterGVO.getReference();
+            final String reference = resolveVariables(parameterGVO.getReference(), placeHolderValues, eventSessionId);
 
             if (BuiltInFunctionGVO.SOURCE_COMPONENT_ID.equals(source)) {
                 value = getComponentValue(sender, reference, appId, windowId);
@@ -224,8 +226,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     protected void storeData(String dataId, String name, Object data) {
         DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
         dataStorage.storeData(dataId, name, data);
-
-        log("dataId1=" + dataId + " - " + name + "=" + data);
+        log(dataId, name, data);
     }
 
     protected Object getData(String dataId, String name) {
@@ -254,11 +255,31 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     protected String getComponentName(final UIObject uiObject) {
         return RendererHelper.getNamedComponentName(uiObject);
     }
+    
+    protected String getUUId(UIObject sender) {
+    	return RendererHelper.getUUId(sender);
+    }
+    
+    protected String getAppId(final UIObject sender) {
+        return RendererHelper.getComponentContext(sender);
+    }
 
     protected boolean isNamedComponent(final UIObject uiObject) {
         return RendererHelper.isNamedComponent(uiObject);
     }
 
+    protected UIObject renderComponent(ComponentGVO componentGVO, String appId, String windowId, String eventSessionId) {
+    	return AnyComponentRenderer.getInstance().render(componentGVO, eventSessionId, windowId, appId);    	
+    }
+    
+    protected void log(String dataId, String name, Object data) {
+    	String logMessage = "dataId=" + dataId + " - " + name;
+    	if (data != null) {
+    		logMessage += "=" + data.toString();
+    	}
+        log(logMessage);
+    }
+    
     protected void log(String message) {
         ClientApplicationContext.getInstance().log(message);
     }

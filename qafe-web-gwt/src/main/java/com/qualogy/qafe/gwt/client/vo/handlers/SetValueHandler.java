@@ -55,7 +55,7 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class SetValueHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
+    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
         SetValueGVO setValueGVO = (SetValueGVO) builtInFunctionGVO;
         ParameterGVO parameterGVO = setValueGVO.getParameter();
         Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);

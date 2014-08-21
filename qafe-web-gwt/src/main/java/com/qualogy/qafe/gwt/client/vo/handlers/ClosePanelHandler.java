@@ -19,24 +19,18 @@ import java.util.Map;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
-import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 
-public class LocalStoreHandler extends AbstractBuiltInHandler {
+public class ClosePanelHandler extends AbstractBuiltInHandler {
 
     public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        LocalStoreGVO localStoreGVO = (LocalStoreGVO) builtInFunctionGVO;
-        ParameterGVO parameterGVO = localStoreGVO.getParameter();
-        Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);
-        storeValue(localStoreGVO, value, appId, windowId, eventSessionId);
+        ClosePanelGVO closePanelGVO = (ClosePanelGVO) builtInFunctionGVO;
+        closePanel(closePanelGVO, mouseInfo, appId, windowId, eventSessionId);
         return false;
     }
     
-    private void storeValue(LocalStoreGVO localStoreGVO, Object value, String appId, String windowId, String eventSessionId) {
-        ParameterGVO parameterGVO = localStoreGVO.getParameter();
-        String name = parameterGVO.getName();
-        String target = localStoreGVO.getTarget();
-        String dataId = generateDataId(target, appId, windowId, eventSessionId);
-        storeData(dataId, name, value);        
-    }
+    private void closePanel(ClosePanelGVO closePanelGVO, Map<String, String> mouseInfo, String appId, String windowId, String eventSessionId) {
+    	String panelDefId = closePanelGVO.getRef();
+    	BuiltinHandlerHelper.closeOpenedPanelDefinition(panelDefId, appId, windowId, eventSessionId);
+	}
 }

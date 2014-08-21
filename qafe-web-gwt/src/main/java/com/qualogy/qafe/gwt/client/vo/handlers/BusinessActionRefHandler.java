@@ -30,7 +30,7 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 
     public final boolean handleBuiltIn(final UIObject sender, final String listenerType,
-            final BuiltInFunctionGVO builtInFunctionGVO, final String appId, final String windowId, final String eventSessionId) {
+            Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInFunctionGVO, final String appId, final String windowId, final String eventSessionId) {
         EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
         eventItemDataGVO.setAppId(appId);
         eventItemDataGVO.setBuiltInFunctionGVO(builtInFunctionGVO);
@@ -42,7 +42,7 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
         eventItemDataGVO.setOutputVariables(outputVariables);
             eventItemDataGVO.setInputValues(inputValues);
 
-        EventCallbackHandler.invokeService(sender, listenerType, eventItemDataGVO, appId, windowId, eventSessionId);
+        EventCallbackHandler.invokeService(sender, listenerType, mouseInfo, eventItemDataGVO, appId, windowId, eventSessionId);
 
         return false;
     }

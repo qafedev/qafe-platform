@@ -71,3 +71,13 @@ qafe-webapps/qafe-gwt-weblogic-webapp/.settings
 qafe-webapps/qafe-gwt-weblogic-webapp/target
 qafe-webapps/target
 /target
+qafe-mobile-gwt/.classpath
+qafe-mobile-gwt/.project
+qafe-mobile-gwt/.settings/.jsdtscope
+.settings
+qafe-webapps/.project
+qafe-mobile-gwt/src/main/webapp/WEB-INF/deploy
+qafe-mobile-gwt/src/main/webapp/qafemobile
+qafe-mobile-gwt/src/main/gwt-unitCache/gwt-unitCache-0000014780FE9417
+qafe-mobile-gwt/src/main/gwt-unitCache
+qafe-web-gwt/src/main/java/com/qualogy/qafe/gwt/.gitignore
