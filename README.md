@@ -40,6 +40,9 @@ The source code can be found in qafe-platform directory
 
 
 ## Building QAFE Platform
+
+For Building QAFE Java is needed. Java6 can be found [here](http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html) for Mac OSX Mavericks see this [link](http://support.apple.com/kb/DL1572) 
+
 Maven version 3.x is used as a project management tool for the QAFE Platform. Maven is an open-source project freely distributed by the Apache Software Foundation. The tool is necessary to be able to build the platform. Before building, make sure that the following tasks are done:
 
 1. Make sure that Maven is installed on your machine. On Mac OS X Mavericks, Maven is not shipped automatically. To install Maven on OS X, the following command should work:
@@ -48,12 +51,12 @@ brew install maven
 ```
 For other platforms, the latest Maven-binaries can be found [here](http://maven.apache.org/download.cgi). 
 
-1. The location of the local maven repository needs to be changed. In the qafe-platform/settings.xml locate the <localRepository> tag. By doing this you won't harm other maven projects on your system. Check it to for example:
+2. The location of the local maven repository needs to be changed. In the qafe-platform/settings.xml locate the <localRepository> tag. By doing this you won't harm other maven projects on your system. Check it to for example:
 ```
 <localRepository>/Users/johndoe/develop/qafe/m2/</localRepository>
 ``` 
 
-1. After setting the proper location of the local Maven repository, you can start the following command to build the platform:
+3. After setting the proper location of the local Maven repository, you can start the following command to build the platform:
 ```
 mvn clean install -DskipTests
 ```
