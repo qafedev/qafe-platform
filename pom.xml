@@ -281,7 +281,7 @@
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
-                <version>1.6.2</version>
+                <version>1.6.7</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -497,12 +497,12 @@
         <snapshotRepository>
             <name>Qafe Snapshots</name>
             <id>qafe.snapshots</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.snapshots</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.snapshots</url>
         </snapshotRepository>
         <repository>
             <name>Qafe Releases</name>
             <id>qafe.releases</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.releases</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.releases</url>
         </repository>
         <!-- <site>
             <name>Qafe Websites</name>
@@ -561,7 +561,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>public</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/groups/public/</url>
+            <url>http://repository.qafe.com/nexus/content/groups/public/</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -574,7 +574,7 @@
         <pluginRepository>
             <id>projects.releases</id>
             <name>Projects Releases</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/projects.releases</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -589,7 +589,7 @@
     <repositories>
         <repository>
             <id>public</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/groups/public/</url>
+            <url>http://repository.qafe.com/nexus/content/groups/public/</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -601,7 +601,7 @@
         </repository>
         <repository>
             <id>snapshots</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.snapshots/</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.snapshots/</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -613,7 +613,7 @@
         </repository>
         <repository>
             <id>releases</id>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.releases/</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.releases/</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -626,7 +626,7 @@
         <repository>
             <id>projects.releases</id>
             <name>Projects Releases</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/projects.releases</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
@@ -639,7 +639,7 @@
         <repository>
             <id>ext</id>
             <name>Qafe Externals Repository</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/thirdparty</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/thirdparty</url>
             <releases>
                 <checksumPolicy>ignore</checksumPolicy>
                 <enabled>true</enabled>
