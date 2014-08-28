@@ -25,6 +25,7 @@ import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
 import com.qualogy.qafe.bind.presentation.event.function.CloseWindow;
+import com.qualogy.qafe.bind.presentation.event.function.LocalDelete;
 import com.qualogy.qafe.bind.presentation.event.function.LocalStore;
 import com.qualogy.qafe.bind.presentation.event.function.LogFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
@@ -44,6 +45,7 @@ public class AnyEventAssembler {
     static {
         ASSEMBLER_MAP.put(OpenWindow.class, new OpenWindowAssembler());
         ASSEMBLER_MAP.put(LocalStore.class, new LocalStoreAssembler());
+        ASSEMBLER_MAP.put(LocalDelete.class, new StoreClearAssembler());
         ASSEMBLER_MAP.put(BusinessActionRef.class, new BusinessActionRefAssembler());
         ASSEMBLER_MAP.put(GenericDialog.class, new GenericDialogAssembler());
         ASSEMBLER_MAP.put(SetValue.class, new SetValueAssembler());

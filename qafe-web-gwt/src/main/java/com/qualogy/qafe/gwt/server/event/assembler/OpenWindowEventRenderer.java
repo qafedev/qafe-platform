@@ -28,6 +28,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.DataParameterGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.web.util.SessionContainer;
 
+@Deprecated
 public class OpenWindowEventRenderer extends AbstractEventRenderer implements EventAssembler{
 
 	private SetValueBuiltInRenderer setValueBuiltInRenderer = new SetValueBuiltInRenderer();

@@ -20,6 +20,7 @@ public interface DataStorage {
 
     void storeData(String dataId, String name, Object data);
     void removeData(String dataId);
+    void removeData(String dataId, String name);
     Object getData(String dataId, String name);
     String register();
     void unregister(String dataId);
