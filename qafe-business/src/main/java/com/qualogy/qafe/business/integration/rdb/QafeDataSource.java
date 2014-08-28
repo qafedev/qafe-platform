@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,129 +34,124 @@ import com.qualogy.qafe.util.ExceptionHelper;
 /**
  *
  */
-public class QafeDataSource implements DataSource {
-	private DataSource dataSource;
-	private boolean isProxyConnection;
-	private DataIdentifier dataId;
-	private Logger logger = Logger.getLogger(this.getClass().getName());
+public final class QafeDataSource implements DataSource {
 
-	public QafeDataSource(DataSource ds, boolean isProxyConnection,
-			DataIdentifier dataId) {
-		this.dataSource = ds;
-		this.isProxyConnection = isProxyConnection;
-		this.dataId = dataId;
-	}
-	
-	public QafeDataSource(RDBDatasource rdbDatasource, DataIdentifier dataId) {
-		this(rdbDatasource.getDataSource(), rdbDatasource.getResource().isProxyConnection(), dataId);
-		//rdbDatasource.setDataSource(this);
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public Connection getConnection() throws SQLException {
-		Connection conn = dataSource.getConnection();
+    private static final Logger LOG = Logger.getLogger(QafeDataSource.class.getName());
 
-		if (isProxyConnection) {
-			conn = DataSourceConnectionFactory.getProxyConnection(dataSource,
-					dataId);
-		}
+    private DataSource dataSource;
 
-		return conn;
-	}
+    private boolean isProxyConnection;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Connection getConnection(String username, String password)
-			throws SQLException {
-		Connection conn = dataSource.getConnection(username, password);
+    private DataIdentifier dataId;
 
-		if (isProxyConnection) {
-			conn = DataSourceConnectionFactory.getProxyConnection(dataSource,
-					dataId);
-		}
+    public QafeDataSource(final DataSource ds, final boolean isProxyConnection, final DataIdentifier dataId) {
+        this.dataSource = ds;
+        this.isProxyConnection = isProxyConnection;
+        this.dataId = dataId;
+    }
 
-		return conn;
-	}
+    public QafeDataSource(final RDBDatasource rdbDatasource, final DataIdentifier dataId) {
+        this(rdbDatasource.getDataSource(), rdbDatasource.getResource().isProxyConnection(), dataId);
+        // rdbDatasource.setDataSource(this);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public PrintWriter getLogWriter() throws SQLException {
-		return dataSource.getLogWriter();
-	}
+    @Override
+    public Connection getConnection() throws SQLException {
+        Connection conn = dataSource.getConnection();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setLogWriter(PrintWriter out) throws SQLException {
-		dataSource.setLogWriter(out);
-	}
+        if (isProxyConnection) {
+            conn = DataSourceConnectionFactory.getProxyConnection(dataSource, dataId);
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void setLoginTimeout(int seconds) throws SQLException {
-		dataSource.setLoginTimeout(seconds);
-	}
+        return conn;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int getLoginTimeout() throws SQLException {
-		return dataSource.getLoginTimeout();
-	}
+    @Override
+    public Connection getConnection(final String username, String password) throws SQLException {
+        Connection conn = dataSource.getConnection(username, password);
 
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		Method m =null;
-		try {
-			m = dataSource.getClass().getMethod("unwrap", Class.class);
-			if (m != null) {
-				return (T) m.invoke(dataSource, iface);
+        if (isProxyConnection) {
+            conn = DataSourceConnectionFactory.getProxyConnection(dataSource, dataId);
+        }
 
-			} else {
-				return null;
-			}
-		} catch (SecurityException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (NoSuchMethodException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalArgumentException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalAccessException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (InvocationTargetException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		}
-		return null;
+        return conn;
+    }
 
-	}
+    @Override
+    public PrintWriter getLogWriter() throws SQLException {
+        return dataSource.getLogWriter();
+    }
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		Method m =null;
-		try {
-			m = dataSource.getClass().getMethod("isWrapperFor", Class.class);
-			if (m != null) {
-				return (Boolean) m.invoke(dataSource, iface);
+    @Override
+    public void setLogWriter(final PrintWriter out) throws SQLException {
+        dataSource.setLogWriter(out);
+    }
 
-			} else {
-				return false;
-			}
-		} catch (SecurityException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (NoSuchMethodException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalArgumentException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalAccessException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (InvocationTargetException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		}
-		return false;
+    @Override
+    public void setLoginTimeout(final int seconds) throws SQLException {
+        dataSource.setLoginTimeout(seconds);
+    }
 
-		
-		
-	}
+    @Override
+    public int getLoginTimeout() throws SQLException {
+        return dataSource.getLoginTimeout();
+    }
+
+    @Override
+    public <T> T unwrap(final Class<T> iface) throws SQLException {
+        Method m = null;
+        try {
+            m = dataSource.getClass().getMethod("unwrap", Class.class);
+            if (m != null) {
+                return (T) m.invoke(dataSource, iface);
+
+            } else {
+                return null;
+            }
+        } catch (SecurityException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (NoSuchMethodException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (IllegalArgumentException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (IllegalAccessException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (InvocationTargetException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        }
+        return null;
+
+    }
+
+    @Override
+    public boolean isWrapperFor(final Class<?> iface) throws SQLException {
+        Method m = null;
+        try {
+            m = dataSource.getClass().getMethod("isWrapperFor", Class.class);
+            if (m != null) {
+                return (Boolean) m.invoke(dataSource, iface);
+
+            } else {
+                return false;
+            }
+        } catch (SecurityException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (NoSuchMethodException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (IllegalArgumentException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (IllegalAccessException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        } catch (InvocationTargetException e) {
+            LOG.log(Level.SEVERE, ExceptionHelper.printStackTrace(e));
+        }
+        return false;
+
+    }
+
+    @Override
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

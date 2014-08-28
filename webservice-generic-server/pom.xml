@@ -17,58 +17,49 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.qualogy.qafe</groupId>
-		<artifactId>platform</artifactId>
-		<version>2.6-rc1-SNAPSHOT</version>
-	</parent>
-	<groupId>com.qualogy.qafe.platform</groupId>
-	<artifactId>webservice-generic-server</artifactId>
-	<version>2.6-rc1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-	<name>Qafe Generic WebService Server</name>
-	<description>Qafe Generic WebService Server</description>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.qualogy.qafe</groupId>
+        <artifactId>platform</artifactId>
+        <version>2.6-rc1-SNAPSHOT</version>
+    </parent>
+    <groupId>com.qualogy.qafe.platform</groupId>
+    <artifactId>webservice-generic-server</artifactId>
+    <version>2.6-rc1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Qafe Generic WebService Server</name>
+    <description>Qafe Generic WebService Server</description>
 
-	<properties>
-		<cxf.version>2.2.9</cxf.version>
-	</properties>
+    <properties>
+        <cxf.version>2.2.9</cxf.version>
+    </properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-core</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-aegis</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+    </dependencies>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-core</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-databinding-aegis</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-	</dependencies>
-	
 </project>
