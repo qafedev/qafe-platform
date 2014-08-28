@@ -7,7 +7,7 @@
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    	http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -54,7 +54,6 @@
                     <execution>
                         <configuration>
                             <inplace>true</inplace>
-                            <extraJvmArgs>-Xms512m -Xmx1024m -XX:PermSize=512M -XX:MaxPermSize=512M -XX:-UseGCOverheadLimit -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
                             <style>${qafe-compiler-debug}</style>
                             <skip>${gwt.compile.skip}</skip>
                             <force>true</force>
@@ -64,15 +63,6 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
-                    <!--execution>
-                        <configuration>
-                            <module>com.qualogy.qafe.mgwt.QAFEMGwt</module>
-                        </configuration>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>test</goal>
-                        </goals>
-                    </execution-->
                 </executions>
             </plugin>
 
@@ -81,7 +71,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.8</version>
 
                 <configuration>
                     <downloadSources>true</downloadSources>
@@ -158,7 +147,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.7</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
@@ -236,143 +224,4 @@
             <!--  <scope>provided</scope>  -->
         </dependency>
     </dependencies>
-    <!-- <profiles>
-        <profile>
-            <id>qafe-demo-edition</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <version>2.1.1</version>
-                        <configuration>
-                          <packagingExcludes>WEB-INF/deploy/**</packagingExcludes>
-                          <overlays>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.editions.demo</groupId>
-                              <artifactId>flex</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.editions.demo</groupId>
-                              <artifactId>common</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.editions</groupId>
-                              <artifactId>common</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.showcaseapp</groupId>
-                              <artifactId>flex</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.showcaseapp</groupId>
-                              <artifactId>common</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.belastingdienstapp</groupId>
-                              <artifactId>flex</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.belastingdienstapp</groupId>
-                              <artifactId>common</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.chartapp</groupId>
-                              <artifactId>flex</artifactId>
-                            </overlay>
-                            <overlay>
-                              <groupId>com.qualogy.qafe.platform.qafe-applications.chartapp</groupId>
-                              <artifactId>common</artifactId>
-                            </overlay>
-                            <overlay>
-                              empty groupId/artifactId represents the current build
-                            </overlay>
-                          </overlays>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
-                    <artifactId>standard</artifactId>
-                    <version>${platform.module.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-licensemanager</groupId>
-                    <artifactId>client</artifactId>
-                    <version>${platform.module.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.editions</groupId>
-                    <artifactId>common</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.editions.demo</groupId>
-                    <artifactId>flex</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.editions.demo</groupId>
-                    <artifactId>common</artifactId>
-                    <version>2.0</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.showcaseapp</groupId>
-                    <artifactId>lib</artifactId>
-                    <version>${platform.module.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.showcaseapp</groupId>
-                    <artifactId>common</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.showcaseapp</groupId>
-                    <artifactId>flex</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.belastingdienstapp</groupId>
-                    <artifactId>lib</artifactId>
-                    <version>${platform.module.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.belastingdienstapp</groupId>
-                    <artifactId>common</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.belastingdienstapp</groupId>
-                    <artifactId>flex</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.chartapp</groupId>
-                    <artifactId>lib</artifactId>
-                    <version>${platform.module.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.chartapp</groupId>
-                    <artifactId>common</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.qualogy.qafe.platform.qafe-applications.chartapp</groupId>
-                    <artifactId>flex</artifactId>
-                    <version>${platform.module.version}</version>
-                    <type>war</type>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles> -->
 </project>
