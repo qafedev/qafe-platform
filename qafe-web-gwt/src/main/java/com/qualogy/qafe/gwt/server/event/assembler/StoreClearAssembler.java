@@ -18,24 +18,24 @@ package com.qualogy.qafe.gwt.server.event.assembler;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
-import com.qualogy.qafe.bind.presentation.event.function.CloseWindow;
+import com.qualogy.qafe.bind.presentation.event.function.LocalDelete;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
-import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
 
-public class CloseWindowAssembler extends AbstractEventItemAssembler {
+public class StoreClearAssembler extends AbstractEventItemAssembler {
 
-    public BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
-        CloseWindowGVO eventItemGVO = null;
-        if (eventItem instanceof CloseWindow) {
-            eventItemGVO = new CloseWindowGVO();
-            assembleAttributes(eventItemGVO, (CloseWindow)eventItem, event, applicationContext);
+    public final BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
+        StoreClearGVO eventItemGVO = null;
+        if (eventItem instanceof LocalDelete) {
+            eventItemGVO = new StoreClearGVO();
+            assembleAttributes(eventItemGVO, (LocalDelete)eventItem, event, applicationContext);
         }
         return eventItemGVO;
     }
 
-    private void assembleAttributes(CloseWindowGVO eventItemGVO, CloseWindow eventItem, Event event, ApplicationContext applicationContext) {
-    	ParameterGVO windowGVO = assembleParameter(eventItem.getWindow());
-    	eventItemGVO.setWindowGVO(windowGVO);
+    private final void assembleAttributes(StoreClearGVO eventItemGVO, LocalDelete eventItem, Event event,
+            ApplicationContext applicationContext) {
+        eventItemGVO.setName(eventItem.getName());
+        eventItemGVO.setTarget(eventItem.getTarget());
     }
 }

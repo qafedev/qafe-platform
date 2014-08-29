@@ -69,7 +69,7 @@
                 <repository>
                     <id>projects.releases</id>
                     <name>Projects Releases</name>
-                    <url>http://dev031.qualogy.com:8080/nexus/content/repositories/projects.releases</url>
+                    <url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
                     <releases>
                         <checksumPolicy>ignore</checksumPolicy>
                         <enabled>true</enabled>
@@ -83,7 +83,7 @@
                 <repository>
                     <id>projects.snapshots</id>
                     <name>Projects Snapshots</name>
-                    <url>http://dev031.qualogy.com:8080/nexus/content/repositories/projects.snapshots</url>
+                    <url>http://repository.qafe.com/nexus/content/repositories/projects.snapshots</url>
                     <releases>
                         <checksumPolicy>ignore</checksumPolicy>
                         <enabled>true</enabled>
@@ -126,21 +126,20 @@
         <mirror>
             <id>public</id>
             <name>Qualogy Maven Repository</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/groups/public/</url>
+            <url>http://repository.qafe.com/nexus/nexus/content/groups/public/</url>
             <mirrorOf>central,thirdparty,apache-snapshots,codehaus-snapshots</mirrorOf>
         </mirror>
         <mirror>
             <id>snapshots</id>
             <name>Qualogy Maven SNAPSHOT Repository</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.snapshots/</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.snapshots/</url>
             <mirrorOf>qafe.snapshots</mirrorOf>
         </mirror>
         <mirror>
             <id>releases</id>
             <name>Qualogy Maven Releases Repository</name>
-            <url>http://repository.qafe.qualogy.com:8081/nexus/content/repositories/qafe.releases/</url>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.releases/</url>
             <mirrorOf>qafe.releases</mirrorOf>
         </mirror>
     </mirrors>
-
 </settings>

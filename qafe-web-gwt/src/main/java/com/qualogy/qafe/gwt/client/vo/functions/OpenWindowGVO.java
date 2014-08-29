@@ -17,7 +17,6 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 import java.util.List;
 
-import com.qualogy.qafe.gwt.client.vo.ui.WindowGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class OpenWindowGVO extends BuiltInFunctionGVO {
@@ -27,6 +26,12 @@ public class OpenWindowGVO extends BuiltInFunctionGVO {
     public static final String PLACEMENT_CASCADE = "cascade";
     public static final String PLACEMENT_CENTER_CASCADE = "center-cascade";
     public static final String PLACEMENT_TILED = "tiled";
+    
+    /* Introduced for client side */
+    private ParameterGVO urlGVO;
+    private ParameterGVO titleGVO;
+    private ParameterGVO paramsGVO;
+    private List<ParameterGVO> dataParamGVOList;
     
     private ParameterGVO windowGVO;
 	private String window;
@@ -101,8 +106,40 @@ public class OpenWindowGVO extends BuiltInFunctionGVO {
 		this.windowGVO = windowGVO;
 	}
 
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
+    public ParameterGVO getUrlGVO() {
+        return urlGVO;
+    }
+
+    public void setUrlGVO(ParameterGVO urlGVO) {
+        this.urlGVO = urlGVO;
+    }
+
+    public ParameterGVO getTitleGVO() {
+        return titleGVO;
+    }
+
+    public void setTitleGVO(ParameterGVO titleGVO) {
+        this.titleGVO = titleGVO;
+    }
+
+    public ParameterGVO getParamsGVO() {
+        return paramsGVO;
+    }
+
+    public void setParamsGVO(ParameterGVO paramsGVO) {
+        this.paramsGVO = paramsGVO;
+    }
+
+    public List<ParameterGVO> getDataParamGVOList() {
+        return dataParamGVOList;
+    }
+
+    public void setDataParamGVOList(List<ParameterGVO> dataParamGVOList) {
+        this.dataParamGVOList = dataParamGVOList;
+    }
+    
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
 }

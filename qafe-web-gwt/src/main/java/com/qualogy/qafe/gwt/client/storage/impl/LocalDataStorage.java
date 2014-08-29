@@ -39,7 +39,18 @@ public class LocalDataStorage implements DataStorage {
             storage.remove(dataId);
         }
     }
-
+    
+    public final void removeData(final String dataId, String name) {
+       if (storage.containsKey(dataId)) {
+           Map<String, Object> values = storage.get(dataId);
+           
+           if (values == null) {
+               return;
+           }
+           values.remove(name);
+       }
+    }
+    
     public final Object getData(final String dataId, final String name) {
         final Map<String, Object> values = storage.get(dataId);
         Object result = null;
