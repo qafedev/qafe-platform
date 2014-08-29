@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,20 +34,22 @@ import com.qualogy.qafe.util.ExceptionHelper;
 /**
  *
  */
-public class QafeDataSource implements DataSource {
-	private DataSource dataSource;
-	private boolean isProxyConnection;
-	private DataIdentifier dataId;
-	private Logger logger = Logger.getLogger(this.getClass().getName());
+public final class QafeDataSource implements DataSource {
+    
+    private static final Logger LOG = Logger.getLogger(QafeDataSource.class.getName());
+    
+	private final DataSource dataSource;
+	private final boolean isProxyConnection;
+	private final DataIdentifier dataId;
 
-	public QafeDataSource(DataSource ds, boolean isProxyConnection,
-			DataIdentifier dataId) {
+	public QafeDataSource(final DataSource ds, final boolean isProxyConnection,
+			final DataIdentifier dataId) {
 		this.dataSource = ds;
 		this.isProxyConnection = isProxyConnection;
 		this.dataId = dataId;
 	}
 	
-	public QafeDataSource(RDBDatasource rdbDatasource, DataIdentifier dataId) {
+	public QafeDataSource(final RDBDatasource rdbDatasource, final DataIdentifier dataId) {
 		this(rdbDatasource.getDataSource(), rdbDatasource.getResource().isProxyConnection(), dataId);
 		//rdbDatasource.setDataSource(this);
 	}
@@ -67,7 +70,7 @@ public class QafeDataSource implements DataSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Connection getConnection(String username, String password)
+	public Connection getConnection(final String username, final String password)
 			throws SQLException {
 		Connection conn = dataSource.getConnection(username, password);
 
@@ -89,14 +92,14 @@ public class QafeDataSource implements DataSource {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setLogWriter(PrintWriter out) throws SQLException {
+	public void setLogWriter(final PrintWriter out) throws SQLException {
 		dataSource.setLogWriter(out);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setLoginTimeout(int seconds) throws SQLException {
+	public void setLoginTimeout(final int seconds) throws SQLException {
 		dataSource.setLoginTimeout(seconds);
 	}
 
@@ -107,7 +110,7 @@ public class QafeDataSource implements DataSource {
 		return dataSource.getLoginTimeout();
 	}
 
-	public <T> T unwrap(Class<T> iface) throws SQLException {
+	public <T> T unwrap(final Class<T> iface) throws SQLException {
 		Method m =null;
 		try {
 			m = dataSource.getClass().getMethod("unwrap", Class.class);
@@ -117,22 +120,22 @@ public class QafeDataSource implements DataSource {
 			} else {
 				return null;
 			}
-		} catch (SecurityException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (NoSuchMethodException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalArgumentException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalAccessException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (InvocationTargetException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final SecurityException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final NoSuchMethodException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final IllegalArgumentException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final IllegalAccessException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final InvocationTargetException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
 		}
 		return null;
 
 	}
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	public boolean isWrapperFor(final Class<?> iface) throws SQLException {
 		Method m =null;
 		try {
 			m = dataSource.getClass().getMethod("isWrapperFor", Class.class);
@@ -142,20 +145,21 @@ public class QafeDataSource implements DataSource {
 			} else {
 				return false;
 			}
-		} catch (SecurityException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (NoSuchMethodException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalArgumentException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (IllegalAccessException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
-		} catch (InvocationTargetException e) {
-			logger.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final SecurityException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final NoSuchMethodException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final IllegalArgumentException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final IllegalAccessException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
+		} catch (final InvocationTargetException e) {
+			LOG.log(Level.SEVERE,ExceptionHelper.printStackTrace(e));
 		}
-		return false;
-
-		
-		
+		return false;		
+	}
+	
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+	    return null;
 	}
 }
