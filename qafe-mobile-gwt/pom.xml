@@ -64,7 +64,7 @@
                     <execution>
                         <configuration>
                             <inplace>true</inplace>
-                            <extraJvmArgs>-Xms512m -Xmx1024m -XX:PermSize=512M -XX:MaxPermSize=512M -XX:-UseGCOverheadLimit -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
+                           <!--  <extraJvmArgs>-Xms512m -Xmx1024m -XX:PermSize=512M -XX:MaxPermSize=512M -XX:-UseGCOverheadLimit -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs> -->
                             <style>${qafe-compiler-debug}</style>
                             <skip>${gwt.compile.skip}</skip>
                             <force>true</force>
