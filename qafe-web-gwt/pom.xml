@@ -46,7 +46,6 @@
                     <execution>
                         <configuration>
                             <inplace>true</inplace>
-                            <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                             <style>${qafe-compiler-debug}</style>
                             <force>true</force>
                             <localWorkers>${qafe.gwt.permutation.workers}</localWorkers>
