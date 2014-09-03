@@ -43,7 +43,7 @@ The source code can be found in qafe-platform directory
 
 ## Building QAFE Platform
 
-For Building QAFE Java is needed. Java6 can be found [here](http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html) for Mac OSX Mavericks see this [link](http://support.apple.com/kb/DL1572) 
+For Building QAFE Java 7 is needed. See [this link for the downloads](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 
 Maven version 3.x is used as a project management tool for the QAFE Platform. Maven is an open-source project freely distributed by the Apache Software Foundation. The tool is necessary to be able to build the platform. Before building, make sure that the following tasks are done:
 
