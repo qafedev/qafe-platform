@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -31,8 +32,6 @@ import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.qualogy.qafe.core.datastore.ApplicationLocalStore;
 import com.qualogy.qafe.core.datastore.DataStore;
@@ -43,108 +42,109 @@ import com.qualogy.qafe.service.domain.DocumentParameter;
 import com.qualogy.qafe.util.ExceptionHelper;
 
 public class DatagridUploadServlet extends HttpServlet {
-	
-	private static final long serialVersionUID = -5162541603503766940L;
-	private  final static Log logger = LogFactory.getLog(DatagridUploadServlet.class);
-	public final static String FORM_PARAMETER_DELIMITER = "delimiter";
-	public final static String FORM_PARAMETER_ISFIRSTLINEHEADER = "isFirstLineHeader";
-	private DocumentService  documentService = new DocumentServiceImpl();
 
-	private void writeLog(String text) {
-		log(text);
-		logger.info(text);
-		System.err.println(text);
-	}
+    private static final long serialVersionUID = -5162541603503766940L;
 
-	@SuppressWarnings("unchecked")
-	private void writeUploadInfo(HttpServletRequest request) {
-		writeLog("Document Upload!");
+    private static final Logger LOG = Logger.getLogger(DatagridUploadServlet.class.getName());
 
-		Enumeration headerNames = request.getHeaderNames();
-		while (headerNames.hasMoreElements()) {
-			Object name = headerNames.nextElement();
-			if (name != null) {
-				writeLog("Header - " + name + " : "
-						+ request.getHeader((String) name));
-			}
-		}
+    public static final String FORM_PARAMETER_DELIMITER = "delimiter";
 
-		writeLog("ServletRemoteAddr: " + request.getRemoteAddr());
-		writeLog("Remote Host: " + request.getRemoteHost());
-		writeLog("Remote User: " + request.getRemoteUser());
-		writeLog("Protocol: " + request.getProtocol());
-		writeLog("Server Name: " + request.getServerName());
-		writeLog("Server Port: " + request.getServerPort());
-		writeLog("Request URL: " + request.getRequestURL());
+    public static final String FORM_PARAMETER_ISFIRSTLINEHEADER = "isFirstLineHeader";
 
-	}
+    private DocumentService documentService = new DocumentServiceImpl();
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		byte[] filecontent = null;
-		ServletFileUpload upload = new ServletFileUpload();
-		InputStream inputStream = null;
-   		ByteArrayOutputStream outputStream = null;
-   		boolean isFirstLineHeader = false;
-		String delimiter = ",";
-		
-		writeUploadInfo(request);
-		log(request.getHeader("User-Agent"));
-		
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		
-		try {
+    private void writeLog(String text) {
+        log(text);
+        LOG.info(text);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void writeUploadInfo(HttpServletRequest request) {
+        writeLog("Document Upload!");
+
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            Object name = headerNames.nextElement();
+            if (name != null) {
+                writeLog("Header - " + name + " : " + request.getHeader((String) name));
+            }
+        }
+
+        writeLog("ServletRemoteAddr: " + request.getRemoteAddr());
+        writeLog("Remote Host: " + request.getRemoteHost());
+        writeLog("Remote User: " + request.getRemoteUser());
+        writeLog("Protocol: " + request.getProtocol());
+        writeLog("Server Name: " + request.getServerName());
+        writeLog("Server Port: " + request.getServerPort());
+        writeLog("Request URL: " + request.getRequestURL());
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+
+        byte[] filecontent = null;
+        ServletFileUpload upload = new ServletFileUpload();
+        InputStream inputStream = null;
+        ByteArrayOutputStream outputStream = null;
+        boolean isFirstLineHeader = false;
+        String delimiter = ",";
+
+        writeUploadInfo(request);
+        log(request.getHeader("User-Agent"));
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        try {
             FileItemIterator fileItemIterator = upload.getItemIterator(request);
             while (fileItemIterator.hasNext()) {
-				FileItemStream item = fileItemIterator.next();
-				inputStream = item.openStream();
-				// Read the file into a byte array.
-				outputStream = new ByteArrayOutputStream();
-				byte[] buffer = new byte[8192];
-				int len = 0;
-				while (-1 != (len = inputStream.read(buffer))) {
-					outputStream.write(buffer, 0, len);
-				}
-				if (filecontent == null) {
-					filecontent = outputStream.toByteArray();
-				}
-				if (FORM_PARAMETER_DELIMITER.equals(item.getFieldName())){
-					delimiter = outputStream.toString();
-				}else if (FORM_PARAMETER_ISFIRSTLINEHEADER.equals(item.getFieldName())){
-					if ("on".equals(outputStream.toString())){
-						isFirstLineHeader = true;
-					}
-				}
+                FileItemStream item = fileItemIterator.next();
+                inputStream = item.openStream();
+                // Read the file into a byte array.
+                outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[8192];
+                int len = 0;
+                while (-1 != (len = inputStream.read(buffer))) {
+                    outputStream.write(buffer, 0, len);
+                }
+                if (filecontent == null) {
+                    filecontent = outputStream.toByteArray();
+                }
+                if (FORM_PARAMETER_DELIMITER.equals(item.getFieldName())) {
+                    delimiter = outputStream.toString();
+                } else if (FORM_PARAMETER_ISFIRSTLINEHEADER.equals(item.getFieldName())) {
+                    if ("on".equals(outputStream.toString())) {
+                        isFirstLineHeader = true;
+                    }
+                }
             }
             inputStream.close();
             outputStream.close();
-		} catch (FileUploadException e) {
-			ExceptionHelper.printStackTrace(e);
-		} catch (RuntimeException e) {
-			out.print("Conversion failed. Please check the file. Message :"	+ e.getMessage());
-		}
-		
-		DocumentParameter dp = new DocumentParameter();
-		dp.setDelimiter(delimiter);
-		dp.setFirstFieldHeader(isFirstLineHeader);
-		dp.setData(filecontent);
-		try {
-			DocumentOutput dout = documentService.processExcelUpload(dp);
-			String uploadUUID = DataStore.KEY_LOOKUP_DATA + dout.getUuid();               		
-       		ApplicationLocalStore.getInstance().store(uploadUUID, uploadUUID, dout.getData());               	
-			out.print("UUID=" + uploadUUID);
-		} catch (Exception e){
-			out.print("Conversion failed. Please check the file (" + e.getMessage()+")");
-		}
-	}
+        } catch (FileUploadException e) {
+            ExceptionHelper.printStackTrace(e);
+        } catch (RuntimeException e) {
+            out.print("Conversion failed. Please check the file. Message :" + e.getMessage());
+        }
 
-	@Override
-	public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-	}
+        DocumentParameter dp = new DocumentParameter();
+        dp.setDelimiter(delimiter);
+        dp.setFirstFieldHeader(isFirstLineHeader);
+        dp.setData(filecontent);
+        try {
+            DocumentOutput dout = documentService.processExcelUpload(dp);
+            String uploadUUID = DataStore.KEY_LOOKUP_DATA + dout.getUuid();
+            ApplicationLocalStore.getInstance().store(uploadUUID, uploadUUID, dout.getData());
+            out.print("UUID=" + uploadUUID);
+        } catch (Exception e) {
+            out.print("Conversion failed. Please check the file (" + e.getMessage() + ")");
+        }
+    }
 
-
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+    }
 
 }

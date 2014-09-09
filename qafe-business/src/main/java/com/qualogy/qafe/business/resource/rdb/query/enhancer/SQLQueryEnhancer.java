@@ -23,63 +23,64 @@ import org.apache.commons.lang.StringUtils;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SQLQueryEnhancer implements Enhancer {
-    public Query enhance(Query query, DatabaseMetaData databaseMetaData)
-        throws EnhancementFailedException {
+
+    private static final Logger LOG = Logger.getLogger(SQLQueryEnhancer.class.getName());
+
+    public Query enhance(Query query, DatabaseMetaData databaseMetaData) throws EnhancementFailedException {
         SQLQuery sqlQuery = (SQLQuery) query;
 
         ResultSet resultSet = null;
 
         try {
-            if (StringUtils.isBlank(sqlQuery.getSqlAsAttribute()) &&
-                    StringUtils.isBlank(sqlQuery.getSqlAsText()) &&
-                    StringUtils.isNotBlank(sqlQuery.getTable())) {
+            if (StringUtils.isBlank(sqlQuery.getSqlAsAttribute())
+                    && StringUtils.isBlank(sqlQuery.getSqlAsText())
+                    && StringUtils.isNotBlank(sqlQuery.getTable())) {
                 // The Oracle database stores its table names as Upper-Case,
                 // if you pass a table name in lowercase characters, it will not work.
                 // MySQL database does not care if table name is uppercase/lowercase.
                 //
-                //TODO:check if there is a way to catch table data
-                //TODO: dialect needed for upper/lowercase
+                // TODO:check if there is a way to catch table data
+                // TODO: dialect needed for upper/lowercase
                 String userName = databaseMetaData.getUserName();
-                resultSet = databaseMetaData.getTables(null, null,
-                        sqlQuery.getTable().toUpperCase(), null);
+                resultSet = databaseMetaData.getTables(null, null, sqlQuery.getTable().toUpperCase(), null);
 
                 String tableSchema = null;
 
-                //Knowing schema name is not necessary but we gain performance
+                // Knowing schema name is not necessary but we gain performance
                 // by using it during retrieving meta data.
                 while (resultSet.next() && (null != userName)) {
-                    //some vendors like MySQL do not provide schema name
+                    // some vendors like MySQL do not provide schema name
                     // that's why we have to check whether the schema name is "null"
-                    if ((null != resultSet.getString("TABLE_SCHEM")) &&
-                            resultSet.getString("TABLE_SCHEM").equals(userName)) {
+                    if ((null != resultSet.getString("TABLE_SCHEM"))
+                            && resultSet.getString("TABLE_SCHEM").equals(userName)) {
                         tableSchema = userName;
 
                         break;
                     }
 
-                    //TABLE_TYPE
+                    // TABLE_TYPE
                 }
 
                 try {
-                    sqlQuery.getMetaData()
-                            .setSupportsGetGeneratedKeys(databaseMetaData.supportsGetGeneratedKeys());
+                    sqlQuery.getMetaData().setSupportsGetGeneratedKeys(
+                        databaseMetaData.supportsGetGeneratedKeys());
                 } catch (AbstractMethodError e) {
-                    System.err.println(
-                        "On the database driver there is no support for Metadata reading (sqlquery: " +
-                        sqlQuery.getId() + ")");
+                    LOG.log(Level.WARNING,
+                        "On the database driver there is no support for Metadata reading (sqlquery: "
+                                + sqlQuery.getId() + ")", e);
                 }
 
-                //if you pass null values for the first two parameters, then
+                // if you pass null values for the first two parameters, then
                 // it might take too long to return the result.
-                resultSet = databaseMetaData.getPrimaryKeys(null, tableSchema,
-                        sqlQuery.getTable().toUpperCase());
+                resultSet =
+                    databaseMetaData.getPrimaryKeys(null, tableSchema, sqlQuery.getTable().toUpperCase());
 
                 while (resultSet.next()) {
-                    sqlQuery.getMetaData()
-                            .addPrimaryKey(resultSet.getString("COLUMN_NAME"));
+                    sqlQuery.getMetaData().addPrimaryKey(resultSet.getString("COLUMN_NAME"));
                 }
 
                 // if no primarykeys found on a table, an update statement cannot be generated

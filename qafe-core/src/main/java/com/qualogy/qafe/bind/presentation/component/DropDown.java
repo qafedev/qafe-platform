@@ -21,158 +21,167 @@ package com.qualogy.qafe.bind.presentation.component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jibx.runtime.IUnmarshallingContext;
 
 import com.qualogy.qafe.bind.PostProcessing;
 
-
 /**
- * @author rjankie 
+ * @author rjankie
  */
 
-public  class DropDown extends EditableComponent implements PostProcessing, HasRequiredProperty{
-	
-	/**
+public class DropDown extends EditableComponent implements PostProcessing, HasRequiredProperty {
+
+    private static final Logger LOG = Logger.getLogger(DropDown.class.getName());
+
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4225013574017207708L;
-	/**
+    private static final long serialVersionUID = 4225013574017207708L;
+
+    /**
 	 * 
 	 */
-	protected List<DropDownItem> dropDownItems = new ArrayList<DropDownItem>();
-	/**
+    protected List<DropDownItem> dropDownItems = new ArrayList<DropDownItem>();
+
+    /**
 	 * 
 	 */
-	protected String emptyItemDisplayName;
-	protected String emptyItemValue;
-	protected String emptyItemMessageKey;
-	protected Boolean required=Boolean.FALSE;
-	protected String requiredStyleClassName;
+    protected String emptyItemDisplayName;
 
-	/**
-	 * @return
-	 */
-	public List<DropDownItem> getDropDownItems() {
-		return dropDownItems;
-	}
+    protected String emptyItemValue;
 
+    protected String emptyItemMessageKey;
 
-	/**
-	 * @param dropDownItems
-	 */
-	public void setDropDownItems(List<DropDownItem> dropDownItems) {
-		this.dropDownItems = dropDownItems;
-	}
-	
-	/**
-	 * @return
-	 */
-	public String getEmptyItemDisplayName() {
-		return emptyItemDisplayName;
-	}
+    protected Boolean required = Boolean.FALSE;
 
-	/**
-	 * @param emptyItemDisplayName
-	 */
-	public void setEmptyItemDisplayName(String emptyItemDisplayName) {
-		this.emptyItemDisplayName = emptyItemDisplayName;
-	}
+    protected String requiredStyleClassName;
 
-	/**
-	 * @return
-	 */
-	public String getEmptyItemValue() {
-		return emptyItemValue;
-	}
+    /**
+     * @return
+     */
+    public List<DropDownItem> getDropDownItems() {
+        return dropDownItems;
+    }
 
-	/**
-	 * @param emptyItemValue
-	 */
-	public void setEmptyItemValue(String emptyItemValue) {
-		this.emptyItemValue = emptyItemValue;
-	}
+    /**
+     * @param dropDownItems
+     */
+    public void setDropDownItems(List<DropDownItem> dropDownItems) {
+        this.dropDownItems = dropDownItems;
+    }
 
-	/**
-	 * @return
-	 */
-	public String getEmptyItemMessageKey() {
-		return emptyItemMessageKey;
-	}
+    /**
+     * @return
+     */
+    public String getEmptyItemDisplayName() {
+        return emptyItemDisplayName;
+    }
 
-	/**
-	 * @param emptyItemMessageKey
-	 */
-	public void setEmptyItemMessageKey(String emptyItemMessageKey) {
-		this.emptyItemMessageKey = emptyItemMessageKey;
-	}
+    /**
+     * @param emptyItemDisplayName
+     */
+    public void setEmptyItemDisplayName(String emptyItemDisplayName) {
+        this.emptyItemDisplayName = emptyItemDisplayName;
+    }
 
+    /**
+     * @return
+     */
+    public String getEmptyItemValue() {
+        return emptyItemValue;
+    }
 
-	/**
-	 * Post setter
-	 * @param context
-	 */
-	public void postset(IUnmarshallingContext context){
-		performPostProcessing();
-	}
-	public void performPostProcessing() {
-		// check the number of selected items !!!
-		if (getDropDownItems()!=null){
-			Iterator<DropDownItem> itr = getDropDownItems().iterator();
-			int selectedCount = 0;
-			while (itr.hasNext()){
-				Object o = itr.next();
-				if (o instanceof DropDownItem){
-					DropDownItem dropDownItem = (DropDownItem)o;
-					if (dropDownItem.isSelected()!=null){
-						if (dropDownItem.isSelected().booleanValue()==true){
-							selectedCount++;
-						}
-					}
-				}
-			}
-			if (selectedCount>1){
-				System.err.println("There are more selected items in dropdown " + getId());
-			}
-		}
-		
-	}
-	/**
-	 * @param dropDownItem
-	 */
-	public void add(DropDownItem dropDownItem){
-		if (dropDownItem !=null){
-			getDropDownItems().add(dropDownItem);
-		} else {
-			// throw NullPointerException
-		}
-	}
-	 
-	/**
-	 * @param dropDownItem
-	 */
-	public void remove(DropDownItem dropDownItem){
-		if (dropDownItem !=null){
-			getDropDownItems().remove(dropDownItem);			
-		} else {
-			// throw NullPointerException
-		}
-	}
-	
-	public Boolean getRequired() {
-		return required;
-	}
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
+    /**
+     * @param emptyItemValue
+     */
+    public void setEmptyItemValue(String emptyItemValue) {
+        this.emptyItemValue = emptyItemValue;
+    }
 
+    /**
+     * @return
+     */
+    public String getEmptyItemMessageKey() {
+        return emptyItemMessageKey;
+    }
 
-	public String getRequiredStyleClassName() {
-		return requiredStyleClassName;
-	}
+    /**
+     * @param emptyItemMessageKey
+     */
+    public void setEmptyItemMessageKey(String emptyItemMessageKey) {
+        this.emptyItemMessageKey = emptyItemMessageKey;
+    }
 
+    /**
+     * Post setter
+     * 
+     * @param context
+     */
+    public void postset(IUnmarshallingContext context) {
+        performPostProcessing();
+    }
 
-	public void setRequiredStyleClassName(String requiredStyleClassName) {
-		this.requiredStyleClassName = requiredStyleClassName;
-	}
+    public void performPostProcessing() {
+        // check the number of selected items !!!
+        if (getDropDownItems() != null) {
+            Iterator<DropDownItem> itr = getDropDownItems().iterator();
+            int selectedCount = 0;
+            while (itr.hasNext()) {
+                Object o = itr.next();
+                if (o instanceof DropDownItem) {
+                    DropDownItem dropDownItem = (DropDownItem) o;
+                    if (dropDownItem.isSelected() != null) {
+                        if (dropDownItem.isSelected().booleanValue() == true) {
+                            selectedCount++;
+                        }
+                    }
+                }
+            }
+            if (selectedCount > 1) {
+                LOG.log(Level.WARNING, "There are more selected items in dropdown " + getId());
+            }
+        }
+
+    }
+
+    /**
+     * @param dropDownItem
+     */
+    public void add(DropDownItem dropDownItem) {
+        if (dropDownItem != null) {
+            getDropDownItems().add(dropDownItem);
+        } else {
+            // throw NullPointerException
+        }
+    }
+
+    /**
+     * @param dropDownItem
+     */
+    public void remove(DropDownItem dropDownItem) {
+        if (dropDownItem != null) {
+            getDropDownItems().remove(dropDownItem);
+        } else {
+            // throw NullPointerException
+        }
+    }
+
+    public Boolean getRequired() {
+        return required;
+    }
+
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
+
+    public String getRequiredStyleClassName() {
+        return requiredStyleClassName;
+    }
+
+    public void setRequiredStyleClassName(String requiredStyleClassName) {
+        this.requiredStyleClassName = requiredStyleClassName;
+    }
 }

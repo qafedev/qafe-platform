@@ -16,6 +16,8 @@
 package com.qualogy.qafe.business.resource.rdb;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -31,93 +33,93 @@ import com.qualogy.qafe.business.resource.Resource;
 import com.qualogy.qafe.business.resource.rdb.statement.dialect.Dialect;
 import com.qualogy.qafe.business.transaction.SupportsLocalTransactions;
 
-public abstract class RDBDatasource extends Resource implements SupportsLocalTransactions{
-	
-	private Dialect dialect;
-	protected DataSource dataSource;          
-	
-	
-	/**
-	 * Holder for {@link Query}. The {@link Query} are read and 
-	 * bound from a file and contained in an {@link QueryContainer}.
-	 */
-	private QueryContainer queryContainer;
-	
-	public QueryContainer getQueryContainer() {
-		return queryContainer;
-	}
-	
-	public void setQueryContainer(QueryContainer queryContainer) {
-		this.queryContainer = queryContainer;
-	}
+public abstract class RDBDatasource extends Resource implements SupportsLocalTransactions {
 
-	public DataSource getDataSource(){
-		return dataSource;
-	}
+    private static final Logger LOG = Logger.getLogger(RDBDatasource.class.getName());
+
+    private Dialect dialect;
+
+    protected DataSource dataSource;
+
+    /**
+     * Holder for {@link Query}. The {@link Query} are read and bound from a file and contained in an
+     * {@link QueryContainer}.
+     */
+    private QueryContainer queryContainer;
+
+    public QueryContainer getQueryContainer() {
+        return queryContainer;
+    }
+
+    public void setQueryContainer(QueryContainer queryContainer) {
+        this.queryContainer = queryContainer;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public DatasourceBindResource getResource(){
-		return (DatasourceBindResource)super.get();
-	}
-	
-	public RDBDatasource(BindResource resource) {
-		super(resource);
-	}
-	
-	public boolean isEqualTo(Resource otherResource) {
-		return false;
-	}
-	
-	public void init() {
-		setDialect(((DatasourceBindResource)getBindResource()).getDialect());
-	}
+    public DatasourceBindResource getResource() {
+        return (DatasourceBindResource) super.get();
+    }
 
+    public RDBDatasource(BindResource resource) {
+        super(resource);
+    }
 
+    public boolean isEqualTo(Resource otherResource) {
+        return false;
+    }
 
-	public String toLogString() {
-		return ToStringBuilder.reflectionToString(dataSource);
-	}
+    public void init() {
+        setDialect(((DatasourceBindResource) getBindResource()).getDialect());
+    }
 
-	public Query get(String queryName) {
-		return (Query)queryContainer.get(queryName);
-	}
-	
-	public void put(Query query) {
-		queryContainer.put(query);
-	}
-	
-	public Dialect getDialect() {
-		return dialect;
-	}
+    public String toLogString() {
+        return ToStringBuilder.reflectionToString(dataSource);
+    }
 
-	public void setDialect(String dialect) {
-		this.dialect = Dialect.create(dialect);
-	}
+    public Query get(String queryName) {
+        return (Query) queryContainer.get(queryName);
+    }
 
-	
-	/**
-	 * @deprecated move to dialect
-	 * @param namedParametersSupported
-	 */
-	public void setNamedParametersSupported(boolean namedParametersSupported) {
-		if(dialect!=null)
-			this.dialect.setNamedParametersSupported(namedParametersSupported);
-	}
-	public void destroy(ApplicationContext context) {
-			if (dataSource != null) {
-				try {
-					DataSourceUtils.releaseConnection(dataSource.getConnection(),dataSource);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace(System.err);
-				}
-//				if (!dataSource.getConnection().isClosed()){
-//					// You call close() on the Connection object when you're done. Note that this doesn't really close the connection - it just returns it to the pool.
-//					dataSource.getConnection().close();
-//				}
-			}
-	}
+    public void put(Query query) {
+        queryContainer.put(query);
+    }
+
+    public Dialect getDialect() {
+        return dialect;
+    }
+
+    public void setDialect(String dialect) {
+        this.dialect = Dialect.create(dialect);
+    }
+
+    /**
+     * @deprecated move to dialect
+     * @param namedParametersSupported
+     */
+    public void setNamedParametersSupported(boolean namedParametersSupported) {
+        if (dialect != null)
+            this.dialect.setNamedParametersSupported(namedParametersSupported);
+    }
+
+    public void destroy(ApplicationContext context) {
+        if (dataSource != null) {
+            try {
+                DataSourceUtils.releaseConnection(dataSource.getConnection(), dataSource);
+            } catch (SQLException e) {
+                LOG.log(Level.WARNING, "Problem releasing db connection", e);
+            }
+            // if (!dataSource.getConnection().isClosed()){
+            // // You call close() on the Connection object when you're done. Note that this doesn't really
+            // close the connection - it just returns it to the pool.
+            // dataSource.getConnection().close();
+            // }
+        }
+    }
 }

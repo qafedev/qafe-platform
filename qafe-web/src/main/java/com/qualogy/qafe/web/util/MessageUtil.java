@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +35,8 @@ import com.qualogy.solutions.business.mail.client.service.impl.MailClientImpl;
 
 public class MessageUtil {
 	
+    private static final Logger LOG = Logger.getLogger(MessageUtil.class.getName());
+    
 	public static String hostUrl = ApplicationCluster.getInstance().getConfigurationItem(Configuration.WEBSERVICE_MAIL_URL);
 	
 	public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -58,7 +61,7 @@ public class MessageUtil {
 			strB.append("Cannot retrieve information, due to security exception!");
 		}
 		strB.append("---- END ENVIRONMENT INFO-----");
-		System.err.println(strB.toString());
+		LOG.info(strB.toString());
 		List<String> tos = new ArrayList<String>();
 		tos.add("support@qafe.com");
 	    MailClient mailClient = new  MailClientImpl (hostUrl);

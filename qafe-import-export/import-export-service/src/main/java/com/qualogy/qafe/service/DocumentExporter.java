@@ -143,7 +143,7 @@ public class DocumentExporter {
 	public static void exportPDFOrRTF(DocumentExportInput input, ByteArrayOutputStream bout, boolean pdf) {
 		ByteArrayOutputStream xmlBout = new ByteArrayOutputStream();
 		exportXML(input, xmlBout);
-		System.err.println(xmlBout.toString());
+
 		ByteArrayInputStream xml = new ByteArrayInputStream(xmlBout.toByteArray());
 
 		// configure fopFactory as desired
