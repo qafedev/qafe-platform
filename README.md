@@ -9,6 +9,7 @@ Additionally we offer a service to convert Oracle Forms to QAML files to be used
 - Building QAFE Platform
 - Modifying QAFE Platform
 - Debugging QAFE Platform
+- Logging QAFE Platform
 - Running QAFE Platform applications
 - Sample code 
 - Further Reading
@@ -85,6 +86,9 @@ mvn gwt:run
 ```
 
 This should open the application in your browser. Now enable Super Dev Mode by opening the Dev Mode On-bookmark. You should now be able to debug the client-side code by using the Chrome Developer Tools. (Menu --> Tools --> Developer Tools or use the shortcut: F12) All client-side Java code can be debugged from the source-tab. Debugging i done by selecting a file and clicking on the line number creating a breakpoint.  
+
+## Logging QAFE Platform
+QAFE Platform uses the Java Logging API as its logging framework. Therefore, configuring logging behaviour can be accomplished by applying changes to the logging.properties of your JRE's lib/logging.properties file. Also, a logging.properties file location can be specified using the system property java.util.logging.config.file. At last, when deployed into a tomcat container different rules apply as tomcat implements its own Log Manager. See http://tomcat.apache.org/tomcat-7.0-doc/logging.html under java.util.logging for the specifics.
 
 ## Running QAFE Platform applications
 The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. This file contains the platform and a basic Hello World application. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application-folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
