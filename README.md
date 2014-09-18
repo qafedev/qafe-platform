@@ -88,7 +88,19 @@ mvn gwt:run
 This should open the application in your browser. Now enable Super Dev Mode by opening the Dev Mode On-bookmark. You should now be able to debug the client-side code by using the Chrome Developer Tools. (Menu --> Tools --> Developer Tools or use the shortcut: F12) All client-side Java code can be debugged from the source-tab. Debugging i done by selecting a file and clicking on the line number creating a breakpoint.  
 
 ## Logging QAFE Platform
-QAFE Platform uses the Java Logging API as its logging framework. Therefore, configuring logging behaviour can be accomplished by applying changes to the logging.properties of your JRE's lib/logging.properties file. Also, a logging.properties file location can be specified using the system property java.util.logging.config.file. At last, when deployed into a tomcat container different rules apply as tomcat implements its own Log Manager. See http://tomcat.apache.org/tomcat-7.0-doc/logging.html under java.util.logging for the specifics.
+QAFE Platform uses the Java Logging API as its logging framework. Therefore, configuring logging behaviour can be accomplished by applying changes to the logging.properties of your JRE's lib/logging.properties file. Also, a logging.properties file location can be specified using the system property java.util.logging.config.file.
+When deployed into a tomcat container different rules apply as tomcat implements its own Log Manager. See http://tomcat.apache.org/tomcat-7.0-doc/logging.html under java.util.logging for the specifics.
+In case of developing QAML using eclipse and the QAML Builder plugins the logging.properties file can be found in the src/main/resources folder of your QAML project. When debugging an application more log output could be desirable, as by default only WARNING or SEVERE messages are logged. Open the logging.properties file and find the following line:
+
+```
+java.util.logging.ConsoleHandler.level = WARNING
+```
+
+and change it to:
+```
+java.util.logging.ConsoleHandler.level = INFO
+```
+See for a complete list of log levels: http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html.
 
 ## Running QAFE Platform applications
 The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. This file contains the platform and a basic Hello World application. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application-folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
