@@ -89,7 +89,9 @@ This should open the application in your browser. Now enable Super Dev Mode by o
 
 ## Logging QAFE Platform
 QAFE Platform uses the Java Logging API as its logging framework. Therefore, configuring logging behaviour can be accomplished by applying changes to the logging.properties of your JRE's lib/logging.properties file. Also, a logging.properties file location can be specified using the system property java.util.logging.config.file.
+
 When deployed into a tomcat container different rules apply as tomcat implements its own Log Manager. See http://tomcat.apache.org/tomcat-7.0-doc/logging.html under java.util.logging for the specifics.
+
 In case of developing QAML using eclipse and the QAML Builder plugins the logging.properties file can be found in the src/main/resources folder of your QAML project. When debugging an application more log output could be desirable, as by default only WARNING or SEVERE messages are logged. Open the logging.properties file and find the following line:
 
 ```
