@@ -32,8 +32,7 @@
 
 @panelBackgroundColor: @baseBackgroundColor ;
 @textFieldBackgroundColor: lighten( @baseBackgroundColor, 20% ) ;
-@buttonBackgroundColor: #C40606 ;   		// lighten( @baseBackgroundColor, 10% ) ;
-@buttonBackgroundColorBlue: #435FEC;
+@buttonBackgroundColor: white ;   		// lighten( @baseBackgroundColor, 10% ) ;
 
 // Border colors
  @requiredBorderColor: #D46060 ; // red 
@@ -50,10 +49,11 @@
 @stackPanelTextColor: @labelTextColor ;
 @textFieldTextColor: @baseTextColor ;
 
+
 //
 // Typography
 
-@baseFont:  arial, sans-serif, helvetica,  verdana  ;
+@baseFont:  verdana, arial, helvetica, sans-serif ;
 @baseFontSize: 12px;
 
 @buttonFontSize: @baseFontSize ;
@@ -190,29 +190,15 @@
 	.qafe_border( lowered, @panelBackgroundColor ) ;
 	.qafe_margin ;
 	.qafe_font( @textfieldFontSize ) ;
+	.qafe_padding ;
 	
 }
 
-.qafe_readonly_text {
-	color: black !important;
-}
 
-.gwt-SuggestBox {
+
+.gwt-SuggestBox{
     .qafe_text_input;
 }
-
-.gwt-SuggestBox-readonly {
-	.qafe_readonly_text;
-}
-
-.gwt-TextBox-readonly {
-	.qafe_readonly_text;
-}
-
-.gwt-ListBox-readonly {
-	.qafe_readonly_text;
-}
-
 // Fixme: Direct GWT
 
 .gwt-DecoratedTabBar {
@@ -229,15 +215,13 @@
 	outline: none;
 	cursor: pointer;
 	text-align: center;
-	.qafe_background( gradient, lighten(@buttonBackgroundColor, 10%), darken(@buttonBackgroundColor, 10%) ) ;
-	.qafe_border( rounded, lighten(@buttonBackgroundColor, 30%) ) ;
-	color: white;
-	.qafe_font( @buttonFontSize, bold ) ;
+	.qafe_background( gradient, @buttonBackgroundColor, darken(@buttonBackgroundColor, 10%) ) ;
+	.qafe_border( rounded, darken(@buttonBackgroundColor, 30%) ) ;
+	color: @buttonTextColor;
+	.qafe_font( @buttonFontSize ) ;
 	.qafe_margin ;
 	.qafe_padding ;
 	.qafe_shadow ;
-	width: 115px;
-	font-family: Arial, sans-serif;
 }
 
 .qafe_button:hover {
@@ -250,34 +234,6 @@
   top: 1px;
   color: lighten( @buttonTextColor, 20% ) ;
   .qafe_background( gradient, darken(@buttonBackgroundColor, 20%), @buttonBackgroundColor ) ;
-}
-
-.qafe_blue_button {
-	display: inline-block;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	.qafe_background( gradient, lighten(@buttonBackgroundColorBlue, 10%), darken(@buttonBackgroundColorBlue, 10%) ) ;
-	.qafe_border( rounded, lighten(@buttonBackgroundColorBlue, 30%) ) ;
-	color: white;
-	.qafe_font( @buttonFontSize, bold ) ;
-	.qafe_margin ;
-	.qafe_padding ;
-	.qafe_shadow ;
-	width: 115px;
-	font-family: Arial, sans-serif;
-}
-
-.qafe_blue_button:hover {
-  text-decoration: none;
-  .qafe_background( gradient, darken(@buttonBackgroundColorBlue, 5%), darken(@buttonBackgroundColorBlue, 15%) ) ;
-}
-
-.qafe_blue_button:active {
-  position: relative;
-  top: 1px;
-  color: lighten( @buttonTextColor, 20% ) ;
-  .qafe_background( gradient, darken(@buttonBackgroundColorBlue, 20%), @buttonBackgroundColorBlue ) ;
 }
 
 // undocumented?
@@ -315,10 +271,6 @@
 	.qafe_text_input ;
 }
 
-.gwt-DateBox-readonly {
-	.qafe_readonly_text;
-}
-
 .qafe_datepicker  {
 }
 
@@ -332,7 +284,6 @@
 }
 
 .qafe_dropdown {
-	/* text-transform: uppercase; */
 }
 
 .qafe_fileupload {
@@ -347,6 +298,7 @@
 // styling datagrid cells 
 .dataTable {
 	.qafe_html {
+		.qafe_background( @textFieldBackgroundColor ) ;
 		.qafe_border ;
 		.qafe_color( @datagridTextColor ) ;
 	//	.qafe_margin ;
@@ -404,10 +356,6 @@
 	.qafe_text_input ;
 }
 
-.gwt-RichTextArea-readonly {
-	.qafe_readonly_text;
-}
-
 .qafe_rootpanel {
 	.qafe_border ;
 	.qafe_background( @panelBackgroundColor ) ;
@@ -448,7 +396,7 @@
 
 // undocumented: hide wrapper as it is larger than grid / table
 .headerwrapper {
-	background: @panelBackgroundColor;
+	background: @panelBackgroundColor !important ;
 }
 
 .qafe_slider {
@@ -496,7 +444,6 @@
 	
 	.qafe_label {
 		.qafe_font( @labelFontSIze, normal ) ;
-		.qafe_color(blue);
 	}
 }
 
@@ -505,7 +452,6 @@
 	
 	.qafe_label {
 		.qafe_font( @labelFontSIze, bold ) ;
-		.qafe_color(white);
 	}
 }
 
@@ -528,14 +474,10 @@
         
 }
 
-.gwt-TextArea {
+.gwt-TextArea{
+
     .qafe_textarea;
 }
-
-.gwt-TextArea-readonly {
-	.qafe_readonly_text;
-}
-
 .qafe_textfield {
 	.qafe_text_input ;
 }
@@ -560,153 +502,1217 @@
 		.qafe_text_input ;
 	}
 }
-.textBox-readonly {
-	.qafe_readonly_text
-}
 
 .qafe_window {
-	background-color: red;
 }
 
-.qafe_invalid_field {
-	border-style: solid;
-	border-color: red;
-	border-width: 1px;
-	font-size: 13px;
+/* =====================================================================================
+   CSS Overrides for new styling
+   ===================================================================================== */
+div.SDIPanel {
+/*
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #eaeaea 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eaeaea));
+    background: -webkit-linear-gradient(top, #ffffff 0%,#eaeaea 100%);
+    background: -o-linear-gradient(top, #ffffff 0%,#eaeaea 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#eaeaea 100%);
+*/
+    background-color: #fff;
+    background: 
+       url('css/assets/img/bg-body-swoosh.png') center bottom no-repeat,
+       url('css/assets/img/bg-body-leaves.png') left bottom no-repeat,
+       url('css/assets/img/bg-logo.png') right bottom no-repeat,
+       url('css/assets/img/bg-body-grad.png') left bottom no-repeat,
+       linear-gradient(to bottom, #ffffff 0%,#eaeaea 100%) left bottom no-repeat;
 }
-
-.qafe_valid_field {
-	border-style: solid;
-	border-color: none;
-	border-width: 1px;
-	font-size: 13px;
+.gwt-Image.titleImage {
+    display: none;    
+    
 }
-
-.dataTable input, .dataTable select {
-	margin: 0px;
-	height: 25px;
-	width: 100%;
+/* fonts */
+@font-face {
+    font-family: 'proximanova';
+    src: url('css/assets/fonts/proxima/proximanova-regular-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanova-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanova-regular-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanova-regular-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanova-regular-webfont.svg#proximanova') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
-
-.dataTable button {
-	margin: 1px;
-	line-height: 9px;
-}
-
-.dataTable .gwt-CheckBox input {
-	height: 22px;
-}
-
-.dataTable .gwt-HTML, .dataTable .gwt-Hyperlink {
-	padding: 0px;
-	line-height: 25px;
-	font-size: 13px;
-}
-
-.qafe_close_on_showPanel {
-	font-family: Calibri,"Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
-	padding: 0pt;
-	cursor: pointer;
-	color: grey;
-	text-align: center;
-	font-weight: bold;
-	width: 15px;
-	height: 15px;
-}
-
-.qafe_close_on_showPanel:hover {
-	color: red;
-}
-
-.datagrids {
-	border-color: #4D6821;
-	border-style: groove;
-	border-width: 1px;
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	/* text-transform: uppercase; */
-}
-
-.headerTable {
-	.qafe_background( gradient, lighten(#3c3c3b, 10%), darken(#3c3c3b, 10%) ) ;
-}
-
-.datagrids .headerWrapper {
-	border-style: groove;
-	border-width: 2px;
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	.qafe_background( gradient, lighten(#3c3c3b, 10%), darken(#3c3c3b, 10%) ) ;
-}
-
-.datagridHeaderLabels {
-	color: white;
-	font-size: 8pt;
-    font-family: Arial, Helvetica, sans-serif;
+@font-face {
+    font-family: 'proximanova';
+    src: url('css/assets/fonts/proxima/proximanova-semibold-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanova-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanova-semibold-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanova-semibold-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanova-semibold-webfont.svg#proximanova') format('svg');
     font-weight: bold;
-	text-align: left;
-	margin-top: 4px;
-	width: 100px;
-	/* text-transform: uppercase; */
+    font-style: normal;
+}
+@font-face {
+    font-family: 'proximanova';
+    src: url('css/assets/fonts/proxima/proximanova-regitalic-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanova-regitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanova-regitalic-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanova-regitalic-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanova-regitalic-webfont.svg#proximanova') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'proximanova';
+    src: url('css/assets/fonts/proxima/proximanova-semibolditalic-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanova-semibolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanova-semibolditalic-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanova-semibolditalic-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanova-semibolditalic-webfont.svg#proximanova') format('svg');
+    font-weight: bold;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'proximanovacond';
+    src: url('css/assets/fonts/proxima/proximanovacond-regular-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanovacond-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanovacond-regular-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanovacond-regular-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanovacond-regular-webfont.svg#proximanovacond') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'proximanovacond';
+    src: url('css/assets/fonts/proxima/proximanovacond-semibold-webfont.eot');
+    src: url('css/assets/fonts/proxima/proximanovacond-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('css/assets/fonts/proxima/proximanovacond-semibold-webfont.woff') format('woff'),
+         url('css/assets/fonts/proxima/proximanovacond-semibold-webfont.ttf') format('truetype'),
+         url('css/assets/fonts/proxima/proximanovacond-semibold-webfont.svg#proximanovacond') format('svg');
+    font-weight: bold;
+    font-style: normal;
 }
 
-.datagrids .dataTable tr.highlighted {
-	border-style: groove;
-	border-width: 2px;
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-    background: #D0E8F4;    
+html body,
+body td,
+body a,
+body div,
+body table td,
+body select,
+body .gwt-Label,
+body .gwt-TextBox,
+body .gwt-ListBox,
+body .gwt-TabBar .gwt-TabBarItem .gwt-Label {
+    font-family: 'proximanova', arial, sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+}
+.gwt-Label.loginPanelHeaderText {
+    font-size: 21px;
+    line-height: 21px;
+    text-transform: uppercase; 
+    padding-left: 6.5px;   
+    
+}
+.gwt-Label.mentisVersionLabel {
+    color: #d0d0d0;    
+}
+.gwt-TreeItem .gwt-Label {
+    font-family: 'proximanovacond', 'arial narrow', 'proximanova', arial, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase; 
+    color: #948e8f;
+}
+.gwt-TreeItem:hover .gwt-Label {
+    color: #333;
 }
 
-.datagrids .dataTable tr.selected {
-	border-style: groove;
-	border-width: 2px;
-	border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-    background: #9CC7F2;
+
+/* .gwt-DecoratedPopupPanel */
+.qafe_body .gwt-DecoratedPopupPanel .popupTopLeft,
+.qafe_body .gwt-DecoratedPopupPanel .popupTopCenter,
+.qafe_body .gwt-DecoratedPopupPanel .popupTopRight,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomLeft,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomCenter,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomRight {
+    background: #eaeaea;
+}
+.qafe_body .gwt-DecoratedPopupPanel .popupMiddleLeft,
+.qafe_body .gwt-DecoratedPopupPanel .popupMiddleCenter,
+.qafe_body .gwt-DecoratedPopupPanel .popupMiddleRight {
+    background-color: #fff;
+    background: 
+       linear-gradient(to bottom, #ffffff 0%,#eaeaea 100%) left bottom no-repeat;
+}
+.qafe_body .gwt-DecoratedPopupPanel .popupMiddleCenter {
+    background-color: #fff;
+    background: 
+       /* url('css/assets/img/bg-body-swoosh.png') center bottom no-repeat, */
+       url('css/assets/img/bg-body-leaves.png') left bottom no-repeat,
+       url('css/assets/img/bg-logo.png') right bottom no-repeat,
+       url('css/assets/img/bg-body-grad.png') left bottom no-repeat,
+       linear-gradient(to bottom, #ffffff 0%,#eaeaea 100%) left bottom no-repeat;
+}
+.qafe_body .gwt-DecoratedPopupPanel .popupTopLeftInner,
+.qafe_body .gwt-DecoratedPopupPanel .popupTopRightInner,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomLeftInner,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomRightInner {
+    width: 0px;
+}
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomLeftInner,
+.qafe_body .gwt-DecoratedPopupPanel .popupBottomRightInner {
+    height: 0px;
+}
+.qafe_body .gwt-DecoratedPanel {
+    background: transparent;
 }
 
-.datagrids .dataTable td.highlighted {
-    background: #D0E8F4;
+/* mosaic */
+.qafe_body .mosaic-Caption {
+    background: #eaeaea;
+    border-bottom: 1px solid #eaeaea;
+}
+.qafe_body .mosaic-WindowPanel .Body {
+    background: transparent;
+}
+.qafe_body .mosaic-Caption-text {
+    color: #939292;
+    text-transform: uppercase;    
+}
+.qafe_body .mosaic-ImageButton img:hover {
+    border-color: transparent;    
+}
+.qafe_body .mosaic-ImageButton td {
+    padding: 4px;
+}
+.qafe_body .mosaic-ImageButton img {
+    background-image: url('css/assets/img/mosaic-ImageButton.png') !important;
+}
+.qafe_body .mosaic-Caption-iconBoxRight td:nth-child(1) .mosaic-ImageButton img {
+    background-position: 1px 0px !important;
+}
+.qafe_body .mosaic-Caption-iconBoxRight td:nth-child(2) .mosaic-ImageButton img {
+    background-position: -16px 0px !important;
+}
+.qafe_body .mosaic-Caption-iconBoxRight td:nth-child(3) .mosaic-ImageButton img {
+    background-position: -33px 0px !important;
+}
+.gwt-DecoratedPopupPanel.mosaic-WindowPanel .gwt-MenuBar-horizontal {
+    background: url('css/assets/img/gwt-MenuBar-horizontal.png') no-repeat right bottom;
+    border: none;
+}
+.gwt-DecoratedPopupPanel.mosaic-WindowPanel .gwt-MenuBar.gwt-MenuBar-horizontal {
+    position: relative;
+    height: 45px;
+}
+.gwt-DecoratedPopupPanel.mosaic-WindowPanel .gwt-MenuBar.gwt-MenuBar-horizontal table {
+    position: absolute;
+    right: 0;
+}
+.gwt-DecoratedPopupPanel .gwt-MenuBar.gwt-MenuBar-horizontal .gwt-MenuItem {
+    color: #948e8f;
+    font-weight: normal;
+    padding: 13px 10px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.gwt-MenuBarPopup .gwt-MenuBar.gwt-MenuBar-vertical .gwt-MenuItem {
+    color: #948e8f;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.gwt-DecoratedPopupPanel.mosaic-WindowPanel .gwt-MenuBar .gwt-MenuItem-selected,
+.gwt-MenuBarPopup .gwt-MenuBar.gwt-MenuBar-vertical .gwt-MenuItem-selected,
+.gwt-MenuBarPopup .gwt-MenuBar.gwt-MenuBar-vertical .subMenuIcon-selected {
+    background: transparent;
+    color: #333333;
 }
 
-.qafe-glass-panel {
-  background-color: #000;
-  opacity: 0.20;
-  filter: alpha(opacity=30);  
+/* PushButtons */
+.gwt-DecoratedPopupPanel .gwt-PushButton-up,
+.gwt-DecoratedPopupPanel .gwt-PushButton-up-hovering,
+.gwt-DecoratedPopupPanel .gwt-PushButton-up-disabled,
+.gwt-DecoratedPopupPanel .gwt-PushButton-down,
+.gwt-DecoratedPopupPanel .gwt-PushButton-down-hovering,
+.gwt-DecoratedPopupPanel .gwt-PushButton-down-disabled {
+    background: linear-gradient(to bottom, #ffffff 0%,#edecec 100%) left bottom no-repeat; /* grey */
+    margin: 0;
+    text-decoration: none;
+    border-color: #edecec; /* grey */
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.gwt-DecoratedPopupPanel .gwt-PushButton-up-hovering,
+.gwt-DecoratedPopupPanel .gwt-PushButton-up-disabled,
+.gwt-DecoratedPopupPanel .gwt-PushButton-down,
+.gwt-DecoratedPopupPanel .gwt-PushButton-down-hovering {
+    background: linear-gradient(to bottom, #e2001a 0%,#cf0018 100%) left bottom no-repeat; /* red */
+    border-color: #cf0018; /* red */
+    background: linear-gradient(to bottom, #edecec 0%,#c6c6c6 100%) left bottom no-repeat; /* darker grey */   
+    border-color: #c6c6c6; /* darker grey */
+}
+.gwt-DecoratedPanel > table > tbody > tr:nth-child(2) > td > table {
+    margin-top: -45px;
+    z-index: 4;
+    position: absolute;
 }
 
-.qafe_body{
-	background-image: url(images/wallpaper.jpg);
-	background-repeat:no-repeat;
-	background-attachment:fixed;
-	background-color:#000;
-	z-index: 0;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-} 
 
-.datePickerButton {
-	font-size: 120%;
-	line-height: 1em;
-	color: blue;
-	cursor: hand;
-	cursor: pointer;
-	padding: 0px 4px;
+
+
+
+.gwt-DecoratedPopupPanel .headerTable {
+    background: #e8ebeb;
 }
 
-.datePickerPreviousButtonYear {
-	.datePickerButton;
-	padding-right: 10px;	
+
+
+
+
+
+
+
+
+/*
+ * Old gwt styles from standalone application version(s)
+ * Most of them are still valid
+ *
+ */
+
+
+/* formHeaderText - "MAINTAIN INSTANCES" label */
+.gwt-Label.formHeaderText,
+.gwt-Label.headerText {
+    color: #333;
+    text-align:left;
+    font-size: 18px;
+    font-weight: normal;
+    padding: 0.5em;
+    text-transform: uppercase;
+    font-family: "proximanova", "proximanovacond";
 }
 
-.datePickerNextButtonYear {
-	.datePickerButton;
-	padding-left: 10px;	
+.gwt-Label.mainNavigationPanelHeaderText,
+.gwt-Label.mainDetailsPanelHeaderText,
+.gwt-Label.detailsPanelHeaderText,
+.gwt-Label.subFormHeaderText,
+.gwt-Label.lovFormHeaderText {
+    color: #d00018;
+    text-align: left;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 0.5em;
+    text-transform: uppercase;
+    font-family: "proximanova", "proximanovacond";
 }
+/* formHolder - main holder for the entire form. */
+.formHolder {
+    
+    
+}
+.messagePanelHolder {
+    
+}
+.messagePanelHolder .gwt-TextBox.messageItem,
+.messagePanelHolder .gwt-TextArea.mentis-messages {
+    box-shadow: none;
+    background: #fdffd6;
+    border: 1px dashed #e2e54e;
+    color: #222;
+    padding: 1px 10px 10px 10px;    
+    
+}
+
+/*
+filterPanelHolder - For filter panel
+sortByPanelHolder - For sort by panel - this is same like filterPanelHolder, so it might not need a new name, we can use filterPanelHolder itself.
+*/
+.filterPanelHolder,
+.sortByPanelHolder {
+    background: #f7f6f7;
+    margin-right: 10px;
+    padding: 0 0.5em;
+    position: relative;
+    margin-top: 30px;
+}
+.filterPanelHolder legend,
+.sortByPanelHolder legend {
+    color: #948e8b;
+    font-weight: normal;
+    top: -20px;
+    padding: 0;
+    background: none;
+    position: absolute;
+    text-transform: uppercase;
+    font-family: "proximanova", "proximanovacond"; 
+}
+.filterPanelHolder .gwt-Label,
+.sortByPanelHolder .gwt-Label {
+    color: #6e6560;
+}
+.filterPanelHolder select,
+.sortByPanelHolder select {
+    background: #f7f6f7;
+}
+
+/* mainNavigationPanelHolder - This is the master area from where user selects some records to see teh details. */
+.mainNavigationPanelHolder {
+    background: none;    
+   
+    
+    
+}
+
+/* mainContentPanelHolder - This is the area where the main contents are included - (area excluding the form header, filterby, action buttons , messages)*/
+.mainContentPanelHolder {
+    padding-top: 21px;    
+}
+
+
+body .gwt-ScrollTable .headerWrapper,
+body .mosaic-ColumnWidget .headerWrapper,
+body .mosaic-ScrollTreeTable .headerWrapper,
+body .mainNavigationPanelHolder .headerWrapper {
+    background: none !important;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+body .mainNavigationPanelHolder .headerWrapper {
+    display: none;
+}
+
+.mainNavigationPanelHolder input.text,
+.mainNavigationPanelHolder input[type="file"],
+.mainNavigationPanelHolder input.form-text,
+.mainNavigationPanelHolder textarea,
+.mainNavigationPanelHolder table .gwt-TextBox,
+.mainNavigationPanelHolder table .gwt-PasswordTextBox,
+.mainNavigationPanelHolder table .gwt-TextArea,
+.mainNavigationPanelHolder table .UTSTextFieldBorder {
+    height: 21px;
+    border-color: #fff;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 3px 2px;
+    color: #6e6560;
+}
+.mainNavigationPanelHolder input.text:focus,
+.mainNavigationPanelHolder input[type="file"]:focus,
+.mainNavigationPanelHolder input.form-text:focus,
+.mainNavigationPanelHolder textarea:focus,
+.mainNavigationPanelHolder table .gwt-TextBox:focus,
+.mainNavigationPanelHolder table .gwt-PasswordTextBox:focus,
+.mainNavigationPanelHolder table .gwt-TextArea:focus,
+.mainNavigationPanelHolder table .UTSTextFieldBorder:focus {
+    border-color: #eee;
+    background: #f7f6f7 !important;
+    color: #222;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* blauwe background in app field */
+
+a,
+a:link,
+a:visited,
+/* a:active,*/
+.w,
+.w a:link {
+    color: #0054A5 !important;
+}
+a:hover {
+    color: #000 !important;
+}
+
+.workorderBlockLabel {
+	color:#0054A5;
+	font-weight:bold;
+    font-size:12px;
+}
+.woManagementLabel {
+	font-size: 18px;
+    color:#0054A5;
+	font-weight:bold;
+}
+.gwt-Label.headerLabelClass {
+	padding: 4px 4px 8px 20px;
+
+}
+.gwt-Label.headerManLabelClass {
+    color: #000;
+}
+
+
+.gwt-Label.headerLabelClass12 {
+    background:none;
+    color:#36a1db;
+    display:block;
+    position:relative;
+    padding-top:10px;
+    
+}
+
+
+
+
+/* ===================================
+	PANELS
+   =================================== */
+body table td {vertical-align: top !important;}
+   
+body table[fn="mainPanelName"] > tbody > tr:first-child > td {}
+
+body table[fn="mainMenuPanel"] {height:0px !important;width:200px !important;margin-top:104px;}
+body table[fn="mainMenuPanel"] > tbody > tr > td {
+    -webkit-border-radius:0px;
+    border-radius:0px;
+}
+body table[fn="mainMenuPanel"] > tbody > tr {}
+body table[fn="mainMenuPanel"] > tbody > tr:first-child > td {
+    background: #feffff;
+    background: -moz-linear-gradient(top,  #feffff 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#feffff), color-stop(100%,#e5e5e5));
+    background: -webkit-linear-gradient(top,  #feffff 0%,#e5e5e5 100%);
+    background: -o-linear-gradient(top,  #feffff 0%,#e5e5e5 100%);
+    background: -ms-linear-gradient(top,  #feffff 0%,#e5e5e5 100%);
+    background: linear-gradient(to bottom,  #feffff 0%,#e5e5e5 100%);
+    border: 1px solid #e5e5e5;
+
+}
+body table[fn="mainMenuPanel"] > tbody > tr:nth-child(2) > td {}
+
+body .menuContentPanelClass {width:100%;
+    background: #55462c;
+    border-color: #e9e4da;
+    border-style: solid;
+    border-width: 1px;
+    margin-left:0px;
+    margin-top:10px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+
+}
+
+.menuContentPanelClass .gwt-DecoratedStackPanel {width:100%;border:0;margin-bottom:4px;}
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemTopLeft,
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemTopCenter,
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemTopRight,
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemMiddleLeft,
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemMiddleCenter,
+.menuContentPanelClass .gwt-DecoratedStackPanel .stackItemMiddleRight {
+    background: none !important;
+    border:none;
+}
+.menuContentPanelClass .gwt-DecoratedStackPanel .gwt-StackPanelContent {
+    border:none;
+    background: none;
+    border-width: 0;
+    padding: 2px 2px 6px 10px;
+}
+.stackItemMiddleCenterInner {color:#e9e4da;font-size: 0.9em;}
+.stackItemMiddleCenterInner:hover {background:#e9e4da;color:#55462c;}
+body .subMenuItemLabel,
+body .menuStyleClass {color:#e9e4da;cursor:pointer;font-size:11px;}
+body .subMenuItemLabel:hover,
+body .gwt-TreeItem-selected .subMenuItemLabel,
+body .menuStyleClass:hover,
+body .gwt-TreeItem-selected .menuStyleClass {background:#e9e4da;color:#55462c;}
+
+
+body .contentPanelClass {
+    background-color: transparent;
+    background:none;
+    border-color: transparent;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0px;
+    margin: 0;
+    padding: 0px;
+}
+/* try to prevent resizing */
+table[fn="mainPanelName"] > tbody > tr > td:nth-child(2) .contentPanelClass,
+body .gwt-TabPanel.tabPanelClass {
+    
+/*
+    min-width:740px !important;
+    max-width:740px !important;
+    width: 740px !important;
+*/
+    min-width:1044px !important;
+    max-width:1044px !important;
+    width: 1044px !important;
+    overflow:scroll !important;
+	table-layout: fixed !important;
+}
+
+
+.SDIPanel.UTSRootPanel > div > div { /* originally on .SDIPanel.UTSRootPanel  - changed to ensure  scrolling background with logo */
+    background: #fff url(css/assets/img/homepage-logo-color.gif) no-repeat center -1px;
+    background-attachment:scroll;
+    margin: auto;
+    padding-top: 74px;  /* added to ensure scrolling background with logo */
+    min-height:400px;
+}
+.SDIPanel .UTSRootPanel {
+    background: transparent url(css/assets/img/logo-qafe-tiny.gif) no-repeat right bottom;
+    border:0;
+    /* margin-top:100px; */ /* disabled to ensure scrolling background with logo */
+    border-top:none;
+}
+table.UTSPanelBorder1 {
+    border-color: transparent;
+    border-style: solid;
+    border-width: 0;
+    background:#fff;
+    margin-top:20px;
+}
+div.gwt-TabPanelBottom {
+    background: transparent url(css/assets/img/bg-tabpanel-bottom2.gif) no-repeat right top;
+    background:none;
+    border:none;
+    padding:0;
+	-webkit-border-radius:0;
+	border-radius:0;
+}
+div.gwt-TabPanelBottom > div {
+    background: transparent url(css/assets/img/bg-tabpanel-bottom-left2.gif) no-repeat left top;
+    background:none;
+    border:none;
+    padding:0 1% !important;
+    width:98% !important;
+    overflow:hidden !important;
+    margin-top: 10px !important;
+}
+body table.tabStyleClass {background:none;}
+/*
+table.tabStyleClass {
+	background: transparent url(css/assets/img/bg-tabpanel-bottom-left.gif) no-repeat left top;
+    min-height:30px;
+}*/
+div.gwt-PopupPanel {
+    background: #fefefe;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 3px;
+    padding: 5px;
+}
+
+
+body .dialogPanelClass {
+    background-color: #36a1db;
+}
+body .dialogPanelTitleClass {
+    color: #ccc;
+}
+body .dialogPanelMessageClass {}
+body .qafe_close_on_showPanel {
+	background:#000;
+    color:#fff;
+    text-transform:lowercase;
+    font-weight:bold;
+    text-align:center;
+    width:18px;
+    height:18px;
+    cursor:pointer;
+}
+body .qafe_close_on_showPanel:hover {
+	background:#558ED5;
+    color:#fff;
+}
+
+
+body .fileUploadClass {
+    background: #e9e4da;
+    border:1px solid #ccc;
+    border-color:#ccc;
+    border-radius: 0;
+    border-style: solid;
+    border-width: 1px;
+}
+
+table.gwt-PagingOptions,
+body fieldset.contentPanelClass table.gwt-PagingOptions {
+    width: auto;
+}
+
+/* ===================================
+	TABS
+   =================================== */
+body .gwt-TabPanel {
+    border:none !important;
+    background: #fff !important;
+}
+table.gwt-TabBar {
+    height:32px;
+    background: none;
+    padding-bottom:0px;
+    border-bottom:1px solid #d00018;
+    border-spacing:0px;
+}
+.gwt-TabBarFirst-wrapper {
+    height:29px;
+}
+.gwt-TabBarRest-wrapper {
+    height:29px;
+}
+.gwt-TabBar .gwt-TabBarFirst {
+    width: 9px !important;
+}
+.gwt-TabBarItem-wrapper {
+    background:none;
+}
+.gwt-TabBarItem-wrapper:last-child {
+    background:none;
+}
+.gwt-TabBarItem-wrapper.gwt-TabBarItem-wrapper-selected {}
+
+.gwt-TabBar .gwt-TabBarItem,
+.gwt-TabBar .gwt-TabBarItem-selected {
+    height:22px;
+    padding:3px 14px 3px 14px !important;
+    margin-top: 0px !important;
+    color: lime !important;
+    font-weight:normal !important;
+	text-transform:uppercase;
+}
+body .gwt-TabBar .gwt-TabBarItem {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    background: #E2E1E1;
+    border: 1px solid #E2E1E1;
+    border-bottom:0 !important;
+}
+body .gwt-TabBar .gwt-TabBarItem-selected {
+    background: #d00018 !important;
+    background-color: #d00018 !important;
+    border: 1px solid #d00018;
+}
+.gwt-TabBar .gwt-TabBarItem .gwt-Label {
+    color: #222 !important;
+    font-size:12px;
+}
+.gwt-TabBar .gwt-TabBarItem-selected .gwt-Label {
+    color: #fff !important;
+}
+
+
+
+/* ===================================
+	FORMS
+   =================================== */
+/* labels */
+.gwt-Label.UTSMediumLabelBlackLetterFont {
+    color: black;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+/* input */
+form input.text,
+form input[type="file"],
+form input.form-text,
+form textarea,
+table .gwt-TextBox,
+table .gwt-PasswordTextBox,
+table .gwt-TextArea,
+table .UTSTextFieldBorder {
+    border-color: #d1d1d1 #fdfdfd #fdfdfd #d1d1d1;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 13px;
+    line-height: 16px;
+    /* margin-bottom: 8px; */
+    padding: 3px 2px;
+    border-radius: 5px;
+    background: linear-gradient(to bottom, #f0f0f0 0%,#e8ebeb 100%);
+}
+form input.text:focus,
+form input[type="file"]:focus,
+form input.form-text:focus,
+form textarea:focus,
+table .gwt-TextBox:focus,
+table .gwt-PasswordTextBox:focus,
+table .gwt-TextArea:focus,
+table .UTSTextFieldBorder:focus {
+    background: #fff;
+}
+body .dropdownFieldClass {
+	padding:3px 2px;
+    height: auto !important;
+    /* margin-bottom:8px; */
+    border-color:#9a9a9a;
+}
+
+form input.text.requiredStyleClass,
+form input.form-text.requiredStyleClass,
+form textarea.requiredStyleClass,
+table .gwt-TextBox.requiredStyleClass,
+table .gwt-PasswordTextBox.requiredStyleClass,
+table .gwt-TextArea.requiredStyleClass,
+table .UTSTextFieldBorder.requiredStyleClass {
+    border-color: red;
+    border-style: dashed; /* dashed? sure? I'd say "solid", it's more ehhh ... solid! */
+}
+form input.text.requiredStyleClass,
+form input.form-text.requiredStyleClass,
+form textarea.requiredStyleClass,
+table .gwt-TextBox.requiredStyleClass,
+table .gwt-PasswordTextBox.requiredStyleClass,
+table .gwt-TextArea.requiredStyleClass,
+table .UTSTextFieldBorder.requiredStyleClass {
+    border-color: red;
+    border-style: dashed; /* dashed? sure? I'd say "solid", it's more ehhh ... solid! */
+}
+button.gwt-Button,
+button.gwt-Button:hover {
+/* assuming a width and height of 140x30px
+    width:140px !important;
+*/
+    width: auto !important;
+    height:30px !important;
+    font-family: 'proximanovacond';
+    background: #eae9e8;
+    background: -moz-linear-gradient(top,  #eae9e8 0%, #d1d1d1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eae9e8), color-stop(100%,#d1d1d1));
+    background: -webkit-linear-gradient(top,  #eae9e8 0%,#d1d1d1 100%);
+    background: -o-linear-gradient(top,  #eae9e8 0%,#d1d1d1 100%);
+    background: -ms-linear-gradient(top,  #eae9e8 0%,#d1d1d1 100%);
+    background: linear-gradient(to bottom,  #eae9e8 0%,#d1d1d1 100%);
+    color:#222 !important;
+    font-weight:normal !important;
+    border: 1px solid #c9c9c9;
+    margin-bottom:8px;
+    margin-right:4px;
+    text-transform: uppercase;
+    box-shadow: none;
+    padding: 4px 14px;
+}
+button.gwt-Button:hover {
+    background: #d00018;
+    border: 1px solid #e1001a !important;
+    color: #fff !important;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+/* assuming a width and height of 200x30px
+   -- depricated
+button.gwt-Button.large {
+	background: #d00018;
+}
+ */
+button.gwt-Button[disabled],
+button.gwt-Button[disabled]:hover {
+    border: 1px solid #ddd !important;
+    background: #f7f6f7 !important;
+    color: #bbb !important;
+    box-shadow: none;
+}
+button.gwt-Button.loginButton,
+.buttonPanelHolder button.gwt-Button {
+    background: #d00018 url(css/assets/img/icons.png);
+    background: url(css/assets/img/icons.png), -moz-linear-gradient(top, #e1001a 0%, #d00018 100%);
+    background: url(css/assets/img/icons.png), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e1001a), color-stop(100%,#d00018));
+    background: url(css/assets/img/icons.png), -webkit-linear-gradient(top, #e1001a 0%, #d00018 100%);
+    background: url(css/assets/img/icons.png), -o-linear-gradient(top, #e1001a 0%, #d00018 100%);
+    background: url(css/assets/img/icons.png), -ms-linear-gradient(top, #e1001a 0%, #d00018 100%);
+    background: url(css/assets/img/icons.png), linear-gradient(to bottom, #e1001a 0%, #d00018 100%);
+    background-repeat: no-repeat, repeat;
+    background-position: -40px top, left top;
+    color:#fff !important;
+    border: 1px solid #e2001a;
+    min-width: 130px;
+}
+button.gwt-Button.loginButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-repeat: no-repeat;
+    background-position: 10px top;
+    border: 1px solid #e1001a !important;
+    color: #fff !important;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+.buttonPanelHolder button.gwt-Button[disabled],
+.buttonPanelHolder button.gwt-Button[disabled]:hover {
+    border: 1px solid #ddd !important;
+    background: #f7f6f7 !important;
+    color: #bbb !important;
+    box-shadow: none;
+}
+button.gwt-Button.loginButton,
+.buttonPanelHolder button.gwt-Button.logoutButton,
+.buttonPanelHolder button.gwt-Button.okButton,
+.buttonPanelHolder button.gwt-Button.cancelButton,
+.buttonPanelHolder button.gwt-Button.copyButton,
+.buttonPanelHolder button.gwt-Button.saveButton,
+.buttonPanelHolder button.gwt-Button.doneButton,
+.buttonPanelHolder button.gwt-Button.runDiscoveryButton {
+    background-repeat: no-repeat, repeat;
+    background-position: 10px top, left top;
+    padding-left: 32px; /* 14px + 18px */
+}
+.buttonPanelHolder button.gwt-Button.logoutButton {
+    background-position: 10px top, left top;
+}
+.buttonPanelHolder button.gwt-Button.logoutButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px top;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.cancelButton {
+    background-position: 10px -1360px, left top;
+}
+.buttonPanelHolder button.gwt-Button.cancelButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -1360px;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.copyButton {
+    background-position: 10px -1040px, left top;
+}
+.buttonPanelHolder button.gwt-Button.copyButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -1040px;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.okButton {
+    background-position: 10px -1280px, left top;
+}
+.buttonPanelHolder button.gwt-Button.okButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -1280px;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.saveButton {
+    background-position: 10px -1280px, left top;
+}
+.buttonPanelHolder button.gwt-Button.saveButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -1280px;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.doneButton {
+    background-position: 10px -720px, left top;
+}
+.buttonPanelHolder button.gwt-Button.doneButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -720px;
+    background-repeat: no-repeat;
+}
+.buttonPanelHolder button.gwt-Button.runDiscoveryButton {
+    background-position: 10px -400px, left top;
+}
+.buttonPanelHolder button.gwt-Button.runDiscoveryButton:hover {
+    background: #e1001a url(css/assets/img/icons.png);
+    background-position: 10px -400px;
+    background-repeat: no-repeat;
+}
+
+/* BUTTONS TO ADD
+.exitButton
+.nextButton
+.previousButton
+.backButton
+
+
+
+.inPageButtonPanelHolder {
+    margin: 20px 0 40px 0;   
+    
+}
+
+
+.gwt-TabPanelBottom {}
+
+/*label holding the current version number of the current panel*/
+body .gwt-Label.mentisVersionLabel {
+    text-transform:uppercase;
+    font-size: 10px;
+    color: #b4afac;
+}
+
+
+/* ===================================
+	TABLES
+   =================================== */
+body .gwt-ScrollTable .headerWrapper,
+body .mosaic-ColumnWidget .headerWrapper,
+body .mosaic-ScrollTreeTable .headerWrapper {
+    background: #f7f6f7 !important;
+    color: #6E6560;
+}
+body .mainNavigationPanelHolder .gwt-ScrollTable .headerWrapper,
+body .mainNavigationPanelHolder .mosaic-ColumnWidget .headerWrapper,
+body .mainNavigationPanelHolder .mosaic-ScrollTreeTable .headerWrapper {
+    background: none !important;
+    color: #948e8b;
+}
+
+
+
+/* commented by Binu for IE 10 
+.gwt-ScrollTable .dataTable tr.selected,
+.mosaic-ColumnWidget .dataTable tr.selected,
+.mosaic-ScrollTreeTable .dataTable tr.selected {
+    background: #e9e4da !important;
+} */
+.gwt-ScrollTable .headerTable td,
+.gwt-ScrollTable .footerTable td,
+.mosaic-ColumnWidget .headerTable td,
+.mosaic-ColumnWidget .footerTable td,
+.mosaic-ScrollTreeTable .headerTable td,
+.mosaic-ScrollTreeTable .footerTable td {
+    border-color: #f7f6f7 !important;
+    padding: 2px;
+}
+.mainNavigationPanelHolder .gwt-ScrollTable .headerTable td,
+.mainNavigationPanelHolder .gwt-ScrollTable .footerTable td,
+.mainNavigationPanelHolder .mainNavigationPanelHolder .mosaic-ColumnWidget .headerTable td,
+.mainNavigationPanelHolder .mosaic-ColumnWidget .footerTable td,
+.mainNavigationPanelHolder .mosaic-ScrollTreeTable .headerTable td,
+.mainNavigationPanelHolder .mosaic-ScrollTreeTable .footerTable td {
+    border-color: #fff !important;
+    padding: 2px;
+}
+.gwt-ScrollTable .dataTable td,
+.mosaic-ColumnWidget .dataTable td,
+.mosaic-ScrollTreeTable .dataTable td {
+    border-color: #e2e1e1 !important;
+    padding: 2px;
+}
+.gwt-ScrollTable .headerWrapper .gwt-Label,
+.mosaic-ColumnWidget .headerWrapper .gwt-Label,
+.mosaic-ScrollTreeTable .headerWrapper .gwt-Label {
+	color:#6E6560;
+    background: #f7f6f7; /* Added 20130201 to prevent invisible datagrid headers */
+    background: none; /* we WANT invisible datagrid headers */
+    border-left:0;
+    border-right: 0;
+    border-top: 0;
+    color: #6E6560;
+    text-transform:uppercase;
+    font-size:11px;
+    padding:2px;
+}
+
+.mainNavigationPanelHolder .gwt-ScrollTable .headerWrapper .gwt-Label,
+.mainNavigationPanelHolder .mosaic-ColumnWidget .headerWrapper .gwt-Label,
+.mainNavigationPanelHolder .mosaic-ScrollTreeTable .headerWrapper .gwt-Label {
+    background: none;
+    color: #d00018;
+    font-family: "proximanova","proximanovacond";
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0.5em;
+    text-align: left;
+    text-transform: uppercase; 
+    
+    
+    
+}
+body .gwt-ScrollTable,
+body .mosaic-ColumnWidget,
+body .mosaic-ScrollTreeTable {
+    border-color: #fff;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+}
+
+
+
+div.dataWrapper table.dataTable {background:#fff;}
+
+.mosaic-DropDownPanel .gwt-ScrollTable .dataTable tr.hovering,
+.mosaic-DropDownPanel .gwt-ScrollTable .dataTable tr.highlighted,
+.mosaic-DropDownPanel .mosaic-ColumnWidget .dataTable tr.hovering,
+.mosaic-DropDownPanel .mosaic-ColumnWidget .dataTable tr.highlighted,
+.mosaic-DropDownPanel .mosaic-ScrollTreeTable .dataTable tr.hovering,
+.mosaic-DropDownPanel .mosaic-ScrollTreeTable .dataTable tr.highlighted {
+    background: #6bdcfd !important;
+}
+body .gwt-ScrollTable .dataTable tr:hover,
+body .gwt-ScrollTable .dataTable tr.highlighted,
+body .gwt-ScrollTable .dataTable tr.hovering,
+body .mosaic-ColumnWidget .dataTable tr.hovering,
+body .mosaic-ScrollTreeTable .dataTable tr.hovering {
+    background: #6bdcfd;
+}
+
+.gwt-ScrollTable .dataTable tr.selected,
+.mosaic-ColumnWidget .dataTable tr.selected,
+.mosaic-ScrollTreeTable .dataTable tr.selected,
+.dataTable tr.selected,
+.dataTable tr.selected td {
+    background: #e2e1e1 !important;
+}
+.mentisDatagrid tr.select td {
+    background-color: lime;    
+}
+body .gwt-ScrollTable .dataTable td,
+body .gwt-ScrollTable .headerTable td,
+body .gwt-ScrollTable .footerTable td,
+body .mosaic-ColumnWidget .dataTable td,
+body .mosaic-ColumnWidget .headerTable td,
+body .mosaic-ColumnWidget .footerTable td,
+body .mosaic-ScrollTreeTable .dataTable td,
+body .mosaic-ScrollTreeTable .headerTable td,
+body .mosaic-ScrollTreeTable .footerTable td {
+    border-color: #e8ebeb !important;
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+body .mainNavigationPanelHolder .gwt-ScrollTable .dataTable td,
+body .mainNavigationPanelHolder .gwt-ScrollTable .headerTable td,
+body .mainNavigationPanelHolder .gwt-ScrollTable .footerTable td,
+body .mainNavigationPanelHolder .mosaic-ColumnWidget .dataTable td,
+body .mainNavigationPanelHolder .mosaic-ColumnWidget .headerTable td,
+body .mainNavigationPanelHolder .mosaic-ColumnWidget .footerTable td,
+body .mainNavigationPanelHolder .mosaic-ScrollTreeTable .dataTable td,
+body .mainNavigationPanelHolder .mosaic-ScrollTreeTable .headerTable td,
+body .mainNavigationPanelHolder .mosaic-ScrollTreeTable .footerTable td {
+    border-color: #e2e1e1 !important;
+    border-right: none;
+    padding: 0px;
+}
+body .gwt-ScrollTable .dataTable td .gwt-Label,
+body .mosaic-ColumnWidget .dataTable td .gwt-Label,
+body .mosaic-ScrollTreeTable .dataTable td .gwt-Label,
+body .gwt-ScrollTable .dataTable td .gwt-TextBox,
+body .mosaic-ColumnWidget .dataTable td .gwt-TextBox,
+body .mosaic-ScrollTreeTable .dataTable td .gwt-TextBox {
+    color: #ada7a4;
+    font-weight: normal;
+    font-family: "proximanova", "proximanovacond";
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+body .gwt-ScrollTable .dataTable tr.hovering td .gwt-Label,
+body .mosaic-ColumnWidget .dataTable tr.hovering td .gwt-Label,
+body .mosaic-ScrollTreeTable .dataTable tr.hovering td .gwt-Label,
+body .gwt-ScrollTable .dataTable tr.hovering td .gwt-TextBox,
+body .mosaic-ColumnWidget .dataTable tr.hovering td .gwt-TextBox,
+body .mosaic-ScrollTreeTable .dataTable tr.hovering td .gwt-TextBox,
+
+body .gwt-ScrollTable .dataTable tr.highlighted td .gwt-Label,
+body .mosaic-ColumnWidget .dataTable tr.highlighted td .gwt-Label,
+body .mosaic-ScrollTreeTable .dataTable tr.highlighted td .gwt-Label,
+body .gwt-ScrollTable .dataTable tr.highlighted td .gwt-TextBox,
+body .mosaic-ColumnWidget .dataTable tr.highlighted td .gwt-TextBox,
+body .mosaic-ScrollTreeTable .dataTable tr.highlighted td .gwt-TextBox,
+
+body .gwt-ScrollTable .dataTable tr.selected td .gwt-Label,
+body .mosaic-ColumnWidget .dataTable tr.selected td .gwt-Label,
+body .mosaic-ScrollTreeTable .dataTable tr.selected td .gwt-Label,
+body .gwt-ScrollTable .dataTable tr.selected td .gwt-TextBox,
+body .mosaic-ColumnWidget .dataTable tr.selected td .gwt-TextBox,
+body .mosaic-ScrollTreeTable .dataTable tr.selected td .gwt-TextBox {
+    color: #222;
+}
+
+body .dataTable .gwt-CheckBox input {
+    height: 16px;
+    margin-top: 4px;
+}
+body .gwt-CheckBox input {
+    margin-top: 8px;    
+}
+
+
+
+
+.dataTable td,
+.lovFormHolder .dataTable td {
+    border-bottom: 1px solid #E2E1E1 !important;    
+}
+.lovFormHolder .dataTable tr.highlighted td,
+.dataTable tr.highlighted td {
+    background: #6bdcfd !important;
+}
+.lovFormHolder .dataTable tr.selected td,
+.lovFormHolder .dataTable tr.selected.highlighted td,
+.dataTable tr.selected td,
+.dataTable tr.selected.highlighted td {
+    background: #E2E1E1 !important;
+}
+.dataTable td input,
+.dataTable td .gwt-TextBox {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.UTSHighlightStatusCreated {
+    background-color: #8CC833 !important;
+}
+
+
+/* additions 2013 01 22 */
+body fieldset.contentPanelClass {
+	border-radius: 0;
+    border-width: 0;
+    border-color: transparent;
+    padding:2px;
+   /* commennted by Binu. background: none repeat scroll 0 0 #E9E4DA; */
+}
+* body fieldset.contentPanelClass {
+    padding: 2px 2px 2px 2px;
+    margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:5px;
+}
+body fieldset.contentPanelClass table {
+	background:#fff;
+    margin-top:10px;
+}
+body fieldset.contentPanelClass table.headerTable {
+    background: #7f7f7f; /* Added 20130201 to prevent invisible datagrid headers */
+}
+body fieldset.contentPanelClass table {
+    width:100%;
+}
+body fieldset.contentPanelClass table table {
+    margin-top:0px;
+}
+
+body fieldset.contentPanelClass > legend,
+body fieldset.contentPanelClass legend {
+    font-family: "proximanova", "proximanovacond";
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #d00018;
+}
+
