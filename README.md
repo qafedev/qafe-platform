@@ -17,9 +17,9 @@ Additionally we offer a service to convert Oracle Forms to QAML files to be used
 
 ## Checking out from git 
 
-First create a directory in which you going to develop 
+First create a directory in which you're going to develop 
 
-(for example on a Mac if username is johndoe: /Users/johndoe/develop/qafe/)
+(for example, on a Mac, if your username is johndoe: /Users/johndoe/develop/qafe/)
 
 ```
 mkdir -p /Users/johndoe/develop/qafe/
@@ -54,7 +54,7 @@ brew install maven
 ```
 For other platforms, the latest Maven-binaries can be found [here](http://maven.apache.org/download.cgi). 
 
-2\. The location of the local maven repository needs to be changed. In the qafe-platform/settings.xml locate the <localRepository> tag. By doing this you won't harm other maven projects on your system. Check it to for example:
+2\. The location of the local maven repository needs to be changed. Locate the <localRepository> tag in qafe-platform/settings.xml. By doing this, you won't harm other maven projects on your system. Check this example:
 ```
 <localRepository>/Users/johndoe/develop/qafe/m2/</localRepository>
 ``` 
@@ -63,15 +63,15 @@ For other platforms, the latest Maven-binaries can be found [here](http://maven.
 ```
 mvn clean install -DskipTests
 ```
-The build time should be approximately 10 minutes on a modern machine. The skiptests in included since database testing using a real database needs to be skipped. The end product of the building the platform are two WAR (Web Application Archive) files, one using GWT and one using Mobile GWT. These WAR-files can be run on most web servers including Apache Tomcat, Jetty, Weblogic, Jboss and Glassfish.
+The build time should be approximately 10 minutes on a modern machine. The skiptest-command is included as an argument to skip all tests since the available database-tests need a physical database for testing-purposes. The end product of the building the platform are two WAR (Web Application Archive) files, one using GWT and one using Mobile GWT. These WAR-files can be run on most web servers including Apache Tomcat, Jetty, Weblogic, Jboss and Glassfish.
 
 **Note**: The Oracle JDBC driver is not allowed to be distributed by maven repositories. For this follow [this link](http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/) to make it work. 
 
 ## Modifying QAFE Platform
-The QAFE Platform project can be imported in each IDE supporting Maven. Import the pom.xml in the folder *qafe-platform* in your IDE of choice as an existing Maven project. The code including the proper dependencies should be ready to use.  
+The QAFE Platform project can be imported in each IDE supporting Maven. Import the pom.xml in the folder *qafe-platform* in your IDE of choice as an existing Maven project. The code, including the proper dependencies, should be ready for use.  
 
 ## Debugging QAFE Platform
-Server-side code can be debugged using the debug-settings in Eclipse. Client-side code on the other hand needs additional steps to properly debug. This is done using the Super Dev Mode-functionality of GWT. This enables client-side debugging in the Chrome browser without the need for any plug-ins. Make sure that the platform-project has been built successfully before debugging. First step is to start the GWT Code server using the following Maven- command in the platform/qafe-web-gwt-folder. **Note: Debugging currently only works in Chrome.**
+Server-side code can be debugged using the debug-settings in Eclipse. Client-side code on the other hand needs additional steps to properly debug. This is done using the Super Dev Mode-functionality of GWT. This enables client-side debugging in the Chrome browser without the need for any plug-ins. Make sure that the platform-project has been built successfully before debugging. The first step is to start the GWT Code server using the following Maven-command in the platform/qafe-web-gwt-folder. **Note: Debugging currently only works in Chrome.**
 
 ```
 mvn gwt:run-codeserver
@@ -85,14 +85,14 @@ The next step is to start QAFE-Web-GWT with the following Maven-command in the p
 mvn gwt:run
 ```
 
-This should open the application in your browser. Now enable Super Dev Mode by opening the Dev Mode On-bookmark. You should now be able to debug the client-side code by using the Chrome Developer Tools. (Menu --> Tools --> Developer Tools or use the shortcut: F12) All client-side Java code can be debugged from the source-tab. Debugging i done by selecting a file and clicking on the line number creating a breakpoint.  
+This should open the application in your browser. Now enable Super Dev Mode by opening the Dev Mode On-bookmark. You should now be able to debug the client-side code by using the Chrome Developer Tools. (Menu --> Tools --> Developer Tools or use the shortcut: F12) All client-side Java code can be debugged from the source-tab. Debugging is done by selecting a file and clicking on the line number creating a breakpoint.  
 
 ## Logging QAFE Platform
 QAFE Platform uses the Java Logging API as its logging framework. Therefore, configuring logging behaviour can be accomplished by applying changes to the logging.properties of your JRE's lib/logging.properties file. Also, a logging.properties file location can be specified using the system property java.util.logging.config.file.
 
 When deployed into a tomcat container different rules apply as tomcat implements its own Log Manager. See http://tomcat.apache.org/tomcat-7.0-doc/logging.html under java.util.logging for the specifics.
 
-In case of developing QAML using eclipse and the QAML Builder plugins the logging.properties file can be found in the src/main/resources folder of your QAML project. When debugging an application more log output could be desirable, as by default only WARNING or SEVERE messages are logged. Open the logging.properties file and find the following line:
+In case of developing QAML using eclipse and the QAML Builder plugins the logging.properties file can be found in the src/main/resources folder of your QAML project. When debugging an application, more log output could be desirable, as by default only WARNING or SEVERE messages are logged. Open the logging.properties file and find the following line:
 
 ```
 java.util.logging.ConsoleHandler.level = WARNING
@@ -102,10 +102,10 @@ and change it to:
 ```
 java.util.logging.ConsoleHandler.level = INFO
 ```
-See for a complete list of log levels: http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html.
+For a complete list of log levels: http://docs.oracle.com/javase/7/docs/api/java/util/logging/Level.html.
 
 ## Running QAFE Platform applications
-The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. This file contains the platform and a basic Hello World application. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application-folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
+The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. This file contains the platform and a basic Hello World application. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
 
 The link to the application is dependent on the port number specified in your web server and the filename of the WAR-file without the extension. For example, if the port number is 8080 (standard for Tomcat) and the filename is qafe-web-gwt.war, then the link would be:
 
@@ -155,5 +155,5 @@ The sample code underneath is a simple Hello World application which includes a 
 Further information regarding the QAML documentation and Forms Conversion can be found on our [QAFE Developer Documentation](https://github.com/qafedev/qafedev.github.io/blob/master/README.md "QAFE Developer Documentation")
 
 ## Licenses
-Information regarding the licenses used in the QAFE Platform can be found on the [Depedencies page](https://github.com/qafedev/qafe-platform/blob/master/dependencies.md "QAFE dependencies") on GitHub. 
+Information regarding the licenses used in the QAFE Platform can be found on the [Dependencies page](https://github.com/qafedev/qafe-platform/blob/master/dependencies.md "QAFE dependencies") on GitHub. 
  
