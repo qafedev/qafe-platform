@@ -59,17 +59,17 @@ public class DataGridFactory {
 	private DataGridFactory() {
 	}
 
-	public static UIObject createPagingDataGrid(DataGridGVO gvo, String uuid, String parent) {
-		QTableModel tableModel = new QTableModel();
+	public static UIObject createPagingDataGrid(final DataGridGVO gvo, final String uuid, final String parent) {
+		final QTableModel tableModel = new QTableModel();
 
 		if (gvo.getPageSize() != null) {
 			tableModel.setRowCount(gvo.getPageSize());
 		}
 
 		// Create a TableCellRenderer
-		TableDefinition<DataContainerGVO> tableDef = new DefaultTableDefinition<DataContainerGVO>();
-		FixedWidthFlexTable headerTable = new FixedWidthFlexTable();
-		FixedWidthGrid dataTable = new FixedWidthGrid();
+		final TableDefinition<DataContainerGVO> tableDef = new DefaultTableDefinition<DataContainerGVO>();
+		final FixedWidthFlexTable headerTable = new FixedWidthFlexTable();
+		final FixedWidthGrid dataTable = new FixedWidthGrid();
 
 		if (gvo.getMultipleSelect()!=null && gvo.getMultipleSelect().booleanValue()){
 			dataTable.setSelectionPolicy(SelectionPolicy.MULTI_ROW);
@@ -77,10 +77,10 @@ public class DataGridFactory {
 			dataTable.setSelectionPolicy(SelectionPolicy.ONE_ROW);
 		}
 
-		QPagingScrollTable pagingScrollTable = new QPagingScrollTable(tableModel, dataTable, headerTable, tableDef, gvo, uuid, parent);
+		final QPagingScrollTable pagingScrollTable = new QPagingScrollTable(tableModel, dataTable, headerTable, tableDef, gvo, uuid, parent);
 		tableModel.setSource(pagingScrollTable);
 		// setup the bulk renderer
-        FixedWidthGridBulkRenderer<DataContainerGVO> bulkRenderer = new FixedWidthGridBulkRenderer<DataContainerGVO>(pagingScrollTable.getDataTable(), pagingScrollTable);
+        final FixedWidthGridBulkRenderer<DataContainerGVO> bulkRenderer = new FixedWidthGridBulkRenderer<DataContainerGVO>(pagingScrollTable.getDataTable(), pagingScrollTable);
 
         pagingScrollTable.setBulkRenderer(bulkRenderer);
 
@@ -105,7 +105,7 @@ public class DataGridFactory {
 			final String finalParent = parent;
 			layout = new FlexTable() {
 				@Override
-				public void onBrowserEvent(Event event) {
+				public void onBrowserEvent(final Event event) {
 					if (event.getTypeInt() == Event.ONCONTEXTMENU) {
 						DOM.eventPreventDefault(event);
 						AbstractComponentRenderer.applyContextMenu(event, finalComponentGVO, finalUuid, finalParent);
@@ -114,7 +114,7 @@ public class DataGridFactory {
 				}
 
 				@Override
-				protected void setElement(Element elem) {
+				protected void setElement(final Element elem) {
 					super.setElement(elem);
 					sinkEvents(Event.ONCONTEXTMENU);
 				}
@@ -129,12 +129,12 @@ public class DataGridFactory {
 		formatter.setWidth(0, 0, "100%");
 		formatter.setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_TOP);
 
-		QPagingScrollTableOperation operations = new QPagingScrollTableOperation(pagingScrollTable);
+		final QPagingScrollTableOperation operations = new QPagingScrollTableOperation(pagingScrollTable);
 		operations.initForCallback(gvo.getId(), uuid, parent, gvo.getContext());
 		operations.setVisible(true);
-		HorizontalPanel hp = new HorizontalPanel();
+		final HorizontalPanel hp = new HorizontalPanel();
 		QPagingOptions pagingOptions = null;
-		Integer pageSize = gvo.getPageSize();
+		final Integer pageSize = gvo.getPageSize();
 		if ((pageSize != null) && (pageSize > -1)) {
 			pagingOptions = new QPagingOptions(pagingScrollTable);
 			pagingOptions.initForCallback(gvo.getId(), uuid, parent, gvo.getContext());
@@ -152,7 +152,7 @@ public class DataGridFactory {
 		RendererHelper.fillIn(gvo, pagingScrollTable, uuid, parent, gvo.getContext());
 
 		if (gvo.hasOverFlow()){
-			UIObject  overflow = AnyComponentRenderer.getInstance().render(gvo.getOverflow(), uuid, parent, gvo.getContext());
+			final UIObject  overflow = AnyComponentRenderer.getInstance().render(gvo.getOverflow(), uuid, parent, gvo.getContext());
 			if (overflow!=null && overflow instanceof Widget){
 				((HasDataGridMethods) pagingScrollTable).setOverflow((Widget) overflow);
 				layout.insertRow(2);
@@ -170,7 +170,7 @@ public class DataGridFactory {
     // CHECKSTYLE.OFF: CyclomaticComplexity
 	public static TableDefinition<DataContainerGVO> createTableDefinition(final DataGridGVO source,final DataGridColumnGVO[] dataGridColumnGVOs,final String uuid,final String parent, final HasDataGridMethods parentWidget) {
 		// Create the table definition
-		DefaultTableDefinition<DataContainerGVO> tableDefinition = new DefaultTableDefinition<DataContainerGVO>();
+		final DefaultTableDefinition<DataContainerGVO> tableDefinition = new DefaultTableDefinition<DataContainerGVO>();
 
 		// Set the row renderer
 		if(source.getRowColors() != null && source.getRowColors().length > 0) {
@@ -180,12 +180,12 @@ public class DataGridFactory {
 			tableDefinition.setRowRenderer(new DefaultRowRenderer<DataContainerGVO>());
 		}
 
-		ArrayList<DataGridColumnGVO> copyDataGridColumnGVOs = new ArrayList<DataGridColumnGVO>();
+		final ArrayList<DataGridColumnGVO> copyDataGridColumnGVOs = new ArrayList<DataGridColumnGVO>();
 
 		// Column to show the status of the row visibly
 		if((source.getAdd() || source.getDelete() || source.getEditable()) && dataGridColumnGVOs != null && !DataMap.ROW_NUMBER.equals(dataGridColumnGVOs[0].getFieldName())) {
-			DataGridColumnGVO rowNumberDataGridColumnGVO = new DataGridColumnGVO();
-			LabelGVO rowNumberLabel = new LabelGVO();
+			final DataGridColumnGVO rowNumberDataGridColumnGVO = new DataGridColumnGVO();
+			final LabelGVO rowNumberLabel = new LabelGVO();
 			rowNumberDataGridColumnGVO.setComponent(rowNumberLabel);
 			rowNumberDataGridColumnGVO.setFieldName(DataMap.ROW_NUMBER);
 			rowNumberDataGridColumnGVO.setWidth("25");
@@ -196,7 +196,7 @@ public class DataGridFactory {
 		}
 
 		if(dataGridColumnGVOs != null){
-			for(DataGridColumnGVO dgColumnGVO : dataGridColumnGVOs){
+			for(final DataGridColumnGVO dgColumnGVO : dataGridColumnGVOs){
 				copyDataGridColumnGVOs.add(dgColumnGVO);
 			}
 		}
@@ -207,50 +207,80 @@ public class DataGridFactory {
 			source.setColumns(dataGridColumnGVOsArray);
 		}
 
-
 		if (copyDataGridColumnGVOs != null) {
-			for (int i = 0; i < dataGridColumnGVOsArray.length; i++) {
-				if (!dataGridColumnGVOsArray[i].isQafeChecksum() && dataGridColumnGVOsArray[i].getVisible().booleanValue()){
-					final String field = dataGridColumnGVOsArray[i].getFieldName();
-					QColumnDefinition columnDef = new QColumnDefinition();
-					columnDef.setField(field);
-					columnDef.setIdentifyingField(dataGridColumnGVOsArray[i].getIdentifyingField());
-					columnDef.setColumnSortable(dataGridColumnGVOsArray[i].getSortable());
-
-					if( dataGridColumnGVOsArray[i].getWidth() != null && dataGridColumnGVOsArray[i].getWidth().length() > 0){
-						try {
-							columnDef.setPreferredColumnWidth(Integer.parseInt(dataGridColumnGVOsArray[i].getWidth()));
-						} catch (Exception e){
-							ClientApplicationContext.getInstance().log("Could not parse column width for datagrid (id"+  source.getId() +") or name ("+source.getFieldName()+") for column (id=" + dataGridColumnGVOsArray[i].getId()+ ",name="+ dataGridColumnGVOsArray[i].getFieldName()  +")" );
-						}
-
-					}
-					tableDefinition.addColumnDefinition(columnDef);
-					CellRenderer<DataContainerGVO, String> cellRenderer = CellRendererHelper.getCellRenderer(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
-					if (cellRenderer != null) {
-						columnDef.setCellRenderer(cellRenderer);
-					}
-					CellCleaner cellCleaner = CellRendererHelper.getCellCleaner(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
-					columnDef.setCellCleaner(cellCleaner);
-				}
+			for (int i = 0; i<dataGridColumnGVOsArray.length; i++) {
+			    final DataGridColumnGVO dataGridColumnGVO = dataGridColumnGVOsArray[i];
+			    if (dataGridColumnGVO.isQafeChecksum()) {
+			        continue;
+			    }
+			    final String columnName = dataGridColumnGVO.getFieldName();
+			    final String columnWidth = dataGridColumnGVO.getWidth();
+			    final Boolean columnVisible = dataGridColumnGVO.getVisible();
+			    
+                final QColumnDefinition columnDef = new QColumnDefinition();
+                columnDef.setField(columnName);
+                columnDef.setIdentifyingField(dataGridColumnGVO.getIdentifyingField());
+                columnDef.setColumnSortable(dataGridColumnGVO.getSortable());
+                if (columnWidth != null && columnWidth.length() > 0) {
+                    try {
+                        columnDef.setPreferredColumnWidth(Integer.parseInt(columnWidth));
+                    } catch (final Exception e){
+                        ClientApplicationContext.getInstance().log("Could not parse column width for datagrid (id"+  source.getId() +") or name ("+source.getFieldName()+") for column (id=" + dataGridColumnGVO.getId()+ ",name="+ columnName  +")" );
+                    }
+                }
+                
+                tableDefinition.addColumnDefinition(columnDef);
+                if ((columnVisible != null) && !columnVisible) {
+                    tableDefinition.setColumnVisible(columnDef, columnVisible);    
+                }
+                
+                final CellRenderer<DataContainerGVO, String> cellRenderer = CellRendererHelper.getCellRenderer(source, dataGridColumnGVO, uuid, parent, parentWidget);
+                if (cellRenderer != null) {
+                    columnDef.setCellRenderer(cellRenderer);
+                }
+                final CellCleaner cellCleaner = CellRendererHelper.getCellCleaner(source, dataGridColumnGVO, uuid, parent, parentWidget);
+                columnDef.setCellCleaner(cellCleaner);
+//				if (!dataGridColumnGVOsArray[i].isQafeChecksum() && dataGridColumnGVOsArray[i].getVisible().booleanValue()){
+//					final String field = dataGridColumnGVOsArray[i].getFieldName();
+//					QColumnDefinition columnDef = new QColumnDefinition();
+//					columnDef.setField(field);
+//					columnDef.setIdentifyingField(dataGridColumnGVOsArray[i].getIdentifyingField());
+//					columnDef.setColumnSortable(dataGridColumnGVOsArray[i].getSortable());
+//
+//					if( dataGridColumnGVOsArray[i].getWidth() != null && dataGridColumnGVOsArray[i].getWidth().length() > 0){
+//						try {
+//							columnDef.setPreferredColumnWidth(Integer.parseInt(dataGridColumnGVOsArray[i].getWidth()));
+//						} catch (Exception e){
+//							ClientApplicationContext.getInstance().log("Could not parse column width for datagrid (id"+  source.getId() +") or name ("+source.getFieldName()+") for column (id=" + dataGridColumnGVOsArray[i].getId()+ ",name="+ dataGridColumnGVOsArray[i].getFieldName()  +")" );
+//						}
+//
+//					}
+//					tableDefinition.addColumnDefinition(columnDef);
+//					CellRenderer<DataContainerGVO, String> cellRenderer = CellRendererHelper.getCellRenderer(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
+//					if (cellRenderer != null) {
+//						columnDef.setCellRenderer(cellRenderer);
+//					}
+//					CellCleaner cellCleaner = CellRendererHelper.getCellCleaner(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
+//					columnDef.setCellCleaner(cellCleaner);
+//				}
 			}
 		}
 		return tableDefinition;
 	}
     // CHECKSTYLE.ON: CyclomaticComplexity
 
-	private static void resolveEvents4RowNumber(DataGridColumnGVO rowNumberColumnGVO, DataGridGVO datagridGVO) {
-		String datagridId = datagridGVO.getId();
+	private static void resolveEvents4RowNumber(final DataGridColumnGVO rowNumberColumnGVO, final DataGridGVO datagridGVO) {
+		final String datagridId = datagridGVO.getId();
 		if ((datagridId == null) || (datagridId.length() == 0)) {
 			return;
 		}
-		EventListenerGVO[] events = datagridGVO.getEvents();
+		final EventListenerGVO[] events = datagridGVO.getEvents();
 		if (events == null) {
 			return;
 		}
-		String rowNumberColumnId = datagridId + "." + rowNumberColumnGVO.getFieldName();
-		List<EventListenerGVO> rowNumberColumnEvents = new ArrayList<EventListenerGVO>();
-		for (EventListenerGVO event : events) {
+		final String rowNumberColumnId = datagridId + "." + rowNumberColumnGVO.getFieldName();
+		final List<EventListenerGVO> rowNumberColumnEvents = new ArrayList<EventListenerGVO>();
+		for (final EventListenerGVO event : events) {
 			if (rowNumberColumnId.equals(event.getEventComponentId())) {
 				rowNumberColumnEvents.add(event);
 			}
