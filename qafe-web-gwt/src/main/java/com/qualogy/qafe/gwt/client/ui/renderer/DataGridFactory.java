@@ -168,55 +168,59 @@ public class DataGridFactory {
 	}
 
     // CHECKSTYLE.OFF: CyclomaticComplexity
-	public static TableDefinition<DataContainerGVO> createTableDefinition(final DataGridGVO source,final DataGridColumnGVO[] dataGridColumnGVOs,final String uuid,final String parent, final HasDataGridMethods parentWidget) {
-		// Create the table definition
-		final DefaultTableDefinition<DataContainerGVO> tableDefinition = new DefaultTableDefinition<DataContainerGVO>();
+    public static TableDefinition<DataContainerGVO> createTableDefinition(final DataGridGVO source,
+            final DataGridColumnGVO[] dataGridColumnGVOs, final String uuid, final String parent,
+            final HasDataGridMethods parentWidget) {
+        // Create the table definition
+        final DefaultTableDefinition<DataContainerGVO> tableDefinition =
+            new DefaultTableDefinition<DataContainerGVO>();
 
-		// Set the row renderer
-		if(source.getRowColors() != null && source.getRowColors().length > 0) {
-			tableDefinition.setRowRenderer(new QDefaultRowRenderer<DataContainerGVO>(source.getRowColors()));
+        // Set the row renderer
+        if (source.getRowColors() != null && source.getRowColors().length > 0) {
+            tableDefinition.setRowRenderer(new QDefaultRowRenderer<DataContainerGVO>(source.getRowColors()));
 
-		} else {
-			tableDefinition.setRowRenderer(new DefaultRowRenderer<DataContainerGVO>());
-		}
+        } else {
+            tableDefinition.setRowRenderer(new DefaultRowRenderer<DataContainerGVO>());
+        }
 
-		final ArrayList<DataGridColumnGVO> copyDataGridColumnGVOs = new ArrayList<DataGridColumnGVO>();
+        final ArrayList<DataGridColumnGVO> copyDataGridColumnGVOs = new ArrayList<DataGridColumnGVO>();
 
-		// Column to show the status of the row visibly
-		if((source.getAdd() || source.getDelete() || source.getEditable()) && dataGridColumnGVOs != null && !DataMap.ROW_NUMBER.equals(dataGridColumnGVOs[0].getFieldName())) {
-			final DataGridColumnGVO rowNumberDataGridColumnGVO = new DataGridColumnGVO();
-			final LabelGVO rowNumberLabel = new LabelGVO();
-			rowNumberDataGridColumnGVO.setComponent(rowNumberLabel);
-			rowNumberDataGridColumnGVO.setFieldName(DataMap.ROW_NUMBER);
-			rowNumberDataGridColumnGVO.setWidth("25");
-			rowNumberDataGridColumnGVO.setContainerName(source.getId());
-			rowNumberDataGridColumnGVO.setContext(source.getContext());
-			resolveEvents4RowNumber(rowNumberDataGridColumnGVO, source);
-			copyDataGridColumnGVOs.add(rowNumberDataGridColumnGVO);
-		}
+        // Column to show the status of the row visibly
+        if ((source.getAdd() || source.getDelete() || source.getEditable()) && dataGridColumnGVOs != null
+                && !DataMap.ROW_NUMBER.equals(dataGridColumnGVOs[0].getFieldName())) {
+            final DataGridColumnGVO rowNumberDataGridColumnGVO = new DataGridColumnGVO();
+            final LabelGVO rowNumberLabel = new LabelGVO();
+            rowNumberDataGridColumnGVO.setComponent(rowNumberLabel);
+            rowNumberDataGridColumnGVO.setFieldName(DataMap.ROW_NUMBER);
+            rowNumberDataGridColumnGVO.setWidth("25");
+            rowNumberDataGridColumnGVO.setContainerName(source.getId());
+            rowNumberDataGridColumnGVO.setContext(source.getContext());
+            resolveEvents4RowNumber(rowNumberDataGridColumnGVO, source);
+            copyDataGridColumnGVOs.add(rowNumberDataGridColumnGVO);
+        }
 
-		if(dataGridColumnGVOs != null){
-			for(final DataGridColumnGVO dgColumnGVO : dataGridColumnGVOs){
-				copyDataGridColumnGVOs.add(dgColumnGVO);
-			}
-		}
+        if (dataGridColumnGVOs != null) {
+            for (final DataGridColumnGVO dgColumnGVO : dataGridColumnGVOs) {
+                copyDataGridColumnGVOs.add(dgColumnGVO);
+            }
+        }
 
-		DataGridColumnGVO[] dataGridColumnGVOsArray = new DataGridColumnGVO[copyDataGridColumnGVOs.size()];
-		dataGridColumnGVOsArray = copyDataGridColumnGVOs.toArray(dataGridColumnGVOsArray);
-		if(dataGridColumnGVOs != null){ // If there are columns defined
-			source.setColumns(dataGridColumnGVOsArray);
-		}
+        DataGridColumnGVO[] dataGridColumnGVOsArray = new DataGridColumnGVO[copyDataGridColumnGVOs.size()];
+        dataGridColumnGVOsArray = copyDataGridColumnGVOs.toArray(dataGridColumnGVOsArray);
+        if (dataGridColumnGVOs != null) { // If there are columns defined
+            source.setColumns(dataGridColumnGVOsArray);
+        }
 
-		if (copyDataGridColumnGVOs != null) {
-			for (int i = 0; i<dataGridColumnGVOsArray.length; i++) {
-			    final DataGridColumnGVO dataGridColumnGVO = dataGridColumnGVOsArray[i];
-			    if (dataGridColumnGVO.isQafeChecksum()) {
-			        continue;
-			    }
-			    final String columnName = dataGridColumnGVO.getFieldName();
-			    final String columnWidth = dataGridColumnGVO.getWidth();
-			    final Boolean columnVisible = dataGridColumnGVO.getVisible();
-			    
+        if (copyDataGridColumnGVOs != null) {
+            for (int i = 0; i < dataGridColumnGVOsArray.length; i++) {
+                final DataGridColumnGVO dataGridColumnGVO = dataGridColumnGVOsArray[i];
+                if (dataGridColumnGVO.isQafeChecksum()) {
+                    continue;
+                }
+                final String columnName = dataGridColumnGVO.getFieldName();
+                final String columnWidth = dataGridColumnGVO.getWidth();
+                final Boolean columnVisible = dataGridColumnGVO.getVisible();
+
                 final QColumnDefinition columnDef = new QColumnDefinition();
                 columnDef.setField(columnName);
                 columnDef.setIdentifyingField(dataGridColumnGVO.getIdentifyingField());
@@ -224,49 +228,32 @@ public class DataGridFactory {
                 if (columnWidth != null && columnWidth.length() > 0) {
                     try {
                         columnDef.setPreferredColumnWidth(Integer.parseInt(columnWidth));
-                    } catch (final Exception e){
-                        ClientApplicationContext.getInstance().log("Could not parse column width for datagrid (id"+  source.getId() +") or name ("+source.getFieldName()+") for column (id=" + dataGridColumnGVO.getId()+ ",name="+ columnName  +")" );
+                    } catch (final Exception e) {
+                        ClientApplicationContext.getInstance().log(
+                            "Could not parse column width for datagrid (id" + source.getId() + ") or name ("
+                                    + source.getFieldName() + ") for column (id=" + dataGridColumnGVO.getId()
+                                    + ",name=" + columnName + ")");
                     }
                 }
-                
+
                 tableDefinition.addColumnDefinition(columnDef);
                 if ((columnVisible != null) && !columnVisible) {
-                    tableDefinition.setColumnVisible(columnDef, columnVisible);    
+                    tableDefinition.setColumnVisible(columnDef, columnVisible);
                 }
-                
-                final CellRenderer<DataContainerGVO, String> cellRenderer = CellRendererHelper.getCellRenderer(source, dataGridColumnGVO, uuid, parent, parentWidget);
+
+                final CellRenderer<DataContainerGVO, String> cellRenderer =
+                    CellRendererHelper.getCellRenderer(source, dataGridColumnGVO, uuid, parent, parentWidget);
                 if (cellRenderer != null) {
                     columnDef.setCellRenderer(cellRenderer);
                 }
-                final CellCleaner cellCleaner = CellRendererHelper.getCellCleaner(source, dataGridColumnGVO, uuid, parent, parentWidget);
+                final CellCleaner cellCleaner =
+                    CellRendererHelper.getCellCleaner(source, dataGridColumnGVO, uuid, parent, parentWidget);
                 columnDef.setCellCleaner(cellCleaner);
-//				if (!dataGridColumnGVOsArray[i].isQafeChecksum() && dataGridColumnGVOsArray[i].getVisible().booleanValue()){
-//					final String field = dataGridColumnGVOsArray[i].getFieldName();
-//					QColumnDefinition columnDef = new QColumnDefinition();
-//					columnDef.setField(field);
-//					columnDef.setIdentifyingField(dataGridColumnGVOsArray[i].getIdentifyingField());
-//					columnDef.setColumnSortable(dataGridColumnGVOsArray[i].getSortable());
-//
-//					if( dataGridColumnGVOsArray[i].getWidth() != null && dataGridColumnGVOsArray[i].getWidth().length() > 0){
-//						try {
-//							columnDef.setPreferredColumnWidth(Integer.parseInt(dataGridColumnGVOsArray[i].getWidth()));
-//						} catch (Exception e){
-//							ClientApplicationContext.getInstance().log("Could not parse column width for datagrid (id"+  source.getId() +") or name ("+source.getFieldName()+") for column (id=" + dataGridColumnGVOsArray[i].getId()+ ",name="+ dataGridColumnGVOsArray[i].getFieldName()  +")" );
-//						}
-//
-//					}
-//					tableDefinition.addColumnDefinition(columnDef);
-//					CellRenderer<DataContainerGVO, String> cellRenderer = CellRendererHelper.getCellRenderer(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
-//					if (cellRenderer != null) {
-//						columnDef.setCellRenderer(cellRenderer);
-//					}
-//					CellCleaner cellCleaner = CellRendererHelper.getCellCleaner(source, dataGridColumnGVOsArray[i], uuid, parent, parentWidget);
-//					columnDef.setCellCleaner(cellCleaner);
-//				}
-			}
-		}
-		return tableDefinition;
-	}
+            }
+        }
+        return tableDefinition;
+    }
+
     // CHECKSTYLE.ON: CyclomaticComplexity
 
 	private static void resolveEvents4RowNumber(final DataGridColumnGVO rowNumberColumnGVO, final DataGridGVO datagridGVO) {
