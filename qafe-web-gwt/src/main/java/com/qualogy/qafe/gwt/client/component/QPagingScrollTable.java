@@ -579,13 +579,18 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 	}
 
 	public void initColumnWidths() {
-	    final DataGridColumnGVO[] dataGridColumnGVOs = source.getColumns();
-	    for (int i = 0; i < dataGridColumnGVOs.length; i++) {
-	    	final String width = dataGridColumnGVOs[i].getWidth();
+		int visibleColIndex = 0;
+	    final DataGridColumnGVO[] columns = source.getColumns();
+	    for (final DataGridColumnGVO columnGVO : columns) {
+	    	if (!columnGVO.getVisible()) {
+				continue;
+			}
+	    	final String width = columnGVO.getWidth();
 	    	if (width != null) {
-	    		setColumnWidth(i, Integer.parseInt(width));
+	    		setColumnWidth(visibleColIndex, Integer.parseInt(width));
 	    	}
-		}
+	    	visibleColIndex++;
+	    }
 	}
 
 	private void clearColumnHeaders() {
@@ -603,14 +608,14 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		int visibleColIndex = 0;
 		final DataGridColumnGVO[] columns = source.getColumns();
 		for (final DataGridColumnGVO columnGVO : columns) {
+			if (!columnGVO.getVisible()) {
+				continue;
+			}
 			final Widget columnHeader = createColumnHeader(columnGVO);
 			if (columnHeader == null) {
 				continue;
 			}
-			final boolean columnVisible = columnGVO.getVisible();
-			if (!columnVisible) {
-				continue;
-			}
+			
 			getHeaderTable().setWidget(0, visibleColIndex, columnHeader);
 			visibleColIndex++;
 		}
