@@ -16,6 +16,7 @@
 package com.qualogy.qafe.bind.core.application;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -261,7 +262,26 @@ public class Configuration implements Serializable, PostProcessing, Cloneable{
 	public void put(String key, String value){
 		configuration.put(key, value);
 	}
+
+	public void addConfigurationItem(String key, String value) {
+		if (key == null) {
+			return;
+		}
+		KeyValue keyValue = new KeyValue();
+		keyValue.setKey(key);
+		keyValue.setValue(value);
+		addConfigurationItem(keyValue);
+	}
 	
+	public void addConfigurationItem(KeyValue keyValue){
+		if (keyValue == null) {
+			return;
+		}
+		if (configurationItems == null) {
+			configurationItems = new ArrayList<KeyValue>();
+		}
+		configurationItems.add(keyValue);
+	}	
 	
 	private Configuration() {
 		super();

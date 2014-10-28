@@ -90,6 +90,10 @@ public class ApplicationStack implements PostProcessing{
 	public Configuration getGlobalConfiguration() {
 		return globalConfiguration;
 	}
+	
+	public void setGlobalConfiguration(Configuration globalConfiguration) {
+		this.globalConfiguration = globalConfiguration;
+	}
 
 	public void performPostProcessing() {
 		
