@@ -200,6 +200,8 @@ public class JavaServiceProcessor extends Processor {
 			throw new ExternalException(e.getCause());
 		}catch(IllegalAccessException e){
 			throw new ExternalException(e.getCause());
+		}catch(Exception e){
+			throw new ExternalException(e.getCause());
 		}
 		return result;
 	}

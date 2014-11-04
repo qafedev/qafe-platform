@@ -73,7 +73,11 @@ public class ErrorProcessor {
 			// or handler specifies that the exception should be rethrown
 			errorResult = resolveRethrow(errorResult, errorHandler, externalException);
 			if (externalException.getCause() != null) {
-				DataStore.store(dataId, DataStore.KEY_ERROR_MESSAGE, externalException.getCause().getMessage());
+				String errorMessage = ((ExternalException)externalException).getErrorMessage();
+				if (errorMessage == null) {
+					errorMessage = externalException.getMessage();
+				}
+				DataStore.store(dataId, DataStore.KEY_ERROR_MESSAGE, errorMessage);
 			}	
 		}
 		return errorResult; 
@@ -81,7 +85,7 @@ public class ErrorProcessor {
 	
 	private static ErrorResult resolveRethrow(ErrorResult errorResult, ErrorHandler errorHandler, Exception externalException) {
 		if ((errorHandler == null) || ErrorHandler.FINALLY_RETHROW.equals(errorHandler.getFinalAction())) {
-			errorResult.setExternalException(new ExternalException(externalException.getMessage(), externalException));
+			errorResult.setExternalException((ExternalException)externalException);
 		}
 		return errorResult;
 	}

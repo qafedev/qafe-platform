@@ -67,9 +67,27 @@ public class DAODelegate {
         try {
             result = dao.execute(ds, query, method, paramsIn, paramsOut, filters, dataId);
         } catch (DataAccessException e) {
-            throw new ExternalException("method [" + method.getId() + "] -> query/call [" + query.getId() + "]", e);
+        	String detailMessage = resolveDetailMessage(e.getCause());
+            throw new ExternalException("method [" + method.getId() + "] -> query/call [" + query.getId() + "]", detailMessage, e);
         }
 
         return result;
     }
+
+	private static String resolveDetailMessage(Throwable cause) {
+		String message = cause.getMessage();
+		
+		String ORA = "ORA-";
+		if (message != null && message.contains(ORA)) {
+			String[] splitString = message.split(":|\\n");
+			
+			for (String s : splitString) {
+				if (!s.contains(ORA)) {
+					return s.trim();
+				}
+			}
+		}
+		
+		return message;
+	}
 }
