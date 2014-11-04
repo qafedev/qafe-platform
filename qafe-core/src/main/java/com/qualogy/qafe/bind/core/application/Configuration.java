@@ -140,6 +140,8 @@ public class Configuration implements Serializable, PostProcessing, Cloneable{
 	public final static String WEBSERVICE_LICENSE_CREATION_URL = "webservice.license.creation.url";
 	
 	public final static String WEBSERVICE_LICENSE_VALIDATION_URL = "webservice.license.validation.url";
+	
+	public static final String WEB_SERVICE_FORMAT_DATE = "date.format";
 
 	public final static String GEO_LOCATION_ENABLED = "geo.location.enabled";
 
