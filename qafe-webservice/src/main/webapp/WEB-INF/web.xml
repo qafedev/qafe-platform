@@ -22,36 +22,10 @@
 
     <display-name>qafe-webservice</display-name>
 
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-		<param-value>nl</param-value>
-	</context-param>
-	<context-param>
-		<param-name>QAFE_reload_enabled</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
+ 	<context-param>
 		<param-name>QAFEContextFile</param-name>
 		<param-value>application-config.xml</param-value>
 	</context-param>
-	<context-param>
-		<param-name>noAuth</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<!--  GWT Upload -->
-	<context-param>
-		<!-- max size of the upload request -->
-		<param-name>maxSize</param-name>
-		<param-value>3145728</param-value>
-	</context-param>
-	<context-param>
-		<!-- useful in development mode to see the upload progress bar in fast networks -->
-		<param-name>slowUploads</param-name>
-		<param-value>true</param-value>
-	</context-param>
-  
-	<!--  END GWT Upload -->
-
 	<context-param>
     	<param-name>contextConfigLocation</param-name>
     	<param-value>classpath*:META-INF/config/applicationContext*.xml</param-value>
@@ -67,28 +41,7 @@
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
-        
-	<servlet>
-		<servlet-name>ManifestServlet</servlet-name>
-		<servlet-class>com.googlecode.mgwt.linker.server.MGWTHtml5ManifestServlet</servlet-class>
-	</servlet>
  	
-    <!-- Callback Servlets -->
-	<servlet>
-		<servlet-name>main</servlet-name>
-		<jsp-file>/index.jsp</jsp-file>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<!-- Logging service -->
-	<servlet>
-		<servlet-name>remoteLoggingServlet</servlet-name>
-		<servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>service</servlet-name>
-		<servlet-class>com.qualogy.qafe.mgwt.server.RPCServiceImpl</servlet-class>
-	</servlet>
-	
 	<!-- JAX-WS -->
 	<servlet>
         <servlet-name>jaxws-servlet</servlet-name>
@@ -97,24 +50,5 @@
     <servlet-mapping>
         <servlet-name>jaxws-servlet</servlet-name>
         <url-pattern>/qafeWS</url-pattern>
-    </servlet-mapping>
-	
-  	<servlet-mapping>
- 	   <servlet-name>ManifestServlet</servlet-name>
-    	<url-pattern>/qafemobile.manifest</url-pattern>
-  	</servlet-mapping>
-  	<servlet-mapping>
-		<servlet-name>main</servlet-name>
-		<url-pattern>*.start</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>service</servlet-name>
-		<url-pattern>*.service</url-pattern>
-	</servlet-mapping>
-	
-	<!-- Default page to serve -->
-	<welcome-file-list>
-    	<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>  
+    </servlet-mapping> 
 </web-app>

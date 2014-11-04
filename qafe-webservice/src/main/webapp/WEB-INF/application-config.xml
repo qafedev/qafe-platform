@@ -19,8 +19,8 @@
 <applications  xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
 	
 	<!--  Hello World application  -->
-	<application name="demoApp" id="demoApp" >
-		<application-mapping-file location="demoApp"/>		
+	<application name="sample" id="sample" >
+		<application-mapping-file location="sample"/>		
 	</application>
 
 </applications>
