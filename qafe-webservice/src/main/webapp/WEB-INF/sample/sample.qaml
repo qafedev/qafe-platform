@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2008-2014 Qualogy Solutions B.V.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    	http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">  	
+	<business-tier> 
+		<business-actions> 
+			<business-action id="selectEMPLOYEESOfHRXE"> 
+				<transaction managed="no"/>  
+				<service ref="hrXE" method-ref="selectEMPLOYEES"> 
+					<out name="result" ref="result"/> 
+				</service> 
+			</business-action>  
+			<!-- 
+			TEST BY EXECUTING THIS SOAP REQUEST
+			<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap="http://soap.ws.qualogy.com/">
+			   <soapenv:Header/>
+			   <soapenv:Body>
+				  <soap:executeBusinessAction>
+					<arg0>demoApp</arg0>
+					 <arg1>selectEmployeeBySalary</arg1>
+					 <arg2>{
+						"salary":12000
+					 }</arg2>
+				  </soap:executeBusinessAction>
+			   </soapenv:Body>
+			</soapenv:Envelope>
+			-->
+			<business-action id="selectEmployeeBySalary"> 
+				<transaction managed="no"/>  
+				<service ref="hrXE" method-ref="selectEmployeeBySalary"> 
+					<in name="salary" ref="salary" />
+					<out name="result" ref="result"/> 
+				</service> 
+			</business-action>  
+			<business-action id="updateEMPLOYEESOfHRXE"> 
+				<transaction managed="no"/>  
+				<service ref="hrXE" method-ref="updateEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</service> 
+			</business-action>  
+			<business-action id="insertEMPLOYEESOfHRXE"> 
+				<transaction managed="no"/>  
+				<service ref="hrXE" method-ref="insertEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</service> 
+			</business-action>  
+			<business-action id="deleteEMPLOYEESOfHRXE"> 
+				<transaction managed="no"/>  
+				<service ref="hrXE" method-ref="deleteEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</service> 
+			</business-action> 
+		</business-actions> 
+	</business-tier>  
+	<integration-tier> 
+		<services> 
+			<service id="hrXE" resource-ref="hrXEResource"> 
+				<method id="selectEMPLOYEES" name="selectEMPLOYEES" scrollable="true"> 
+					<out name="result"/> 
+				</method> 
+				<method id="selectEmployeeBySalary" name="selectEmployeeBySalary">
+					<in name="salary" ref="salary"/>
+					<out name="result"/>
+				</method>
+				<method id="updateEMPLOYEES" name="updateEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</method>  
+				<method id="insertEMPLOYEES" name="insertEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</method>  
+				<method id="deleteEMPLOYEES" name="deleteEMPLOYEES"> 
+					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
+				</method> 
+			</service> 
+		</services> 
+	</integration-tier>  
+	<resource-tier> 
+		<resources> 
+			<drivermanager-datasource id="hrXEResource" url="jdbc:oracle:thin:@localhost:1521:xe" username="hr" password="hr" driver-classname="oracle.jdbc.OracleDriver" statements-file-url="sample-sql.xml"/> 
+		</resources> 
+	</resource-tier> 
+</application-mapping>
