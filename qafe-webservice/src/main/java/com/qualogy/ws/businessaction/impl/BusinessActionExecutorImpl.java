@@ -42,9 +42,8 @@ import com.qualogy.ws.exception.NotFoundException;
  */
 public class BusinessActionExecutorImpl implements BusinessActionExecutor {
 
-    private ApplicationContext applicationContext;
-
     protected ApplicationContext getApplicationContext(String appId) {
+        ApplicationContext applicationContext = null;
         if (applicationContext == null && appId != null) {
             final Iterator<ApplicationContext> itrAppContext = ApplicationCluster.getInstance().iterator();
             while (itrAppContext.hasNext()) {
@@ -82,13 +81,7 @@ public class BusinessActionExecutorImpl implements BusinessActionExecutor {
                 outputParams = ref.getOutput();
             } else if (item instanceof ServiceRef) {
                 ServiceRef ref = (ServiceRef) item;
-                outputParams = ref.getOutput();
-                Object o = ref.getInput().get(0);
-//                ((In)o).getOutputClass()
-//                ((In)o).getType()
-//                ((In)o).getValue()
-                System.out.println(o);
-                        
+                outputParams = ref.getOutput();                        
             }
 
             if (outputParams == null || outputParams.isEmpty()) {
@@ -107,7 +100,7 @@ public class BusinessActionExecutorImpl implements BusinessActionExecutor {
         
         final ApplicationContext appContext = getApplicationContext(appId);
         
-        if (appId == null || appContext == null) {
+        if (appContext == null) {
             throw new NotFoundException("Application with id: [" + appId + "] can not be found");
         }
         

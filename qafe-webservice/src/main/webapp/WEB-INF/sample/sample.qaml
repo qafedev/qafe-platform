@@ -66,12 +66,6 @@
 					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
 				</service> 
 			</business-action> 
-			<business-action id="parseDate">
-				<transaction managed="no"/>
-				<service ref="javaHRXE" method-ref="parseDate">
-					<in name="myInputDate" ref="inputDate" />
-				</service>
-			</business-action>
 		</business-actions> 
 	</business-tier>  
 	<integration-tier> 
@@ -94,17 +88,11 @@
 					<in name="recordOfEMPLOYEES" ref="recordOfEMPLOYEES"/> 
 				</method> 
 			</service> 
-			<service id="javaHRXE" resource-ref="hrXEJavaResource">
-				<method id="parseDate" name="parseDate">
-					<in name="0" ref="inputDate" type="date"/>
-				</method>
-			</service>
 		</services> 
 	</integration-tier>  
 	<resource-tier> 
 		<resources> 
-			<drivermanager-datasource id="hrXEResource" url="jdbc:oracle:thin:@localhost:1521:xe" username="hr" password="hr" driver-classname="oracle.jdbc.OracleDriver" statements-file-url="qafe-1108-sql.xml"/> 
-			<javaclass id="hrXEJavaResource" classname="com.qualogy.service.Service"/>
+			<drivermanager-datasource id="hrXEResource" url="jdbc:oracle:thin:@localhost:1521:xe" username="hr" password="hr" driver-classname="oracle.jdbc.OracleDriver" statements-file-url="sample-sql.xml"/> 
 		</resources> 
 	</resource-tier> 
 </application-mapping>
