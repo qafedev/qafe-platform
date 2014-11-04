@@ -92,7 +92,7 @@
 	</integration-tier>  
 	<resource-tier> 
 		<resources> 
-			<drivermanager-datasource id="hrXEResource" url="jdbc:oracle:thin:@localhost:1521:xe" username="hr" password="hr" driver-classname="oracle.jdbc.OracleDriver" statements-file-url="sample-sql.xml"/> 
+			<drivermanager-datasource id="hrXEResource" url="jdbc:oracle:thin:@192.168.140.226:1521:xe" username="hr" password="hr" driver-classname="oracle.jdbc.OracleDriver" statements-file-url="sample-sql.xml"/> 
 		</resources> 
 	</resource-tier> 
 </application-mapping>
