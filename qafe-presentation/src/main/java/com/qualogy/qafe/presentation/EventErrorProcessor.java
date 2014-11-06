@@ -24,13 +24,14 @@ import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.errorhandling.ErrorProcessor;
 import com.qualogy.qafe.core.errorhandling.ErrorResult;
+import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.core.framework.presentation.EventData;
 
 public class EventErrorProcessor {
 	
 	private final static Logger logger = Logger.getLogger(EventErrorProcessor.class.getName());
 
-	public static ErrorResult processError(ListIterator<EventItem> itrEventItem, EventItem triggeredEventItem, ApplicationContext context, DataIdentifier dataId, Exception externalException, EventData eventData) {
+	public static ErrorResult processError(ListIterator<EventItem> itrEventItem, EventItem triggeredEventItem, ApplicationContext context, DataIdentifier dataId, ExternalException externalException, EventData eventData) {
 		Window window = getWindow(eventData.getWindowId(), context);
 		ErrorResult errorResult = ErrorProcessor.processError(itrEventItem, triggeredEventItem, context, window, dataId, externalException, logger);
 		return errorResult; 

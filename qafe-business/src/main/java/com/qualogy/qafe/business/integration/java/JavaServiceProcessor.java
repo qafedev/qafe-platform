@@ -45,7 +45,6 @@ import com.qualogy.qafe.business.resource.java.JavaClass;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
-import com.qualogy.qafe.core.framework.business.UnableToProcessException;
 
 /**
  * actual executer of the method on the service
@@ -195,13 +194,17 @@ public class JavaServiceProcessor extends Processor {
 				}
 			}
 		}catch(NoSuchMethodException e){
-			throw new UnableToProcessException(e);
+			String errorMessage = resolveErrorMessage(e);
+			throw new ExternalException(errorMessage, errorMessage, e);
 		}catch(InvocationTargetException e){
-			throw new ExternalException(e.getCause());
+			String errorMessage = resolveErrorMessage(e.getTargetException());
+			throw new ExternalException(e.getMessage(), errorMessage, e.getTargetException());
 		}catch(IllegalAccessException e){
-			throw new ExternalException(e.getCause());
+			String errorMessage = resolveErrorMessage(e);
+			throw new ExternalException(e.getMessage(), errorMessage, e.getCause());
 		}catch(Exception e){
-			throw new ExternalException(e.getCause());
+			String errorMessage = resolveErrorMessage(e);
+			throw new ExternalException(e.getMessage(), errorMessage, e.getCause());
 		}
 		return result;
 	}
@@ -238,5 +241,20 @@ public class JavaServiceProcessor extends Processor {
 	@Override
 	protected String filterToString(Filters filters){
 		return null;
+	}
+	
+	private static String resolveErrorMessage(Throwable cause) {
+		String errorMessage = null;
+		if (cause instanceof NullPointerException) {
+			StackTraceElement[] stackTraceElements = ((NullPointerException)cause).getStackTrace();
+			StackTraceElement stackTraceElement = stackTraceElements[0];
+			errorMessage = cause.toString() + ": " + stackTraceElement.toString();
+		} else {
+			errorMessage = cause.getMessage();
+		}
+		if (errorMessage != null) {
+			errorMessage = errorMessage.trim();
+		}
+		return errorMessage;
 	}
 }

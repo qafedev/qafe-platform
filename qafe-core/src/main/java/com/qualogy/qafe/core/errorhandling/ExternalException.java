@@ -40,7 +40,7 @@ public class ExternalException extends Exception {
 	
 	public ExternalException(String message, String errorMessage, Throwable cause) {
 		super(message, cause);
-		this.errorMessage = detailMessage;
+		this.errorMessage = errorMessage;
 	}
 
 	public String getErrorMessage() {

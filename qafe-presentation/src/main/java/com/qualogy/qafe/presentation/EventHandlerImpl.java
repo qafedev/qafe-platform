@@ -216,7 +216,7 @@ public class EventHandlerImpl implements EventHandler {
 					}
 				} catch (ReturnBuiltInException e) {
 					break;
-				} catch (Exception e) {
+				} catch (ExternalException e) {
 					ErrorResult errorResult = EventErrorProcessor.processError(itrEventItem, eventItem, context, dataId, e, eventData);
 					boolean rethrow = (errorResult.getExternalException() != null);
 					if (rethrow) {

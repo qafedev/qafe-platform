@@ -115,7 +115,7 @@ public class EventItemExecutor {
 				throw e;
 			} catch (Exception e) {
 				LogFactory.getLog(getClass().getName()).info("AbstractComponentRenderer:renderChildComponent\n" + ExceptionHelper.printStackTrace(e));
-				throw new RuntimeException(e.getMessage(), e);
+				throw new ExternalException(e.getMessage(), e);
 			}
 		}
 		return stopProcessing;
