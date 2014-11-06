@@ -40,12 +40,12 @@ public class ErrorProcessor {
 	
 	private final static Logger logger = Logger.getLogger(ErrorProcessor.class.getName());
 	
-	public static ErrorResult processError(ListIterator<? extends Item> itrItem, Item triggeredItem, ApplicationContext context, DataIdentifier dataId, Exception externalException) {
+	public static ErrorResult processError(ListIterator<? extends Item> itrItem, Item triggeredItem, ApplicationContext context, DataIdentifier dataId, ExternalException externalException) {
 		ErrorResult errorResult = processError(itrItem, triggeredItem, context, null, dataId, externalException, logger);
 		return errorResult; 
 	}
 
-	public static ErrorResult processError(ListIterator<? extends Item> itrItem, Item triggeredItem, ApplicationContext context, Window window, DataIdentifier dataId, Exception externalException, Logger log) {
+	public static ErrorResult processError(ListIterator<? extends Item> itrItem, Item triggeredItem, ApplicationContext context, Window window, DataIdentifier dataId, ExternalException externalException, Logger log) {
 		if (externalException == null) {
 			throw new IllegalArgumentException("ExternalException is null, and therefore cannot be processed");
 		}	
@@ -73,7 +73,7 @@ public class ErrorProcessor {
 			// or handler specifies that the exception should be rethrown
 			errorResult = resolveRethrow(errorResult, errorHandler, externalException);
 			if (externalException.getCause() != null) {
-				String errorMessage = ((ExternalException)externalException).getErrorMessage();
+				String errorMessage = externalException.getErrorMessage();
 				if (errorMessage == null) {
 					errorMessage = externalException.getMessage();
 				}
@@ -83,18 +83,17 @@ public class ErrorProcessor {
 		return errorResult; 
 	}
 	
-	private static ErrorResult resolveRethrow(ErrorResult errorResult, ErrorHandler errorHandler, Exception externalException) {
+	private static ErrorResult resolveRethrow(ErrorResult errorResult, ErrorHandler errorHandler, ExternalException externalException) {
 		if ((errorHandler == null) || ErrorHandler.FINALLY_RETHROW.equals(errorHandler.getFinalAction())) {
-			errorResult.setExternalException((ExternalException)externalException);
+			errorResult.setExternalException(externalException);
 		}
 		return errorResult;
 	}
 	
-	private static ErrorHandler resolveErrorHandler(List<ErrorHandler> errorHandlers, Exception externalException) {
+	private static ErrorHandler resolveErrorHandler(List<ErrorHandler> errorHandlers, ExternalException externalException) {
 		ErrorHandler errorHandler = null;
 		if ((errorHandlers != null) && (externalException != null)) {
-			// The exceptionMessage is null when it is a NullPointerException
-			String exceptionMessage = externalException.getCause().getMessage();
+			String exceptionMessage = externalException.getCause().toString();
 			
 			Map<String,Class<?>> exceptionClassHierarchy = resolveExceptionClassHierarchy(externalException);
 			for (ErrorHandler handler : errorHandlers) {
@@ -117,7 +116,7 @@ public class ErrorProcessor {
 		return errorHandler;
 	}
 	
-	private static Map<String,Class<?>> resolveExceptionClassHierarchy(Exception externalException) {
+	private static Map<String,Class<?>> resolveExceptionClassHierarchy(ExternalException externalException) {
 		Map<String,Class<?>> exceptionClassHierarchy = new LinkedHashMap<String,Class<?>>();
 		if (externalException != null) { 
 			Class<?> exceptionClass = externalException.getCause().getClass();
