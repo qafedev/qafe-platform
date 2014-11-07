@@ -67,9 +67,27 @@ public class DAODelegate {
         try {
             result = dao.execute(ds, query, method, paramsIn, paramsOut, filters, dataId);
         } catch (DataAccessException e) {
-            throw new ExternalException("method [" + method.getId() + "] -> query/call [" + query.getId() + "]", e);
+        	String errorMessage = resolveErrorMessage(e.getCause());
+            throw new ExternalException("method [" + method.getId() + "] -> query/call [" + query.getId() + "]", errorMessage, e);
         }
 
         return result;
     }
+
+	private static String resolveErrorMessage(Throwable cause) {
+		String errorMessage = cause.getMessage();
+		if (errorMessage == null) {
+			return null;
+		}
+		// Example:
+		// ORA-20001: MY ERROR MESSAGE
+		// ORA-06512: at "HDEMO65.QAFE_TESTS", line 20
+		// ORA-06512: at line 1
+		String[] lines = errorMessage.split("\\n");
+		errorMessage = lines[0];
+		if (errorMessage.startsWith("ORA-")) {
+			errorMessage = errorMessage.replaceAll("ORA-[0-9]+:", "");
+		}
+		return errorMessage.trim();
+	}
 }

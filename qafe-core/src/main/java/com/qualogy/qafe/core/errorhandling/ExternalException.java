@@ -27,12 +27,23 @@ public class ExternalException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = 7455149670874287725L;
+	
+	private String errorMessage;
 
 	public ExternalException(Throwable cause) {
-		super(cause);
+		this(null, null, cause);
 	}
 	
 	public ExternalException(String message, Throwable cause) {
+		this(message, null, cause);
+	}
+	
+	public ExternalException(String message, String errorMessage, Throwable cause) {
 		super(message, cause);
+		this.errorMessage = errorMessage;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 }
