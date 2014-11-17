@@ -14,6 +14,7 @@ Additionally we offer a service to convert Oracle Forms to QAML files to be used
 - Running QAFE Platform applications
 - Sample code 
 - Further Reading
+- Webservice
 - Licenses
 
 ## Checking out from git 
@@ -174,6 +175,9 @@ The sample code underneath is a simple Hello World application which includes a 
 
 ## Further Reading
 Further information regarding the QAML documentation and Forms Conversion can be found on our [QAFE Developer Documentation](https://github.com/qafedev/qafedev.github.io/blob/master/README.md "QAFE Developer Documentation")
+
+## Webservice
+Information on how to build, run and use the QAFE SOAP webservice see the [Webservice README](https://github.com/qafedev/qafe-platform/tree/develop/qafe-webservice/README.md "QAFE Webservice Documentation").
 
 ## Licenses
 Information regarding the licenses used in the QAFE Platform can be found on the [Depedencies page](https://github.com/qafedev/qafe-platform/blob/master/dependencies.md "QAFE dependencies") on GitHub. 

@@ -2,12 +2,12 @@
 The QAFE platform webservice exposes a running QAFE application with a SOAP-based API.
 
 **Table of contents**
-- Building the QAFE webservice
-- Running the QAFE webservice
-- Using the QAFE webservice
-- Sample Code
+* [1. Building the QAFE webservice](#1-building-the-qafe-webservice)
+* [2. Running the QAFE webservice](#2-running-the-qafe-webservice)
+* [3. Using the QAFE webservice](#3-using-the-qafe-webservice)
+* [4. Sample Code](#4-sample-code)
 
-## Building the QAFE webservice
+## 1. Building the QAFE webservice
 For Building QAFE webservice, Java 7 is needed. See [this link for the downloads](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 
 Maven version 3.x is used as a project management tool for the QAFE webservice. Maven is an open-source project freely distributed by the Apache Software Foundation. The tool is necessary to be able to build the platform. Before building, make sure that the following tasks are done:
@@ -30,7 +30,7 @@ mvn clean install
 ```
 The build time should take less than a minute on a modern machine. The end product of the building the webservice is a WAR (Web Application Archive) file. The WAR-file can be run on most web servers including Apache Tomcat, Jetty, Weblogic, Jboss and Glassfish.
 
-## Running the QAFE webservice
+## 2. Running the QAFE webservice
 The WAR-file for the QAFE-webservice is found in the target-folder of the project after the build process is completed. A web server is necessary to run the application, as discussed in the build-section. Copy the file to the application-folder of your web server (i.e. the webapps-folder in Tomcat) and run the server. 
 
 The endpoint of the SOAP webservice is dependent on the port number specified in your web server and the configuration settings in the ${webservice-root}/WEB-INF/sun-jaxws.xml and ${webservice-root}/WEB-INF/web.xml files. For example if the port number is 8080 (standard for Tomcat) and if using the default webservice configuration, the endpoint would be:
@@ -38,7 +38,7 @@ The endpoint of the SOAP webservice is dependent on the port number specified in
 http://domain.tld:8080/qafeWS
 ```
 
-## Using the QAFE webservice
+## 3. Using the QAFE webservice
 Through the webservice a business action can be run against the running application, defined by QAML files. In order to do so the executeBusinessAction SOAP method can be invoked against the running webservice.
 The executeBusinessAction method takes 3 arguments:
 - The appId (String)
@@ -47,7 +47,7 @@ The executeBusinessAction method takes 3 arguments:
 
 To test the webservice, [SOAP UI](http://www.soapui.org) can be used.
 
-## Sample Code
+## 4. Sample Code
 For example, observe the definition of this QAFE application (QAML formatted):
 ```
 <?xml version="1.0" encoding="UTF-8"?>
