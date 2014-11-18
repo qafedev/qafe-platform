@@ -154,7 +154,7 @@ The sample code underneath is a simple Hello World application which includes a 
 </application-mapping>  
 ```
 
-## Create an QAFE applications using the QAFE Platform
+## Create an QAFE application using the QAFE Platform
 The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. First unpack the WAR-file to a different folder (e.g. C:\qafe-web-gwt-x.x.x). After unpacking the WAR-file, create a new QAFE Project in QAML-builder (Eclipse plugin) and set the "Path to QAFE" setting to match the location of the unpacked WAR-file (in our example C:\qafe-web-gwt-x.x.x).
 
 ## Updating QAFE Platform on existing QAFE projects
