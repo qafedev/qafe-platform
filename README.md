@@ -12,8 +12,8 @@ Additionally we offer a service to convert Oracle Forms to QAML files to be used
 - Logging QAFE Platform
 - Running QAFE Platform applications
 - Sample code 
-- Creating QAFE applications
-- Updating QAFE applications
+- Create an QAFE applications using the QAFE Platform
+- Updating QAFE Platform on existing QAFE projects
 - Further Reading
 - Webservice
 - Licenses
@@ -154,10 +154,10 @@ The sample code underneath is a simple Hello World application which includes a 
 </application-mapping>  
 ```
 
-## Creating QAFE applications
+## Create an QAFE applications using the QAFE Platform
 The WAR-file for the QAFE-platform based on GWT is found in the target-folder of the qafe-webapps project after building the platform. First unpack the WAR-file to a different folder (e.g. C:\qafe-web-gwt-x.x.x). After unpacking the WAR-file, create a new QAFE Project in QAML-builder (Eclipse plugin) and set the "Path to QAFE" setting to match the location of the unpacked WAR-file (in our example C:\qafe-web-gwt-x.x.x).
 
-## Updating QAFE applications
+## Updating QAFE Platform on existing QAFE projects
 To update an existing project, modify the project's main pom.xml file and change the fileset configuration in the prepare-package phase to match the required platform version (e.g.):
 ```
 ...
