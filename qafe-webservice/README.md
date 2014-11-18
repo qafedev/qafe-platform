@@ -6,8 +6,8 @@ The QAFE platform webservice exposes a running QAFE application with a SOAP-base
 * [2. Running the QAFE webservice](#2-running-the-qafe-webservice)
 * [3. Using the QAFE webservice](#3-using-the-qafe-webservice)
 * [4. Sample Code](#4-sample-code)
-* [5. Create an QAFE application using the QAFE webservice]()
-* [6. Updating QAFE webservice on existing QAFE projects]
+* [5. Create an QAFE application using the QAFE webservice](#5-create-an-qafe-application-using-the-qafe-webservice)
+* [6. Updating QAFE webservice on existing QAFE projects](#6-updating-qafe-webservice-on-existing-qafe-projects)
 
 ## 1. Building the QAFE webservice
 For Building QAFE webservice, Java 7 is needed. See [this link for the downloads](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
