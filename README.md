@@ -12,7 +12,7 @@ Additionally we offer a service to convert Oracle Forms to QAML files to be used
 - Logging QAFE Platform
 - Running QAFE Platform applications
 - Sample code 
-- Create an QAFE applications using the QAFE Platform
+- Create an QAFE application using the QAFE Platform
 - Updating QAFE Platform on existing QAFE projects
 - Further Reading
 - Webservice
