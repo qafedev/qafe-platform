@@ -22,63 +22,66 @@ import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.aspectj.lang.annotation.DeclareError;
+public class DataMap extends HashMap<String, DataContainerGVO> implements IsSerializable {
 
-public class DataMap extends HashMap<String, DataContainerGVO> implements
-		IsSerializable {
-
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -1873453039049810608L;
+    private static final long serialVersionUID = -1873453039049810608L;
 
-	private Set<String> keys = new LinkedHashSet<String>();
-	
-	@Deprecated
-	public static String ROW_STATUS_KEY = "rowStatus";
-	@Deprecated
-	public static String ROW_NUMBER = "rowNumber";
-	@Deprecated
-	public static String ROW_STATUS_UNMODIFIED = "$$UNMODIFIED";
-	@Deprecated
-	public static String ROW_STATUS_NEW = "$$NEW";
-	@Deprecated
-	public static String ROW_STATUS_DELETED = "$$DELETED";
-	@Deprecated
-	public static String ROW_STATUS_MODIFIED = "$$MODIFIED";
-	public static String SELECTED_INDEX = "$SELECTED_INDEX";
-	
-	
-	/**
-	 * (non-Javadoc)
-	 * @see java.util.HashMap#put(java.lang.Object, java.lang.Object)
-	 */
-	@Override
-	public DataContainerGVO put(String key, DataContainerGVO value) {
-		keys.add(key);
-		return super.put(key, value);
-	}
-	
-	@Override
-	public DataContainerGVO remove(Object key) {
-		keys.remove(key);
-		return super.remove(key);
-	}
-	
-	/**
-	 * Returns backing ordered keySet
-	 */
-	@Override
-	public Set<String> keySet() {
-		return keys;
-	}
-	
-	/**
-	 * @see java.util.HashMap#clear()
-	 */
-	@Override
-	public void clear() {
-		keys.clear();
-		super.clear();
-	}
+    private Set<String> keys = new LinkedHashSet<String>();
+
+    @Deprecated
+    public static String ROW_STATUS_KEY = "rowStatus";
+
+    @Deprecated
+    public static String ROW_NUMBER = "rowNumber";
+
+    @Deprecated
+    public static String ROW_STATUS_UNMODIFIED = "$$UNMODIFIED";
+
+    @Deprecated
+    public static String ROW_STATUS_NEW = "$$NEW";
+
+    @Deprecated
+    public static String ROW_STATUS_DELETED = "$$DELETED";
+
+    @Deprecated
+    public static String ROW_STATUS_MODIFIED = "$$MODIFIED";
+
+    public static String SELECTED_INDEX = "$SELECTED_INDEX";
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see java.util.HashMap#put(java.lang.Object, java.lang.Object)
+     */
+    @Override
+    public DataContainerGVO put(String key, DataContainerGVO value) {
+        keys.add(key);
+        return super.put(key, value);
+    }
+
+    @Override
+    public DataContainerGVO remove(Object key) {
+        keys.remove(key);
+        return super.remove(key);
+    }
+
+    /**
+     * Returns backing ordered keySet
+     */
+    @Override
+    public Set<String> keySet() {
+        return keys;
+    }
+
+    /**
+     * @see java.util.HashMap#clear()
+     */
+    @Override
+    public void clear() {
+        keys.clear();
+        super.clear();
+    }
 }

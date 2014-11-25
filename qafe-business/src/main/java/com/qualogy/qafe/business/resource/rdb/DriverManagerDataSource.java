@@ -33,59 +33,66 @@ import com.qualogy.qafe.business.resource.Resource;
 
 public class DriverManagerDataSource extends RDBDatasource {
 
-	public DriverManagerDataSource(BindResource resource) {
-		super(resource);
-	}
+    public DriverManagerDataSource(BindResource resource) {
+        super(resource);
+    }
 
-	
-	public boolean isEqualTo(Resource otherResource) {
-		return false;
-	}
+    public boolean isEqualTo(Resource otherResource) {
+        return false;
+    }
 
-	public void init(ApplicationContext context) {
-		DriverManagerResource driverManagerResource = (DriverManagerResource)getBindResource(); 
-		String userName = driverManagerResource.getUsername();
-		String password = driverManagerResource.getPassword();
-		String url = driverManagerResource.getUrl();
-		String driverClassName = driverManagerResource.getDriverClassName();
+    public void init(ApplicationContext context) {
+        DriverManagerResource driverManagerResource = (DriverManagerResource) getBindResource();
+        String userName = driverManagerResource.getUsername();
+        String password = driverManagerResource.getPassword();
+        String url = driverManagerResource.getUrl();
+        String driverClassName = driverManagerResource.getDriverClassName();
 
-		DataSource springDS = new org.springframework.jdbc.datasource.DriverManagerDataSource(url, userName, password);
-		((org.springframework.jdbc.datasource.DriverManagerDataSource) springDS).setDriverClassName(driverClassName);
+        DataSource springDS =
+            new org.springframework.jdbc.datasource.DriverManagerDataSource(url, userName, password);
+        ((org.springframework.jdbc.datasource.DriverManagerDataSource) springDS)
+            .setDriverClassName(driverClassName);
 
-		GenericObjectPool pool = new GenericObjectPool();
-		pool.setMinEvictableIdleTimeMillis(300000);
-		pool.setTimeBetweenEvictionRunsMillis(60000);
-		PoolableConnectionFactory connectionFactory = new PoolableConnectionFactory(new DataSourceConnectionFactory(springDS), pool, null, null, false, true);
+        GenericObjectPool pool = new GenericObjectPool();
+        pool.setMinEvictableIdleTimeMillis(300000);
+        pool.setTimeBetweenEvictionRunsMillis(60000);
+        PoolableConnectionFactory connectionFactory =
+            new PoolableConnectionFactory(new DataSourceConnectionFactory(springDS), pool, null, null, false,
+                    true);
 
         PoolingDataSource poolingDataSource = new PoolingDataSource(pool);
         poolingDataSource.setAccessToUnderlyingConnectionAllowed(true);
-        dataSource = poolingDataSource;
-	}
+        setDataSource(poolingDataSource);
 
-	public void validate() throws ValidationException {
-		QueryContainer queryContainer = getQueryContainer();
-		if (queryContainer == null) {
-			return;
-		}
-		List<String> duplicateQueries = queryContainer.getDuplicateQueries();
-		if (duplicateQueries == null) {
-			return;
-		}
-		String resourceId = getName();
-		String message = "Query duplication detected for resource " + resourceId + " " + duplicateQueries + ", id of an query should be unqiue within the resource.";
-		throw new ValidationException(message);
-	}
+        postInit(context);
+    }
 
+    public void validate() throws ValidationException {
+        QueryContainer queryContainer = getQueryContainer();
+        if (queryContainer == null) {
+            return;
+        }
+        List<String> duplicateQueries = queryContainer.getDuplicateQueries();
+        if (duplicateQueries == null) {
+            return;
+        }
+        String resourceId = getName();
+        String message =
+            "Query duplication detected for resource " + resourceId + " " + duplicateQueries
+                    + ", id of an query should be unqiue within the resource.";
+        throw new ValidationException(message);
+    }
 
-	@Override
-	public String toString() {
-		StringBuilder buffer = new StringBuilder();
-		buffer.append("[userName:\t"+((DriverManagerResource) getBindResource()).getUsername()+"\n");
-		buffer.append("password:\t"+ ((DriverManagerResource) getBindResource()).getPassword()+"\n");
-		buffer.append("url:\t"+((DriverManagerResource) getBindResource()).getUrl()+"\n");
-		buffer.append("driverClassName:\t"+((DriverManagerResource) getBindResource()).getDriverClassName()+"\n");
-		buffer.append("id:\t"+((DriverManagerResource) getBindResource()).getId() +"]"+"\n");
-		return buffer.toString();
-	}
-	
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("[userName:\t" + ((DriverManagerResource) getBindResource()).getUsername() + "\n");
+        buffer.append("password:\t" + ((DriverManagerResource) getBindResource()).getPassword() + "\n");
+        buffer.append("url:\t" + ((DriverManagerResource) getBindResource()).getUrl() + "\n");
+        buffer.append("driverClassName:\t" + ((DriverManagerResource) getBindResource()).getDriverClassName()
+                + "\n");
+        buffer.append("id:\t" + ((DriverManagerResource) getBindResource()).getId() + "]" + "\n");
+        return buffer.toString();
+    }
+
 }

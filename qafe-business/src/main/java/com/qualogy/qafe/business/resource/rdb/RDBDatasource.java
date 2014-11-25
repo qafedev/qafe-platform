@@ -15,21 +15,32 @@
  */
 package com.qualogy.qafe.business.resource.rdb;
 
+import java.io.File;
+import java.net.URI;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.core.application.Configuration;
+import com.qualogy.qafe.bind.io.FileLocation;
+import com.qualogy.qafe.bind.io.Reader;
 import com.qualogy.qafe.bind.resource.BindResource;
 import com.qualogy.qafe.bind.resource.DatasourceBindResource;
 import com.qualogy.qafe.bind.resource.query.Query;
 import com.qualogy.qafe.bind.resource.query.QueryContainer;
 import com.qualogy.qafe.business.resource.Resource;
+import com.qualogy.qafe.business.resource.rdb.query.enhancer.EnhancementManager;
 import com.qualogy.qafe.business.resource.rdb.statement.dialect.Dialect;
 import com.qualogy.qafe.business.transaction.SupportsLocalTransactions;
 
@@ -39,7 +50,7 @@ public abstract class RDBDatasource extends Resource implements SupportsLocalTra
 
     private Dialect dialect;
 
-    protected DataSource dataSource;
+    private DataSource dataSource;
 
     /**
      * Holder for {@link Query}. The {@link Query} are read and bound from a file and contained in an
@@ -121,5 +132,114 @@ public abstract class RDBDatasource extends Resource implements SupportsLocalTra
             // dataSource.getConnection().close();
             // }
         }
+    }
+
+    private List<FileLocation> getFileLocations(final ApplicationContext context) {
+
+        final List<FileLocation> fileLocations = new ArrayList<FileLocation>();
+        final FileLocation stmtFileNameTemp = getResource().getStatementsFileUrl();
+
+        if (stmtFileNameTemp != null) {
+            if (stmtFileNameTemp.getLocation().contains(",")) {
+                final String[] stmtFiles = getResource().getStatementsFileUrl().getLocation().split(",");
+                for (final String stmtFile : stmtFiles) {
+                    String root = stmtFileNameTemp.getRoot();
+                    final FileLocation fileLocation;
+                    if (root == null && stmtFile.startsWith(FileLocation.SCHEME_FILE)) {
+                        fileLocation = new FileLocation(stmtFile);
+                    } else {
+                        root = context.getRoot();
+                        fileLocation = new FileLocation(StringUtils.trim(root), StringUtils.trim(stmtFile));
+                    }
+                    fileLocations.add(fileLocation);
+                }
+            } else {
+                fileLocations.add(getResource().getStatementsFileUrl());
+            }
+        }
+        return fileLocations;
+    }
+
+    private URI fileLocationToURI(final ApplicationContext context, final FileLocation stmtFileName) {
+
+        URI uri = null;
+
+        final String stmtFileLocation = stmtFileName.getLocation();
+
+        if ((stmtFileLocation.startsWith(FileLocation.SCHEME_HTTP + FileLocation.COMMON_SCHEME_DELIM))
+                || (stmtFileLocation.startsWith(FileLocation.SCHEME_FILE))) {
+            uri = stmtFileName.toURI();
+        } else {
+            LOG.info(" Statement [" + stmtFileName
+                    + "] file could not be found. Now iterating the filelocations in the applicationmapping");
+
+            final List<FileLocation> list = context.getMappingFileLocations();
+            if (list != null) {
+                for (FileLocation fileLocation : list) {
+                    LOG.info("Trying Statement ["
+                            + fileLocation.getLocation()
+                            + File.separator
+                            + stmtFileName
+                            + "] file could not be found. Now iterating the filelocations in the applicationmapping");
+
+                    final String baseLocation;
+                    if (FilenameUtils.indexOfExtension(fileLocation.getLocation()) == -1) {
+                        baseLocation = fileLocation.getLocation();
+                    } else {
+                        baseLocation = FilenameUtils.getPath(fileLocation.getLocation());
+                    }
+
+                    final FileLocation fileLoc =
+                        new FileLocation(context.getRoot(), baseLocation + File.separator
+                                + stmtFileName.getLocation());
+                    uri = fileLoc.toURI();
+                    if (uri != null) {
+                        break;
+                    }
+                }
+            } else {
+                uri = stmtFileName.toURI();
+            }
+        }
+        return uri;
+    }
+
+    final void postInit(final ApplicationContext context) {
+
+        QueryContainer container = null;
+
+        final boolean validating =
+            Boolean.valueOf(context.getConfigurationItem(Configuration.QAFE_XML_VALIDATION)).booleanValue();
+
+        for (final FileLocation stmtFileName : getFileLocations(context)) {
+            if (stmtFileName == null) {
+                throw new IllegalArgumentException("DBSTATEMENTS_FILE_URL property not set");
+            }
+
+            final URI uri = fileLocationToURI(context, stmtFileName);
+
+            LOG.info("loading from [" + ((uri != null) ? uri.toString() : "<empty URI>") + "]");
+
+            if (uri == null) {
+                throw new IllegalArgumentException("DBSTATEMENTS_FILE_URL statements not found "
+                        + stmtFileName.getLocation());
+            }
+
+            if (container == null) {
+                container = (QueryContainer) new Reader(QueryContainer.class, validating).read(uri);
+            } else {
+                final QueryContainer containerTemp =
+                    (QueryContainer) new Reader(QueryContainer.class, validating).read(uri);
+                final Collection<Query> queries = containerTemp.values();
+                for (Query query : queries) {
+                    container.put(query);
+                }
+            }
+        }
+
+        container = EnhancementManager.enhance(container, this);
+        setQueryContainer(container);
+
+        validate();
     }
 }

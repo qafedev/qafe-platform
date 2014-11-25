@@ -15,13 +15,11 @@
  */
 package com.qualogy.qafe.business.action;
 
-import com.qualogy.qafe.bind.business.action.BusinessAction;
 import com.qualogy.qafe.bind.business.action.BusinessActionRef;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.item.Item;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
-import com.qualogy.qafe.core.framework.business.UnableToManageException;
 
 /**
  * Processor class for businessaction refs

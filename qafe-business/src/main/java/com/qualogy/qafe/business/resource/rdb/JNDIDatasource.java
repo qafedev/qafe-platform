@@ -15,52 +15,58 @@
  */
 package com.qualogy.qafe.business.resource.rdb;
 
-import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import com.qualogy.qafe.bind.ValidationException;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.resource.BindResource;
-import com.qualogy.qafe.bind.resource.DriverManagerResource;
 import com.qualogy.qafe.bind.resource.JNDIDatasourceResource;
 import com.qualogy.qafe.bind.util.ServiceLocator;
 import com.qualogy.qafe.business.resource.ResourceInitializationException;
 
-
 public class JNDIDatasource extends RDBDatasource {
 
-	public JNDIDatasource(BindResource resource) {
-		super(resource);
-	}
+    public JNDIDatasource(BindResource resource) {
+        super(resource);
+    }
 
-	public void init(ApplicationContext context) {
-		try {
-			dataSource = ServiceLocator.getInstance().getDataSource(((JNDIDatasourceResource)getBindResource()).getJndiname());
-			/*Context initialContext = new InitialContext();
-			if (initialContext == null) {
-				throw new ResourceInitializationException("initialContext = null, cannot retrieve datasource");
-			}
-			dataSource = (DataSource) initialContext.lookup(
-					((JNDIDatasourceResource)getBindResource()).getJndiname());*/
-		} catch (Exception e) {
-			String jndiName =null;
-			if (getBindResource()!=null){
-			   jndiName= ((JNDIDatasourceResource)getBindResource()).getJndiname();
-			}
-			throw new ResourceInitializationException("Exception in finding Datasource ("+jndiName+")");
-		} 
-	}
+    public void init(final ApplicationContext context) {
+        try {
+            final DataSource dataSource =
+                ServiceLocator.getInstance().getDataSource(
+                    ((JNDIDatasourceResource) getBindResource()).getJndiname());
 
-	
-	
-	public void validate() throws ValidationException {
-		//TODO
-	}
+            setDataSource(dataSource);
+            /*
+             * Context initialContext = new InitialContext(); if (initialContext == null) { throw new
+             * ResourceInitializationException("initialContext = null, cannot retrieve datasource"); }
+             * dataSource = (DataSource) initialContext.lookup(
+             * ((JNDIDatasourceResource)getBindResource()).getJndiname());
+             */
+        } catch (Exception e) {
+            String jndiName = null;
+            if (getBindResource() != null) {
+                jndiName = ((JNDIDatasourceResource) getBindResource()).getJndiname();
+            }
+            throw new ResourceInitializationException("Exception in finding Datasource (" + jndiName + ")");
+        }
 
-	@Override
-	public String toString() {
-		StringBuilder buffer = new StringBuilder();
-		buffer.append("[jndiname:\t"+((JNDIDatasourceResource) getBindResource()).getJndiname()+"\n");
-		buffer.append("id:\t"+((JNDIDatasourceResource) getBindResource()).getId() +"]"+"\n");
-		return buffer.toString();
-	}
+        if (context == null) {
+            throw new IllegalArgumentException("cannot initialize without context");
+        }
+
+        postInit(context);
+    }
+
+    public void validate() throws ValidationException {
+        // TODO
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("[jndiname:\t" + ((JNDIDatasourceResource) getBindResource()).getJndiname() + "\n");
+        buffer.append("id:\t" + ((JNDIDatasourceResource) getBindResource()).getId() + "]" + "\n");
+        return buffer.toString();
+    }
 }
