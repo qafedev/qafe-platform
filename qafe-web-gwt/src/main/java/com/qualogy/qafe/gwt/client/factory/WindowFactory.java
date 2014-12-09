@@ -122,7 +122,13 @@ public class WindowFactory {
 
 				ClientApplicationContext.getInstance().addWindows(ui, window, windowId);
 				if (Cookies.getCookie(ui.getUuid() + "-top-" + windowId) != null && Cookies.getCookie(ui.getUuid() + "-left-" + windowId) != null) {
-					window.setPopupPosition(new Integer(Cookies.getCookie(ui.getUuid() + "-left-" + windowId)).intValue(), new Integer(Cookies.getCookie(ui.getUuid() + "-top-" + windowId)).intValue());
+					// There is a known bug that causes the parsing of the position stored as string in the cookie to be
+					// returned as a double. 
+					double leftPos = Double.parseDouble(Cookies.getCookie(ui.getUuid() + "-left-" + windowId));
+					double rightPos = Double.parseDouble(Cookies.getCookie(ui.getUuid() + "-top-" + windowId));
+					int roundedLeftPos = (int)Math.round(leftPos);
+					int roundedRightPos = (int)Math.round(rightPos);
+					window.setPopupPosition(roundedLeftPos, roundedRightPos);
 
 				}
 				window.setWidget(w);

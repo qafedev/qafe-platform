@@ -311,14 +311,14 @@ public class EventFactory {
 				int height = event.getHeight();
 				int width = event.getWidth();
 				if (!("" + height).equals(Cookies.getCookie(uuid + "-height-" + window)) || !("" + width).equals(Cookies.getCookie(uuid + "-width-" + window))) {
-					//Cookies.setCookie(uuid + "-height" + "-" + window, "" + height);
-					//Cookies.setCookie(uuid + "-width" + "-" + window, "" + width);
-					Cookies.setCookie(uuid + "-left" + "-" + window, "" + sender.getAbsoluteLeft());
-					Cookies.setCookie(uuid + "-top" + "-" + window, "" + sender.getAbsoluteTop());
+					
+					int absoluteLeft = sender.getAbsoluteLeft();
+					int absoluteTop = sender.getAbsoluteTop();
+					
+					Cookies.setCookie(uuid + "-left" + "-" + window, String.valueOf(absoluteLeft));
+					Cookies.setCookie(uuid + "-top" + "-" + window, String.valueOf(absoluteTop));
 					sender.getWidget().setHeight(height + "");
 					sender.getWidget().setWidth(width + "");
-//					if (sender.getWidget() != null && (sender.getWidget()) instanceof ScrollPanel) {
-//						ScrollPanel sp = (ScrollPanel) (sender.getWidget());
 
 						if (sender.getWidget() != null && (sender.getWidget()) instanceof QRootPanel) {
 							QRootPanel qRootPanel = (QRootPanel) (sender.getWidget());
