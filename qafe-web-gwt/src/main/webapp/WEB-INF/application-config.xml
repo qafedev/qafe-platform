@@ -31,11 +31,4 @@
 		<application-mapping-file location="helloworld.xml"/>		
 	</application>
 
-<<<<<<< HEAD
-	<application name="QAFE-1107" id="QAFE-1107" >
-		<application-mapping-file location="QAFE-1107.xml"/>
-	</application>
-
-=======
->>>>>>> 3d967b685b64dbabbec2708a0e7cde14d9ad2386
 </applications>
