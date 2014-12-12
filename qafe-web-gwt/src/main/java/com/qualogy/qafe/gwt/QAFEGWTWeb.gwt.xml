@@ -64,5 +64,6 @@
 	<set-configuration-property name="devModeRedirectEnabled" value="true" />
 	<!-- enable source maps -->
     <set-property name="compiler.useSourceMaps" value="true" />
+	<set-property name="user.agent" value="safari" />
 </module>
 

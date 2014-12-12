@@ -21,49 +21,35 @@
 	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
 	<presentation-tier>
 		<view>
+<<<<<<< HEAD
 		<!-- demo app -->
 			<window id="window1" displayname="Hello World" width="300"  height="250" >
+=======
+			<window id="window1" displayname="Hello World" >
+>>>>>>> Modified the window to support resizable components
 				<rootpanel id="myRootPanel">
-					<verticallayout>
-						<button id="mylabel" displayname="Hello World" />
-						<label id="sourcecode" displayname="Click here for the source code" />
-						<panel id="sourcecodepanel" visible="false">
-							<autolayout>	
-						 <textarea rows="30" height="400px" width="800px" editable="false">
-									<value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
-<application-mapping xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
-	<presentation-tier>
-		 <view>
-	        <window id="window1" displayname="Hello World">
-				<rootpanel id="myRootPanel">	 
-	   			<verticallayout>
-					<button id="mylabel" displayname="Hello World"/>
-					
-				</verticallayout>
-				</rootpanel>			
-			</window>
-		</view>
-	</presentation-tier>
-</application-mapping> 
-									
- ]]></value>
-								</textarea>
-							</autolayout>
+					<horizontallayout>
+						<panel>
+							<horizontallayout>
+								<textfield id="mytf1" style="width:50%;"><value>bla</value></textfield>
+								<textfield id="mytf2" style="width:50%;"><value>bla</value></textfield>
+							</horizontallayout>
 						</panel>
-					</verticallayout>
+						<panel>
+							<verticallayout>
+								<button id="myLabel2" displayname="Btn2"/>
+								<button id="myLabel3" displayname="Btn3"/>
+								<button id="myLabel4" displayname="Btn2" style="width:20%;"/>
+								<button id="myLabel5" displayname="Btn3"/>
+								<button id="myLabel6" displayname="Btn2"/>
+								<button id="myLabel7" displayname="Btn3" style="width:40%;"/>
+								<button id="myLabel8" displayname="Btn2"/>
+								<button id="myLabel9" displayname="Btn3"/>
+							</verticallayout>
+						</panel>
+					</horizontallayout>
 				</rootpanel>
 				<events>
-					<event id="sourceCodeEvent">
-  					<listeners>
-  						<listenergroup>
-  							<component ref="sourcecode"/>
-  							<listener type="onclick"/>
-  						</listenergroup>
-  					</listeners>
-  					<toggle>
-  						<component ref="sourcecodepanel"/>
-  					</toggle>  					
-  				</event>
 				</events>
 			</window>
 		</view>
