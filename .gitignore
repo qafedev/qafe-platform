@@ -89,3 +89,4 @@ qafe-webservice/.project
 .idea/
 *.iml
 *.info
+*.class
