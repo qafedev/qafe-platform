@@ -1,11 +1,22 @@
-#java files
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.a
+*.so
+
+# java specific #
+#################
 *target*
 *.jar
 *.war
 *.ear
-*.class
 
-#netbeans files
+# netbeans files #
+##################
 nbproject/private/
 build/
 nbbuild/
@@ -14,11 +25,13 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 
-#intellij files
+# intellij #
+############
 .idea/
 *.iml
 
-# Eclipse files
+# Eclipse files #
+#################
 *.launch
 .project
 .buildpath
@@ -27,7 +40,8 @@ local.properties
 .loadpath
 .classpath
 
-#general files
+# general files #
+#################
 bin/
 tmp/
 *.tmp
@@ -40,26 +54,85 @@ tmp/
 *.out
 *.info
 
-#qafe platform
+# qafe platform #
+#################
 qafegwt/
 qafemobile/
 
 # boilerplate generated classes #
+#################################
 .apt_generated/
 
 # more caches and things from deploy #
+######################################
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
 
-#compilation logs
+# compilation logs #
+################### #
 .gwt/
 
-#caching for already compiled files
+# caching for already compiled files #
+######################################
 gwt-unitCache/
 
-#gwt junit compilation files
+# gwt junit compilation files #
+###############################
 www-test/
 
-#old GWT (1.5) created this dir
+# old GWT (1.5) created this dir #
+##################################
 .gwt-tmp/
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.db
+
+# Temporary files #
+###################
+*~
+
+# Hidden files #
+###################
+.*
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trash*
+Icon?
+ehthumbs.db
+Thumbs.db
+
+assignment01/src/main/resources/index_lucene
+assignment01/target/*
+assignment01/bin/*
+*.ini
+
+assignment03/src/main/resources/index_lucene
+assignment03/target/*
+assignment03/bin/*
+assignment03/res/*
+
+assignment04/bin
+assignment04/tmp
 
