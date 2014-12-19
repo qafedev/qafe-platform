@@ -19,6 +19,7 @@
 <application-mapping xmlns="http://qafe.com/schema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
 	<presentation-tier>
 		<view>
@@ -30,6 +31,9 @@
 >>>>>>> Modified the window to support resizable components
 =======
 	xsi:schemaLocation="http://qafe.com/schema file:///D:/qafe-projects/platform/qafe-core/src/main/resources/application-mapping.xsd">
+=======
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+>>>>>>> Forgot to change back the XSD location
 	
 	<!-- -->
 	<presentation-tier>
