@@ -18,6 +18,7 @@
 -->
 <application-mapping xmlns="http://qafe.com/schema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<<<<<<< HEAD
 	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
 	<presentation-tier>
 		<view>
@@ -27,25 +28,28 @@
 =======
 			<window id="window1" displayname="Hello World" >
 >>>>>>> Modified the window to support resizable components
+=======
+	xsi:schemaLocation="http://qafe.com/schema file:///D:/qafe-projects/platform/qafe-core/src/main/resources/application-mapping.xsd">
+	
+	<!-- -->
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="Hello World" width="30%" height="30%">
+>>>>>>> QAFE-1132 As a core developer I want to re-implement horizontallayout to be flexible/responsive, so that users of the QAFE platform can create scalable apps
 				<rootpanel id="myRootPanel">
 					<horizontallayout>
 						<panel>
 							<horizontallayout>
-								<textfield id="mytf1" style="width:50%;"><value>bla</value></textfield>
-								<textfield id="mytf2" style="width:50%;"><value>bla</value></textfield>
+								<textfield id="mytf1" width="25%"/>
+								<textfield id="mytf2" width="35%"/>
 							</horizontallayout>
 						</panel>
 						<panel>
-							<verticallayout>
+							<horizontallayout>
 								<button id="myLabel2" displayname="Btn2"/>
-								<button id="myLabel3" displayname="Btn3"/>
-								<button id="myLabel4" displayname="Btn2" style="width:20%;"/>
-								<button id="myLabel5" displayname="Btn3"/>
-								<button id="myLabel6" displayname="Btn2"/>
-								<button id="myLabel7" displayname="Btn3" style="width:40%;"/>
 								<button id="myLabel8" displayname="Btn2"/>
 								<button id="myLabel9" displayname="Btn3"/>
-							</verticallayout>
+							</horizontallayout>
 						</panel>
 					</horizontallayout>
 				</rootpanel>

@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2014 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ import com.google.gwt.dom.client.Style.Unit;
 
 public class QAMLUtil {
 
-    public static final String DEFAULT_UNIT = Unit.PX.getType(); 
-    
 	/**
 	 * IMPORTANT: this method must be an exact copy of the one used in the qafe-business project
 	 */
@@ -40,23 +38,43 @@ public class QAMLUtil {
 		}
 		return value;
 	}
-    
-    /**
-     * Check to see if a string contains a unit (px, %, em, etc)
-     * 
-     * @param value the string to check against
-     * @return true if the string contains a supported unit identifier
-     */
-    public static boolean containsUnitIdentifier(String value) {
-        if (value == null) {
-            return false;
-        }
-        
-        for (Unit unit : Unit.values()) {
-            if (value.toLowerCase().contains(unit.getType())) {
-                return true;
-            }
-        }
-        return false;
-    }
+		
+	public static final String DEFAULT_UNIT = Unit.PX.getType(); 
+	
+	/**
+	 * Check to see if a string contains a unit (PX, %, EM, etc)
+	 * 
+	 * @param value the string to check against
+	 * @return true if the string contains a supported unit identifier
+	 */
+	public static boolean containsUnitIdentifier(String value) {
+		if (value == null) {
+			return false;
+		}
+		
+		for (Unit unit : Unit.values()) {
+			if (value.toLowerCase().contains(unit.getType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Check if the string contains a positive number
+	 * 
+	 * @TODO give a more sensible name
+	 * @param value the string to parse for positive number
+	 * @return true if the string contains a positive number
+	 */
+	public static boolean isPositiveDimension(String value) {
+		// removes all non number and . characters from the string
+		String valueAsNumber = value.replaceAll("\\D+","");
+		int valueToInt = Integer.parseInt(valueAsNumber);
+		if (valueToInt > 0) {
+			return true;
+		}
+		
+		return false;
+	}
 }

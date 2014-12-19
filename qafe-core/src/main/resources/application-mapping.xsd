@@ -451,8 +451,8 @@
 					default="true" />
 				<xs:attribute name="draggable" type="xs:boolean"
 					default="true" />
-				<xs:attribute name="width" type="xs:nonNegativeInteger" default="200"/>
-				<xs:attribute name="height" type="xs:nonNegativeInteger" default="200"/>
+				<xs:attribute name="width" type="xs:string" default="200px"/>
+				<xs:attribute name="height" type="xs:string" default="200px"/>
 				<xs:attribute name="icon" type="xs:string" />
 				<xs:attribute name="icon-style" type="xs:string" />
 				<xs:attribute name="top" type="xs:unsignedInt" />
@@ -1777,8 +1777,8 @@
 				<xs:attribute name="message-key" type="xs:string" use="optional" />
 				<xs:attribute name="name" type="xs:string" use="optional" />
 				<xs:attribute name="tooltip" type="xs:string" use="optional" />
-				<xs:attribute name="width" type="xs:int" use="optional" />
-				<xs:attribute name="height" type="xs:int" use="optional" />
+				<xs:attribute name="width" type="xs:string" use="optional" />
+				<xs:attribute name="height" type="xs:string" use="optional" />
 				<xs:attribute name="conditional-style-ref" type="xs:string"/>
 			</xs:extension>
 		</xs:complexContent>

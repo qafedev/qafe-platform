@@ -55,14 +55,6 @@ public class WindowRenderer extends AbstractComponentRenderer {
 				Widget messageBox = new MessageBox();
 				
 				ScrollPanel sp = new ScrollPanel();
-/*				if (ClientApplicationContext.getInstance().isMDI()){
-					sp.setHeight("100%");
-					sp.setWidth("100%");
-				} else {
-					sp.setHeight("100%");
-					sp.setWidth("100%");
-				}*/
-				// set scroll panel to 100% of height and value of its parent
 				sp.setHeight("100%");
 				sp.setWidth("100%");
 				sp.add(rootPanel);				
