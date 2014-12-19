@@ -39,6 +39,11 @@ public class QAMLUtil {
 		return value;
 	}
 		
+	
+	/**
+	 * @TODO relocate DEFAULT_UNIT constant, isPositiveDimension() and isPositiveDimension()
+	 * methods to a location that makes more sense
+	 * */
 	public static final String DEFAULT_UNIT = Unit.PX.getType(); 
 	
 	/**
