@@ -38,4 +38,43 @@ public class QAMLUtil {
 		}
 		return value;
 	}
+		
+	public static final String DEFAULT_UNIT = Unit.PX.getType(); 
+	
+	/**
+	 * Check to see if a string contains a unit (PX, %, EM, etc)
+	 * 
+	 * @param value the string to check against
+	 * @return true if the string contains a supported unit identifier
+	 */
+	public static boolean containsUnitIdentifier(String value) {
+		if (value == null) {
+			return false;
+		}
+		
+		for (Unit unit : Unit.values()) {
+			if (value.toLowerCase().contains(unit.getType())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Check if the string contains a positive number
+	 * 
+	 * @TODO give a more sensible name
+	 * @param value the string to parse for positive number
+	 * @return true if the string contains a positive number
+	 */
+	public static boolean isPositiveDimension(String value) {
+		// removes all non number and . characters from the string
+		String valueAsNumber = value.replaceAll("\\D+","");
+		int valueToInt = Integer.parseInt(valueAsNumber);
+		if (valueToInt > 0) {
+			return true;
+		}
+		
+		return false;
+	}
 }

@@ -34,12 +34,14 @@ import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.ui.GWTUIGenerator;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.ui.renderer.events.EventFactory;
+import com.qualogy.qafe.gwt.client.util.QAMLUtil;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemSeparatorGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.QAFEKeywordsGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.WindowGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
+import com.sun.stylesheet.types.Size.Unit;
 
 public class WindowFactory {
 
@@ -81,24 +83,31 @@ public class WindowFactory {
 				// window.updateSize();
 				if (windowGVO.getHeight() != null && windowGVO.getHeight().length() > 0) {
 					try {
-						int height = Integer.parseInt(windowGVO.getHeight());
-						// Test if the height is not negative
-						if (height < 0)
+						String height = windowGVO.getHeight();
+						if (!QAMLUtil.isPositiveDimension(height)) {
 							throw new NumberFormatException();
+						}
+						if (!QAMLUtil.containsUnitIdentifier(height)) {
+							height = height + QAMLUtil.DEFAULT_UNIT;
+						}
+						window.setHeight(height);
 						bPack = false;
-						window.setHeight(height + "px");
 					} catch (NumberFormatException e) {
 						ClientApplicationContext.getInstance().log("could not set height on Window (it's not a valid integer):" + windowGVO.getHeight());
 					}
 				}
 				if (windowGVO.getWidth() != null && windowGVO.getWidth().length() > 0) {
 					try {
-						int width = Integer.parseInt(windowGVO.getWidth());
-						// Test if the width is not negative
-						if (width < 0)
+						String width = windowGVO.getWidth();
+						if (!QAMLUtil.isPositiveDimension(width)) {
 							throw new NumberFormatException();
+						}
+						
+						if (!QAMLUtil.containsUnitIdentifier(width)) {
+							width = width + QAMLUtil.DEFAULT_UNIT;
+						}
+						window.setWidth(width);
 						bPack = false;
-						window.setWidth(width + "px");
 					} catch (NumberFormatException e) {
 						ClientApplicationContext.getInstance().log("could not set width on Window (it's not a valid integer):" + windowGVO.getWidth());
 					}
