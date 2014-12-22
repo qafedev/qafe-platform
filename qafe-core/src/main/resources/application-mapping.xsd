@@ -1414,7 +1414,7 @@
 				<xs:attribute name="value" type="xs:string" />
 				<xs:attribute name="contextmenu" type="xs:string" />
 				<xs:attribute name="name" type="xs:string" />
-				<xs:attribute name="horizontal" type="xs:boolean" />
+				<xs:attribute name="horizontal" type="xs:boolean" default="true" />
 				<xs:attribute name="required" type="xs:boolean" default="false" />
 				<xs:attribute name="width" type="xs:string" />
 				<xs:attribute name="height" type="xs:string" />
@@ -2623,7 +2623,7 @@
 	<xs:complexType name="ShowPanelType">
 		<xs:attribute name="src" type="xs:string" use="required"/>
 		<xs:attribute name="auto-hide" type="xs:boolean" default="true"/>
-		<xs:attribute name="modal" type="xs:boolean" />
+		<xs:attribute name="modal" type="xs:boolean" default="false"/>
 		<xs:attribute name="x" type="xs:integer" />
 		<xs:attribute name="y" type="xs:integer" />
 		<xs:attribute name="position">

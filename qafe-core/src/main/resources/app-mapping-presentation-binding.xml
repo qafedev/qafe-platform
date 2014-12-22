@@ -534,7 +534,7 @@
 		<namespace uri="http://qafe.com/schema" default="elements" />
 		<value name="src" field="src" style="attribute" />
 		<value name="auto-hide" field="autoHide" style="attribute" usage="optional" default="true"/>
-		<value name="modal" field="modal" style="attribute" usage="optional" />
+		<value name="modal" field="modal" style="attribute" usage="optional" default="false"/>
 		<value name="x" field="left" style="attribute" usage="optional" />
 		<value name="y" field="top" style="attribute" usage="optional" />
 		<value name="position" field="position" style="attribute" usage="optional" />
