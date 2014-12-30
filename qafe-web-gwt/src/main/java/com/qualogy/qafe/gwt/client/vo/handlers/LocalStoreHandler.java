@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
@@ -24,12 +25,12 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class LocalStoreHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        LocalStoreGVO localStoreGVO = (LocalStoreGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        LocalStoreGVO localStoreGVO = (LocalStoreGVO) builtInGVO;
         ParameterGVO parameterGVO = localStoreGVO.getParameter();
         Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);
         storeValue(localStoreGVO, value, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     private void storeValue(LocalStoreGVO localStoreGVO, Object value, String appId, String windowId, String eventSessionId) {

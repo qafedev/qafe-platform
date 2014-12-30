@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
@@ -23,10 +24,10 @@ import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 
 public class ClosePanelHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        ClosePanelGVO closePanelGVO = (ClosePanelGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        ClosePanelGVO closePanelGVO = (ClosePanelGVO) builtInGVO;
         closePanel(closePanelGVO, mouseInfo, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     private void closePanel(ClosePanelGVO closePanelGVO, Map<String, String> mouseInfo, String appId, String windowId, String eventSessionId) {

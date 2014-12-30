@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -35,10 +36,10 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
 
 	private static final Object CENTER_POSITION = "center";
 	
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        ShowPanelGVO showPanelGVO = (ShowPanelGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        ShowPanelGVO showPanelGVO = (ShowPanelGVO) builtInGVO;
         showPanel(showPanelGVO, mouseInfo, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     private void showPanel(ShowPanelGVO showPanelGVO, Map<String, String> mouseInfo, String appId, String windowId, String eventSessionId) {

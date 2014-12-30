@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.ui.renderer.events.EventCallbackHandler;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
@@ -29,22 +29,23 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 
-    public final boolean handleBuiltIn(final UIObject sender, final String listenerType,
-            Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInFunctionGVO, final String appId, final String windowId, final String eventSessionId) {
+    protected BuiltInState executeBuiltIn(final UIObject sender, final String listenerType,
+            Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInGVO
+            , final String appId, final String windowId, final String eventSessionId, Queue derivedBuiltIns) {
+    	BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
         EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
         eventItemDataGVO.setAppId(appId);
-        eventItemDataGVO.setBuiltInFunctionGVO(builtInFunctionGVO);
-        BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInFunctionGVO;
+        eventItemDataGVO.setBuiltInGVO(builtInGVO);        
         Map<String, Object> inputValues =
             collectInputValues(sender, appId, windowId, eventSessionId, businessActionRefGVO);
         eventItemDataGVO.setInputValues(inputValues);
-        List<String> outputVariables = collectOutputValues(businessActionRefGVO);
+        List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
         eventItemDataGVO.setOutputVariables(outputVariables);
-            eventItemDataGVO.setInputValues(inputValues);
 
-        EventCallbackHandler.invokeService(sender, listenerType, mouseInfo, eventItemDataGVO, appId, windowId, eventSessionId);
+        executeBuiltInServerSide(sender, listenerType, mouseInfo, eventItemDataGVO
+        		, appId, windowId, eventSessionId);
 
-        return false;
+        return BuiltInState.SUSPEND;
     }
 
     private Map<String, Object> collectInputValues(final UIObject sender, final String appId,
@@ -58,7 +59,7 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
         return inputValues;
     }
 
-    private List<String> collectOutputValues(BusinessActionRefGVO businessActionRefGVO) {
+    private List<String> collectOutputVariables(BusinessActionRefGVO businessActionRefGVO) {
         List<String> outputVariables = new ArrayList<String>();
         for (ParameterGVO parameterGVO : businessActionRefGVO.getOutputParameters()) {
             String key = parameterGVO.getName();
@@ -66,5 +67,4 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
         }
         return outputVariables;
     }
-
 }

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -55,12 +56,12 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class SetValueHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        SetValueGVO setValueGVO = (SetValueGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        SetValueGVO setValueGVO = (SetValueGVO) builtInGVO;
         ParameterGVO parameterGVO = setValueGVO.getParameter();
         Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);
         setValue(sender, listenerType, setValueGVO, value, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     // CHECKSTYLE.OFF: CyclomaticComplexity

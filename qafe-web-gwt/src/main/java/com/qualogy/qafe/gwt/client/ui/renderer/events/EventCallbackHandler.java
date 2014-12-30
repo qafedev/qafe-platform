@@ -57,27 +57,27 @@ public class EventCallbackHandler {
         String moduleRelativeURL = GWT.getModuleBaseURL() + "rpc.service";
         endpoint.setServiceEntryPoint(moduleRelativeURL);
 
-        if (callback == null) {
-            callback = new AsyncCallback<Object>() {
-
-                public void onSuccess(Object result) {
-                    GEventItemDataObject output = (GEventItemDataObject) result;
-                    EventHandler.getInstance().handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId, output);
-                }
-
-                public void onFailure(Throwable caught) {
-                    // EventHandler.getInstance().handleEventItems(sender, appId, windowId, eventSessionId);
-                    // ClientApplicationContext.getInstance().log("Event execution for " + listenerType +
-                    // " failed", caught.getMessage(), true, false, caught);
-                    ClientApplicationContext.getInstance().setBusy(false);
-                    if (caught instanceof GWTServiceException) {
-                        GWTServiceException gWTServiceException = (GWTServiceException) caught;
-                        // processOutput(gWTServiceException.getGDataObject());
-                    }
-                }
-
-            };
-        }
+//        if (callback == null) {
+//            callback = new AsyncCallback<Object>() {
+//
+//                public void onSuccess(Object result) {
+//                    GEventItemDataObject output = (GEventItemDataObject) result;
+//                    EventHandler.getInstance().handleEventItems(sender, listenerType, mouseInfo, appId, windowId, eventSessionId, output);
+//                }
+//
+//                public void onFailure(Throwable caught) {
+//                    // EventHandler.getInstance().handleEventItems(sender, appId, windowId, eventSessionId);
+//                    // ClientApplicationContext.getInstance().log("Event execution for " + listenerType +
+//                    // " failed", caught.getMessage(), true, false, caught);
+//                    ClientApplicationContext.getInstance().setBusy(false);
+//                    if (caught instanceof GWTServiceException) {
+//                        GWTServiceException gWTServiceException = (GWTServiceException) caught;
+//                        // processOutput(gWTServiceException.getGDataObject());
+//                    }
+//                }
+//
+//            };
+//        }
         return callback;
     }
 

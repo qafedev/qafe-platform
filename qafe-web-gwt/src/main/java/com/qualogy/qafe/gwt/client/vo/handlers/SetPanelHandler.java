@@ -17,6 +17,7 @@ package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
@@ -30,10 +31,10 @@ import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 
 public class SetPanelHandler extends AbstractBuiltInHandler {
 
-	public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-		SetPanelGVO setPanelGVO = (SetPanelGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+		SetPanelGVO setPanelGVO = (SetPanelGVO) builtInGVO;
 		setPanel(setPanelGVO, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
 	}
 	
 	private void setPanel(SetPanelGVO setPanelGVO, String appId, String windowId, String eventSessionId) {

@@ -16,10 +16,13 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
@@ -27,6 +30,8 @@ import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
+import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
+import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
@@ -34,6 +39,15 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 
+	public final BuiltInState handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
+			, String eventSessionId, Queue derivedBuiltIns) {
+		preExecution(sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+		BuiltInState state = executeBuiltIn(sender, listenerType, mouseInfo, builtInGVO, appId, windowId, eventSessionId, derivedBuiltIns);
+		postExecution(sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+		return state;
+	}
+	 
     protected Object getValue(UIObject sender, ParameterGVO parameterGVO, String appId, String windowId,
             String eventSessionId) {
         Object value = null;
@@ -290,7 +304,81 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         log(logMessage);
     }
     
+    protected void log(String action, UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
+    	StringBuffer logMessage = new StringBuffer();
+    	logMessage.append(action + " Built-In [" + builtInGVO + "]");
+    	logMessage.append(": Sender=" + sender + " -- ListenerType=" + listenerType);
+    	logMessage.append(" -- MouseInfo=" + mouseInfo);
+    	logMessage.append(" -- AppId=" + appId + " -- WindowId=" + windowId);
+        log(logMessage.toString());
+    }
+    
     protected void log(String message) {
         ClientApplicationContext.getInstance().log(message);
     }
+    
+    private void preExecution(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
+    	log("Entering", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+    }
+    
+    private void postExecution(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
+    	log("Exiting", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+    }
+    
+    protected void executeBuiltInServerSide(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, EventItemDataGVO eventItemDataGVO, String appId, String windowId, String eventSessionId) {
+    	setBusy(true);
+    	AsyncCallback<?> callback = createCallback(sender, listenerType, mouseInfo, eventItemDataGVO, appId, windowId, eventSessionId);
+    	EventHandler.getInstance().get().executeEventItem(eventItemDataGVO, callback);
+    }
+    
+    private AsyncCallback<?> createCallback(final UIObject sender, final String listenerType
+    		, final Map<String, String> mouseInfo, final EventItemDataGVO eventItemDataGVO
+    		, final String appId, final String windowId, final String eventSessionId) {
+
+        return new AsyncCallback<Object>() {
+
+            public void onSuccess(Object result) {
+                GEventItemDataObject data = (GEventItemDataObject) result;
+                resolveOutputValues(eventSessionId, data);
+                setBusy(false);
+                EventHandler.getInstance().handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+            }
+
+            public void onFailure(Throwable exception) {
+                String title = "Fail to execute " + eventItemDataGVO.getBuiltInGVO();
+                String message = exception.getMessage();
+                showMessage(title, message, exception);                
+                setBusy(false);
+            }
+        };
+    }
+
+    private void resolveOutputValues(String eventSessionId, GEventItemDataObject data) {
+        Map<String, Object> outputValues = data.getOutputValues();
+        if (outputValues == null) {
+            return;
+        }
+        Iterator<String> itrOutputName = outputValues.keySet().iterator();
+        while (itrOutputName.hasNext()) {
+        	String outputName = itrOutputName.next();
+        	Object outputValue = outputValues.get(outputName);
+        	storeData(eventSessionId, outputName, outputValue);
+        }
+    }
+    
+    private void setBusy(boolean busy) {
+    	ClientApplicationContext.getInstance().setBusy(busy);
+    }
+    
+    private void showMessage(String title, String message, Throwable exception) {
+    	 ClientApplicationContext.getInstance().log(title, message, true, false, exception);
+    }
+    
+    protected abstract BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
+			, String eventSessionId, Queue derivedBuiltIns);	
 }

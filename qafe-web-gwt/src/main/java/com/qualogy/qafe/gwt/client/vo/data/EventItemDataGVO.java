@@ -28,10 +28,12 @@ public class EventItemDataGVO implements IsSerializable {
     private static final long serialVersionUID = 8381696301664889297L;
 
     private String appId;
+    
     private Map<String, Object> inputValues = new HashMap<String, Object>();
+    
     private List<String> outputVariables = new ArrayList<String>();
 
-    private BuiltInFunctionGVO builtInFunctionGVO;
+    private BuiltInFunctionGVO builtInGVO;
 
     public final String getAppId() {
         return appId;
@@ -41,33 +43,27 @@ public class EventItemDataGVO implements IsSerializable {
         this.appId = applicationId;
     }
 
-    public final BuiltInFunctionGVO getBuiltInFunctionGVO() {
-        return builtInFunctionGVO;
+    public final BuiltInFunctionGVO getBuiltInGVO() {
+        return builtInGVO;
     }
 
-    public final void setBuiltInFunctionGVO(final BuiltInFunctionGVO builtInFunctionGVO) {
-        this.builtInFunctionGVO = builtInFunctionGVO;
+    public final void setBuiltInGVO(final BuiltInFunctionGVO builtInGVO) {
+        this.builtInGVO = builtInGVO;
     }
-
     
     public Map<String, Object> getInputValues() {
         return inputValues;
     }
 
-    
     public void setInputValues(Map<String, Object> inputValues) {
         this.inputValues = inputValues;
     }
-
     
     public List<String> getOutputVariables() {
         return outputVariables;
     }
-
     
     public void setOutputVariables(List<String> outputVariables) {
         this.outputVariables = outputVariables;
     }
-
-   
 }

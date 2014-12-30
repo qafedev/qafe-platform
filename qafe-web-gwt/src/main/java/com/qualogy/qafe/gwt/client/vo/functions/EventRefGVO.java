@@ -13,17 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qualogy.qafe.gwt.client.vo.handlers;
+package com.qualogy.qafe.gwt.client.vo.functions;
 
-import java.util.Map;
-import java.util.Queue;
+public class EventRefGVO extends BuiltInFunctionGVO {
 
-import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.EventRefGVO";
 
-public interface BuiltInHandler {
+	private String eventId;
 	
-    BuiltInState handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
-    		, BuiltInFunctionGVO builtInGVO, String appId, String windowId
-    		, String eventSessionId, Queue derivedBuiltIns);
+	public String getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
+	
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 }

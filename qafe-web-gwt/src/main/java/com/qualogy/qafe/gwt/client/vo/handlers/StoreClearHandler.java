@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
@@ -23,11 +24,11 @@ import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
 
 public class StoreClearHandler extends AbstractBuiltInHandler {
 
-	public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId,
-			String windowId, String eventSessionId) {
-		StoreClearGVO storeClear = (StoreClearGVO)builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId,
+			String windowId, String eventSessionId, Queue derivedBuiltIns) {
+		StoreClearGVO storeClear = (StoreClearGVO)builtInGVO;
 		storeClear(storeClear, appId, windowId, eventSessionId);
-		return false;
+		return BuiltInState.EXECUTED;
 	}
 	
 	/**

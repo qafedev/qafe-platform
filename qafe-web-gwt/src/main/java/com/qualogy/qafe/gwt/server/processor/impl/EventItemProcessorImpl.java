@@ -29,9 +29,9 @@ public class EventItemProcessorImpl implements EventItemProcessor {
 
     public Map<String, Object> execute(EventItemDataGVO eventItemData) throws ExternalException {
         EventItemDataObject eventItemDataObject = null;
-        if (eventItemData.getBuiltInFunctionGVO() instanceof BusinessActionRefGVO) {
+        if (eventItemData.getBuiltInGVO() instanceof BusinessActionRefGVO) {
             BusinessActionRefGVO businessActionRefGVO =
-                (BusinessActionRefGVO) eventItemData.getBuiltInFunctionGVO();
+                (BusinessActionRefGVO) eventItemData.getBuiltInGVO();
             eventItemDataObject =
                 new BusinessActionItemDataObject(eventItemData.getAppId(),
                         businessActionRefGVO.getBusinessActionId(), eventItemData.getInputValues(), eventItemData.getOutputVariables());
