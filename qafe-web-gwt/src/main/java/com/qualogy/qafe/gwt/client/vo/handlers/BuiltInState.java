@@ -15,15 +15,16 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-import java.util.Map;
-import java.util.Queue;
-
-import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
-
-public interface BuiltInHandler {
+public enum BuiltInState {
+	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT");
 	
-    BuiltInState handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
-    		, BuiltInFunctionGVO builtInGVO, String appId, String windowId
-    		, String eventSessionId, Queue derivedBuiltIns);
+	private String literal;
+	
+	private BuiltInState(String literal) {
+		this.literal = literal;
+	}
+	
+	public String getLiteral() {
+		return literal;
+	}
 }

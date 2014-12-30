@@ -16,17 +16,21 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
+import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
+import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
@@ -34,6 +38,12 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 
+	public final BuiltInState handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
+			, String eventSessionId, Queue derivedBuiltIns) {
+		return executeBuiltIn(sender, listenerType, mouseInfo, builtInGVO, appId, windowId, eventSessionId, derivedBuiltIns);
+	}
+	 
     protected Object getValue(UIObject sender, ParameterGVO parameterGVO, String appId, String windowId,
             String eventSessionId) {
         Object value = null;
@@ -119,7 +129,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                 BuiltinHandlerHelper.fetchDatagridCellValue(reference, uuid, windowId, appId);
         } else {
             final String key = RendererHelper.generateId(reference, windowId, appId); // inputVariables[i][1]
-            ClientApplicationContext.getInstance().log(key);
+            log(key);
             List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(key);
 
             // since the parameter can be a complex object, we need to create a
@@ -143,7 +153,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             } else {
                 // so the object could not be found in the ComponentRepository,
                 // maybe we try by name to find it.
-                ClientApplicationContext.getInstance().log("Reference" + reference);
+                log("Reference" + reference);
                 String[] keysSet = reference.split("[.]");
                 if (keysSet != null) {
                     String searchKey = null;
@@ -156,7 +166,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                         uiObjects = ComponentRepository.getInstance().getNamedComponent(searchKey);
                         if (uiObjects != null) {
                             for (UIObject uiObject : uiObjects) {
-                                ClientApplicationContext.getInstance().log("Title" + uiObject.getTitle());
+                                log("Title" + uiObject.getTitle());
 
                                 // Collect all the data from a list of named
                                 // components
@@ -224,24 +234,24 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
 
     protected void storeData(String dataId, String name, Object data) {
-        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
-        dataStorage.storeData(dataId, name, data);
+        getDataStorage().storeData(dataId, name, data);
         log(dataId, name, data);
     }
 
     protected Object getData(String dataId, String name) {
-        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
-        return dataStorage.getData(dataId, name);
+        return getDataStorage().getData(dataId, name);
     }
     
     protected void removeData(String dataId) {
-        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
-        dataStorage.removeData(dataId);
+        getDataStorage().removeData(dataId);
     }
     
     protected void removeData(String dataId, String name) {
-        DataStorage dataStorage = ClientApplicationContext.getInstance().getDataStorage();
-        dataStorage.removeData(dataId, name);
+        getDataStorage().removeData(dataId, name);
+    }
+    
+    protected DataStorage getDataStorage() {
+    	return EventHandler.getInstance().getDataStorage();
     }
     
     protected String generateDataId(String sourceOrTarget, String appId, String windowId,
@@ -291,6 +301,65 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
     
     protected void log(String message) {
-        ClientApplicationContext.getInstance().log(message);
+        EventHandler.getInstance().log(message);
     }
+    
+    protected void executeBuiltInServerSide(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, EventItemDataGVO eventItemDataGVO, String appId, String windowId, String eventSessionId) {
+    	setBusy(true);
+    	AsyncCallback<?> callback = createCallback(sender, listenerType, mouseInfo, eventItemDataGVO, appId, windowId, eventSessionId);
+    	EventHandler.getInstance().getRPCService().executeEventItem(eventItemDataGVO, callback);
+    }
+    
+    private AsyncCallback<?> createCallback(final UIObject sender, final String listenerType
+    		, final Map<String, String> mouseInfo, final EventItemDataGVO eventItemDataGVO
+    		, final String appId, final String windowId, final String eventSessionId) {
+
+        return new AsyncCallback<Object>() {
+
+            public void onSuccess(Object result) {
+            	setBusy(false);
+                GEventItemDataObject data = (GEventItemDataObject) result;
+                storeOutputValues(eventSessionId, data);
+                EventHandler.getInstance().handleEvent(eventSessionId, sender, listenerType
+                		, mouseInfo, appId, windowId);
+            }
+
+            public void onFailure(Throwable exception) {
+            	setBusy(false);
+            	Object currentBuiltIn = eventItemDataGVO.getBuiltInGVO();
+            	EventHandler.getInstance().handleException(exception, currentBuiltIn
+            			, sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
+            }
+        };
+    }
+
+    private void storeOutputValues(String eventSessionId, GEventItemDataObject data) {
+        Map<String, Object> outputValues = data.getOutputValues();
+        if (outputValues == null) {
+            return;
+        }
+        Iterator<String> itrOutputName = outputValues.keySet().iterator();
+        while (itrOutputName.hasNext()) {
+        	String outputName = itrOutputName.next();
+        	Object outputValue = outputValues.get(outputName);
+        	storeData(eventSessionId, outputName, outputValue);
+        }
+    }
+    
+    protected void setBusy(boolean busy) {
+    	EventHandler.getInstance().setBusy(busy);
+    }
+    
+    protected void showMessage(String title, String message) {
+   	 	showMessage(title, message, null);
+    }
+    
+    protected void showMessage(String title, String message, Throwable exception) {
+    	EventHandler.getInstance().showMessage(title, message, exception);
+    }
+    
+    protected abstract BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
+			, String eventSessionId, Queue derivedBuiltIns);	
 }

@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.UIObject;
@@ -77,12 +78,12 @@ public final class OpenWindowHandler extends AbstractBuiltInHandler {
 
     private static final String SCREENY = "screenY";
 
-    public boolean handleBuiltIn(final UIObject sender, final String listenerType,
-            final Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInFunctionGVO,
-            final String appId, final String windowId, final String eventSessionId) {
-        final OpenWindowGVO openWindowGVO = (OpenWindowGVO) builtInFunctionGVO;
+    protected BuiltInState executeBuiltIn(final UIObject sender, final String listenerType,
+            final Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInGVO,
+            final String appId, final String windowId, final String eventSessionId, Queue derivedBuiltIns) {
+        final OpenWindowGVO openWindowGVO = (OpenWindowGVO) builtInGVO;
         showWindow(sender, openWindowGVO, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
 
     private void showWindow(final UIObject sender, final OpenWindowGVO openWindowGVO, final String appId,

@@ -17,6 +17,7 @@ package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.component.DialogComponent;
@@ -30,10 +31,10 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class GenericDialogHandler extends AbstractBuiltInHandler {
 
-	public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        GenericDialogGVO genericDialogGVO = (GenericDialogGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        GenericDialogGVO genericDialogGVO = (GenericDialogGVO) builtInGVO;
         showDialog(sender, genericDialogGVO, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
 	
 	private void showDialog(UIObject sender, GenericDialogGVO genericDialogGVO, String appId, String windowId, String eventSessionId) {

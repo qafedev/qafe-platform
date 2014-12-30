@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.Map;
+import java.util.Queue;
 
 import org.gwt.mosaic.ui.client.WindowPanel;
 
@@ -28,10 +29,10 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class LogHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        LogFunctionGVO logFunctionGVO = (LogFunctionGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        LogFunctionGVO logFunctionGVO = (LogFunctionGVO) builtInGVO;
         logMessage(sender, logFunctionGVO, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     private void logMessage(UIObject sender, LogFunctionGVO logFunctionGVO, String appId, String windowId, String eventSessionId) {

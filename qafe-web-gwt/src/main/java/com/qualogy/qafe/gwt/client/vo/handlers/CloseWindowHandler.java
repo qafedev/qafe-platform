@@ -17,10 +17,10 @@ package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import org.gwt.mosaic.ui.client.WindowPanel;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.factory.WindowFactory;
@@ -29,10 +29,10 @@ import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
 
 public class CloseWindowHandler extends AbstractBuiltInHandler {
 
-    public boolean handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInFunctionGVO, String appId, String windowId, String eventSessionId) {
-        CloseWindowGVO closeWindowGVO = (CloseWindowGVO) builtInFunctionGVO;
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+        CloseWindowGVO closeWindowGVO = (CloseWindowGVO) builtInGVO;
         closeWindow(closeWindowGVO, sender, appId, windowId, eventSessionId);
-        return false;
+        return BuiltInState.EXECUTED;
     }
     
     private void closeWindow(CloseWindowGVO closeWindowGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
