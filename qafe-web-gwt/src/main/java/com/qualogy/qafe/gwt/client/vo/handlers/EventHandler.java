@@ -266,6 +266,60 @@ public class EventHandler {
         return RendererHelper.getParentComponent(sender);
     }
     
+    private EventGVO getEvent(final String eventId, final String windowId, UIGVO applicationGVO) {
+        EventGVO eventGVO = null;
+        if (applicationGVO == null) {
+            return eventGVO;
+        }
+        eventGVO = applicationGVO.getEvent(eventId);
+        if (eventGVO == null) {
+            eventGVO = applicationGVO.getEvent(windowId + eventId);
+        }
+        return eventGVO;
+    }
+    
+    public Queue getBuiltIns(EventGVO eventGVO) {
+    	Queue builtIns = new LinkedList();
+    	if (eventGVO != null) {
+    		builtIns.addAll(eventGVO.getEventItems());
+    	}
+		return builtIns;
+	}
+    
+    public void setBusy(boolean busy) {
+    	ClientApplicationContext.getInstance().setBusy(busy);
+    }
+    
+    public void showMessage(String title, String message, Throwable exception) {
+    	 ClientApplicationContext.getInstance().log(title, message, true, false, exception);
+    }
+    
+    public void log(String action, UIObject sender, String listenerType, Map<String, String> mouseInfo
+			, BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
+    	StringBuffer logMessage = new StringBuffer();
+    	logMessage.append(action + " Built-In [" + builtInGVO + "]");
+    	logMessage.append(": Sender=" + sender + " -- ListenerType=" + listenerType);
+    	logMessage.append(" -- MouseInfo=" + mouseInfo);
+    	logMessage.append(" -- AppId=" + appId + " -- WindowId=" + windowId);
+        log(logMessage.toString());
+    }
+    
+    public void log(String message) {
+        ClientApplicationContext.getInstance().log(message);
+    }
+    
+    public DataStorage getDataStorage() {
+        return ClientApplicationContext.getInstance().getDataStorage();
+    }
+    
+    private String getAppId(final UIObject sender) {
+        return RendererHelper.getComponentContext(sender);
+    }
+
+    private String getWindowId(final UIObject sender) {
+        return RendererHelper.getParentComponent(sender);
+    }
+    
     private void cleanup(String eventSessionId) {
 		unregister(eventSessionId);
     	eventMap.remove(eventSessionId);
