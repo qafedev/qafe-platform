@@ -16,29 +16,24 @@
 package com.qualogy.qafe.gwt.server.event.assembler;
 
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.Focus;
-import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
-import com.qualogy.qafe.web.util.SessionContainer;
 
-@Deprecated
-public class FocusEventRenderer extends AbstractEventRenderer implements EventAssembler{
+public class FocusAssembler extends AbstractEventItemAssembler {
 
-	public BuiltInFunctionGVO convert(EventItem eventItem, EventDataGVO eventData,ApplicationContext context, SessionContainer sc) {
-		BuiltInFunctionGVO bif = null;
-		if (eventItem instanceof Focus) {
-			FocusGVO focus = new FocusGVO();
-			
-			bif = focus;
-			fillIn(eventItem, focus, eventData);
-			
-			Focus in = (Focus)eventItem;
-			focus.setComponentId(in.getComponentId()+"|"+eventData.getUuid());
-			focus.setBuiltInComponentGVO(getBuiltInComponentGVO(in.getComponentId(), eventData));	
-		}
-		return bif;
-	}
+    public BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
+    	FocusGVO eventItemGVO = null;
+        if (eventItem instanceof Focus) {
+            eventItemGVO = new FocusGVO();
+            assembleAttributes(eventItemGVO, (Focus)eventItem, event, applicationContext);
+        }
+        return eventItemGVO;
+    }
 
+    private void assembleAttributes(FocusGVO eventItemGVO, Focus eventItem, Event event, ApplicationContext applicationContext) {
+    	eventItemGVO.setComponentId(eventItem.getComponentId());
+    }
 }

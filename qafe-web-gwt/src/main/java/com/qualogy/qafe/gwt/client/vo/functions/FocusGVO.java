@@ -18,36 +18,30 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class FocusGVO extends BuiltInFunctionGVO {
 
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.FocusGVO";
+	
 	private String componentId;
 	
 	private BuiltInComponentGVO  builtInComponentGVO;
-
-
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.FocusGVO";
-	}
-
 
 	public String getComponentId() {
 		return componentId;
 	}
 
-
 	public void setComponentId(String componentId) {
 		this.componentId = componentId;
 	}
-
 
 	public BuiltInComponentGVO getBuiltInComponentGVO() {
 		return builtInComponentGVO;
 	}
 
-
 	public void setBuiltInComponentGVO(BuiltInComponentGVO builtInComponentGVO) {
 		this.builtInComponentGVO = builtInComponentGVO;
 	}
 
-
-	
-
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 }

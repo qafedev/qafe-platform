@@ -29,6 +29,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
 
+@Deprecated
 public class FocusExecute extends AbstractBuiltInExecute implements ExecuteCommand {
 
 	public void execute(BuiltInFunctionGVO builtInFunction) {

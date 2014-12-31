@@ -29,6 +29,7 @@ import com.qualogy.qafe.core.placeholder.PlaceHolderResolver;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
+@Deprecated
 public class FocusExecute extends AbstractEventItemExecute implements ExecuteEventItem {
 
 	public boolean execute(EventItem eventItem, ApplicationContext context, Event event, EventData eventData, Collection<BuiltInFunction> listToExecute, EventHandlerImpl eventHandler, DataIdentifier dataId) {

@@ -15,6 +15,7 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,10 +25,12 @@ import java.util.Queue;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
+import com.qualogy.qafe.gwt.client.util.QAMLConstants;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
@@ -233,6 +236,42 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return name;
     }
 
+    protected int getRowIndex(String component, HasDataGridMethods hasDataGridMethods) {
+		int rowIndex = -1;
+		int indexPrefix = component.indexOf("[");
+		if (indexPrefix > -1) {
+			int indexPostfix = component.indexOf("]");
+			String selectedIndex = component.substring(indexPrefix + 1, indexPostfix);
+			rowIndex = hasDataGridMethods.getRowIndex(selectedIndex);
+		}
+		return rowIndex;
+	}
+	
+	protected List<UIObject> collectCellUIObjects(String component, int rowIndex, List<UIObject> cellUIObjects) {
+		if (cellUIObjects == null) {
+			cellUIObjects = new ArrayList<UIObject>();
+		}
+		component = component.replaceFirst("\\[.+\\]", "");
+		boolean rowSelection = (rowIndex > -1);
+		while (true) {
+			String cellKey = QAMLConstants.TOKEN_INDEXING + rowIndex + QAMLConstants.TOKEN_INDEXING + component;  
+			List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(cellKey);
+			if (uiObjects != null) {
+				cellUIObjects.addAll(uiObjects);
+			}
+			if (rowSelection || (uiObjects == null)) {
+				break;
+			}
+			rowIndex++;
+		}
+		return cellUIObjects;
+	}
+	
+	protected List<UIObject> getParentUIObjects(String component) {
+		String parentKey = component.replaceFirst("\\.[\\w\\$]+\\|", "|").replaceFirst("\\[.+\\]", "");
+		return ComponentRepository.getInstance().getComponent(parentKey);
+	}
+	
     protected void storeData(String dataId, String name, Object data) {
         getDataStorage().storeData(dataId, name, data);
         log(dataId, name, data);
@@ -268,6 +307,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return null;
     }
 
+    protected String generateId(String componentId, String windowId, String appId) {
+        return RendererHelper.generateId(componentId, windowId, appId);
+    }
+    
     protected String getSenderId(final UIObject sender) {
         return RendererHelper.getComponentId(sender);
     }
