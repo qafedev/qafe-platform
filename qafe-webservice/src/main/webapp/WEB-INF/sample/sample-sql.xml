@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2008-2014 Qualogy Solutions B.V.
+    Copyright 2008-2015 Qualogy Solutions B.V.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
     limitations under the License.
 
 -->
-
 <statements xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd">  
 	<select id="selectEMPLOYEES"><![CDATA[select * from EMPLOYEES]]></select>
 	<select id="selectEmployeeBySalary"><![CDATA[select * from EMPLOYEES where SALARY < :salary]]></select>
