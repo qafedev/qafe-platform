@@ -56,13 +56,8 @@ public class WindowRenderer extends AbstractComponentRenderer {
 				Widget messageBox = new MessageBox();
 				
 				ScrollPanel sp = new ScrollPanel();
-				if (ClientApplicationContext.getInstance().isMDI()){
-					sp.setHeight(gvo.getHeight());
-					sp.setWidth(gvo.getWidth());
-				} else {
-					sp.setHeight(Window.getClientHeight()+"px");
-					sp.setWidth(Window.getClientWidth()+"px");
-				}
+				sp.setHeight("100%");
+				sp.setWidth("100%");
 				sp.add(rootPanel);				
 				
 				qRootPanel.setMenuAndToolBar(menuAndToolbar);

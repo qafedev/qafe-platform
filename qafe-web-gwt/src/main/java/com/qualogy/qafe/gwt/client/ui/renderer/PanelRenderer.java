@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.DisclosurePanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -199,7 +200,7 @@ public class PanelRenderer extends AbstractComponentRenderer {
 					}
 				} else if (layout instanceof HorizontalLayoutGVO) {
 					if (root.getMenu() != null && !(component instanceof RootPanelGVO)) {
-						panel = new HorizontalPanel() {
+						panel = new FlowPanel() {
 							@Override
 							public void onBrowserEvent(Event event) {
 								if (event.getTypeInt() == Event.ONCONTEXTMENU) {
@@ -216,7 +217,7 @@ public class PanelRenderer extends AbstractComponentRenderer {
 							}
 						};
 					} else {
-						panel = new HorizontalPanel();
+						panel = new FlowPanel();
 					}
 					performCommonTasks(root, panel, uuid, parent);
 				} else if (layout instanceof VerticalLayoutGVO) {
