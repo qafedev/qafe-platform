@@ -26,9 +26,13 @@
 		<application-mapping-file location="qafe-default-system-app.xml"/>
 	</application>
 	
-	<!--  Hello World application  -->
-	<application name="Hello World Application" id="HelloWorld" >
-		<application-mapping-file location="helloworld.xml"/>		
+	<application name="QAFE-965" id="qafe-965">
+		<application-mapping-file location="QAFE-965.xml"/>
 	</application>
+	
+	<!--  Hello World application  -->
+<!-- 	<application name="Hello World Application" id="HelloWorld" >
+		<application-mapping-file location="helloworld.xml"/>		
+	</application> -->
 
 </applications>
