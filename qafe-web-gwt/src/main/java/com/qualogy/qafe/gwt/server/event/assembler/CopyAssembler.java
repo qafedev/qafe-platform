@@ -16,32 +16,25 @@
 package com.qualogy.qafe.gwt.server.event.assembler;
 
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.Copy;
-import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
-import com.qualogy.qafe.web.util.SessionContainer;
 
-@Deprecated
-public class CopyEventRenderer extends AbstractEventRenderer implements
-		EventAssembler {
+public class CopyAssembler extends AbstractEventItemAssembler {
 
-	public BuiltInFunctionGVO convert(EventItem eventItem,EventDataGVO eventData,ApplicationContext context, SessionContainer sc) {
-		BuiltInFunctionGVO bif = null;
-		if (eventItem instanceof Copy) {
-			CopyGVO copy = new CopyGVO();
-
-			bif = copy;
-			fillIn(eventItem, copy, eventData);
-			Copy in = (Copy) eventItem;
-			copy.setFrom(in.getFrom()+"|"+eventData.getUuid());
-			copy.setTo(in.getTo()+"|"+eventData.getUuid());
-			copy.setFromGVO(getBuiltInComponentGVO(in.getFrom(),eventData));
-			copy.setToGVO(getBuiltInComponentGVO(in.getTo(), eventData));
-			
-		}
-		return bif;
+	public BuiltInFunctionGVO assemble(EventItem eventItem, Event event, ApplicationContext applicationContext) {
+    	CopyGVO eventItemGVO = null;
+        if (eventItem instanceof Copy) {
+            eventItemGVO = new CopyGVO();
+            assembleAttributes(eventItemGVO, (Copy)eventItem, event, applicationContext);
+        }
+        return eventItemGVO;
 	}
-
+	
+    private void assembleAttributes(CopyGVO eventItemGVO, Copy eventItem, Event event, ApplicationContext applicationContext) {
+    	eventItemGVO.setFrom(eventItem.getFrom());
+    	eventItemGVO.setTo(eventItem.getTo());
+    }
 }

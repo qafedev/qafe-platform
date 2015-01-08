@@ -33,6 +33,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
@@ -75,6 +76,7 @@ public class EventHandler {
         BUILTIN_MAP.put(CloseWindowGVO.CLASS_NAME, new CloseWindowHandler());
         BUILTIN_MAP.put(EventRefGVO.CLASS_NAME, new EventRefHandler());
         BUILTIN_MAP.put(FocusGVO.CLASS_NAME, new FocusHandler());
+        BUILTIN_MAP.put(CopyGVO.CLASS_NAME, new CopyHandler());
     }
 
     public static EventHandler getInstance() {

@@ -18,18 +18,14 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class CopyGVO extends BuiltInFunctionGVO  {
 
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.CopyGVO";
+
 	protected String from;
 
 	protected String to;
 	
 	protected BuiltInComponentGVO fromGVO;
 	protected BuiltInComponentGVO toGVO;
-
-	
-
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.CopyGVO";
-	}
 
 	public String getFrom() {
 		return from;
@@ -63,4 +59,7 @@ public class CopyGVO extends BuiltInFunctionGVO  {
 		this.toGVO = toGVO;
 	}
 
+	public String getClassName() {
+		return CLASS_NAME;
+	}	
 }
