@@ -23,6 +23,7 @@ import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
 
+@Deprecated
 public class CopyExecute implements ExecuteCommand {
 
 	public void execute(BuiltInFunctionGVO builtInFunction) {

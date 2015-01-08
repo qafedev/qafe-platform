@@ -25,6 +25,7 @@ import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
 import com.qualogy.qafe.bind.presentation.event.function.CloseWindow;
+import com.qualogy.qafe.bind.presentation.event.function.Copy;
 import com.qualogy.qafe.bind.presentation.event.function.EventRef;
 import com.qualogy.qafe.bind.presentation.event.function.Focus;
 import com.qualogy.qafe.bind.presentation.event.function.LocalDelete;
@@ -59,6 +60,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(CloseWindow.class, new CloseWindowAssembler());
         ASSEMBLER_MAP.put(EventRef.class, new EventRefAssembler());
         ASSEMBLER_MAP.put(Focus.class, new FocusAssembler());
+        ASSEMBLER_MAP.put(Copy.class, new CopyAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {

@@ -23,6 +23,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
 import com.qualogy.qafe.web.util.SessionContainer;
 
+@Deprecated
 public class CopyEventRenderer extends AbstractEventRenderer implements
 		EventAssembler {
 
