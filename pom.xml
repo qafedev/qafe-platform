@@ -189,7 +189,6 @@
 			<plugin>
 				<groupId>com.mycila</groupId>
 				<artifactId>license-maven-plugin</artifactId>
-				<version>2.6</version>
 				<configuration>
 					<!-- Template location -->
 					<header>${fileHeaderBaseDir}/src/main/resources/file-header.txt</header>
@@ -225,12 +224,10 @@
 			<plugin>
 				<groupId>org.jibx</groupId>
 				<artifactId>maven-jibx-plugin</artifactId>
-				<version>${maven-jibx-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12</version>
 				<dependencies>
 					<dependency>
 						<groupId>com.qualogy.solutions</groupId>
@@ -254,7 +251,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.7</version>
 			</plugin>
 		</plugins>
 	</build>
