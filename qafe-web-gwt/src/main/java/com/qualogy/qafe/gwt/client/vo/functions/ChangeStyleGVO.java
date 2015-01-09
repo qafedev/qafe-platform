@@ -22,11 +22,7 @@ public class ChangeStyleGVO extends BuiltInFunctionGVO {
 	
 	private List<ChangeStyleActionGVO> actions;
 
-	
-
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO";
-	}
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO";
 
 	public List<ChangeStyleActionGVO> getActions() {
 		return actions;
@@ -36,4 +32,7 @@ public class ChangeStyleGVO extends BuiltInFunctionGVO {
 		this.actions = actions;
 	}
 
+	public String getClassName() {
+		return CLASS_NAME;
+	}	
 }
