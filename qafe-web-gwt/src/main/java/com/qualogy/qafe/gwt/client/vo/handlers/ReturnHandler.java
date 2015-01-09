@@ -15,16 +15,20 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-public enum BuiltInState {
-	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT"), ENTER_CALL("ENTER_CALL"), EXIT_CALL("EXIT_CALL");
-	
-	private String literal;
-	
-	private BuiltInState(String literal) {
-		this.literal = literal;
+import java.util.Map;
+import java.util.Queue;
+
+import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
+
+public class ReturnHandler extends AbstractBuiltInHandler {
+
+	@Override
+	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType,
+			Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO,
+			String appId, String windowId, String eventSessionId,
+			Queue derivedBuiltIns) {
+		return BuiltInState.EXIT_CALL;
 	}
-	
-	public String getLiteral() {
-		return literal;
-	}
+
 }

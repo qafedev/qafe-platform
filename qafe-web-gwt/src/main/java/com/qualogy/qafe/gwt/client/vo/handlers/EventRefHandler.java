@@ -44,7 +44,7 @@ public class EventRefHandler extends AbstractBuiltInHandler {
             	derivedBuiltIns.addAll(eventGVO.getEventItems());	
             }
         }
-        return BuiltInState.EXECUTED;
+        return BuiltInState.ENTER_CALL;
     }
     
     private boolean isRecursiveCall(String eventId, EventGVO eventGVO, List<String> eventReferencesCall

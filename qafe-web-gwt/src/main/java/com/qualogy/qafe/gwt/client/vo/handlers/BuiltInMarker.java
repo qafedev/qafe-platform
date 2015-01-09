@@ -15,16 +15,6 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-public enum BuiltInState {
-	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT"), ENTER_CALL("ENTER_CALL"), EXIT_CALL("EXIT_CALL");
-	
-	private String literal;
-	
-	private BuiltInState(String literal) {
-		this.literal = literal;
-	}
-	
-	public String getLiteral() {
-		return literal;
-	}
+public enum BuiltInMarker {
+	EXIT_POINT
 }

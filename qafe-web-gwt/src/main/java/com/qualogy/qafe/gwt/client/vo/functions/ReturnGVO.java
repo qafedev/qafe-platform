@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qualogy.qafe.gwt.client.vo.handlers;
+package com.qualogy.qafe.gwt.client.vo.functions;
 
-public enum BuiltInState {
-	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT"), ENTER_CALL("ENTER_CALL"), EXIT_CALL("EXIT_CALL");
+public class ReturnGVO extends BuiltInFunctionGVO {
+
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO";
 	
-	private String literal;
-	
-	private BuiltInState(String literal) {
-		this.literal = literal;
-	}
-	
-	public String getLiteral() {
-		return literal;
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 }
