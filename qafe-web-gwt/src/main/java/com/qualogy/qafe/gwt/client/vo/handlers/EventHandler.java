@@ -41,6 +41,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
@@ -56,9 +57,10 @@ public class EventHandler {
     
     private RPCServiceAsync rpcService = null;
 
-    private Map<String,Stack<Queue>> eventMap = new HashMap<String, Stack<Queue>>();
+    private Map<String, Stack<Queue<Object>>> eventMap = new HashMap<String, Stack<Queue<Object>>>();
     
-    private Map<String, Map<String, Object>> processingBuiltInsMap = new HashMap<String, Map<String, Object>>();
+    private Map<String, Map<String, Object>> processingBuiltInsMap =
+        new HashMap<String, Map<String, Object>>();
     
     private final Map<String, BuiltInHandler> BUILTIN_MAP = new HashMap<String, BuiltInHandler>();
 
@@ -77,6 +79,7 @@ public class EventHandler {
         BUILTIN_MAP.put(CloseWindowGVO.CLASS_NAME, new CloseWindowHandler());
         BUILTIN_MAP.put(EventRefGVO.CLASS_NAME, new EventRefHandler());
         BUILTIN_MAP.put(FocusGVO.CLASS_NAME, new FocusHandler());
+        BUILTIN_MAP.put(ReturnGVO.CLASS_NAME, new ReturnHandler());
         BUILTIN_MAP.put(CopyGVO.CLASS_NAME, new CopyHandler());
         BUILTIN_MAP.put(ChangeStyleGVO.CLASS_NAME, new ChangeStyleHandler());
     }
@@ -91,17 +94,18 @@ public class EventHandler {
     public RPCServiceAsync getRPCService() {
     	if (rpcService == null) {
     		rpcService = (RPCServiceAsync) GWT.create(RPCService.class);
-    		ServiceDefTarget endpoint = (ServiceDefTarget) rpcService;
-            String moduleRelativeURL = GWT.getModuleBaseURL() + "rpc.service";
+            final ServiceDefTarget endpoint = (ServiceDefTarget) rpcService;
+            final String moduleRelativeURL = GWT.getModuleBaseURL() + "rpc.service";
             endpoint.setServiceEntryPoint(moduleRelativeURL);
     	}
     	return rpcService;
     }
     
-    public void handleEvent(final UIObject sender, String listenerType, EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo) {
-        String appId = getAppId(sender);
-        String windowId = getWindowId(sender);
-        UIGVO applicationGVO = getApplication(appId);
+    public void handleEvent(final UIObject sender, final String listenerType, EventListenerGVO eventListenerGVO,
+            Map<String, String> mouseInfo) {
+        final String appId = getAppId(sender);
+        final String windowId = getWindowId(sender);
+        final UIGVO applicationGVO = getApplication(appId);
         if (applicationGVO == null) {
             return;
         }
@@ -114,16 +118,17 @@ public class EventHandler {
         }
 
         final String eventSessionId = register();
-        Stack<Queue> builtInsStack = new Stack<Queue>();
-        Queue builtIns = getBuiltIns(eventGVO);
+        Stack<Queue<Object>> builtInsStack = new Stack<Queue<Object>>();
+        Queue<Object> builtIns = getBuiltIns(eventGVO);
         builtInsStack.add(builtIns); 
         eventMap.put(eventSessionId, builtInsStack);
         handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
     
-	public void handleEvent(final String eventSessionId, final UIObject sender, final String listenerType
-    		, final  Map<String, String> mouseInfo, final String appId, final String windowId) {
-    	Stack<Queue> builtInsStack = eventMap.get(eventSessionId);
+    // CHECKSTYLE.OFF: CyclomaticComplexity
+    public void handleEvent(final String eventSessionId, final UIObject sender, final String listenerType,
+            final Map<String, String> mouseInfo, final String appId, final String windowId) {
+        Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
 		if ((builtInsStack == null) || builtInsStack.isEmpty()) {
 			cleanup(eventSessionId);
 			return;
@@ -132,6 +137,10 @@ public class EventHandler {
 		while (!builtIns.isEmpty()) {
 			Object builtIn = builtIns.poll();
 			try {
+                if (builtIn == BuiltInMarker.EXIT_POINT) {
+                    continue;
+                }
+
 				// Meant for logging the execution of built-ins
 				Map<String, Object> processingBuiltIns = processingBuiltInsMap.get(eventSessionId);
 				if (processingBuiltIns == null) {
@@ -156,21 +165,33 @@ public class EventHandler {
 					}
 				}
 				
-				Queue derivedBuiltIns = new LinkedList();
-				BuiltInState state = handleBuiltIn(builtIn, sender, listenerType, mouseInfo
-						, appId, windowId, eventSessionId, derivedBuiltIns);
+                Queue<Object> derivedBuiltIns = new LinkedList<Object>();
+                BuiltInState state =
+                    handleBuiltIn(builtIn, sender, listenerType, mouseInfo, appId, windowId, eventSessionId,
+                        derivedBuiltIns);
 				switch (state) {
 					case SUSPEND: {
 						/*
-						 * NOTE:
-						 * The callback is handled in the superclass of all built-in handlers,
-						 * call handleEvent(eventSessionId, ...) after processing the corresponding built-in in the callback
+                         * NOTE: The callback is handled in the superclass of all built-in handlers, call
+                         * handleEvent(eventSessionId, ...) after processing the corresponding built-in in the
+                         * callback
 						 */
 						return;
 					}
 					case REPEAT: {
 						((LinkedList)builtIns).addFirst(builtIn);
-					} break;
+                    }
+                        break;
+                    case ENTER_CALL: {
+                        if (!derivedBuiltIns.isEmpty()) {
+                            derivedBuiltIns.add(BuiltInMarker.EXIT_POINT);
+                        }
+                    }
+                        break;
+                    case EXIT_CALL: {
+                        handleExitCall(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+                        return;
+                    }
 				}
 				if (!derivedBuiltIns.isEmpty()) {
 					// Postpone current processing and process the new top of the stack
@@ -186,6 +207,43 @@ public class EventHandler {
 			builtInsStack.remove(builtIns);
 		}
 		handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+    }
+    // CHECKSTYLE.ON: CyclomaticComplexity
+
+	/**
+	 * Handles exiting an event caused by a return built in by
+	 * removing built ins until an exit point is hit. 
+	 * When an exit point is found, we return to normal processing of the caller event
+	 *  
+	 * @param eventSessionId the current sessions id
+	 * @param sender the component that triggered the event
+	 * @param listenerType the type of trigger causing the event
+	 * @param mouseInfo information such as x and y position about the mouse
+	 * @param appId the qafe application id where the event occurred
+	 * @param windowId the window within the application where the event occurred
+	 */
+    private void handleExitCall(String eventSessionId, UIObject sender, String listenerType
+			, Map<String, String> mouseInfo, String appId, String windowId) {
+    	
+    	Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
+    	if ((builtInsStack == null) || builtInsStack.isEmpty()) {
+			cleanup(eventSessionId);
+			return;
+		}
+    	
+		Queue<Object> builtIns = builtInsStack.peek();
+		while (!builtIns.isEmpty()) {
+			Object builtIn = builtIns.poll();
+			if (builtIn == BuiltInMarker.EXIT_POINT) {
+				handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+				return;
+			}
+		}
+		
+		if (builtIns.isEmpty()) {
+			builtInsStack.remove(builtIns);
+		}
+		handleExitCall(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
 
     private BuiltInState handleBuiltIn(Object builtIn, final UIObject sender, final String listenerType
