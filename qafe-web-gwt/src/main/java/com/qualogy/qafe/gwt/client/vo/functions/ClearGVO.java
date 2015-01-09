@@ -17,6 +17,8 @@ package com.qualogy.qafe.gwt.client.vo.functions;
 
 
 public class ClearGVO extends BuiltInFunctionGVO  {
+	
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ClearGVO";
 
 	private String componentId;
 
@@ -24,8 +26,9 @@ public class ClearGVO extends BuiltInFunctionGVO  {
 
 	
 	
+	@Override
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.ClearGVO";
+		return CLASS_NAME;
 	}
 
 

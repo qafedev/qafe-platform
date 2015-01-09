@@ -56,8 +56,7 @@ public class FocusHandler extends AbstractBuiltInHandler {
 	}
 	
 	private List<UIObject> getUIObjects(String componentId, String appId, String windowId, String eventSessionId) {
-		componentId = resolveVariables(componentId, null, eventSessionId);
-		String key = generateId(componentId, windowId, appId);
+		String key = generateId(componentId, windowId, appId, eventSessionId);
 		List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(key);
 		if (uiObjects == null) {
 			List<UIObject> parentUIObjects = getParentUIObjects(key);

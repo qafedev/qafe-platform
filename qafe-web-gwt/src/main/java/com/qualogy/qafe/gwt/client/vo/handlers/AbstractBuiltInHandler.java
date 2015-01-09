@@ -41,6 +41,7 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 
+	@Override
 	public final BuiltInState handleBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
 			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
 			, String eventSessionId, Queue derivedBuiltIns) {
@@ -307,9 +308,49 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return null;
     }
 
-    protected String generateId(String componentId, String windowId, String appId) {
+	/**
+	 * Get the component key.
+	 * 
+	 * @param componentId
+	 * @param appId
+	 * @param windowId
+	 * @param eventSessionId
+	 * @return The key
+	 */
+    protected String generateId(String componentId, String windowId, String appId, String eventSessionId) {
+    	componentId = resolveVariables(componentId, null, eventSessionId);
         return RendererHelper.generateId(componentId, windowId, appId);
     }
+    
+	/**
+	 * Search for UIObjects considering ref is id.
+	 * 
+	 * @param key
+	 * @return List of UIObjects
+	 */
+	protected List<UIObject> getUIObjectsById(String key) {
+		return ComponentRepository.getInstance().getComponent(key);
+	}
+	
+	/**
+	 * Search for UIObjects considering ref is name.
+	 * 
+	 * @param key
+	 * @return List of UIObjects
+	 */
+	protected List<UIObject> getUIObjectsByName(String key) {		
+		return ComponentRepository.getInstance().getNamedComponent(key);
+	}
+	
+	/**
+	 * Search for UIObjects considering ref is group.
+	 * 
+	 * @param key
+	 * @return List of UIObjects
+	 */
+	protected List<UIObject> getUIObjectsByGroup(String key) {		
+		return ComponentRepository.getInstance().getGroupedComponent(key);
+	}
     
     protected String getSenderId(final UIObject sender) {
         return RendererHelper.getComponentId(sender);
@@ -360,7 +401,8 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 
         return new AsyncCallback<Object>() {
 
-            public void onSuccess(Object result) {
+            @Override
+			public void onSuccess(Object result) {
             	setBusy(false);
                 GEventItemDataObject data = (GEventItemDataObject) result;
                 storeOutputValues(eventSessionId, data);
@@ -368,7 +410,8 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                 		, mouseInfo, appId, windowId);
             }
 
-            public void onFailure(Throwable exception) {
+            @Override
+			public void onFailure(Throwable exception) {
             	setBusy(false);
             	Object currentBuiltIn = eventItemDataGVO.getBuiltInGVO();
             	EventHandler.getInstance().handleException(exception, currentBuiltIn
