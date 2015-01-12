@@ -55,4 +55,10 @@ public class JNSIUtil {
 	    }
 	    return null;
 	}-*/;
+	
+	public static native String evaluateExpression(String expression) /*-{
+	 	var expr = "resultValue=" + expression;
+		result = eval($wnd.Sk.importMainWithBody("<stdin>", false, expr));
+		return String(result.$d.resultValue.v);
+	}-*/;
 }		

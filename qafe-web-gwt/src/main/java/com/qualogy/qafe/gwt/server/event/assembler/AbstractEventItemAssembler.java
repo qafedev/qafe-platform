@@ -67,6 +67,8 @@ public abstract class AbstractEventItemAssembler implements EventItemAssembler {
         } else if (parameter.getRef() != null) {
             Reference reference = parameter.getRef();
             parameterGVO = new ParameterGVO(name, reference.stringValueOf(), reference.getSource());
+        } else if (parameter.getExpression() != null) {
+        	parameterGVO = new ParameterGVO(parameter.getExpression());
         }
         return parameterGVO;
     }
