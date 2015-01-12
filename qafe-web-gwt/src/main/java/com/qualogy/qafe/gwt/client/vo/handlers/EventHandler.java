@@ -47,6 +47,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.StoreClearGVO;
@@ -88,6 +89,7 @@ public class EventHandler {
         BUILTIN_MAP.put(ReturnGVO.CLASS_NAME, new ReturnHandler());
         BUILTIN_MAP.put(CopyGVO.CLASS_NAME, new CopyHandler());
         BUILTIN_MAP.put(ChangeStyleGVO.CLASS_NAME, new ChangeStyleHandler());
+        BUILTIN_MAP.put(SetPropertyGVO.CLASS_NAME, new SetPropertyHandler());
     }
 
     public static EventHandler getInstance() {

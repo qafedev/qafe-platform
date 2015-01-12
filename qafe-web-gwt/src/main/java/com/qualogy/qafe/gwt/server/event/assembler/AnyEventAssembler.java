@@ -27,6 +27,7 @@ import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.Clear;
+import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
 import com.qualogy.qafe.bind.presentation.event.function.CloseWindow;
 import com.qualogy.qafe.bind.presentation.event.function.Copy;
@@ -38,6 +39,7 @@ import com.qualogy.qafe.bind.presentation.event.function.LogFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
 import com.qualogy.qafe.bind.presentation.event.function.Return;
 import com.qualogy.qafe.bind.presentation.event.function.SetPanel;
+import com.qualogy.qafe.bind.presentation.event.function.SetProperty;
 import com.qualogy.qafe.bind.presentation.event.function.SetValue;
 import com.qualogy.qafe.bind.presentation.event.function.ShowPanel;
 import com.qualogy.qafe.bind.presentation.event.function.Toggle;
@@ -71,6 +73,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(Copy.class, new CopyAssembler());
         ASSEMBLER_MAP.put(ChangeStyle.class, new ChangeStyleAssembler());
         ASSEMBLER_MAP.put(ErrorHandler.class, new ErrorHandlerAssembler());
+        ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {

@@ -16,12 +16,15 @@
 package com.qualogy.qafe.gwt.client.vo.functions;
 
 public class SetPropertyGVO extends BuiltInFunctionGVO {
-
+    
+    public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO";
+    
 	private String property;
 	private String value;
 	
+	@Override
 	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO";
+		return CLASS_NAME;
 	}
 
 	public String getProperty() {
