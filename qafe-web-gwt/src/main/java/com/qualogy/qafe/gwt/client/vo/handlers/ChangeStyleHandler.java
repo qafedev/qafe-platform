@@ -59,13 +59,7 @@ public class ChangeStyleHandler extends AbstractBuiltInHandler {
 			List<UIObject> uiObjects = getUIObjects(builtInComponentGVO, appId, windowId, eventSessionId);
 			
 			if (uiObjects == null) { // Components within a window are not found. Check for SDI.
-				if (!(ClientApplicationContext.getInstance().isMDI())) {
-					UIObject mainPanel = ClientApplicationContext.getInstance().getMainPanel().getWidget();
-					uiObjects = new ArrayList<UIObject>();
-					if (mainPanel!=null){
-						uiObjects.add(mainPanel);
-					}
-				}
+				uiObjects = checkSDIMode(uiObjects);
 			}
 			
 			if (uiObjects == null) {
@@ -90,30 +84,45 @@ public class ChangeStyleHandler extends AbstractBuiltInHandler {
                 	continue;
                 }
 
-                for (ChangeStyleActionGVO changeStyleAction : actions) {
-                    String action = changeStyleAction.getAction().toLowerCase();
-					String key = changeStyleAction.getKey();
-					String style = changeStyleAction.getStyle();
-					
-					if (ACTION_REMOVE.equals(action)) {
-                        if (key != null && key.trim().length() > 0) {
-                        	RendererHelper.setStyleForElement(element, key, null);
-                        }
-                        if (style != null && style.trim().length() > 0) {
-                        	object.removeStyleName(style);
-                        }
-                    } else if (ACTION_SET.equals(action)) {
-					    if (key != null && key.trim().length() > 0) {
-					    	RendererHelper.setStyleForElement(element, key, changeStyleAction.getValue());
-					    }
-					    if (style != null && style.trim().length() > 0) {
-					    	object.addStyleName(style);
-					    }
-					}									
-                }  
+                handleChangeStyle(object, element, actions);  
             }
 		}
 	}
+
+    private void handleChangeStyle(UIObject object, Element element, List<ChangeStyleActionGVO> actions) {
+        for (ChangeStyleActionGVO changeStyleAction : actions) {
+            String action = changeStyleAction.getAction().toLowerCase();
+        	String key = changeStyleAction.getKey();
+        	String style = changeStyleAction.getStyle();
+        	
+        	if (ACTION_REMOVE.equals(action)) {
+                if (key != null && key.trim().length() > 0) {
+                	RendererHelper.setStyleForElement(element, key, null);
+                }
+                if (style != null && style.trim().length() > 0) {
+                	object.removeStyleName(style);
+                }
+            } else if (ACTION_SET.equals(action)) {
+        	    if (key != null && key.trim().length() > 0) {
+        	    	RendererHelper.setStyleForElement(element, key, changeStyleAction.getValue());
+        	    }
+        	    if (style != null && style.trim().length() > 0) {
+        	    	object.addStyleName(style);
+        	    }
+        	}									
+        }
+    }
+
+    private List<UIObject> checkSDIMode(List<UIObject> uiObjects) {
+        if (!(ClientApplicationContext.getInstance().isMDI())) {
+        	UIObject mainPanel = ClientApplicationContext.getInstance().getMainPanel().getWidget();
+        	uiObjects = new ArrayList<UIObject>();
+        	if (mainPanel!=null){
+        		uiObjects.add(mainPanel);
+        	}
+        }
+        return uiObjects;
+    }
 
 	private List<UIObject> getUIObjects(BuiltInComponentGVO builtInComponentGVO, String appId, String windowId, String eventSessionId) {
 		List<UIObject> uiObjects = null;
