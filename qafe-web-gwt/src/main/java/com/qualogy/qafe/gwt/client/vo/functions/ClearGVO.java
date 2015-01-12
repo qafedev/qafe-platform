@@ -25,13 +25,6 @@ public class ClearGVO extends BuiltInFunctionGVO  {
 	private BuiltInComponentGVO builtInComponentGVO;
 
 	
-	
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
-
-
 	public String getComponentId() {
 		return componentId;
 	}
@@ -51,7 +44,8 @@ public class ClearGVO extends BuiltInFunctionGVO  {
 		this.builtInComponentGVO = builtInComponentGVO;
 	}
 
-
-	
-
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 }

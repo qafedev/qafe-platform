@@ -133,7 +133,6 @@ public class ChangeStyleHandler extends AbstractBuiltInHandler {
 		}
 		
 		String componentName = builtInComponentGVO.getComponentName();
-		componentName = resolveVariables(componentName, null, eventSessionId);
 		key = generateId(componentName, windowId, appId, eventSessionId);
 		uiObjects = ComponentRepository.getInstance().getNamedComponent(key);
 		return uiObjects;

@@ -38,10 +38,8 @@ public class CopyHandler extends AbstractBuiltInHandler {
 	}
 	
 	private void copy(CopyGVO copyGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
-		String toComponentId = resolveVariables(copyGVO.getTo(), null, eventSessionId);
-		String fromComponentId = resolveVariables(copyGVO.getFrom(), null, eventSessionId);
-		String toKey = generateId(toComponentId, windowId, appId, eventSessionId);
-		String fromKey = generateId(fromComponentId, windowId, appId, eventSessionId);
+		String toKey = generateId(copyGVO.getTo(), windowId, appId, eventSessionId);
+		String fromKey = generateId(copyGVO.getFrom(), windowId, appId, eventSessionId);
 		
 		List<UIObject> uiObjectsFrom = getUIObjects(fromKey);
 		if (uiObjectsFrom == null) {
