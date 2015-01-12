@@ -30,8 +30,6 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleActionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.execute.FunctionsExecutor;
 
 public class ChangeStyleHandler extends AbstractBuiltInHandler {
 
@@ -128,7 +126,7 @@ public class ChangeStyleHandler extends AbstractBuiltInHandler {
 		List<UIObject> uiObjects = null;
 		String componentId = builtInComponentGVO.getComponentId();
 		componentId = resolveVariables(componentId, null, eventSessionId);
-		String key = generateId(componentId, windowId, appId);
+		String key = generateId(componentId, windowId, appId, eventSessionId);
 		uiObjects = ComponentRepository.getInstance().getComponent(key);
 		if (uiObjects != null) {
 			return uiObjects;
@@ -136,7 +134,7 @@ public class ChangeStyleHandler extends AbstractBuiltInHandler {
 		
 		String componentName = builtInComponentGVO.getComponentName();
 		componentName = resolveVariables(componentName, null, eventSessionId);
-		key = generateId(componentName, windowId, appId);
+		key = generateId(componentName, windowId, appId, eventSessionId);
 		uiObjects = ComponentRepository.getInstance().getNamedComponent(key);
 		return uiObjects;
 	}

@@ -21,13 +21,13 @@ import java.util.Queue;
 
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
 
 public class CopyHandler extends AbstractBuiltInHandler {
 
+	@Override
 	public BuiltInState executeBuiltIn(UIObject sender, String listenerType,
 			Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO,
 			String appId, String windowId, String eventSessionId,
@@ -40,8 +40,8 @@ public class CopyHandler extends AbstractBuiltInHandler {
 	private void copy(CopyGVO copyGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
 		String toComponentId = resolveVariables(copyGVO.getTo(), null, eventSessionId);
 		String fromComponentId = resolveVariables(copyGVO.getFrom(), null, eventSessionId);
-		String toKey = generateId(toComponentId, windowId, appId);
-		String fromKey = generateId(fromComponentId, windowId, appId);
+		String toKey = generateId(toComponentId, windowId, appId, eventSessionId);
+		String fromKey = generateId(fromComponentId, windowId, appId, eventSessionId);
 		
 		List<UIObject> uiObjectsFrom = getUIObjects(fromKey);
 		if (uiObjectsFrom == null) {
