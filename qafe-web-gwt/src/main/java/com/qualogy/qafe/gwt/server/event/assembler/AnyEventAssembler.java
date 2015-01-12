@@ -36,6 +36,7 @@ import com.qualogy.qafe.bind.presentation.event.function.LogFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
 import com.qualogy.qafe.bind.presentation.event.function.Return;
 import com.qualogy.qafe.bind.presentation.event.function.SetPanel;
+import com.qualogy.qafe.bind.presentation.event.function.SetProperty;
 import com.qualogy.qafe.bind.presentation.event.function.SetValue;
 import com.qualogy.qafe.bind.presentation.event.function.ShowPanel;
 import com.qualogy.qafe.bind.presentation.event.function.Toggle;
@@ -67,6 +68,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(Return.class, new ReturnAssembler());
         ASSEMBLER_MAP.put(Copy.class, new CopyAssembler());
         ASSEMBLER_MAP.put(ChangeStyle.class, new ChangeStyleAssembler());
+        ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {
