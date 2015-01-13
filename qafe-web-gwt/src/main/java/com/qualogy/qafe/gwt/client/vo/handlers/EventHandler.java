@@ -15,6 +15,7 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -31,11 +32,12 @@ import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.ClearGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ClearGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CopyGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.ErrorHandlerGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
@@ -271,15 +273,89 @@ public class EventHandler {
     public void handleException(final Throwable exception, final Object currentBuiltIn
     		, final UIObject sender, final String listenerType, final Map<String, String> mouseInfo
     		, final String appId, final String windowId, final String eventSessionId) {
-    	String title = "Fail to execute " + currentBuiltIn;
-        String message = exception.getMessage();
-        showMessage(title, message, exception);
+        Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
+		if ((builtInsStack == null) || builtInsStack.isEmpty()) {
+			String title = "Fail to execute " + currentBuiltIn;
+	        String message = exception.getMessage();
+	        showMessage(title, message, exception);
+	        cleanup(eventSessionId);
+			return;
+		}
+		Queue builtIns = builtInsStack.peek();
+		while (!builtIns.isEmpty()) {
+			Object builtIn = builtIns.poll();
+			ErrorHandlerGVO errorHandlerGVO = resolveErrorHandler(builtIn, appId, windowId, exception);
+			if (errorHandlerGVO != null) {
+				String finalAction = errorHandlerGVO.getFinalAction();
+				if (ErrorHandlerGVO.FINALLY_RETHROW.equals(finalAction)) {
+					continue;
+				}
+				storeData(eventSessionId, DataStorage.KEY_ERROR_MESSAGE, exception.getMessage());
+				Collection<BuiltInFunctionGVO> eventItems = errorHandlerGVO.getEventItems();
+				Queue exceptionBuiltIns = new LinkedList();
+				exceptionBuiltIns.addAll(eventItems);
+				builtInsStack.add(exceptionBuiltIns);
+				handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+				return;
+			}
+		}	
+		if (builtIns.isEmpty()) {
+			builtInsStack.remove(builtIns);
+		}
+		handleException(exception, currentBuiltIn, sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
 	}
     
-    public UIGVO getApplication(final String appId) {
+    private ErrorHandlerGVO resolveErrorHandler(Object builtIn, String appId, String windowId, Throwable exception) {
+    	if (builtIn instanceof ErrorHandlerGVO) {
+    		ErrorHandlerGVO errorHandlerGVO = (ErrorHandlerGVO) builtIn;
+    		if (matchException(errorHandlerGVO, exception)) {
+    			return errorHandlerGVO;
+    		}
+    		return null;
+    	}
+    	if (builtIn instanceof EventRefGVO) {
+    		EventRefGVO eventRefGVO = (EventRefGVO) builtIn;
+    		String eventId = eventRefGVO.getEventId();
+    		EventGVO eventGVO = getEvent(eventId, windowId, appId);
+            if (eventGVO == null) {
+                return null;
+            }
+            Collection<BuiltInFunctionGVO> eventItems = eventGVO.getEventItems();
+    		if (eventItems == null) {
+    			return null;
+    		}    		
+    		for (BuiltInFunctionGVO eventItemGVO : eventItems) {
+    			ErrorHandlerGVO errorHandlerGVO = resolveErrorHandler(eventItemGVO, appId, windowId, exception);
+    			if (errorHandlerGVO != null) {
+    				return errorHandlerGVO;
+    			}
+    		}
+    		return null;
+    	}
+		return null;
+	}
+
+    private boolean matchException(ErrorHandlerGVO builtIn, Throwable exception) {
+    	if (exception == null) {
+    		return false;
+    	}
+    	String exceptionMessage = exception.toString();
+    	String errorHandlerMessage = builtIn.getException();
+		return exceptionMessage.contains(errorHandlerMessage);
+	}
+
+	public UIGVO getApplication(final String appId) {
     	 return ClientApplicationContext.getInstance().getApplication(appId);
     }
     
+	public EventGVO getEvent(String eventId, String windowId, String appId) {
+    	UIGVO applicationGVO = EventHandler.getInstance().getApplication(appId);
+        if (applicationGVO == null) {
+            return null;
+        }
+        return getEvent(eventId, windowId, applicationGVO);
+    }
+	
     public EventGVO getEvent(final String eventId, final String windowId, UIGVO applicationGVO) {
         EventGVO eventGVO = null;
         if (applicationGVO == null) {
@@ -317,9 +393,22 @@ public class EventHandler {
     	logMessage.append(" -- AppId=" + appId + " -- WindowId=" + windowId);
         log(logMessage.toString());
     }
+
+    public void log(String dataId, String name, Object data) {
+    	String logMessage = "dataId=" + dataId + " - " + name;
+    	if (data != null) {
+    		logMessage += "=" + data.toString();
+    	}
+        log(logMessage);
+    }
     
     public void log(String message) {
         ClientApplicationContext.getInstance().log(message);
+    }
+    
+    public void storeData(String dataId, String name, Object data) {
+        getDataStorage().storeData(dataId, name, data);
+        log(dataId, name, data);
     }
     
     public DataStorage getDataStorage() {

@@ -278,8 +278,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 	}
 	
     protected void storeData(String dataId, String name, Object data) {
-        getDataStorage().storeData(dataId, name, data);
-        log(dataId, name, data);
+    	EventHandler.getInstance().storeData(dataId, name, data);
     }
 
     protected Object getData(String dataId, String name) {
@@ -378,14 +377,6 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 
     protected UIObject renderComponent(ComponentGVO componentGVO, String appId, String windowId, String eventSessionId) {
     	return AnyComponentRenderer.getInstance().render(componentGVO, eventSessionId, windowId, appId);    	
-    }
-    
-    protected void log(String dataId, String name, Object data) {
-    	String logMessage = "dataId=" + dataId + " - " + name;
-    	if (data != null) {
-    		logMessage += "=" + data.toString();
-    	}
-        log(logMessage);
     }
     
     protected void log(String message) {

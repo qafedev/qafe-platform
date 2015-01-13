@@ -33,7 +33,7 @@ import com.qualogy.qafe.presentation.BusinessActionItemDataObject;
 public class BusinessActionRefHandler {
 
     public final Map<String, Object> execute(final BusinessActionItemDataObject businessActionItemDataObject,
-            final ApplicationContext context, final DataIdentifier dataId) {
+            final ApplicationContext context, final DataIdentifier dataId) throws ExternalException {
 
         final BusinessAction businessAction =
             context.getApplicationMapping().getBusinessTier()
@@ -50,7 +50,7 @@ public class BusinessActionRefHandler {
             
 
         } catch (final ExternalException e) {
-            e.printStackTrace();
+            throw e;
         }
 
         return outputValues;
