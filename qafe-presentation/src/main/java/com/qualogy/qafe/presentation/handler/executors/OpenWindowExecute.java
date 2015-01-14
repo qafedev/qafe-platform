@@ -40,6 +40,7 @@ import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.EventItemExecutor;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
+@Deprecated
 public class OpenWindowExecute extends AbstractEventItemExecute implements ExecuteEventItem {
 
 	// CHECKSTYLE.OFF: CyclomaticComplexity

@@ -19,6 +19,8 @@ import com.google.gwt.dom.client.Style.Unit;
 
 public class QAMLUtil {
 
+    public static final String DEFAULT_UNIT = Unit.PX.getType(); 
+    
 	/**
 	 * IMPORTANT: this method must be an exact copy of the one used in the qafe-business project
 	 */
@@ -38,4 +40,23 @@ public class QAMLUtil {
 		}
 		return value;
 	}
+    
+    /**
+     * Check to see if a string contains a unit (px, %, em, etc)
+     * 
+     * @param value the string to check against
+     * @return true if the string contains a supported unit identifier
+     */
+    public static boolean containsUnitIdentifier(String value) {
+        if (value == null) {
+            return false;
+        }
+        
+        for (Unit unit : Unit.values()) {
+            if (value.toLowerCase().contains(unit.getType())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
