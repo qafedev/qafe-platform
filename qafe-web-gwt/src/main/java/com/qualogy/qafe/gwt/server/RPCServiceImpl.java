@@ -105,7 +105,7 @@ public class RPCServiceImpl
 			if (throwable == null) { // fallback if no rootCause could be found!
 				throwable = e;
 			}
-			gwtE = new GWTServiceException(e.getMessage(), throwable);
+			gwtE = new GWTServiceException(throwable.getMessage(), throwable);
 			String detailedMessage = ExceptionHelper.printStackTrace(e);
 			gwtE.setDetailedMessage(detailedMessage);
 		} else { // fallback if exception somehow is null

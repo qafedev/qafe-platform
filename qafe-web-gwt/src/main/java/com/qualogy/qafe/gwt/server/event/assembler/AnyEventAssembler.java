@@ -20,9 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.qualogy.qafe.bind.business.action.BusinessActionRef;
+import com.qualogy.qafe.bind.commons.error.ErrorHandler;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.core.statement.IfStatement;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
+import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.Clear;
 import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
@@ -64,31 +67,40 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(CloseWindow.class, new CloseWindowAssembler());
         ASSEMBLER_MAP.put(EventRef.class, new EventRefAssembler());
         ASSEMBLER_MAP.put(Focus.class, new FocusAssembler());
+		ASSEMBLER_MAP.put(IfStatement.class, new IfAssembler());
         ASSEMBLER_MAP.put(Clear.class, new ClearAssembler());
         ASSEMBLER_MAP.put(Return.class, new ReturnAssembler());
         ASSEMBLER_MAP.put(Copy.class, new CopyAssembler());
         ASSEMBLER_MAP.put(ChangeStyle.class, new ChangeStyleAssembler());
         ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
+        ASSEMBLER_MAP.put(ErrorHandler.class, new ErrorHandlerAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {
         EventGVO eventGVO = null;
         if (event == null) {
-            return eventGVO;
+            return null;
         }
-        eventGVO = new EventGVO();
+        EventGVO eventGVO = new EventGVO();
         final List<EventItem> eventItems = event.getEventItems();
         for (EventItem eventItem : eventItems) {
-            final EventItemAssembler eventItemAssembler = ASSEMBLER_MAP.get(eventItem.getClass());
-            if (eventItemAssembler == null) {
-                continue;
-            }
-            final BuiltInFunctionGVO eventItemGVO =
-                eventItemAssembler.assemble(eventItem, event, applicationContext);
+            final BuiltInFunctionGVO eventItemGVO = assemble(eventItem, event, applicationContext);                
             if (eventItemGVO != null) {
                 eventGVO.addEventItem(eventItemGVO);
             }
         }
         return eventGVO;
+    }
+    
+    public static BuiltInFunctionGVO assemble(final EventItem eventItem, final Event event
+    	, final ApplicationContext applicationContext) {    	
+        if (eventItem == null) {
+            return null;
+        }
+        final EventItemAssembler eventItemAssembler = ASSEMBLER_MAP.get(eventItem.getClass());
+        if (eventItemAssembler == null) {
+            return null;
+        }
+        return eventItemAssembler.assemble(eventItem, event, applicationContext);
     }
 }

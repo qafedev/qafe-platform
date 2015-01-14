@@ -27,7 +27,6 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventRefGVO;
-import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 
 public class EventRefHandler extends AbstractBuiltInHandler {
 
@@ -99,11 +98,7 @@ public class EventRefHandler extends AbstractBuiltInHandler {
     }
 
 	private EventGVO getEvent(EventRefGVO eventRefGVO, String appId, String windowId) {
-    	UIGVO applicationGVO = EventHandler.getInstance().getApplication(appId);
-        if (applicationGVO == null) {
-            return null;
-        }
         String eventId = eventRefGVO.getEventId();
-        return EventHandler.getInstance().getEvent(eventId, windowId, applicationGVO);
+        return EventHandler.getInstance().getEvent(eventId, windowId, appId);
     }
 }

@@ -26,6 +26,7 @@ public class ParameterGVO implements IsSerializable {
 	private String value;
 	private String reference;
     private String source;
+    private String expression;
     private List<ParameterGVO> placeHolders = new ArrayList<ParameterGVO>();
 	
 	public ParameterGVO(){}
@@ -40,6 +41,10 @@ public class ParameterGVO implements IsSerializable {
 	    setReference(reference);
 	    setSource(source);
     }
+	
+	public ParameterGVO(String expression) {
+		setExpression(expression);
+	}
 	
 	public String getName() {
 		return name;
@@ -73,6 +78,19 @@ public class ParameterGVO implements IsSerializable {
         this.source = source;
     }
 
+	/**
+	 * @return the expression
+	 */
+	public String getExpression() {
+		return expression;
+	}
+
+	/**
+	 * @param expression the expression to set
+	 */
+	public void setExpression(String expression) {
+		this.expression = expression;
+	}
     
     public List<ParameterGVO> getPlaceHolders() {
         return placeHolders;
@@ -86,6 +104,4 @@ public class ParameterGVO implements IsSerializable {
     public void addPlaceHolder(ParameterGVO placeHolder){
         placeHolders.add(placeHolder);
     }
-    
-    
 }

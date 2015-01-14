@@ -13,17 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.qualogy.qafe.gwt.client.storage;
+package com.qualogy.qafe.gwt.client.vo.functions;
 
+import java.util.List;
 
-public interface DataStorage {
+public class IfGVO extends AbstractSelectionItemGVO {
 
-	String KEY_ERROR_MESSAGE = "$ERROR_MESSAGE";
+	public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.IfGVO";
 	
-    void storeData(String dataId, String name, Object data);
-    void removeData(String dataId);
-    void removeData(String dataId, String name);
-    Object getData(String dataId, String name);
-    String register();
-    void unregister(String dataId);
+	/**
+	 * Gets all event items for the True case
+	 * 
+	 * @return the event items for the True case
+	 */
+	public List<BuiltInFunctionGVO> getEventItems(boolean value) {
+		return super.getEventItems(Boolean.toString(value));
+	}
+	
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
+	}
 }

@@ -31,6 +31,7 @@ import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
+import com.qualogy.qafe.gwt.client.util.JNSIUtil;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
@@ -55,15 +56,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         if (parameterGVO == null) {
             return value;
         }
-
-        Map<String, Object> placeHolderValues = new HashMap<String, Object>();
-
-        if (parameterGVO.getPlaceHolders() != null && !parameterGVO.getPlaceHolders().isEmpty()) {
-            for (ParameterGVO placeholder : parameterGVO.getPlaceHolders()) {
-                Object placeHolderValue = getValue(sender, placeholder, appId, windowId, eventSessionId);
-                placeHolderValues.put(placeholder.getName(), placeHolderValue);
-            }
-        }
+        Map<String, Object> placeHolderValues = resolvePlaceholderValues(parameterGVO, sender, appId, windowId, eventSessionId);
 
         value = getValue(sender, parameterGVO, appId, windowId, eventSessionId, placeHolderValues);
 
@@ -217,6 +210,17 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
 
     // CHECKSTYLE.ON: CyclomaticComplexity
+    
+    protected Map<String, Object> resolvePlaceholderValues(ParameterGVO parameterGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
+		Map<String, Object> placeHolderValues = new HashMap<String, Object>();
+        if (parameterGVO.getPlaceHolders() != null && !parameterGVO.getPlaceHolders().isEmpty()) {
+            for (ParameterGVO placeholder : parameterGVO.getPlaceHolders()) {
+                Object placeHolderValue = getValue(sender, placeholder, appId, windowId, eventSessionId);
+                placeHolderValues.put(placeholder.getName(), placeHolderValue);
+            }
+        }
+        return placeHolderValues;
+	}
 
     protected String resolveVariables(String name, Map<String, Object> placeHolderValues,
             String eventSessionId) {
@@ -275,8 +279,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 	}
 	
     protected void storeData(String dataId, String name, Object data) {
-        getDataStorage().storeData(dataId, name, data);
-        log(dataId, name, data);
+    	EventHandler.getInstance().storeData(dataId, name, data);
     }
 
     protected Object getData(String dataId, String name) {
@@ -377,14 +380,6 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     	return AnyComponentRenderer.getInstance().render(componentGVO, eventSessionId, windowId, appId);    	
     }
     
-    protected void log(String dataId, String name, Object data) {
-    	String logMessage = "dataId=" + dataId + " - " + name;
-    	if (data != null) {
-    		logMessage += "=" + data.toString();
-    	}
-        log(logMessage);
-    }
-    
     protected void log(String message) {
         log("Error occured", message);
     }
@@ -452,6 +447,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     
     protected void showMessage(String title, String message, Throwable exception) {
     	EventHandler.getInstance().showMessage(title, message, exception);
+    }
+    
+    protected String evaluateExpression(String expression) {
+    	return JNSIUtil.evaluateExpression(expression);
     }
     
     protected abstract BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
