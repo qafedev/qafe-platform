@@ -26,6 +26,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.util.StyleDomUtil;
 import com.qualogy.qafe.web.util.SessionContainer;
 
+@Deprecated
 public class LogFunctionEventRenderer extends AbstractEventRenderer implements
 		EventAssembler {
 

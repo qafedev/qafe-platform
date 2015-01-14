@@ -319,7 +319,16 @@ public class EventHandler {
     }
     
     public void log(String message) {
-        ClientApplicationContext.getInstance().log(message);
+        log("Log", message);
+        
+    }
+    
+    public void log(String title, String message) {
+        log("Log", message, false);
+    }
+    
+    public void log(String title, String message, boolean alert) {
+        ClientApplicationContext.getInstance().log(title, message, alert);
     }
     
     public DataStorage getDataStorage() {

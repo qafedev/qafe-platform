@@ -23,6 +23,7 @@ import com.qualogy.qafe.gwt.client.factory.WindowFactory;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 
+@Deprecated
 public class OpenWindowExecute implements ExecuteCommand {
 
     // CHECKSTYLE.OFF: CyclomaticComplexity
