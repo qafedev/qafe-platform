@@ -16,6 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.data;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -27,19 +28,15 @@ public class GEventItemDataObject implements IsSerializable {
      */
     private static final long serialVersionUID = 838163633554889279L;
     
-    private HashMap<String, Object> outputValues = new HashMap<String, Object>();
+    private Map<String, Object> outputValues = new HashMap<String, Object>();
 
     
-    public final HashMap<String, Object> getOutputValues() {
+    public final Map<String, Object> getOutputValues() {
         return outputValues;
     }
 
-    
-    public final void setOutputValues(final HashMap<String, Object> outputValues) {
+    public final void setOutputValues(final Map<String, Object> outputValues) {
         this.outputValues = outputValues;
     }
-    
-    
-    
 }
 

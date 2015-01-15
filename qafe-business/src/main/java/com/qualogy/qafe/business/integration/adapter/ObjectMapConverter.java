@@ -18,9 +18,12 @@ package com.qualogy.qafe.business.integration.adapter;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +57,14 @@ public class ObjectMapConverter {
 	
 	public static final String KEYWORD_FQN = "fqn";
 	
+	public static final String OPTION_SERIALIZABLE_OBJECTS = "serializableObjects";
+	
+	public static final String OPTION_MAP_CREATION = "mapCreation";
+	
+	public static Object convert(Object object) {
+		return convert(object, new HashSet<String>());
+	}
+	
 	/**
 	 * Method to convert a given object into a map. The given object
 	 * cannot be of type Collection or an Array of objects. 
@@ -69,14 +80,14 @@ public class ObjectMapConverter {
 	 * 			array of objects
 	 * @return map - the object converted to a Map
 	 */
-	public static Object convert(Object object){
+	public static Object convert(Object object, Set<String> options){
 		Object converted = null;
 		if(object instanceof Map){
-			converted = convertMap((Map)object, new HashSet());
+			converted = convertMap((Map)object, new HashSet(), options);
 		}else if(object instanceof Collection || object instanceof Object[]){
-			converted =  convertObject(object,new HashSet());
+			converted =  convertObject(object,new HashSet(), options);
 		}else if(object != null && !PredefinedClassTypeConverter.isPredefined(object.getClass())){
-			converted = (Map)convertObject(object, new HashSet());
+			converted = (Map)convertObject(object, new HashSet(), options);
 		}
 		return converted;
 	}
@@ -138,22 +149,23 @@ public class ObjectMapConverter {
 	/**
 	 * Method to convert an object to a Map. 
 	 * @param object
+	 * @param options TODO
 	 * @return
 	 */
 	
-	private static Object convertObject(Object object, Set entries){
+	private static Object convertObject(Object object, Set entries, Set<String> options){
 		Object converted = null;
 		if (object instanceof Object[]) {
 			object = Arrays.asList((Object[])object);
 		}
 		if(object instanceof Map){
-			converted = convertMap((Map)object, entries);
+			converted = convertMap((Map)object, entries, options);
 		} else if (object instanceof Collection){
 			converted = object;
 			List convertedItems = new ArrayList();
 			for (Iterator iter = ((Collection)converted).iterator(); iter.hasNext();) {
 				// 	QAFEPLATFORM-88 - The converted items were not collected and returned previously. 
-				Object convertedItem = convertObject((Object) iter.next(), entries);
+				Object convertedItem = convertObject((Object) iter.next(), entries, options);
 				if (convertedItem != null) {
 					convertedItems.add(convertedItem);
 				}
@@ -161,7 +173,7 @@ public class ObjectMapConverter {
 			converted = convertedItems;
 		} else if (object != null){
 //			converted = getFieldsFromObject(new CaseInsensitiveMap(), entries, object.getClass(), object);
-			converted = getFieldsFromObject(new DataMap(), entries, object.getClass(), object);
+			converted = getFieldsFromObject(new DataMap(), entries, object.getClass(), object, options);
 		}
 		return converted;
 	}
@@ -173,13 +185,14 @@ public class ObjectMapConverter {
 	 * as well, it will be converted as well.
 	 * 
 	 * Note: Ignores fields from java.lang
+	 * @param options TODO
 	 */
-	private static Map<String, Object> getFieldsFromObject(Map<String, Object> converted, Set<Object> entries, Class clazz, Object object){
+	private static Map<String, Object> getFieldsFromObject(Map<String, Object> converted, Set<Object> entries, Class clazz, Object object, Set<String> options){
 		if(OBJECT_CLASS.equals(object.getClass()))
 			return converted;
 		
 		if(clazz.getSuperclass() != null && clazz.getSuperclass() != OBJECT_CLASS) {
-			converted = getFieldsFromObject(converted, entries, clazz.getSuperclass(), object);
+			converted = getFieldsFromObject(converted, entries, clazz.getSuperclass(), object, options);
 		}
 		
 		Field[] fields = clazz.getDeclaredFields();
@@ -199,9 +212,9 @@ public class ObjectMapConverter {
 			if(entries.add(uniqueEntryIdentifier)){// ???? not already contains, to prevent from statics to be included more than once, raising a stackoverflow
 				// 	QAFEPLATFORM-88 - java.util collections were also excluded previously.- now added check for Collection
 				if ((value instanceof Collection) || ((value != null) && !PredefinedClassTypeConverter.isPredefined(value.getClass()) && !hasExcludedPackage(value.getClass()))) {
-					value = convertObject(value, entries);
+					value = convertObject(value, entries, options);
 				} else if (value instanceof Map) {
-					value = convertMap((Map)value, entries);
+					value = convertMap((Map)value, entries, options);
 				}
 			}
 			converted.put(fields[i].getName(), value);
@@ -223,9 +236,15 @@ public class ObjectMapConverter {
 	 * Method to convert nested objects within a Map.
 	 * TODO: necessary?
 	 * @param object
+	 * @param options TODO
 	 * @return
 	 */	
-	private static Map<String, Object> convertMap(Map object, Set entries){
+	private static Map<String, Object> convertMap(Map object, Set entries, Set<String> options){
+		Map newObject = object;
+		if (options.contains(OPTION_MAP_CREATION)) {
+			newObject = new HashMap();
+		}
+		
 		Set keys = object.keySet();
 		for (Iterator iter = keys.iterator(); iter.hasNext();) {
 			Object tempKey = iter.next();
@@ -233,11 +252,27 @@ public class ObjectMapConverter {
 				String key = tempKey.toString();
 				Object value = object.get(key);
 				if(value != null && !PredefinedClassTypeConverter.isPredefined(value.getClass()) && !hasExcludedPackage(value.getClass())){
-					value = convertObject(value, entries);
+					value = convertObject(value, entries, options);
 				}
-				object.put(key, value);
+				
+				if (options.contains(OPTION_SERIALIZABLE_OBJECTS)) {
+					value = convertToSerializableObject(value);	
+				}
+				
+				newObject.put(key, value);
 			}
 		}
-		return object;
+		return newObject;
+	}
+
+	private static Object convertToSerializableObject(Object value) {
+		if (value instanceof BigDecimal) {
+			String stringValue = ((BigDecimal)value).toString();
+			value = Long.valueOf(stringValue);
+		} else if (value instanceof BigInteger) {
+			String stringValue = ((BigInteger)value).toString();
+			value = Long.valueOf(stringValue);
+		}
+		return value;
 	}
 }

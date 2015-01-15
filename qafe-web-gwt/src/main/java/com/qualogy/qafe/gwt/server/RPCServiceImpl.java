@@ -520,12 +520,7 @@ public class RPCServiceImpl
             EventItemProcessor eventItemProcessor = new EventItemProcessorImpl(); 
             Map<String, Object> outputValues = eventItemProcessor.execute(eventItem);
             GEventItemDataObject gEventItemDataObject = new GEventItemDataObject();            
-            //We are iterating the result and creating a new HashMap object because of GWT exception is passing this value directly. 
-            HashMap<String, Object> copyOfoutputValues = new HashMap<String, Object>();             
-            for(String key : outputValues.keySet()) {
-                copyOfoutputValues.put(key, outputValues.get(key));
-            }
-            gEventItemDataObject.setOutputValues(copyOfoutputValues);
+            gEventItemDataObject.setOutputValues(outputValues);
             stopWatch.stop();    
             return gEventItemDataObject;
         }  catch (Exception e) {
