@@ -59,8 +59,6 @@ public class ObjectMapConverter {
 	
 	public static final String OPTION_SERIALIZABLE_OBJECTS = "serializableObjects";
 	
-	public static final String OPTION_MAP_CREATION = "mapCreation";
-	
 	public static Object convert(Object object) {
 		return convert(object, new HashSet<String>());
 	}
@@ -241,7 +239,7 @@ public class ObjectMapConverter {
 	 */	
 	private static Map<String, Object> convertMap(Map object, Set entries, Set<String> options){
 		Map newObject = object;
-		if (options.contains(OPTION_MAP_CREATION)) {
+		if (options.contains(OPTION_SERIALIZABLE_OBJECTS)) {
 			newObject = new HashMap();
 		}
 		

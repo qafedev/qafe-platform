@@ -63,7 +63,6 @@ public class BusinessActionRefHandler {
             final DataIdentifier dataId) {
         Map<String, Object> outputValues = new HashMap<String, Object>();
         Set<String> options = new HashSet<String>();
-        options.add(ObjectMapConverter.OPTION_MAP_CREATION);
         options.add(ObjectMapConverter.OPTION_SERIALIZABLE_OBJECTS);
         for(String key : businessActionItemDataObject.getOutputVariables()) {
             Object value = DataStore.getValue(dataId, key);

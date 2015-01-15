@@ -15,20 +15,20 @@
  */
 package test.com.qualogy.qafe.business.integration.adapter;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
-import test.com.qualogy.qafe.business.integration.adapter.SomeObject.SomeOtherObject;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
-import com.qualogy.qafe.bind.commons.type.Out;
-import com.qualogy.qafe.business.integration.adapter.Adapter;
+import org.springframework.util.LinkedCaseInsensitiveMap;
+
 import com.qualogy.qafe.business.integration.adapter.ObjectMapConverter;
-import com.qualogy.qafe.core.datastore.DataIdentifier;
-import com.qualogy.qafe.core.datastore.DataStore;
 
 public class ObjectToMapConverterTest extends TestCase {
 	public class SuperTestObject{
@@ -125,5 +125,32 @@ public class ObjectToMapConverterTest extends TestCase {
 	public void testNull(){
 		Object map = ObjectMapConverter.convert(null);
 		assertNull(map);
+	}
+	
+	public void testConvertOptions() {
+		BigInteger bigInteger = BigInteger.valueOf(10);
+		BigDecimal bigDecimal = BigDecimal.valueOf(20);
+		Map<String, Object> map = new LinkedCaseInsensitiveMap<Object>();
+		Set<String> options = new HashSet<String>();
+		options.add(ObjectMapConverter.OPTION_SERIALIZABLE_OBJECTS);
+		
+		String bigIntegerName = "bi";
+		String bigDecimalName = "bc";
+		map.put(bigIntegerName, bigInteger);
+		map.put(bigDecimalName, bigDecimal);
+		
+		Object resultOptionsMap = ObjectMapConverter.convert(map, options);
+		assertFalse("Map is an instance of LinkedCaseInsensitiveMap", resultOptionsMap instanceof LinkedCaseInsensitiveMap);
+		assertTrue("Map is not an instance of HashMap", resultOptionsMap instanceof HashMap);
+
+		@SuppressWarnings("unchecked")
+		Map<String, Object> resultOptionHashMap = (Map<String, Object>) resultOptionsMap;
+		Object bigIntegerObject = resultOptionHashMap.get(bigIntegerName);
+		Object bigDecimalObject = resultOptionHashMap.get(bigDecimalName);
+		
+		assertTrue("Big Integer object is not a Long", bigIntegerObject instanceof Long);
+		assertTrue("Big Decimal object is not a Long", bigDecimalObject instanceof Long);
+		assertEquals("Big Integer object is not properly converted", bigIntegerObject, 10L);
+		assertEquals("Big Decimal object is not properly converted", bigDecimalObject, 20L);
 	}
 }
