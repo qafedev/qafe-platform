@@ -147,7 +147,7 @@ public class ObjectMapConverter {
 	/**
 	 * Method to convert an object to a Map. 
 	 * @param object
-	 * @param options TODO
+	 * @param options
 	 * @return
 	 */
 	
@@ -183,7 +183,7 @@ public class ObjectMapConverter {
 	 * as well, it will be converted as well.
 	 * 
 	 * Note: Ignores fields from java.lang
-	 * @param options TODO
+	 * @param options
 	 */
 	private static Map<String, Object> getFieldsFromObject(Map<String, Object> converted, Set<Object> entries, Class clazz, Object object, Set<String> options){
 		if(OBJECT_CLASS.equals(object.getClass()))
@@ -234,7 +234,7 @@ public class ObjectMapConverter {
 	 * Method to convert nested objects within a Map.
 	 * TODO: necessary?
 	 * @param object
-	 * @param options TODO
+	 * @param options
 	 * @return
 	 */	
 	private static Map<String, Object> convertMap(Map object, Set entries, Set<String> options){
@@ -266,10 +266,11 @@ public class ObjectMapConverter {
 	private static Object convertToSerializableObject(Object value) {
 		if (value instanceof BigDecimal) {
 			String stringValue = ((BigDecimal)value).toString();
-			value = Long.valueOf(stringValue);
-		} else if (value instanceof BigInteger) {
+			return Long.valueOf(stringValue);
+		} 
+		if (value instanceof BigInteger) {
 			String stringValue = ((BigInteger)value).toString();
-			value = Long.valueOf(stringValue);
+			return Long.valueOf(stringValue);
 		}
 		return value;
 	}

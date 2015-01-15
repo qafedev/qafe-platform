@@ -69,13 +69,6 @@ public class BusinessActionRefHandler {
             value = ObjectMapConverter.convert(value, options);
             outputValues.put(key, value);
         }
-        
-        //This is to make sure the inout values can be used in the rest of the event.
-        for(String key : businessActionItemDataObject.getInputValues().keySet()) {
-            Object value = DataStore.getValue(dataId, key);
-            outputValues.put(key, value);
-        }
-        
         return outputValues;
     }
 

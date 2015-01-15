@@ -45,10 +45,12 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
         executeBuiltInServerSide(sender, listenerType, mouseInfo, eventItemDataGVO
         		, appId, windowId, eventSessionId);
 
+        storeInputValues(inputValues, eventSessionId);
+        
         return BuiltInState.SUSPEND;
     }
 
-    private Map<String, Object> collectInputValues(final UIObject sender, final String appId,
+	private Map<String, Object> collectInputValues(final UIObject sender, final String appId,
             final String windowId, final String eventSessionId, BusinessActionRefGVO businessActionRefGVO) {
         Map<String, Object> inputValues = new HashMap<String, Object>();
         for (ParameterGVO parameterGVO : businessActionRefGVO.getInputParameters()) {
@@ -67,4 +69,11 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
         }
         return outputVariables;
     }
+    
+    private void storeInputValues(Map<String, Object> inputValues, String eventSessionId) {
+    	for (String key : inputValues.keySet()) {
+    		Object value = inputValues.get(key);
+			storeData(eventSessionId, key, value);
+		}
+	}
 }

@@ -127,6 +127,11 @@ public class ObjectToMapConverterTest extends TestCase {
 		assertNull(map);
 	}
 	
+	/**
+	 * OJDBC gives back a result set containing a list of LinkedCaseInsensitiveMaps.
+	 * Inside that Map, BigDecimal and BigInteger are used as a representation of a number.
+	 * LinkedCaseInsensitiveMap, BigDecimal and bigInteger are not serializable to be send to the client-side.
+	 */
 	public void testConvertOptions() {
 		BigInteger bigInteger = BigInteger.valueOf(10);
 		BigDecimal bigDecimal = BigDecimal.valueOf(20);
