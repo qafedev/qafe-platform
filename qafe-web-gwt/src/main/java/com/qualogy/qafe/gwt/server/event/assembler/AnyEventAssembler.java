@@ -72,11 +72,13 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(Return.class, new ReturnAssembler());
         ASSEMBLER_MAP.put(Copy.class, new CopyAssembler());
         ASSEMBLER_MAP.put(ChangeStyle.class, new ChangeStyleAssembler());
+        ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
         ASSEMBLER_MAP.put(ErrorHandler.class, new ErrorHandlerAssembler());
         ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {
+        EventGVO eventGVO = null;
         if (event == null) {
             return null;
         }
