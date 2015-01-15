@@ -15,18 +15,17 @@
  */
 package com.qualogy.qafe.gwt.client.vo.functions;
 
+import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
+
+
 public class SetPropertyGVO extends BuiltInFunctionGVO {
     
-    public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO";
+    public final static String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO";
     
 	private String property;
 	private String value;
+	private ParameterGVO parameter;
 	
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
-
 	public String getProperty() {
 		return property;
 	}
@@ -34,12 +33,25 @@ public class SetPropertyGVO extends BuiltInFunctionGVO {
 	public void setProperty(String property) {
 		this.property = property;
 	}
+    
+    public String getValue() {
+        return value;
+    }
+    
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public ParameterGVO getParameter() {
+        return parameter;
+    }
+    
+    public void setParameter(ParameterGVO parameter) {
+        this.parameter = parameter;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    @Override
+    public String getClassName() {
+        return CLASS_NAME;
+    }
 }

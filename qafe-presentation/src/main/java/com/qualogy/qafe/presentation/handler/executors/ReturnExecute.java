@@ -28,6 +28,7 @@ import com.qualogy.qafe.core.framework.presentation.EventData;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
+@Deprecated
 public class ReturnExecute extends AbstractEventItemExecute implements ExecuteEventItem {
 
 	public boolean execute(EventItem eventItem,ApplicationContext context, Event event, EventData eventData,Collection<BuiltInFunction> listToExecute,EventHandlerImpl eventHandler,DataIdentifier dataId) throws ExternalException {

@@ -26,6 +26,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
+import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
@@ -380,7 +381,15 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
     
     protected void log(String message) {
-        EventHandler.getInstance().log(message);
+        log("Error occured", message);
+    }
+    
+    protected void log(String title, String message) {
+        log(title, message, false);
+    }
+    
+    protected void log(String title, String message, boolean alert) {
+        EventHandler.getInstance().log(title, message, alert);
     }
     
     protected void executeBuiltInServerSide(UIObject sender, String listenerType, Map<String, String> mouseInfo

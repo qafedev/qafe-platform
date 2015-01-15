@@ -36,6 +36,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClearGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
 
+@Deprecated
 public class ClearExecute implements ExecuteCommand {
 	
 	public void execute(BuiltInFunctionGVO builtInFunction) {
