@@ -22,7 +22,6 @@ import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 
-@Deprecated
 public class LogFunctionExecute implements ExecuteCommand {
 
 	public void execute(BuiltInFunctionGVO builtInFunction) {

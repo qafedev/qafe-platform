@@ -430,10 +430,6 @@ public class ClientApplicationContext implements HasResultHandlers {
 	public void log(String message) {
 		log("log", message, false);
 	}
-	
-	public void log(String message, boolean alert) {
-	    log("log", message, alert);
-	}
 
 	public void log(String title, String message, boolean alert) {
 		log(title, message, alert, false, null);

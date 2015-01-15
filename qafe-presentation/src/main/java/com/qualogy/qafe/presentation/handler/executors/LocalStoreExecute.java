@@ -36,7 +36,6 @@ import com.qualogy.qafe.core.framework.presentation.EventData;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
-@Deprecated
 public class LocalStoreExecute extends AbstractEventItemExecute implements ExecuteEventItem {
 	public final static Logger logger = Logger.getLogger(LocalStoreExecute.class.getName());
 

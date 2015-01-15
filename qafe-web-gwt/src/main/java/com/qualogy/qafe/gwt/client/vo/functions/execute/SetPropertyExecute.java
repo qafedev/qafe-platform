@@ -50,12 +50,10 @@ import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.ui.renderer.TabPanelRenderer;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
-import com.qualogy.qafe.gwt.client.util.QAMLUtil;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO;
 
-@Deprecated
 public class SetPropertyExecute extends AbstractBuiltInExecute implements ExecuteCommand {
 
 	public static final String MENU = "@menu";
@@ -281,21 +279,13 @@ public class SetPropertyExecute extends AbstractBuiltInExecute implements Execut
 			}
 		} else if (QAMLConstants.PROPERTY_HEIGHT.equals(setProperty.getProperty())) {
 			try {
-			    String height = setProperty.getValue();
-	            if (!QAMLUtil.containsUnitIdentifier(height)) {
-	                height += QAMLUtil.DEFAULT_UNIT;
-	            }
-				uiObject.setHeight(height);
+				uiObject.setHeight(setProperty.getValue());
 			} catch (Exception e) {
 				ClientApplicationContext.getInstance().log("Set Property on height failed", "Please check value of height (" + setProperty.getValue() + ")", true);
 			}
 		} else if (QAMLConstants.PROPERTY_WIDTH.equals(setProperty.getProperty())) {
 			try {
-			    String width = setProperty.getValue();
-	            if (!QAMLUtil.containsUnitIdentifier(width)) {
-	                width += QAMLUtil.DEFAULT_UNIT;
-	            }
-				uiObject.setWidth(width);
+				uiObject.setWidth( setProperty.getValue());
 			} catch (Exception e) {
 				ClientApplicationContext.getInstance().log("Set Property on width failed", "Please check value of width (" + setProperty.getValue() + ")", true);
 			}

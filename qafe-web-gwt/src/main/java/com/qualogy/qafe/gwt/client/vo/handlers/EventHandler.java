@@ -405,16 +405,7 @@ public class EventHandler {
     }
     
     public void log(String message) {
-        log("Log", message);
-        
-    }
-    
-    public void log(String title, String message) {
-        log("Log", message, false);
-    }
-    
-    public void log(String title, String message, boolean alert) {
-        ClientApplicationContext.getInstance().log(title, message, alert);
+        ClientApplicationContext.getInstance().log(message);
     }
     
     public void storeData(String dataId, String name, Object data) {

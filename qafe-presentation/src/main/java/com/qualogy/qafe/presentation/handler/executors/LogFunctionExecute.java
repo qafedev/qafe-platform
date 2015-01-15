@@ -32,7 +32,6 @@ import com.qualogy.qafe.core.framework.presentation.EventData;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
-@Deprecated
 public class LogFunctionExecute extends AbstractEventItemExecute implements
 		ExecuteEventItem {
 

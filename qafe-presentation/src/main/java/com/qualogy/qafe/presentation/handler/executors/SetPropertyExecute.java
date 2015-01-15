@@ -36,7 +36,6 @@ import com.qualogy.qafe.core.placeholder.PlaceHolderResolver;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
-@Deprecated
 public class SetPropertyExecute extends AbstractEventItemExecute implements
 		ExecuteEventItem {
 
