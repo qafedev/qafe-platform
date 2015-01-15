@@ -78,7 +78,6 @@ public class AnyEventAssembler {
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {
-        EventGVO eventGVO = null;
         if (event == null) {
             return null;
         }
