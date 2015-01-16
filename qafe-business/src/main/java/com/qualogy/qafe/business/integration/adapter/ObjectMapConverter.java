@@ -79,7 +79,7 @@ public class ObjectMapConverter {
 	 * @return map - the object converted to a Map
 	 */
 	public static Object convert(Object object, Set<String> options){
-		Object converted = null;
+		Object converted = object;
 		if(object instanceof Map){
 			converted = convertMap((Map)object, new HashSet(), options);
 		}else if(object instanceof Collection || object instanceof Object[]){
