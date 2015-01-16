@@ -42,6 +42,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.EventRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.FocusGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.IfGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.IterationGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
@@ -90,6 +91,7 @@ public class EventHandler {
         BUILTIN_MAP.put(CopyGVO.CLASS_NAME, new CopyHandler());
         BUILTIN_MAP.put(ChangeStyleGVO.CLASS_NAME, new ChangeStyleHandler());
         BUILTIN_MAP.put(SetPropertyGVO.CLASS_NAME, new SetPropertyHandler());
+        BUILTIN_MAP.put(IterationGVO.CLASS_NAME, new IterationHandler());
     }
 
     public static EventHandler getInstance() {
@@ -145,9 +147,9 @@ public class EventHandler {
 		while (!builtIns.isEmpty()) {
 			Object builtIn = builtIns.poll();
 			try {
-                if (builtIn == BuiltInMarker.EXIT_POINT) {
-                    continue;
-                }
+				if (!canProcess(builtIn)) {
+					continue;
+				}
 
 				// Meant for logging the execution of built-ins
 				Map<String, Object> processingBuiltIns = processingBuiltInsMap.get(eventSessionId);
@@ -218,6 +220,16 @@ public class EventHandler {
     }
     // CHECKSTYLE.ON: CyclomaticComplexity
 
+    private boolean canProcess(Object builtIn) {
+    	if (builtIn == BuiltInMarker.EXIT_POINT) {
+    		return false;
+        }
+    	if (builtIn instanceof ErrorHandlerGVO) {
+    		return false;
+        }
+		return true;
+	}
+    
 	/**
 	 * Handles exiting an event caused by a return built in by
 	 * removing built ins until an exit point is hit. 
@@ -277,7 +289,8 @@ public class EventHandler {
     		, final String appId, final String windowId, final String eventSessionId) {
         Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
 		if ((builtInsStack == null) || builtInsStack.isEmpty()) {
-			String title = "Fail to execute " + currentBuiltIn;
+			String builtInShortenName = getShortenName(currentBuiltIn);
+			String title = "Fail to execute " + builtInShortenName;
 	        String message = exception.getMessage();
 	        showMessage(title, message, exception);
 	        cleanup(eventSessionId);
@@ -388,11 +401,13 @@ public class EventHandler {
     
     public void log(String action, UIObject sender, String listenerType, Map<String, String> mouseInfo
 			, BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
+    	String builtInShortenName = getShortenName(builtInGVO);
+    	String componentId = getComponentId(sender);
     	StringBuffer logMessage = new StringBuffer();
-    	logMessage.append(action + " Built-In [" + builtInGVO + "]");
-    	logMessage.append(": Sender=" + sender + " -- ListenerType=" + listenerType);
-    	logMessage.append(" -- MouseInfo=" + mouseInfo);
-    	logMessage.append(" -- AppId=" + appId + " -- WindowId=" + windowId);
+    	logMessage.append(action + " Built-In [" + builtInShortenName + "]");
+    	logMessage.append(": Sender=" + componentId + " - ListenerType=" + listenerType);
+    	logMessage.append(" - WindowId=" + windowId + " - AppId=" + appId);
+    	logMessage.append(" - MouseInfo=" + mouseInfo);
         log(logMessage.toString());
     }
 
@@ -425,6 +440,18 @@ public class EventHandler {
     public DataStorage getDataStorage() {
         return ClientApplicationContext.getInstance().getDataStorage();
     }
+
+    public String getShortenName(Object builtIn) {
+    	if (builtIn == null) {
+    		return null;
+    	}
+    	String shortenName = builtIn.toString();
+    	int dotIndex = shortenName.lastIndexOf(".");
+    	if (dotIndex > -1) {
+    		shortenName = shortenName.substring(dotIndex + 1);
+    	}
+    	return shortenName;
+    }
     
     private String getAppId(final UIObject sender) {
         return RendererHelper.getComponentContext(sender);
@@ -432,6 +459,10 @@ public class EventHandler {
 
     private String getWindowId(final UIObject sender) {
         return RendererHelper.getParentComponent(sender);
+    }
+    
+    private String getComponentId(final UIObject sender) {
+        return RendererHelper.getComponentId(sender);
     }
     
     private void cleanup(String eventSessionId) {

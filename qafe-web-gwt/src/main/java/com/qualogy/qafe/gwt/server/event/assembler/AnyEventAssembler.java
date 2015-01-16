@@ -23,11 +23,11 @@ import com.qualogy.qafe.bind.business.action.BusinessActionRef;
 import com.qualogy.qafe.bind.commons.error.ErrorHandler;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.core.statement.IfStatement;
+import com.qualogy.qafe.bind.core.statement.Iteration;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.Clear;
-import com.qualogy.qafe.bind.presentation.event.function.ChangeStyle;
 import com.qualogy.qafe.bind.presentation.event.function.ClosePanel;
 import com.qualogy.qafe.bind.presentation.event.function.CloseWindow;
 import com.qualogy.qafe.bind.presentation.event.function.Copy;
@@ -75,6 +75,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
         ASSEMBLER_MAP.put(ErrorHandler.class, new ErrorHandlerAssembler());
         ASSEMBLER_MAP.put(SetProperty.class, new SetPropertyAssembler());
+        ASSEMBLER_MAP.put(Iteration.class, new IterationAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {
