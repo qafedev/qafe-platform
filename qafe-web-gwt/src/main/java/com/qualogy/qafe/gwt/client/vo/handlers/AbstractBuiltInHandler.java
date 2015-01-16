@@ -26,7 +26,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
-import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
@@ -56,14 +55,16 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         if (parameterGVO == null) {
             return value;
         }
+
         Map<String, Object> placeHolderValues = resolvePlaceholderValues(parameterGVO, sender, appId, windowId, eventSessionId);
-
         value = getValue(sender, parameterGVO, appId, windowId, eventSessionId, placeHolderValues);
-
+        if (value instanceof DataContainerGVO) {
+        	value = DataContainerGVO.createType((DataContainerGVO)value);	
+        }
         return value;
     }
 
-    protected final Object getValue(final UIObject sender, final ParameterGVO parameterGVO,
+    private final Object getValue(final UIObject sender, final ParameterGVO parameterGVO,
             final String appId, final String windowId, final String eventSessionId,
             final Map<String, Object> placeHolderValues) {
         Object value = null;
@@ -452,6 +453,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     protected String evaluateExpression(String expression) {
     	return JNSIUtil.evaluateExpression(expression);
     }
+    
+    protected String getShortenName(Object builtIn) {
+    	return EventHandler.getInstance().getShortenName(builtIn);
+	}
     
     protected abstract BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
 			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
