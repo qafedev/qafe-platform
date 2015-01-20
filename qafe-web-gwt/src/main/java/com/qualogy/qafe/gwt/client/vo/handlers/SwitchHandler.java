@@ -18,13 +18,14 @@ package com.qualogy.qafe.gwt.client.vo.handlers;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.IfGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.SwitchGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
-public class IfHandler extends AbstractBuiltInHandler {
+public class SwitchHandler extends AbstractBuiltInHandler {
 
 	/**
 	 * 
@@ -34,25 +35,42 @@ public class IfHandler extends AbstractBuiltInHandler {
 			Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO,
 			String appId, String windowId, String eventSessionId,
 			Queue derivedBuiltIns) {
-		IfGVO ifGVO = (IfGVO) builtInGVO;
-		handleIf(ifGVO, sender, appId, windowId, eventSessionId, derivedBuiltIns);
+		SwitchGVO switchGVO = (SwitchGVO) builtInGVO;
+		handleSwitch(switchGVO, sender, appId, windowId, eventSessionId, derivedBuiltIns);
 		return BuiltInState.EXECUTED;
 	}
 	
 	/**
 	 * 
-	 * @param ifGVO
+	 * @param switchGVO
 	 * @param sender
 	 * @param appId
 	 * @param windowId
 	 * @param eventSessionId
 	 */
 	@SuppressWarnings("unchecked")
-	private void handleIf(IfGVO ifGVO, UIObject sender, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
-		ParameterGVO expression = ifGVO.getExpression();
+	private void handleSwitch(SwitchGVO switchGVO, UIObject sender, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+		ParameterGVO expression = switchGVO.getExpression();
 		String result = (String) getValue(sender, expression, appId, windowId, eventSessionId);
-		boolean bool = Boolean.valueOf(result);
-		Collection<BuiltInFunctionGVO> eventItems = ifGVO.getEventItems(bool);
+		Collection<BuiltInFunctionGVO> eventItems = null;
+		
+		Set<Object> selectionCases = switchGVO.getSelectionCases();
+		for (Object selectionCase : selectionCases) {
+			Object value = selectionCase;
+			if (selectionCase instanceof ParameterGVO) {
+				value = getValue(sender, (ParameterGVO)selectionCase, appId, windowId, eventSessionId);
+			}
+			if (value == null) {
+				continue;
+			}
+			if (value.equals(result)) {
+				eventItems = switchGVO.getEventItems(selectionCase);
+				break;
+			}
+		}
+		if (eventItems == null) {
+			eventItems = switchGVO.getDefaultEventItems();
+		}
 		if (eventItems != null) {
 			derivedBuiltIns.addAll(eventItems);
 		}

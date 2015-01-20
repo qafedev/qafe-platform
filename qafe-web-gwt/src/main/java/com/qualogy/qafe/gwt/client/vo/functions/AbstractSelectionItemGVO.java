@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
@@ -46,6 +47,10 @@ public abstract class AbstractSelectionItemGVO extends BuiltInFunctionGVO {
 			selectionItems.put(selectionCase, new ArrayList<BuiltInFunctionGVO>());
 		}
 		selectionItems.get(selectionCase).add(eventItem);
+	}
+	
+	public Set<Object> getSelectionCases() {
+		return selectionItems.keySet();
 	}
 
 	/**

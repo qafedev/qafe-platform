@@ -92,6 +92,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                     value = getData(dataId, reference);
                 }
             }
+        } else if (parameterGVO.getExpression() != null) {
+        	String expr = parameterGVO.getExpression();
+        	expr = resolveExpression(expr, placeHolderValues, eventSessionId);
+        	value = evaluateExpression(expr);
         }
         return value;
     }
@@ -211,6 +215,42 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
 
     // CHECKSTYLE.ON: CyclomaticComplexity
+    
+    /**
+	 * 
+	 * @param name
+	 * @param placeHolderValues
+	 * @param eventSessionId
+	 * @return
+	 */
+	protected String resolveExpression(String name, Map<String, Object> placeHolderValues,
+            String eventSessionId) {
+
+        while (name != null && name.contains("${")) {
+            String varName = name.substring(name.indexOf("{") + 1, name.indexOf("}"));
+            Object value = null;
+            if (placeHolderValues != null && placeHolderValues.containsKey(varName)) {
+                value = placeHolderValues.get(varName);
+            } else {
+                value = getData(eventSessionId, varName);
+            }
+            if (value == null) {
+                value = "null";
+            } else {
+            	if (value instanceof DataContainerGVO) {
+            		value = DataContainerGVO.createType((DataContainerGVO) value);
+            	}  
+            	if (value instanceof String) {
+            		value = "'" + value + "'";
+            	} else if (value instanceof Boolean) {
+                	boolean bool = (Boolean) value;
+                	value = bool ? "True" : "False";		
+                }
+            }
+            name = name.replace("${" + varName + "}", value.toString());
+        }
+        return name;
+    }
     
     protected Map<String, Object> resolvePlaceholderValues(ParameterGVO parameterGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
 		Map<String, Object> placeHolderValues = new HashMap<String, Object>();
@@ -382,7 +422,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
     
     protected void log(String message) {
-        log("Error occured", message);
+        log("Log", message);
     }
     
     protected void log(String title, String message) {

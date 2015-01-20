@@ -24,7 +24,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.IterationGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
-public class IterationHandler extends AbstractSelectionItemHandler {
+public class IterationHandler extends AbstractBuiltInHandler {
 
 	@Override
 	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType
