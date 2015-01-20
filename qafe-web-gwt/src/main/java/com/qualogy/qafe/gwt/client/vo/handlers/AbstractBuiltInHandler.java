@@ -396,6 +396,24 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 	protected List<UIObject> getUIObjectsByGroup(String key) {		
 		return ComponentRepository.getInstance().getGroupedComponent(key);
 	}
+	
+	/**
+	 * Search for UIObjects
+	 * @param key
+	 * @return
+	 */
+	protected List<UIObject> getUIObjects(String key) {		
+		List<UIObject> uiObjects = getUIObjectsById(key);
+		if (uiObjects != null) {
+			return uiObjects;
+		}
+		uiObjects = getUIObjectsByName(key);
+		if (uiObjects != null) {
+			return uiObjects;
+		}
+		uiObjects = getUIObjectsByGroup(key);
+		return uiObjects;
+	}
     
     protected String getSenderId(final UIObject sender) {
         return RendererHelper.getComponentId(sender);

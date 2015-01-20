@@ -15,51 +15,42 @@
  */
 package com.qualogy.qafe.gwt.client.vo.functions;
 
-
 public class RegExpValidateGVO extends BuiltInFunctionGVO {
+
+	public static final String CLASS_NAME = "com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO";
 
 	private String regExp;
 	private String message;
 	private String type;
-	
-	public final static String PYTHONSCRIPT="python";	
-	
-	
+
+	public final static String PYTHONSCRIPT = "python";
+
 	public String getMessage() {
 		return message;
 	}
-
 
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
-
 	public String getRegExp() {
 		return regExp;
 	}
-
 
 	public void setRegExp(String regExp) {
 		this.regExp = regExp;
 	}
 
-
-
-	
-	
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO";
-	}
-
-
 	public String getType() {
 		return type;
 	}
 
-
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 
 }

@@ -25,6 +25,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO;
 
+@Deprecated
 public class RegExpValidateExecute implements ExecuteCommand {
 
 	public void execute(BuiltInFunctionGVO builtInFunction) {

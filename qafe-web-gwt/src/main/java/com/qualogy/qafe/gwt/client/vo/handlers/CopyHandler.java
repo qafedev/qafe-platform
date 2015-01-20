@@ -67,20 +67,4 @@ public class CopyHandler extends AbstractBuiltInHandler {
 			}
 		}
 	}
-
-	private List<UIObject> getUIObjects(String key) {
-		List<UIObject> uiObjects = null;
-		uiObjects = ComponentRepository.getInstance().getComponent(key);
-		if (uiObjects != null) {
-			return uiObjects;
-		}
-		
-		uiObjects = ComponentRepository.getInstance().getNamedComponent(key);
-		if (uiObjects != null) {
-			return uiObjects;
-		}
-		
-		uiObjects = ComponentRepository.getInstance().getGroupedComponent(key);
-		return uiObjects;
-	}	
 }

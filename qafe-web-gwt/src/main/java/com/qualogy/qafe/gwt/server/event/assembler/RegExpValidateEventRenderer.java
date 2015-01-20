@@ -23,7 +23,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO;
 import com.qualogy.qafe.web.util.SessionContainer;
 
-
+@Deprecated
 public class RegExpValidateEventRenderer extends AbstractEventRenderer implements EventAssembler {
 
 	public BuiltInFunctionGVO convert(EventItem eventItem,EventDataGVO eventData,ApplicationContext context, SessionContainer sc) {

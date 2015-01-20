@@ -46,6 +46,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.IterationGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LocalStoreGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO;
@@ -94,6 +95,7 @@ public class EventHandler {
         BUILTIN_MAP.put(SetPropertyGVO.CLASS_NAME, new SetPropertyHandler());
         BUILTIN_MAP.put(IterationGVO.CLASS_NAME, new IterationHandler());
         BUILTIN_MAP.put(SwitchGVO.CLASS_NAME, new SwitchHandler());
+        BUILTIN_MAP.put(RegExpValidateGVO.CLASS_NAME, new RegExpValidateHandler());
     }
 
     public static EventHandler getInstance() {
@@ -203,6 +205,10 @@ public class EventHandler {
                     case EXIT_CALL: {
                         handleExitCall(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
                         return;
+                    }
+                    case TERMINATE: {
+                    	cleanup(eventSessionId);
+            			return;
                     }
 				}
 				if (!derivedBuiltIns.isEmpty()) {

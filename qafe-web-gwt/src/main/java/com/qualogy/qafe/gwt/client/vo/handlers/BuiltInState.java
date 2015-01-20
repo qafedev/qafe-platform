@@ -16,7 +16,7 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 public enum BuiltInState {
-	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT"), ENTER_CALL("ENTER_CALL"), EXIT_CALL("EXIT_CALL");
+	EXECUTED("EXECUTED"), SUSPEND("SUSPEND"), REPEAT("REPEAT"), ENTER_CALL("ENTER_CALL"), EXIT_CALL("EXIT_CALL"), TERMINATE("TERMINATE");
 	
 	private String literal;
 	
