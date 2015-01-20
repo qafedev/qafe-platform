@@ -59,16 +59,17 @@ public abstract class AbstractEventItemAssembler implements EventItemAssembler {
     }
 
     private ParameterGVO createParameterGVO(Parameter parameter) {
-        ParameterGVO parameterGVO = new ParameterGVO();
-        String name = parameter.getName();
+    	String name = parameter.getName();
+    	ParameterGVO parameterGVO = new ParameterGVO(name);
         if (parameter.getValue() != null) {
             Value value = parameter.getValue();
-            parameterGVO = new ParameterGVO(name, value.getStaticValue());
+            parameterGVO.setValue(value.getStaticValue());
         } else if (parameter.getRef() != null) {
             Reference reference = parameter.getRef();
-            parameterGVO = new ParameterGVO(name, reference.stringValueOf(), reference.getSource());
+            parameterGVO.setReference(reference.stringValueOf());
+            parameterGVO.setSource(reference.getSource());
         } else if (parameter.getExpression() != null) {
-        	parameterGVO = new ParameterGVO(parameter.getExpression());
+        	parameterGVO.setExpression(parameter.getExpression());
         }
         return parameterGVO;
     }

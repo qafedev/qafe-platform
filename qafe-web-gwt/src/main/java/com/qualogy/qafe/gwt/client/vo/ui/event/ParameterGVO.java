@@ -31,20 +31,20 @@ public class ParameterGVO implements IsSerializable {
 	
 	public ParameterGVO(){}
 	
-	public ParameterGVO(String name, String value) {
+	public ParameterGVO(String name) {
 		setName(name);
+	}
+	
+	public ParameterGVO(String name, String value) {
+		this(name);
 		setValue(value);
 	}
 
 	public ParameterGVO(String name, String reference, String source) {
-	    setName(name);
+	    this(name);
 	    setReference(reference);
 	    setSource(source);
     }
-	
-	public ParameterGVO(String expression) {
-		setExpression(expression);
-	}
 	
 	public String getName() {
 		return name;
