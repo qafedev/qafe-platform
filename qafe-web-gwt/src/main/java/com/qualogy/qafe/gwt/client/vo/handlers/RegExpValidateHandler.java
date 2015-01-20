@@ -68,9 +68,9 @@ public class RegExpValidateHandler extends AbstractBuiltInHandler {
 					continue;
 				}
 				String expression = validateGVO.getRegExp();
-				if (validate(textValue, expression)) {
+				if (!matchExpression(textValue, expression)) {
 					String message = validateGVO.getMessage();
-					log("Validation error", message, true);
+					showMessage("Validation error", message);
 					return BuiltInState.TERMINATE;
 				}
 			}
@@ -79,16 +79,16 @@ public class RegExpValidateHandler extends AbstractBuiltInHandler {
 	}
 
 	/**
-	 * Validates a text value against a regular expression.
+	 * Matches a text value against a regular expression.
 	 * 
 	 * @param textValue
-	 *            the value to validate
+	 *            the value to match
 	 * @param expression
 	 *            the regular expression
 	 * @return true if a match is found, false if no match is found
 	 */
-	private boolean validate(String textValue, String expression) {
-		return (textValue.replaceFirst(expression, "").length() > 0);
+	private boolean matchExpression(String textValue, String expression) {
+		return (textValue.replaceFirst(expression, "").length() == 0);
 	}
 
 }
