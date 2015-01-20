@@ -17,187 +17,202 @@
 
 -->
 <web-app id="WebApp_ID" version="2.4"
-	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	
-	<display-name>qafe-web-gwt</display-name>
+    xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-	<context-param>
-		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-		<param-value>nl</param-value>
-	</context-param>
-	<context-param>
-		<param-name>QAFE_reload_enabled</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>QAFEContextFile</param-name>
-		<param-value>application-config.xml</param-value>
-	</context-param>
-	<context-param>
-		<param-name>noAuth</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<!--  GWT Upload -->
-	<context-param>
-		<!-- max size of the upload request -->
-		<param-name>maxSize</param-name>
-		<param-value>3145728</param-value>
-	</context-param>
-	<context-param>
-		<!-- useful in development mode to see the upload progress bar in fast networks -->
-		<param-name>slowUploads</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<!--  END GWT Upload -->
-	
-	<filter>
-		<filter-name>GzipFilter</filter-name>
-		<filter-class>org.gwtwidgets.server.filters.ResponseHeaderFilter</filter-class>
-		<init-param>
-			<param-name>Content-Type</param-name>
-			<param-value>text/html; charset=utf-8</param-value>
-		</init-param>
-		<init-param>
-			<param-name>Content-Encoding</param-name>
-			<param-value>gzip</param-value>
-		</init-param>
-		<init-param>
-			<param-name>ResponseHeaderFilter.UrlPattern</param-name>
-			<param-value><![CDATA[^.*\.cache\.html]]></param-value>
-		</init-param>
-	</filter>
+    <display-name>qafe-web-gwt</display-name>
 
-	<filter-mapping>
-		<filter-name>GzipFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping> 
-	
-	<!-- 
-		For more info on CORS filter, please look at the following link:
-		https://tomcat.apache.org/tomcat-7.0-doc/config/filter.html
-	 -->
-	<filter>
-		<filter-name>CorsFilter</filter-name>
-		<filter-class>com.qualogy.qafe.gwt.server.filter.CORSFilter</filter-class>		
-	 	<init-param>
-	  		<param-name>cors.allowed.origins</param-name>
-	  		<param-value>*</param-value>
-		</init-param>		
-		<init-param>
-  			<param-name>cors.allowed.methods</param-name>
-	  		<param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
-		</init-param>		
-		<init-param>
-	  		<param-name>cors.allowed.headers</param-name>
-	  		<param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-GWT-Module-Base,X-GWT-Permutation</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-  		<filter-name>CorsFilter</filter-name>
-  		<url-pattern>/*</url-pattern>
-	</filter-mapping> 
-	
-	<context-param>
-    	<param-name>contextConfigLocation</param-name>
-    	<param-value>classpath*:META-INF/config/applicationContext*.xml</param-value>
-  	</context-param>
-  	<listener>
-    	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  	</listener>
-	<listener>
-		<listener-class>com.qualogy.qafe.web.ContextLoaderListener</listener-class>
-	</listener>
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+        <param-value>nl</param-value>
+    </context-param>
+    <context-param>
+        <param-name>QAFE_reload_enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>QAFEContextFile</param-name>
+        <param-value>application-config.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>noAuth</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!--  GWT Upload -->
+    <context-param>
+        <!-- max size of the upload request -->
+        <param-name>maxSize</param-name>
+        <param-value>3145728</param-value>
+    </context-param>
+    <context-param>
+        <!-- useful in development mode to see the upload progress bar in fast networks -->
+        <param-name>slowUploads</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!--  END GWT Upload -->
 
-	<!-- Callback Servlets -->
-	<servlet>
-		<servlet-name>main</servlet-name>
-		<jsp-file>/QAFEGWTWeb.jsp</jsp-file>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<!-- Logging service -->
-	<servlet>
-		<servlet-name>remoteLoggingServlet</servlet-name>
-		<servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>service</servlet-name>
-		<servlet-class>com.qualogy.qafe.gwt.server.RPCServiceImpl</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>css-generator</servlet-name>
-		<servlet-class>com.qualogy.qafe.web.css.servlet.CssServlet</servlet-class>
-	</servlet>
-	<servlet> 
-		<servlet-name>DatagridUploadservlet</servlet-name>
-		<servlet-class>com.qualogy.qafe.web.upload.DatagridUploadServlet</servlet-class>
-	</servlet> 
-	<servlet>
-		<servlet-name>DatagridDownloadServlet</servlet-name>
-		<servlet-class>com.qualogy.qafe.web.upload.DatagridDownloadServlet</servlet-class>
-	</servlet>
-	<servlet> 
-		<servlet-name>UploadServlet</servlet-name>
-		<servlet-class>com.qualogy.qafe.web.servlet.UploadServlet</servlet-class>
-	</servlet>
-	<servlet> 
-		<servlet-name>EncryptionServlet</servlet-name>
-		<servlet-class>com.qualogy.qafe.web.servlet.EncryptionServlet</servlet-class>
-	</servlet>
-	<!--
-	<servlet> 
-		<servlet-name>FMBUploadServlet</servlet-name>
-		<servlet-class>com.qualogy.qafe.tools.conversion.oracleforms.web.servlet.FMBUploadServlet</servlet-class>
-	</servlet>  -->
+    <filter>
+        <filter-name>GzipFilter</filter-name>
+        <filter-class>org.gwtwidgets.server.filters.ResponseHeaderFilter</filter-class>
+        <init-param>
+            <param-name>Content-Type</param-name>
+            <param-value>text/html; charset=utf-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Content-Encoding</param-name>
+            <param-value>gzip</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ResponseHeaderFilter.UrlPattern</param-name>
+            <param-value><![CDATA[^.*\.cache\.html]]></param-value>
+        </init-param>
+    </filter>
 
-	<servlet-mapping>
-		<servlet-name>main</servlet-name>
-		<url-pattern>*.start</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>remoteLoggingServlet</servlet-name>
-		<url-pattern>/qafegwt/remote_logging</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>service</servlet-name>
-		<url-pattern>*.service</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>css-generator</servlet-name>
-		<url-pattern>/css-generator</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DatagridDownloadServlet</servlet-name>
-		<url-pattern>*.export</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DatagridUploadservlet</servlet-name>
-		<url-pattern>*.datagridupload</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>UploadServlet</servlet-name>
-		<url-pattern>*.upload</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>UploadServlet</servlet-name>
-		<url-pattern>*.view</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>UploadServlet</servlet-name>
-		<url-pattern>*.remove</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>EncryptionServlet</servlet-name>
-		<url-pattern>*.encryption</url-pattern>
-	</servlet-mapping>  	
-	<!--
-	<servlet-mapping>
-		<servlet-name>FMBUploadServlet</servlet-name>
-		<url-pattern>*.fmbupload</url-pattern>
-	</servlet-mapping> -->
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-	<welcome-file-list>
-		<welcome-file>QAFEGWTWeb.jsp</welcome-file>
-	</welcome-file-list>
-	
+    <!--
+        For more info on CORS filter, please look at the following link:
+        https://tomcat.apache.org/tomcat-7.0-doc/config/filter.html
+     -->
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>com.qualogy.qafe.gwt.server.filter.CORSFilter</filter-class>
+        <init-param>
+            <param-name>cors.allowed.origins</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.allowed.methods</param-name>
+            <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.allowed.headers</param-name>
+            <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-GWT-Module-Base,X-GWT-Permutation</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:META-INF/config/applicationContext*.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.qualogy.qafe.web.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Callback Servlets -->
+    <servlet>
+        <servlet-name>main</servlet-name>
+        <jsp-file>/QAFEGWTWeb.jsp</jsp-file>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!-- Logging service -->
+    <servlet>
+        <servlet-name>remoteLoggingServlet</servlet-name>
+        <servlet-class>com.google.gwt.logging.server.RemoteLoggingServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>service</servlet-name>
+        <servlet-class>com.qualogy.qafe.gwt.server.RPCServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>css-generator</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.css.servlet.CssServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DatagridUploadservlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.upload.DatagridUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DatagridDownloadServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.upload.DatagridDownloadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.servlet.UploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EncryptionServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.web.servlet.EncryptionServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.qualogy.qafe.jaxrs</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+    <!--
+    <servlet>
+        <servlet-name>FMBUploadServlet</servlet-name>
+        <servlet-class>com.qualogy.qafe.tools.conversion.oracleforms.web.servlet.FMBUploadServlet</servlet-class>
+    </servlet>  -->
+
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
+        <url-pattern>*.start</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>remoteLoggingServlet</servlet-name>
+        <url-pattern>/qafegwt/remote_logging</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>service</servlet-name>
+        <url-pattern>*.service</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>css-generator</servlet-name>
+        <url-pattern>/css-generator</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DatagridDownloadServlet</servlet-name>
+        <url-pattern>*.export</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DatagridUploadservlet</servlet-name>
+        <url-pattern>*.datagridupload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>*.upload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>*.view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>*.remove</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EncryptionServlet</servlet-name>
+        <url-pattern>*.encryption</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    <!--
+    <servlet-mapping>
+        <servlet-name>FMBUploadServlet</servlet-name>
+        <url-pattern>*.fmbupload</url-pattern>
+    </servlet-mapping> -->
+
+    <welcome-file-list>
+        <welcome-file>QAFEGWTWeb.jsp</welcome-file>
+    </welcome-file-list>
+
 </web-app>
