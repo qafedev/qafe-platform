@@ -144,7 +144,7 @@
         <servlet-name>EncryptionServlet</servlet-name>
         <servlet-class>com.qualogy.qafe.web.servlet.EncryptionServlet</servlet-class>
     </servlet>
-    <!-- <servlet>
+    <servlet>
         <servlet-name>Jersey REST Service</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
@@ -155,8 +155,7 @@
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>com.qualogy.qafe.jaxrs.businessaction.BusinessActionApplication</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet> -->
+    </servlet>
 
 
     <!--
@@ -205,10 +204,10 @@
         <servlet-name>EncryptionServlet</servlet-name>
         <url-pattern>*.encryption</url-pattern>
     </servlet-mapping>
-    <!-- <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Jersey REST Service</servlet-name>
         <url-pattern>/rest/*</url-pattern>
-    </servlet-mapping> -->
+    </servlet-mapping>
     <!--
     <servlet-mapping>
         <servlet-name>FMBUploadServlet</servlet-name>

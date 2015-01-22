@@ -303,6 +303,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.qualogy.qafe.platform</groupId>
+            <artifactId>qafe-webservice-rest</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
             <artifactId>import-export-library-servlet</artifactId>
             <version>${project.version}</version>
