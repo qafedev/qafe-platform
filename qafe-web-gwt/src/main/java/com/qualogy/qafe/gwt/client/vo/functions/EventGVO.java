@@ -24,8 +24,12 @@ public class EventGVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    private String sourceName;
+    private String sourceId;
+    private String sourceValue;
+    private String sourceListenerType;
     private List<BuiltInFunctionGVO> eventItems = new ArrayList<BuiltInFunctionGVO>();
-
+    
     public Collection<BuiltInFunctionGVO> getEventItems() {
         return eventItems;
     }
@@ -35,5 +39,45 @@ public class EventGVO implements Serializable {
             return;
         }
         eventItems.add(eventItem);
+    }
+
+    
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    
+    public String getSourceValue() {
+        return sourceValue;
+    }
+
+    
+    public void setSourceValue(String sourceValue) {
+        this.sourceValue = sourceValue;
+    }
+
+    
+    public String getSourceListenerType() {
+        return sourceListenerType;
+    }
+
+    
+    public void setSourceListenerType(String sourceListenerType) {
+        this.sourceListenerType = sourceListenerType;
     }
 }
