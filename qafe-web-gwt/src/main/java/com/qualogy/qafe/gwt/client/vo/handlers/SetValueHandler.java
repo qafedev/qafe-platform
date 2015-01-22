@@ -494,7 +494,7 @@ public class SetValueHandler extends AbstractBuiltInHandler {
                             containerGVO.setDataMap(dcGVO.getDataMap());
                             containerGVO.setKind(DataContainerGVO.KIND_MAP);
                             setValueGVO.setDataContainer(containerGVO);
-                            processNamedComponent(widget, value, setValueGVO, dataContainerGVO);
+                            processNamedComponent(widget, value, setValueGVO, containerGVO);
                         }
                     }
                 }
