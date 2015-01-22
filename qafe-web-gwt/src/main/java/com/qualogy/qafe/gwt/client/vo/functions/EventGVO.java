@@ -23,7 +23,7 @@ import java.util.List;
 public class EventGVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private String sourceName;
     private String sourceId;
     private String sourceValue;

@@ -67,14 +67,14 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
 public class EventHandler {
 
     private static EventHandler instance = null;
-    
+
     private RPCServiceAsync rpcService = null;
 
     private Map<String, Stack<Queue<Object>>> eventMap = new HashMap<String, Stack<Queue<Object>>>();
-    
+
     private Map<String, Map<String, Object>> processingBuiltInsMap =
         new HashMap<String, Map<String, Object>>();
-    
+
     private final Map<String, BuiltInHandler> BUILTIN_MAP = new HashMap<String, BuiltInHandler>();
 
     private EventHandler() {
@@ -92,7 +92,7 @@ public class EventHandler {
         BUILTIN_MAP.put(CloseWindowGVO.CLASS_NAME, new CloseWindowHandler());
         BUILTIN_MAP.put(EventRefGVO.CLASS_NAME, new EventRefHandler());
         BUILTIN_MAP.put(FocusGVO.CLASS_NAME, new FocusHandler());
-		BUILTIN_MAP.put(IfGVO.CLASS_NAME, new IfHandler());
+        BUILTIN_MAP.put(IfGVO.CLASS_NAME, new IfHandler());
         BUILTIN_MAP.put(ClearGVO.CLASS_NAME, new ClearHandler());
         BUILTIN_MAP.put(ReturnGVO.CLASS_NAME, new ReturnHandler());
         BUILTIN_MAP.put(CopyGVO.CLASS_NAME, new CopyHandler());
@@ -111,15 +111,15 @@ public class EventHandler {
     }
 
     public RPCServiceAsync getRPCService() {
-    	if (rpcService == null) {
-    		rpcService = (RPCServiceAsync) GWT.create(RPCService.class);
+        if (rpcService == null) {
+            rpcService = (RPCServiceAsync) GWT.create(RPCService.class);
             final ServiceDefTarget endpoint = (ServiceDefTarget) rpcService;
             final String moduleRelativeURL = GWT.getModuleBaseURL() + "rpc.service";
             endpoint.setServiceEntryPoint(moduleRelativeURL);
-    	}
-    	return rpcService;
+        }
+        return rpcService;
     }
-    
+
     public void handleEvent(final UIObject sender, final String listenerType,
             EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo) {
         final String appId = getAppId(sender);
@@ -141,7 +141,7 @@ public class EventHandler {
 
         Stack<Queue<Object>> builtInsStack = new Stack<Queue<Object>>();
         Queue<Object> builtIns = getBuiltIns(eventGVO);
-        builtInsStack.add(builtIns); 
+        builtInsStack.add(builtIns);
         eventMap.put(eventSessionId, builtInsStack);
         handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
@@ -150,57 +150,57 @@ public class EventHandler {
     public void handleEvent(final String eventSessionId, final UIObject sender, final String listenerType,
             final Map<String, String> mouseInfo, final String appId, final String windowId) {
         Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
-		if ((builtInsStack == null) || builtInsStack.isEmpty()) {
-			cleanup(eventSessionId);
-			return;
-		}
-		Queue builtIns = builtInsStack.peek();
-		while (!builtIns.isEmpty()) {
-			Object builtIn = builtIns.poll();
-			try {
-				if (!canProcess(builtIn)) {
-					continue;
-				}
+        if ((builtInsStack == null) || builtInsStack.isEmpty()) {
+            cleanup(eventSessionId);
+            return;
+        }
+        Queue builtIns = builtInsStack.peek();
+        while (!builtIns.isEmpty()) {
+            Object builtIn = builtIns.poll();
+            try {
+                if (!canProcess(builtIn)) {
+                    continue;
+                }
 
-				// Meant for logging the execution of built-ins
-				Map<String, Object> processingBuiltIns = processingBuiltInsMap.get(eventSessionId);
-				if (processingBuiltIns == null) {
-					processingBuiltIns = new HashMap<String, Object>();
-					processingBuiltInsMap.put(eventSessionId, processingBuiltIns);
-				}
-				String keyOfBuiltIn = null;
-				if (builtIn instanceof String) {
-					keyOfBuiltIn = (String) builtIn;
-					builtIn = processingBuiltIns.remove(keyOfBuiltIn);
-					BuiltInFunctionGVO builtInGVO = (BuiltInFunctionGVO) builtIn;
-					log("Exiting", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
-					continue;
-				}
-				if (builtIn instanceof BuiltInFunctionGVO) {
-					keyOfBuiltIn = builtIn.toString();
-					if (!processingBuiltIns.containsKey(keyOfBuiltIn)) {
-						BuiltInFunctionGVO builtInGVO = (BuiltInFunctionGVO) builtIn;
-						log("Entering", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
-						processingBuiltIns.put(keyOfBuiltIn, builtIn);
-						((LinkedList)builtIns).addFirst(keyOfBuiltIn);						
-					}
-				}
-				
+                // Meant for logging the execution of built-ins
+                Map<String, Object> processingBuiltIns = processingBuiltInsMap.get(eventSessionId);
+                if (processingBuiltIns == null) {
+                    processingBuiltIns = new HashMap<String, Object>();
+                    processingBuiltInsMap.put(eventSessionId, processingBuiltIns);
+                }
+                String keyOfBuiltIn = null;
+                if (builtIn instanceof String) {
+                    keyOfBuiltIn = (String) builtIn;
+                    builtIn = processingBuiltIns.remove(keyOfBuiltIn);
+                    BuiltInFunctionGVO builtInGVO = (BuiltInFunctionGVO) builtIn;
+                    log("Exiting", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+                    continue;
+                }
+                if (builtIn instanceof BuiltInFunctionGVO) {
+                    keyOfBuiltIn = builtIn.toString();
+                    if (!processingBuiltIns.containsKey(keyOfBuiltIn)) {
+                        BuiltInFunctionGVO builtInGVO = (BuiltInFunctionGVO) builtIn;
+                        log("Entering", sender, listenerType, mouseInfo, builtInGVO, appId, windowId);
+                        processingBuiltIns.put(keyOfBuiltIn, builtIn);
+                        ((LinkedList) builtIns).addFirst(keyOfBuiltIn);
+                    }
+                }
+
                 Queue<Object> derivedBuiltIns = new LinkedList<Object>();
                 BuiltInState state =
                     handleBuiltIn(builtIn, sender, listenerType, mouseInfo, appId, windowId, eventSessionId,
                         derivedBuiltIns);
-				switch (state) {
-					case SUSPEND: {
-						/*
+                switch (state) {
+                    case SUSPEND: {
+                        /*
                          * NOTE: The callback is handled in the superclass of all built-in handlers, call
                          * handleEvent(eventSessionId, ...) after processing the corresponding built-in in the
                          * callback
-						 */
-						return;
-					}
-					case REPEAT: {
-						((LinkedList)builtIns).addFirst(builtIn);
+                         */
+                        return;
+                    }
+                    case REPEAT: {
+                        ((LinkedList) builtIns).addFirst(builtIn);
                     }
                         break;
                     case ENTER_CALL: {
@@ -215,82 +215,82 @@ public class EventHandler {
                     }
                     case TERMINATE: {
                     	cleanup(eventSessionId);
-            			return;
+                        return;
                     }
-				}
-				if (!derivedBuiltIns.isEmpty()) {
-					// Postpone current processing and process the new top of the stack
-					builtInsStack.add(derivedBuiltIns);
-					break;
-				}
-			} catch (Exception e) {
-				handleException(e, builtIn, sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
-				return;
-			}
-		}
-		if (builtIns.isEmpty()) {
-			builtInsStack.remove(builtIns);
-		}
-		handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+                }
+                if (!derivedBuiltIns.isEmpty()) {
+                    // Postpone current processing and process the new top of the stack
+                    builtInsStack.add(derivedBuiltIns);
+                    break;
+                }
+            } catch (Exception e) {
+                handleException(e, builtIn, sender, listenerType, mouseInfo, appId, windowId, eventSessionId);
+                return;
+            }
+        }
+        if (builtIns.isEmpty()) {
+            builtInsStack.remove(builtIns);
+        }
+        handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
+
     // CHECKSTYLE.ON: CyclomaticComplexity
 
     private boolean canProcess(Object builtIn) {
-    	if (builtIn == BuiltInMarker.EXIT_POINT) {
-    		return false;
+        if (builtIn == BuiltInMarker.EXIT_POINT) {
+            return false;
         }
-    	if (builtIn instanceof ErrorHandlerGVO) {
-    		return false;
+        if (builtIn instanceof ErrorHandlerGVO) {
+            return false;
         }
-		return true;
-	}
-    
-	/**
-	 * Handles exiting an event caused by a return built in by
-	 * removing built ins until an exit point is hit. 
-	 * When an exit point is found, we return to normal processing of the caller event
-	 *  
-	 * @param eventSessionId the current sessions id
-	 * @param sender the component that triggered the event
-	 * @param listenerType the type of trigger causing the event
-	 * @param mouseInfo information such as x and y position about the mouse
-	 * @param appId the qafe application id where the event occurred
-	 * @param windowId the window within the application where the event occurred
-	 */
+        return true;
+    }
+
+    /**
+     * Handles exiting an event caused by a return built in by removing built ins until an exit point is hit.
+     * When an exit point is found, we return to normal processing of the caller event
+     * 
+     * @param eventSessionId the current sessions id
+     * @param sender the component that triggered the event
+     * @param listenerType the type of trigger causing the event
+     * @param mouseInfo information such as x and y position about the mouse
+     * @param appId the qafe application id where the event occurred
+     * @param windowId the window within the application where the event occurred
+     */
     private void handleExitCall(String eventSessionId, UIObject sender, String listenerType,
             Map<String, String> mouseInfo, String appId, String windowId) {
-    	
-    	Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
-    	if ((builtInsStack == null) || builtInsStack.isEmpty()) {
-			cleanup(eventSessionId);
-			return;
-		}
-    	
-		Queue<Object> builtIns = builtInsStack.peek();
-		while (!builtIns.isEmpty()) {
-			Object builtIn = builtIns.poll();
-			if (builtIn == BuiltInMarker.EXIT_POINT) {
-				handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
-				return;
-			}
-		}
-		
-		if (builtIns.isEmpty()) {
-			builtInsStack.remove(builtIns);
-		}
-		handleExitCall(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+
+        Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
+        if ((builtInsStack == null) || builtInsStack.isEmpty()) {
+            cleanup(eventSessionId);
+            return;
+        }
+
+        Queue<Object> builtIns = builtInsStack.peek();
+        while (!builtIns.isEmpty()) {
+            Object builtIn = builtIns.poll();
+            if (builtIn == BuiltInMarker.EXIT_POINT) {
+                handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+                return;
+            }
+        }
+
+        if (builtIns.isEmpty()) {
+            builtInsStack.remove(builtIns);
+        }
+        handleExitCall(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
 
     private BuiltInState handleBuiltIn(Object builtIn, final UIObject sender, final String listenerType,
             final Map<String, String> mouseInfo, final String appId, final String windowId,
             final String eventSessionId, Queue derivedBuiltIns) {
-    	BuiltInFunctionGVO builtInGVO = null;
-    	if (builtIn instanceof BuiltInFunctionGVO) {
-    		builtInGVO = (BuiltInFunctionGVO) builtIn;
-    	}
-    	if (builtInGVO == null) {
-    		return null;
-    	}
+        BuiltInFunctionGVO builtInGVO = null;
+        if (builtIn instanceof BuiltInFunctionGVO) {
+            builtInGVO = (BuiltInFunctionGVO) builtIn;
+        }
+        if (builtInGVO == null) {
+            return null;
+        }
         BuiltInHandler builtInHandler = BUILTIN_MAP.get(builtInGVO.getClassName());
         if (builtInHandler == null) {
             return null;
@@ -298,97 +298,97 @@ public class EventHandler {
         return builtInHandler.handleBuiltIn(sender, listenerType, mouseInfo, builtInGVO, appId, windowId,
             eventSessionId, derivedBuiltIns);
     }
-    
+
     public void handleException(final Throwable exception, final Object currentBuiltIn
     		, final UIObject sender, final String listenerType, final Map<String, String> mouseInfo
     		, final String appId, final String windowId, final String eventSessionId) {
         Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
-		if ((builtInsStack == null) || builtInsStack.isEmpty()) {
-			String builtInShortenName = getShortenName(currentBuiltIn);
-			String title = "Fail to execute " + builtInShortenName;
-	        String message = exception.getMessage();
-	        showMessage(title, message, exception);
-	        cleanup(eventSessionId);
-			return;
-		}
-		Queue builtIns = builtInsStack.peek();
-		while (!builtIns.isEmpty()) {
-			Object builtIn = builtIns.poll();
-			ErrorHandlerGVO errorHandlerGVO = resolveErrorHandler(builtIn, appId, windowId, exception);
-			if (errorHandlerGVO != null) {
-				String finalAction = errorHandlerGVO.getFinalAction();
-				if (ErrorHandlerGVO.FINALLY_RETHROW.equals(finalAction)) {
-					continue;
-				}
-				storeData(eventSessionId, DataStorage.KEY_ERROR_MESSAGE, exception.getMessage());
-				Collection<BuiltInFunctionGVO> eventItems = errorHandlerGVO.getEventItems();
-				Queue exceptionBuiltIns = new LinkedList();
-				exceptionBuiltIns.addAll(eventItems);
-				builtInsStack.add(exceptionBuiltIns);
-				handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
-				return;
-			}
-		}	
-		if (builtIns.isEmpty()) {
-			builtInsStack.remove(builtIns);
-		}
+        if ((builtInsStack == null) || builtInsStack.isEmpty()) {
+            String builtInShortenName = getShortenName(currentBuiltIn);
+            String title = "Fail to execute " + builtInShortenName;
+            String message = exception.getMessage();
+            showMessage(title, message, exception);
+            cleanup(eventSessionId);
+            return;
+        }
+        Queue builtIns = builtInsStack.peek();
+        while (!builtIns.isEmpty()) {
+            Object builtIn = builtIns.poll();
+            ErrorHandlerGVO errorHandlerGVO = resolveErrorHandler(builtIn, appId, windowId, exception);
+            if (errorHandlerGVO != null) {
+                String finalAction = errorHandlerGVO.getFinalAction();
+                if (ErrorHandlerGVO.FINALLY_RETHROW.equals(finalAction)) {
+                    continue;
+                }
+                storeData(eventSessionId, DataStorage.KEY_ERROR_MESSAGE, exception.getMessage());
+                Collection<BuiltInFunctionGVO> eventItems = errorHandlerGVO.getEventItems();
+                Queue exceptionBuiltIns = new LinkedList();
+                exceptionBuiltIns.addAll(eventItems);
+                builtInsStack.add(exceptionBuiltIns);
+                handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
+                return;
+            }
+        }
+        if (builtIns.isEmpty()) {
+            builtInsStack.remove(builtIns);
+        }
         handleException(exception, currentBuiltIn, sender, listenerType, mouseInfo, appId, windowId,
             eventSessionId);
-	}
-    
+    }
+
     private ErrorHandlerGVO resolveErrorHandler(Object builtIn, String appId, String windowId,
             Throwable exception) {
-    	if (builtIn instanceof ErrorHandlerGVO) {
-    		ErrorHandlerGVO errorHandlerGVO = (ErrorHandlerGVO) builtIn;
-    		if (matchException(errorHandlerGVO, exception)) {
-    			return errorHandlerGVO;
-    		}
-    		return null;
-    	}
-    	if (builtIn instanceof EventRefGVO) {
-    		EventRefGVO eventRefGVO = (EventRefGVO) builtIn;
-    		String eventId = eventRefGVO.getEventId();
-    		EventGVO eventGVO = getEvent(eventId, windowId, appId);
+        if (builtIn instanceof ErrorHandlerGVO) {
+            ErrorHandlerGVO errorHandlerGVO = (ErrorHandlerGVO) builtIn;
+            if (matchException(errorHandlerGVO, exception)) {
+                return errorHandlerGVO;
+            }
+            return null;
+        }
+        if (builtIn instanceof EventRefGVO) {
+            EventRefGVO eventRefGVO = (EventRefGVO) builtIn;
+            String eventId = eventRefGVO.getEventId();
+            EventGVO eventGVO = getEvent(eventId, windowId, appId);
             if (eventGVO == null) {
                 return null;
             }
             Collection<BuiltInFunctionGVO> eventItems = eventGVO.getEventItems();
-    		if (eventItems == null) {
-    			return null;
-    		}    		
-    		for (BuiltInFunctionGVO eventItemGVO : eventItems) {
+            if (eventItems == null) {
+                return null;
+            }
+            for (BuiltInFunctionGVO eventItemGVO : eventItems) {
                 ErrorHandlerGVO errorHandlerGVO =
                     resolveErrorHandler(eventItemGVO, appId, windowId, exception);
-    			if (errorHandlerGVO != null) {
-    				return errorHandlerGVO;
-    			}
-    		}
-    		return null;
-    	}
-		return null;
-	}
+                if (errorHandlerGVO != null) {
+                    return errorHandlerGVO;
+                }
+            }
+            return null;
+        }
+        return null;
+    }
 
     private boolean matchException(ErrorHandlerGVO builtIn, Throwable exception) {
-    	if (exception == null) {
-    		return false;
-    	}
-    	String exceptionMessage = exception.toString();
-    	String errorHandlerMessage = builtIn.getException();
-		return exceptionMessage.contains(errorHandlerMessage);
-	}
-
-	public UIGVO getApplication(final String appId) {
-    	 return ClientApplicationContext.getInstance().getApplication(appId);
+        if (exception == null) {
+            return false;
+        }
+        String exceptionMessage = exception.toString();
+        String errorHandlerMessage = builtIn.getException();
+        return exceptionMessage.contains(errorHandlerMessage);
     }
-    
-	public EventGVO getEvent(String eventId, String windowId, String appId) {
-    	UIGVO applicationGVO = EventHandler.getInstance().getApplication(appId);
+
+    public UIGVO getApplication(final String appId) {
+        return ClientApplicationContext.getInstance().getApplication(appId);
+    }
+
+    public EventGVO getEvent(String eventId, String windowId, String appId) {
+        UIGVO applicationGVO = EventHandler.getInstance().getApplication(appId);
         if (applicationGVO == null) {
             return null;
         }
         return getEvent(eventId, windowId, applicationGVO);
     }
-	
+
     public EventGVO getEvent(final String eventId, final String windowId, UIGVO applicationGVO) {
         EventGVO eventGVO = null;
         if (applicationGVO == null) {
@@ -400,52 +400,52 @@ public class EventHandler {
         }
         return eventGVO;
     }
-    
+
     public Queue getBuiltIns(EventGVO eventGVO) {
-    	Queue builtIns = new LinkedList();
-    	if (eventGVO != null) {
-    		builtIns.addAll(eventGVO.getEventItems());
-    	}
-		return builtIns;
-	}
-    
+        Queue builtIns = new LinkedList();
+        if (eventGVO != null) {
+            builtIns.addAll(eventGVO.getEventItems());
+        }
+        return builtIns;
+    }
+
     public void setBusy(boolean busy) {
-    	ClientApplicationContext.getInstance().setBusy(busy);
+        ClientApplicationContext.getInstance().setBusy(busy);
     }
-    
+
     public void showMessage(String title, String message, Throwable exception) {
-    	 ClientApplicationContext.getInstance().log(title, message, true, false, exception);
+        ClientApplicationContext.getInstance().log(title, message, true, false, exception);
     }
-    
+
     public void log(String action, UIObject sender, String listenerType, Map<String, String> mouseInfo,
             BuiltInFunctionGVO builtInGVO, String appId, String windowId) {
-    	String builtInShortenName = getShortenName(builtInGVO);
-    	String componentId = getComponentId(sender);
-    	StringBuffer logMessage = new StringBuffer();
-    	logMessage.append(action + " Built-In [" + builtInShortenName + "]");
-    	logMessage.append(": Sender=" + componentId + " - ListenerType=" + listenerType);
-    	logMessage.append(" - WindowId=" + windowId + " - AppId=" + appId);
-    	logMessage.append(" - MouseInfo=" + mouseInfo);
+        String builtInShortenName = getShortenName(builtInGVO);
+        String componentId = getComponentId(sender);
+        StringBuffer logMessage = new StringBuffer();
+        logMessage.append(action + " Built-In [" + builtInShortenName + "]");
+        logMessage.append(": Sender=" + componentId + " - ListenerType=" + listenerType);
+        logMessage.append(" - WindowId=" + windowId + " - AppId=" + appId);
+        logMessage.append(" - MouseInfo=" + mouseInfo);
         log(logMessage.toString());
     }
 
     public void log(String dataId, String name, Object data) {
-    	String logMessage = "dataId=" + dataId + " - " + name;
-    	if (data != null) {
-    		logMessage += "=" + data.toString();
-    	}
+        String logMessage = "dataId=" + dataId + " - " + name;
+        if (data != null) {
+            logMessage += "=" + data.toString();
+        }
         log(logMessage);
     }
-    
+
     public void log(String message) {
         log("Log", message);
-        
+
     }
-    
+
     public void log(String title, String message) {
         log("Log", message, false);
     }
-    
+
     public void log(String title, String message, boolean alert) {
         ClientApplicationContext.getInstance().log(title, message, alert);
     }
@@ -472,28 +472,28 @@ public class EventHandler {
         storeData(eventSessionId, event.getSourceValue(), srcValue);
         storeData(eventSessionId, event.getSourceListenerType(), srcListener);
     }
-    
+
     public void storeData(String dataId, String name, Object data) {
         getDataStorage().storeData(dataId, name, data);
         log(dataId, name, data);
     }
-    
+
     public DataStorage getDataStorage() {
         return ClientApplicationContext.getInstance().getDataStorage();
     }
 
     public String getShortenName(Object builtIn) {
-    	if (builtIn == null) {
-    		return null;
-    	}
-    	String shortenName = builtIn.toString();
-    	int dotIndex = shortenName.lastIndexOf(".");
-    	if (dotIndex > -1) {
-    		shortenName = shortenName.substring(dotIndex + 1);
-    	}
-    	return shortenName;
+        if (builtIn == null) {
+            return null;
+        }
+        String shortenName = builtIn.toString();
+        int dotIndex = shortenName.lastIndexOf(".");
+        if (dotIndex > -1) {
+            shortenName = shortenName.substring(dotIndex + 1);
+        }
+        return shortenName;
     }
-    
+
     private String getAppId(final UIObject sender) {
         return RendererHelper.getComponentContext(sender);
     }
@@ -501,7 +501,7 @@ public class EventHandler {
     private String getWindowId(final UIObject sender) {
         return RendererHelper.getParentComponent(sender);
     }
-    
+
     private String getComponentId(final UIObject sender) {
         return RendererHelper.getComponentId(sender);
     }
@@ -509,16 +509,16 @@ public class EventHandler {
     private String getComponentName(final UIObject sender) {
         return RendererHelper.getNamedComponentName(sender);
     }
-    
+
     private Object getComponentValue(UIObject sender, String appId, String windowId, String srcId) {
         return BuiltinHandlerHelper.getValue(sender, sender, null, false, null);
     }
     
     private void cleanup(String eventSessionId) {
-		unregister(eventSessionId);
-    	eventMap.remove(eventSessionId);
-    	processingBuiltInsMap.remove(eventSessionId);
-	}
+        unregister(eventSessionId);
+        eventMap.remove(eventSessionId);
+        processingBuiltInsMap.remove(eventSessionId);
+    }
 
     private String register() {
         return getDataStorage().register();
