@@ -104,7 +104,7 @@ public class AnyEventAssembler {
         eventGVO.setSourceValue(event.getSourceValue());
         eventGVO.setSourceListenerType(event.getSourceListenerType());
     }
-
+    
     public static BuiltInFunctionGVO assemble(final EventItem eventItem, final Event event
     	, final ApplicationContext applicationContext) {    	
         if (eventItem == null) {
