@@ -87,7 +87,7 @@ public class AnyEventAssembler {
             return null;
         }
         EventGVO eventGVO = new EventGVO();
-        assembleAttributeValues(event, eventGVO);
+        assembleAttributes(event, eventGVO);
         final List<EventItem> eventItems = event.getEventItems();
         for (EventItem eventItem : eventItems) {
             final BuiltInFunctionGVO eventItemGVO = assemble(eventItem, event, applicationContext);                
@@ -98,7 +98,7 @@ public class AnyEventAssembler {
         return eventGVO;
     }
     
-    private static void assembleAttributeValues(Event event, EventGVO eventGVO) {
+    private static void assembleAttributes(Event event, EventGVO eventGVO) {
         eventGVO.setSourceId(event.getSourceId());
         eventGVO.setSourceName(event.getSourceName());
         eventGVO.setSourceValue(event.getSourceValue());
