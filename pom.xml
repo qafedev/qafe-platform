@@ -563,8 +563,8 @@
         <module>qafe-web-gwt</module>
         <module>qafe-webapps</module>
         <!-- module>qafe-mobile-gwt</module -->
-        <module>qafe-webservice</module>
-        <module>qafe-webservice-rest</module>
+<!--         <module>qafe-webservice</module>
+        <module>qafe-webservice-rest</module> -->
     </modules>
 
     <pluginRepositories>
