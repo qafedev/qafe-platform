@@ -21,6 +21,7 @@
 	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
 	<presentation-tier>
 		<view>
+		<!-- demo app -->
 			<window id="window1" displayname="Hello World" width="300"  height="250" >
 				<rootpanel id="myRootPanel">
 					<verticallayout>
