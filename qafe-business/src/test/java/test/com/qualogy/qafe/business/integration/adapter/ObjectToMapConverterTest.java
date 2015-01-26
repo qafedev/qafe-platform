@@ -73,7 +73,7 @@ public class ObjectToMapConverterTest extends TestCase {
 	public void testString(){
 		String jaja = "jaja";
 		Object obj = ObjectMapConverter.convert(jaja);
-		assertNull(obj);
+		assertNotNull(obj);
 	}
 	
 	public void testMap(){
