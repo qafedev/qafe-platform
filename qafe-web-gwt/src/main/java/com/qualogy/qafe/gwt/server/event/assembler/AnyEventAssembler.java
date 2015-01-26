@@ -89,11 +89,13 @@ public class AnyEventAssembler {
         EventGVO eventGVO = new EventGVO();
         assembleAttributes(event, eventGVO);
         final List<EventItem> eventItems = event.getEventItems();
-        for (EventItem eventItem : eventItems) {
-            final BuiltInFunctionGVO eventItemGVO = assemble(eventItem, event, applicationContext);                
-            if (eventItemGVO != null) {
-                eventGVO.addEventItem(eventItemGVO);
-            }
+        if (eventItems != null) {
+        	for (EventItem eventItem : eventItems) {
+                final BuiltInFunctionGVO eventItemGVO = assemble(eventItem, event, applicationContext);                
+                if (eventItemGVO != null) {
+                    eventGVO.addEventItem(eventItemGVO);
+                }
+            }	
         }
         return eventGVO;
     }
