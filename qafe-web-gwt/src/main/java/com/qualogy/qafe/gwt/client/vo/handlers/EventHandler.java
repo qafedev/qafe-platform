@@ -30,6 +30,7 @@ import com.qualogy.qafe.gwt.client.service.RPCService;
 import com.qualogy.qafe.gwt.client.service.RPCServiceAsync;
 import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
+import com.qualogy.qafe.gwt.client.vo.data.GDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO;
@@ -124,7 +125,12 @@ public class EventHandler {
             return;
         }
         ClientApplicationContext.getInstance().setPrerenderingUIVO(appId, applicationGVO);
+        
+        handleResultListeners(sender, listenerType);
 
+        if (eventListenerGVO == null) {
+        	return;
+        }
         String eventId = eventListenerGVO.getEventId();
         EventGVO eventGVO = getEvent(eventId, windowId, applicationGVO);
         if (eventGVO == null) {
@@ -228,9 +234,23 @@ public class EventHandler {
         }
         handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
-
     // CHECKSTYLE.ON: CyclomaticComplexity
 
+    /**
+     * Handles defined internal listeners. 
+     * 
+     * @param sender the sender UI object
+     * @param listenerType the listener type
+     */
+    private void handleResultListeners(final UIObject sender,
+			final String listenerType) {
+		GDataObject dataObject = new GDataObject();
+        String senderId = getComponentId(sender);
+        dataObject.setSenderId(senderId);
+        dataObject.setListenerType(listenerType);
+        ClientApplicationContext.getInstance().fireResult(dataObject);
+	}
+    
     private boolean canProcess(Object builtIn) {
         if (builtIn == BuiltInMarker.EXIT_POINT) {
             return false;
