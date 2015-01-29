@@ -46,6 +46,7 @@ public class QTableModel extends MutableTableModel<DataContainerGVO> {
 	public final static String KEY_WORD_PAGESIZE = "$PAGESIZE";
 	public final static String KEY_WORD_PAGE_NUMBER = "$OFFSET";
 	
+	public static final String[] RESERVED_KEWORDS = {KEY_WORD_SORT_ON_COLUMN, KEY_WORD_SORT_ORDER, KEY_WORD_PAGESIZE, KEY_WORD_PAGE_NUMBER};
 	
 	/**
 	 * 

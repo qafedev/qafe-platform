@@ -45,7 +45,8 @@ public class BusinessActionRefHandler {
         Map<String, Object> outputValues = new HashMap<String, Object>();
 
         try {
-            storeInputValuesInDataStore(businessActionItemDataObject, dataId);
+            storeValues(businessActionItemDataObject.getInputValues(), dataId);
+            storeValues(businessActionItemDataObject.getInternalVariables(), dataId);
 
             context.getBusinessManager().manage(context, dataId, businessAction);
             
@@ -71,12 +72,13 @@ public class BusinessActionRefHandler {
         }
         return outputValues;
     }
-
-    private void storeInputValuesInDataStore(final BusinessActionItemDataObject businessActionItemDataObject,
-            final DataIdentifier dataId) {
-        final Map<String, Object> inpuValues = businessActionItemDataObject.getInputValues();
-        for (String key : businessActionItemDataObject.getInputValues().keySet()) {
-            DataStore.store(dataId, key, inpuValues.get(key));
+ 
+    private void storeValues(final Map<String, Object> values, final DataIdentifier dataId) {
+    	if (values == null) {
+    		return;
+    	}
+    	for (String key : values.keySet()) {
+            DataStore.store(dataId, key, values.get(key));
         }
     }
 

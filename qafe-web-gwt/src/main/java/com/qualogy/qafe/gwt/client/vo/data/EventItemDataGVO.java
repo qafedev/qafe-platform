@@ -32,6 +32,8 @@ public class EventItemDataGVO implements IsSerializable {
     private Map<String, Object> inputValues = new HashMap<String, Object>();
     
     private List<String> outputVariables = new ArrayList<String>();
+    
+    private Map<String, Object> internalVariables = new HashMap<String, Object>();
 
     private BuiltInFunctionGVO builtInGVO;
 
@@ -66,4 +68,18 @@ public class EventItemDataGVO implements IsSerializable {
     public void setOutputVariables(List<String> outputVariables) {
         this.outputVariables = outputVariables;
     }
+
+	/**
+	 * @return the internalVariables
+	 */
+	public Map<String,Object> getInternalVariables() {
+		return internalVariables;
+	}
+
+	/**
+	 * @param internalVariables the internalVariables to set
+	 */
+	public void setInternalVariables(Map<String,Object> internalVariables) {
+		this.internalVariables = internalVariables;
+	}
 }

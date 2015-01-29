@@ -15,7 +15,9 @@
  */
 package com.qualogy.qafe.gwt.client.storage.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.user.client.Random;
@@ -57,18 +59,32 @@ public class LocalDataStorage implements DataStorage {
         if (values == null) {
             return null;
         }
-        if (name != null && name.contains(".")) {
-            String dataStoreKey = name.substring(0, name.indexOf('.'));
-            String attrbute = name.substring(name.indexOf('.') + 1);
-            Object intermediateResult = values.get(dataStoreKey);
+        if (name == null) {
+        	return values.get(name);
+        }
+        if (name.contains(".")) {
+        	String[] splitName = name.split(".");
+        	String dataStoreKey = splitName[0];
+        	String attribute = splitName[1];
+        	Object intermediateResult = values.get(dataStoreKey);
             if (intermediateResult instanceof DataContainerGVO) {
                 DataContainerGVO dataContainer = (DataContainerGVO) intermediateResult;
                 switch (dataContainer.getKind()) {
                     case DataContainerGVO.KIND_MAP: {
-                        result = dataContainer.getDataMap().get(attrbute);
+                        result = dataContainer.getDataMap().get(attribute);
                     }
                 }
             }
+        } else if (name.contains("[")) {
+        	String newName = name.replace("[", ":").replace("]", ":");
+        	String[] splitName = newName.split(":");
+        	String dataStoreKey = splitName[0];
+        	String index = splitName[1];
+        	Object value = values.get(dataStoreKey);
+        	if (value instanceof List) {
+        		List collectionValue = (List) value;
+        		result = collectionValue.get(Integer.valueOf(index));
+        	}
         } else {
             result = values.get(name);
         }
