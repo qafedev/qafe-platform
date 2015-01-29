@@ -16,6 +16,8 @@
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -240,18 +242,55 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             	if (value instanceof DataContainerGVO) {
             		value = DataContainerGVO.createType((DataContainerGVO) value);
             	}  
-            	if (value instanceof String) {
-            		value = "'" + value + "'";
-            	} else if (value instanceof Boolean) {
-                	boolean bool = (Boolean) value;
-                	value = bool ? "True" : "False";		
-                }
+            	value = resolveExpression(value);
             }
             name = name.replace("${" + varName + "}", value.toString());
         }
         return name;
     }
-    
+	
+	private String resolveExpression(Object value) {
+		if (value == null) {
+			return "None";
+		}
+		if (value instanceof String) {
+    		return "'" + value + "'";
+    	}
+		if (value instanceof Boolean) {
+        	boolean bool = (Boolean) value;
+        	return bool ? "True" : "False";		
+        }
+		if (value instanceof Date) {
+			return resolveExpression(value.toString());
+		}
+		if (value instanceof Map) {
+			Map mapValue = (Map) value;
+			StringBuilder newValueBuilder = new StringBuilder();
+			newValueBuilder.append("{");
+			for (Object key : mapValue.keySet()) {
+				newValueBuilder.append(resolveExpression(key));
+				newValueBuilder.append(":");
+				Object keyValue = mapValue.get(key);
+				newValueBuilder.append(resolveExpression(keyValue));
+				newValueBuilder.append(",");
+			}
+			newValueBuilder.append("}");
+			return newValueBuilder.toString();
+		}
+		if (value instanceof Collection) {
+			Collection collectionValue = (Collection) value;
+			StringBuilder newValueBuilder = new StringBuilder();
+			newValueBuilder.append("[");
+			for (Object item : collectionValue) {
+				newValueBuilder.append(resolveExpression(item));
+				newValueBuilder.append(",");
+			}
+			newValueBuilder.append("]");
+			return newValueBuilder.toString();
+		}
+		return value.toString();
+	}
+	
     protected Map<String, Object> resolvePlaceholderValues(ParameterGVO parameterGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
 		Map<String, Object> placeHolderValues = new HashMap<String, Object>();
         if (parameterGVO.getPlaceHolders() != null && !parameterGVO.getPlaceHolders().isEmpty()) {

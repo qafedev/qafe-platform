@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.component.QTableModel;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
@@ -29,50 +30,86 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 
-    protected BuiltInState executeBuiltIn(final UIObject sender, final String listenerType,
-            Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInGVO
-            , final String appId, final String windowId, final String eventSessionId, Queue derivedBuiltIns) {
-    	BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
-        EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
-        eventItemDataGVO.setAppId(appId);
-        eventItemDataGVO.setBuiltInGVO(builtInGVO);        
-        Map<String, Object> inputValues =
-            collectInputValues(sender, appId, windowId, eventSessionId, businessActionRefGVO);
-        eventItemDataGVO.setInputValues(inputValues);
-        List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
-        eventItemDataGVO.setOutputVariables(outputVariables);
+	protected BuiltInState executeBuiltIn(final UIObject sender,
+			final String listenerType, Map<String, String> mouseInfo,
+			final BuiltInFunctionGVO builtInGVO, final String appId,
+			final String windowId, final String eventSessionId,
+			Queue derivedBuiltIns) {
+		BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
+		EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
+		eventItemDataGVO.setAppId(appId);
+		eventItemDataGVO.setBuiltInGVO(builtInGVO);
+		Map<String, Object> inputValues = collectInputValues(sender, appId,
+				windowId, eventSessionId, businessActionRefGVO);
+		eventItemDataGVO.setInputValues(inputValues);
+		Map<String, Object> internalVariables = collectInteralVariables(sender,
+				appId, windowId, eventSessionId);
+		eventItemDataGVO.setInternalVariables(internalVariables);
+		List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
+		eventItemDataGVO.setOutputVariables(outputVariables);
 
-        executeBuiltInServerSide(sender, listenerType, mouseInfo, eventItemDataGVO
-        		, appId, windowId, eventSessionId);
+		executeBuiltInServerSide(sender, listenerType, mouseInfo,
+				eventItemDataGVO, appId, windowId, eventSessionId);
 
-        storeInputValues(inputValues, eventSessionId);
-        
-        return BuiltInState.SUSPEND;
-    }
+		storeInputValues(inputValues, eventSessionId);
 
-	private Map<String, Object> collectInputValues(final UIObject sender, final String appId,
-            final String windowId, final String eventSessionId, BusinessActionRefGVO businessActionRefGVO) {
-        Map<String, Object> inputValues = new HashMap<String, Object>();
-        for (ParameterGVO parameterGVO : businessActionRefGVO.getInputParameters()) {
-            String key = parameterGVO.getName();
-            Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);
-            inputValues.put(key, value);
-        }
-        return inputValues;
-    }
+		return BuiltInState.SUSPEND;
+	}
 
-    private List<String> collectOutputVariables(BusinessActionRefGVO businessActionRefGVO) {
-        List<String> outputVariables = new ArrayList<String>();
-        for (ParameterGVO parameterGVO : businessActionRefGVO.getOutputParameters()) {
-            String key = parameterGVO.getName();
-            outputVariables.add(key);
-        }
-        return outputVariables;
-    }
-    
-    private void storeInputValues(Map<String, Object> inputValues, String eventSessionId) {
-    	for (String key : inputValues.keySet()) {
-    		Object value = inputValues.get(key);
+	private Map<String, Object> collectInputValues(final UIObject sender,
+			final String appId, final String windowId,
+			final String eventSessionId,
+			BusinessActionRefGVO businessActionRefGVO) {
+		Map<String, Object> inputValues = new HashMap<String, Object>();
+		for (ParameterGVO parameterGVO : businessActionRefGVO
+				.getInputParameters()) {
+			String key = parameterGVO.getName();
+			Object value = getValue(sender, parameterGVO, appId, windowId,
+					eventSessionId);
+			inputValues.put(key, value);
+		}
+		return inputValues;
+	}
+
+	/**
+	 * Collects all available internal variables.
+	 * 
+	 * @param sender
+	 *            the UIObject sender
+	 * @param appId
+	 *            the app id
+	 * @param windowId
+	 *            the window id
+	 * @param eventSessionId
+	 *            the event session id
+	 * @return a map of internal variables
+	 */
+	private Map<String, Object> collectInteralVariables(final UIObject sender,
+			final String appId, final String windowId,
+			final String eventSessionId) {
+		Map<String, Object> internalVariables = new HashMap<String, Object>();
+		for (String reservedKeyword : QTableModel.RESERVED_KEWORDS) {
+			Object data = getData(eventSessionId, reservedKeyword);
+			internalVariables.put(reservedKeyword, data);
+		}
+		return internalVariables;
+	}
+
+	private List<String> collectOutputVariables(
+			BusinessActionRefGVO businessActionRefGVO) {
+		List<String> outputVariables = new ArrayList<String>();
+		for (ParameterGVO parameterGVO : businessActionRefGVO
+				.getOutputParameters()) {
+			String key = parameterGVO.getName();
+			outputVariables.add(key);
+		}
+		return outputVariables;
+	}
+
+	private void storeInputValues(Map<String, Object> inputValues,
+			String eventSessionId) {
+		for (String key : inputValues.keySet()) {
+			Object value = inputValues.get(key);
 			storeData(eventSessionId, key, value);
 		}
 	}

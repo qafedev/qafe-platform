@@ -34,7 +34,8 @@ public class EventItemProcessorImpl implements EventItemProcessor {
                 (BusinessActionRefGVO) eventItemData.getBuiltInGVO();
             eventItemDataObject =
                 new BusinessActionItemDataObject(eventItemData.getAppId(),
-                        businessActionRefGVO.getBusinessActionId(), eventItemData.getInputValues(), eventItemData.getOutputVariables());
+                        businessActionRefGVO.getBusinessActionId(), eventItemData.getInputValues(), eventItemData.getOutputVariables(),
+                        eventItemData.getInternalVariables());
         }
 
         final EventItemHandler eventItemHandler = EventItemHandler.getInstance();
