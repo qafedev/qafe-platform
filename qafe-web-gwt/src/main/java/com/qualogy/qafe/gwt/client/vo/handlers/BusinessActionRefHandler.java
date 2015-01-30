@@ -35,41 +35,43 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 			final BuiltInFunctionGVO builtInGVO, final String appId,
 			final String windowId, final String eventSessionId,
 			Queue derivedBuiltIns) {
-		BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
-		EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
-		eventItemDataGVO.setAppId(appId);
-		eventItemDataGVO.setBuiltInGVO(builtInGVO);
+    	BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
+        EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
+        eventItemDataGVO.setAppId(appId);
+        eventItemDataGVO.setWindowId(windowId);
+        eventItemDataGVO.setSessionId(getSessionId());
+        eventItemDataGVO.setBuiltInGVO(builtInGVO);        
 		Map<String, Object> inputValues = collectInputValues(sender, appId,
 				windowId, eventSessionId, businessActionRefGVO);
-		eventItemDataGVO.setInputValues(inputValues);
+        eventItemDataGVO.setInputValues(inputValues);
 		Map<String, Object> internalVariables = collectInteralVariables(sender,
 				appId, windowId, eventSessionId);
 		eventItemDataGVO.setInternalVariables(internalVariables);
-		List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
-		eventItemDataGVO.setOutputVariables(outputVariables);
+        List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
+        eventItemDataGVO.setOutputVariables(outputVariables);
 
 		executeBuiltInServerSide(sender, listenerType, mouseInfo,
 				eventItemDataGVO, appId, windowId, eventSessionId);
 
-		storeInputValues(inputValues, eventSessionId);
-
-		return BuiltInState.SUSPEND;
-	}
+        storeInputValues(inputValues, eventSessionId);
+        
+        return BuiltInState.SUSPEND;
+    }
 
 	private Map<String, Object> collectInputValues(final UIObject sender,
 			final String appId, final String windowId,
 			final String eventSessionId,
 			BusinessActionRefGVO businessActionRefGVO) {
-		Map<String, Object> inputValues = new HashMap<String, Object>();
+        Map<String, Object> inputValues = new HashMap<String, Object>();
 		for (ParameterGVO parameterGVO : businessActionRefGVO
 				.getInputParameters()) {
-			String key = parameterGVO.getName();
+            String key = parameterGVO.getName();
 			Object value = getValue(sender, parameterGVO, appId, windowId,
 					eventSessionId);
-			inputValues.put(key, value);
-		}
-		return inputValues;
-	}
+            inputValues.put(key, value);
+        }
+        return inputValues;
+    }
 
 	/**
 	 * Collects all available internal variables.
@@ -97,19 +99,19 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 
 	private List<String> collectOutputVariables(
 			BusinessActionRefGVO businessActionRefGVO) {
-		List<String> outputVariables = new ArrayList<String>();
+        List<String> outputVariables = new ArrayList<String>();
 		for (ParameterGVO parameterGVO : businessActionRefGVO
 				.getOutputParameters()) {
-			String key = parameterGVO.getName();
-			outputVariables.add(key);
-		}
-		return outputVariables;
-	}
-
+            String key = parameterGVO.getName();
+            outputVariables.add(key);
+        }
+        return outputVariables;
+    }
+    
 	private void storeInputValues(Map<String, Object> inputValues,
 			String eventSessionId) {
-		for (String key : inputValues.keySet()) {
-			Object value = inputValues.get(key);
+    	for (String key : inputValues.keySet()) {
+    		Object value = inputValues.get(key);
 			storeData(eventSessionId, key, value);
 		}
 	}

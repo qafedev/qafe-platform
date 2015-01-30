@@ -30,12 +30,12 @@ public class BusinessActionItemDataObject extends EventItemDataObject implements
     private Map<String, Object> inputValues = new HashMap<String, Object>();
 
     private List<String> outputVariables = new ArrayList<String>();
-    
+
     private Map<String, Object> internalVariables = new HashMap<String, Object>();
 
-    public BusinessActionItemDataObject(final String appId, final String businessActionId,
+    public BusinessActionItemDataObject(final String sessionId, final String appId, final String windowId, final String businessActionId,
             final Map<String, Object> inputValues, List<String> outputVariables, Map<String, Object> internalVariables) {
-        super(appId);
+        super(sessionId, appId, windowId);
         this.businessActionId = businessActionId;
         this.inputValues = inputValues;
         this.outputVariables = outputVariables;
@@ -67,6 +67,6 @@ public class BusinessActionItemDataObject extends EventItemDataObject implements
 	 */
 	public Map<String, Object> getInternalVariables() {
 		return internalVariables;
-	}
+    }
 
 }

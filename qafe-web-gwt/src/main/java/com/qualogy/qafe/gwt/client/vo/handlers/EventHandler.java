@@ -509,6 +509,10 @@ public class EventHandler {
         return shortenName;
     }
 
+    public String getSessionId() {
+        return ClientApplicationContext.getInstance().getWindowSession();
+    }
+    
     private String getAppId(final UIObject sender) {
         return RendererHelper.getComponentContext(sender);
     }

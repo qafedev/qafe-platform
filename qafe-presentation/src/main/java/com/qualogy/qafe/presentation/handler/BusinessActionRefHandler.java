@@ -45,8 +45,11 @@ public class BusinessActionRefHandler {
         Map<String, Object> outputValues = new HashMap<String, Object>();
 
         try {
-            storeValues(businessActionItemDataObject.getInputValues(), dataId);
-            storeValues(businessActionItemDataObject.getInternalVariables(), dataId);
+	    final String sessionId = businessActionItemDataObject.getSessionId();
+            final String windowId = businessActionItemDataObject.getWindowId();
+
+            storeValues(businessActionItemDataObject.getInputValues(), dataId, windowId, sessionId);
+            storeValues(businessActionItemDataObject.getInternalVariables(), dataId, windowId, sessionId);
 
             context.getBusinessManager().manage(context, dataId, businessAction);
             
@@ -72,13 +75,19 @@ public class BusinessActionRefHandler {
         }
         return outputValues;
     }
- 
-    private void storeValues(final Map<String, Object> values, final DataIdentifier dataId) {
+
+    private void storeValues(final Map<String, Object> values, final DataIdentifier dataId, final String windowId, final String sessionId) {
     	if (values == null) {
     		return;
     	}
     	for (String key : values.keySet()) {
-            DataStore.store(dataId, key, values.get(key));
+            Object value = values.get(key);
+            if (EventItemExecuteHelper.isLookupData(value)) {
+                Parameter parameter = new Parameter();
+                parameter.setName(key);
+                value = EventItemExecuteHelper.resolveLookupData(dataId, windowId, sessionId, parameter, value);
+            }
+            DataStore.store(dataId, key, value);
         }
     }
 

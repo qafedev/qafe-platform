@@ -20,17 +20,38 @@ import java.io.Serializable;
 public class EventItemDataObject implements Serializable {
 
     private static final long serialVersionUID = 349178336673442712L;
-
+    
+    private String sessionId;
+    
     private String applicationId;
-
-    private String businessActionId;
-
-    public EventItemDataObject(String appId) {
+    
+    private String windowId;
+   
+    public EventItemDataObject(final String sessionId, final String appId
+            , final String windowId) {
+        this.sessionId = sessionId;
         this.applicationId = appId;
+        this.windowId = windowId;
     }
 
     public String getApplicationId() {
         return applicationId;
+    }
+    
+    public String getSessionId() {
+        return sessionId;
+    }
+    
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public String getWindowId() {
+        return windowId;
+    }
+    
+    public void setWindowId(String windowId) {
+        this.windowId = windowId;
     }
    
 }

@@ -81,36 +81,40 @@ public abstract class EventItemExecuteHelper {
 	}
 	
 	private static Object resolveLookupData(DataIdentifier dataId, EventData eventData, Parameter parameter, Object data) {
-		if (data instanceof Map) {
-			Map dataMap = (Map)data;
-			Iterator keyIterator = dataMap.keySet().iterator();
-			while(keyIterator.hasNext()) {
-				String key = (String)keyIterator.next();
-				Object value = dataMap.get(key);
-				value =	retrieveLookupData(dataId, eventData, parameter, value);
-				dataMap.put(key, value);
-			}			
-		} else {
-			data = retrieveLookupData(dataId, eventData, parameter, data);
-		}
-		return data;
+	    return resolveLookupData(dataId, eventData.getWindowId(), eventData.getWindowSession(), parameter, data);
 	}
 	
-	private static Object retrieveLookupData(DataIdentifier dataId, EventData eventData, Parameter parameter, Object o) {
-		Object result = o;
-		if (isLookupData(o)) { 
-			String lookupData = (String) o;
-			String lookupKey = eventData.getWindowSession() + ApplicationLocalStore.OBJECT_DELIMITER + eventData.getWindowId();
-			//String lookupKey = eventData.getApplicationIdentifier().stringValueOf() + ApplicationLocalStore.OBJECT_DELIMITER + eventData.getWindowId();
-			if (ApplicationLocalStore.getInstance().contains(lookupKey, lookupData)) {
-				result = ApplicationLocalStore.getInstance().retrieve(lookupKey, lookupData);
-				ParameterValueHandler.store(dataId, parameter, result);
-			}
-		}
-		return result;
-	}
+    public static Object resolveLookupData(DataIdentifier dataId, String windowId, String sessionId
+            , Parameter parameter, Object data) {
+        if (data instanceof Map) {
+            Map dataMap = (Map) data;
+            Iterator keyIterator = dataMap.keySet().iterator();
+            while (keyIterator.hasNext()) {
+                String key = (String) keyIterator.next();
+                Object value = dataMap.get(key);
+                value = retrieveLookupData(dataId, windowId, sessionId, parameter, value);
+                dataMap.put(key, value);
+            }
+        } else {
+            data = retrieveLookupData(dataId, windowId, sessionId, parameter, data);
+        }
+        return data;
+    }
 	
-	private static Boolean isLookupData(Object data) {
+	private static Object retrieveLookupData(DataIdentifier dataId, String windowId, String sessionId, Parameter parameter, Object data) {
+        Object result = data;
+        if (isLookupData(data)) { 
+            String lookupData = (String) data;
+            String lookupKey = sessionId + ApplicationLocalStore.OBJECT_DELIMITER + windowId;
+            if (ApplicationLocalStore.getInstance().contains(lookupKey, lookupData)) {
+                result = ApplicationLocalStore.getInstance().retrieve(lookupKey, lookupData);
+                ParameterValueHandler.store(dataId, parameter, result);
+            }
+        }
+        return result;
+    }
+	
+	public static Boolean isLookupData(Object data) {
 		if (data instanceof String) {
 			String lookupDataKey = DataStore.KEY_LOOKUP_DATA;
 			String lookupData = (String) data;

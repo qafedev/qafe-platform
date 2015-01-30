@@ -28,6 +28,8 @@ public class EventItemDataGVO implements IsSerializable {
     private static final long serialVersionUID = 8381696301664889297L;
 
     private String appId;
+    private String windowId;
+    private String sessionId;
     
     private Map<String, Object> inputValues = new HashMap<String, Object>();
     
@@ -45,6 +47,22 @@ public class EventItemDataGVO implements IsSerializable {
         this.appId = applicationId;
     }
 
+    public final String getWindowId() {
+        return windowId;
+    }
+
+    public final void setWindowId(final String windowId) {
+        this.windowId = windowId;
+    }
+
+    public final String getSessionId() {
+        return sessionId;
+    }
+
+    public final void setSessionId(final String sessionId) {
+        this.sessionId = sessionId;
+    }
+    
     public final BuiltInFunctionGVO getBuiltInGVO() {
         return builtInGVO;
     }
