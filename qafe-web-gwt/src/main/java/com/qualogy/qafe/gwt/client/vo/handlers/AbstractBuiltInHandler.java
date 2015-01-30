@@ -516,6 +516,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     	return EventHandler.getInstance().getShortenName(builtIn);
 	}
     
+    protected String getSessionId() {
+        return EventHandler.getInstance().getSessionId();
+    }
+    
     protected abstract BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo
 			, BuiltInFunctionGVO builtInGVO, String appId, String windowId
 			, String eventSessionId, Queue derivedBuiltIns);	

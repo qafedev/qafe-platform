@@ -35,6 +35,8 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
     	BusinessActionRefGVO businessActionRefGVO = (BusinessActionRefGVO) builtInGVO;
         EventItemDataGVO eventItemDataGVO = new EventItemDataGVO();
         eventItemDataGVO.setAppId(appId);
+        eventItemDataGVO.setWindowId(windowId);
+        eventItemDataGVO.setSessionId(getSessionId());
         eventItemDataGVO.setBuiltInGVO(builtInGVO);        
         Map<String, Object> inputValues =
             collectInputValues(sender, appId, windowId, eventSessionId, businessActionRefGVO);

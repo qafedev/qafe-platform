@@ -31,9 +31,9 @@ public class BusinessActionItemDataObject extends EventItemDataObject implements
 
     List<String> outputVariables = new ArrayList<String>();
 
-    public BusinessActionItemDataObject(final String appId, final String businessActionId,
+    public BusinessActionItemDataObject(final String sessionId, final String appId, final String windowId, final String businessActionId,
             final Map<String, Object> inputValues, List<String> outputVariables) {
-        super(appId);
+        super(sessionId, appId, windowId);
         this.businessActionId = businessActionId;
         this.inputValues = inputValues;
         this.outputVariables = outputVariables;

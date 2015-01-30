@@ -21,12 +21,14 @@ import java.util.Map;
 import java.util.Set;
 
 import com.qualogy.qafe.bind.business.action.BusinessAction;
+import com.qualogy.qafe.bind.commons.type.Parameter;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.business.integration.adapter.ObjectMapConverter;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.presentation.BusinessActionItemDataObject;
+import com.qualogy.qafe.presentation.handler.executors.EventItemExecuteHelper;
 
 /**
  * 
@@ -74,9 +76,18 @@ public class BusinessActionRefHandler {
 
     private void storeInputValuesInDataStore(final BusinessActionItemDataObject businessActionItemDataObject,
             final DataIdentifier dataId) {
-        final Map<String, Object> inpuValues = businessActionItemDataObject.getInputValues();
-        for (String key : businessActionItemDataObject.getInputValues().keySet()) {
-            DataStore.store(dataId, key, inpuValues.get(key));
+        final String sessionId = businessActionItemDataObject.getSessionId();
+        final String windowId = businessActionItemDataObject.getWindowId();
+        
+        final Map<String, Object> inputValues = businessActionItemDataObject.getInputValues();
+        for (String key : inputValues.keySet()) {
+            Object value = inputValues.get(key);
+            if (EventItemExecuteHelper.isLookupData(value)) {
+                Parameter parameter = new Parameter();
+                parameter.setName(key);
+                value = EventItemExecuteHelper.resolveLookupData(dataId, windowId, sessionId, parameter, value);
+            }
+            DataStore.store(dataId, key, value);
         }
     }
 
