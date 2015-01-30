@@ -47,16 +47,15 @@ public class BusinessActionRefHandler {
         Map<String, Object> outputValues = new HashMap<String, Object>();
 
         try {
-	    final String sessionId = businessActionItemDataObject.getSessionId();
+            final String sessionId = businessActionItemDataObject.getSessionId();
             final String windowId = businessActionItemDataObject.getWindowId();
 
             storeValues(businessActionItemDataObject.getInputValues(), dataId, windowId, sessionId);
             storeValues(businessActionItemDataObject.getInternalVariables(), dataId, windowId, sessionId);
 
             context.getBusinessManager().manage(context, dataId, businessAction);
-            
+
             outputValues = collectOutputValues(businessActionItemDataObject, dataId);
-            
 
         } catch (final ExternalException e) {
             throw e;
