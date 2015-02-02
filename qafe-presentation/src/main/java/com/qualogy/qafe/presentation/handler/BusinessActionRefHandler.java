@@ -67,11 +67,8 @@ public class BusinessActionRefHandler {
     private Map<String, Object> collectOutputValues(final BusinessActionItemDataObject businessActionItemDataObject,
             final DataIdentifier dataId) {
         Map<String, Object> outputValues = new HashMap<String, Object>();
-        Set<String> options = new HashSet<String>();
-        options.add(ObjectMapConverter.OPTION_SERIALIZABLE_OBJECTS);
         for(String key : businessActionItemDataObject.getOutputVariables()) {
             Object value = DataStore.getValue(dataId, key);
-            value = ObjectMapConverter.convert(value, options);
             outputValues.put(key, value);
         }
         return outputValues;

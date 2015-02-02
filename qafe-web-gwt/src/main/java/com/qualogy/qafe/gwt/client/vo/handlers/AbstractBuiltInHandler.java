@@ -531,6 +531,9 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         while (itrOutputName.hasNext()) {
         	String outputName = itrOutputName.next();
         	Object outputValue = outputValues.get(outputName);
+        	if (outputValue instanceof DataContainerGVO) {
+        		outputValue = DataContainerGVO.createType((DataContainerGVO) outputValue);
+        	}
         	storeData(eventSessionId, outputName, outputValue);
         }
     }

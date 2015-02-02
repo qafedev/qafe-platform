@@ -20,6 +20,7 @@ import java.util.Map;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import com.qualogy.qafe.gwt.server.processor.EventItemProcessor;
 import com.qualogy.qafe.presentation.BusinessActionItemDataObject;
 import com.qualogy.qafe.presentation.EventItemDataObject;
@@ -40,6 +41,13 @@ public class EventItemProcessorImpl implements EventItemProcessor {
 
         final EventItemHandler eventItemHandler = EventItemHandler.getInstance();
         Map<String, Object> outputValues = eventItemHandler.execute(eventItemDataObject);
+        if (outputValues != null) {
+        	for (String key : outputValues.keySet()) {
+            	Object keyValue = outputValues.get(key);
+            	keyValue = DataContainerGVO.create(keyValue);
+            	outputValues.put(key, keyValue);
+            }
+        }
         return outputValues;
     }
 
