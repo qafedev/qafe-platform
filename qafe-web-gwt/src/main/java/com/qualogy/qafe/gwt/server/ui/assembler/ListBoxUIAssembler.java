@@ -34,6 +34,7 @@ public class ListBoxUIAssembler implements UIAssembler {
 	public ListBoxUIAssembler() {
 	}
 
+	@Override
 	public ComponentGVO convert(Component object, Window currentWindow,ApplicationMapping applicationMapping, ApplicationContext context, SessionContainer ss) {
 		ComponentGVO vo = null;
 		if (object != null) {
@@ -47,20 +48,21 @@ public class ListBoxUIAssembler implements UIAssembler {
 					Iterator<DropDownItem> itr = list.getDropDownItems().iterator();
 					int index=0;
 					while (itr.hasNext()){
-						DropDownItem item = (DropDownItem) itr.next();
+						DropDownItem item = itr.next();
 						items[index] = (DropDownItemGVO)ComponentUIAssembler.convert(item,currentWindow,applicationMapping,context, ss);
 						index++;
 					}
 					voTemp.setDropDownItems(items);
-					voTemp.setMultipleSelect(list.getMultipleSelect());
-					voTemp.setNrOfVisibleItems(list.getNrOfVisibleItems());
 				}
+				voTemp.setMultipleSelect(list.getMultipleSelect());
+				voTemp.setNrOfVisibleItems(list.getNrOfVisibleItems());
 				vo =voTemp;
 			}
 		}
 		return vo;
 	}
 
+	@Override
 	public String getStaticStyleName() {
 		return "listbox";
 	}
