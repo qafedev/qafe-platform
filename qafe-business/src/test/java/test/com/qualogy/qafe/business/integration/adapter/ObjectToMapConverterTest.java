@@ -126,36 +126,4 @@ public class ObjectToMapConverterTest extends TestCase {
 		Object map = ObjectMapConverter.convert(null);
 		assertNull(map);
 	}
-	
-	/**
-	 * OJDBC gives back a result set containing a list of LinkedCaseInsensitiveMaps.
-	 * Inside that Map, BigDecimal and BigInteger are used as a representation of a number.
-	 * LinkedCaseInsensitiveMap, BigDecimal and bigInteger are not serializable to be send to the client-side.
-	 */
-	public void testConvertOptions() {
-		BigInteger bigInteger = BigInteger.valueOf(10);
-		BigDecimal bigDecimal = BigDecimal.valueOf(20);
-		Map<String, Object> map = new LinkedCaseInsensitiveMap<Object>();
-		Set<String> options = new HashSet<String>();
-		options.add(ObjectMapConverter.OPTION_SERIALIZABLE_OBJECTS);
-		
-		String bigIntegerName = "bi";
-		String bigDecimalName = "bc";
-		map.put(bigIntegerName, bigInteger);
-		map.put(bigDecimalName, bigDecimal);
-		
-		Object resultOptionsMap = ObjectMapConverter.convert(map, options);
-		assertFalse("Map is an instance of LinkedCaseInsensitiveMap", resultOptionsMap instanceof LinkedCaseInsensitiveMap);
-		assertTrue("Map is not an instance of HashMap", resultOptionsMap instanceof HashMap);
-
-		@SuppressWarnings("unchecked")
-		Map<String, Object> resultOptionHashMap = (Map<String, Object>) resultOptionsMap;
-		Object bigIntegerObject = resultOptionHashMap.get(bigIntegerName);
-		Object bigDecimalObject = resultOptionHashMap.get(bigDecimalName);
-		
-		assertTrue("Big Integer object is not a Long", bigIntegerObject instanceof Long);
-		assertTrue("Big Decimal object is not a Long", bigDecimalObject instanceof Long);
-		assertEquals("Big Integer object is not properly converted", bigIntegerObject, 10L);
-		assertEquals("Big Decimal object is not properly converted", bigDecimalObject, 20L);
-	}
 }

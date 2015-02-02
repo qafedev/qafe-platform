@@ -256,67 +256,67 @@ public class DataContainerGVO implements IsSerializable {
 	
     // CHECKSTYLE.OFF: CyclomaticComplexity
     public static DataContainerGVO create(Object object) {
+    	if (object == null) {
+    		return null;
+    	}
         DataContainerGVO data = null;
-        if (object != null) {
-            if (object instanceof DataContainerGVO) {
-                DataContainerGVO dc = (DataContainerGVO) object;
-                data = create(DataContainerGVO.createType(dc));
-            } else {
-                data = new DataContainerGVO();
-                boolean valueIsSet = false;
-                if (object instanceof Boolean || object instanceof Character || object instanceof String || object instanceof Date || object instanceof Number) {
-                    if (object instanceof Boolean) {
-                        data.setStringDataType(DataContainerGVO.TYPE_BOOLEAN);
-                    } else if (object instanceof Character) {
-                        data.setStringDataType(DataContainerGVO.TYPE_CHAR);
-                    } else if (object instanceof String) {
-                        data.setStringDataType(DataContainerGVO.TYPE_STRING);
-                    } else if (object instanceof Date) {
-                        data.setStringDataType(DataContainerGVO.TYPE_DATE);
-                        data.setDateData(new Date(((Date) object).getTime()));
-                    } else if (object instanceof Number) {
-                        if (object instanceof Byte) {
-                            data.setStringDataType(DataContainerGVO.TYPE_BYTE);
-                        } else if (object instanceof BigDecimal) {
-                            try {
-                                int intValue = Integer.parseInt(object.toString());
-                                data.setStringDataType(DataContainerGVO.TYPE_INT);
-                                data.setDataString("" + intValue);
-                                valueIsSet = true;
-                            } catch (Exception e) {
-                                data.setStringDataType(DataContainerGVO.TYPE_DOUBLE);
-                            }
-                        } else if (object instanceof BigInteger) {
-                            data.setStringDataType(DataContainerGVO.TYPE_BIGINTEGER);
-                        } else if (object instanceof Double) {
-                            data.setStringDataType(DataContainerGVO.TYPE_DOUBLE);
-                        } else if (object instanceof Float) {
-                            data.setStringDataType(DataContainerGVO.TYPE_FLOAT);
-                        } else if (object instanceof Integer) {
+        if (object instanceof DataContainerGVO) {
+            data = (DataContainerGVO) object;
+        } else {
+            data = new DataContainerGVO();
+            boolean valueIsSet = false;
+            if (object instanceof Boolean || object instanceof Character || object instanceof String || object instanceof Date || object instanceof Number) {
+                if (object instanceof Boolean) {
+                    data.setStringDataType(DataContainerGVO.TYPE_BOOLEAN);
+                } else if (object instanceof Character) {
+                    data.setStringDataType(DataContainerGVO.TYPE_CHAR);
+                } else if (object instanceof String) {
+                    data.setStringDataType(DataContainerGVO.TYPE_STRING);
+                } else if (object instanceof Date) {
+                    data.setStringDataType(DataContainerGVO.TYPE_DATE);
+                    data.setDateData(new Date(((Date) object).getTime()));
+                } else if (object instanceof Number) {
+                    if (object instanceof Byte) {
+                        data.setStringDataType(DataContainerGVO.TYPE_BYTE);
+                    } else if (object instanceof BigDecimal) {
+                        try {
+                            int intValue = Integer.parseInt(object.toString());
                             data.setStringDataType(DataContainerGVO.TYPE_INT);
-                        } else if (object instanceof Long) {
-                            data.setStringDataType(DataContainerGVO.TYPE_LONG);
-                        } else if (object instanceof Short) {
-                            data.setStringDataType(DataContainerGVO.TYPE_SHORT);
+                            data.setDataString("" + intValue);
+                            valueIsSet = true;
+                        } catch (Exception e) {
+                            data.setStringDataType(DataContainerGVO.TYPE_DOUBLE);
                         }
+                    } else if (object instanceof BigInteger) {
+                        data.setStringDataType(DataContainerGVO.TYPE_BIGINTEGER);
+                    } else if (object instanceof Double) {
+                        data.setStringDataType(DataContainerGVO.TYPE_DOUBLE);
+                    } else if (object instanceof Float) {
+                        data.setStringDataType(DataContainerGVO.TYPE_FLOAT);
+                    } else if (object instanceof Integer) {
+                        data.setStringDataType(DataContainerGVO.TYPE_INT);
+                    } else if (object instanceof Long) {
+                        data.setStringDataType(DataContainerGVO.TYPE_LONG);
+                    } else if (object instanceof Short) {
+                        data.setStringDataType(DataContainerGVO.TYPE_SHORT);
                     }
+                }
 
-                    if (!valueIsSet) {
-                        data.setDataString(object.toString());
-                    }
+                if (!valueIsSet) {
+                    data.setDataString(object.toString());
+                }
 
-                    data.setKind(DataContainerGVO.KIND_STRING);
-                } else if (object instanceof Map) {
-                    processMap(object, data);
-                } else if (object instanceof Collection) {
-                    Collection c = (Collection) object;
-                    data.setKind(DataContainerGVO.KIND_COLLECTION);
-                    List<DataContainerGVO> list = new ArrayList<DataContainerGVO>();
-                    data.setListofDC(list);
-                    List<Object> l = (List<Object>) c;
-                    for (Object o : l) {
-                        list.add(create(o));
-                    }
+                data.setKind(DataContainerGVO.KIND_STRING);
+            } else if (object instanceof Map) {
+                processMap(object, data);
+            } else if (object instanceof Collection) {
+                Collection c = (Collection) object;
+                data.setKind(DataContainerGVO.KIND_COLLECTION);
+                List<DataContainerGVO> list = new ArrayList<DataContainerGVO>();
+                data.setListofDC(list);
+                List<Object> l = (List<Object>) c;
+                for (Object o : l) {
+                    list.add(create(o));
                 }
             }
         }

@@ -15,7 +15,6 @@
  */
 package com.qualogy.qafe.gwt.client.storage.impl;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,35 +54,46 @@ public class LocalDataStorage implements DataStorage {
     
     public final Object getData(final String dataId, final String name) {
         final Map<String, Object> values = storage.get(dataId);
-        Object result = null;
         if (values == null) {
             return null;
         }
         if (name == null) {
         	return values.get(name);
         }
+        Object result = null;
         if (name.contains(".")) {
-        	String[] splitName = name.split(".");
-        	String dataStoreKey = splitName[0];
+        	String[] splitName = name.split("\\.");
+        	String key = splitName[0];
         	String attribute = splitName[1];
-        	Object intermediateResult = values.get(dataStoreKey);
-            if (intermediateResult instanceof DataContainerGVO) {
-                DataContainerGVO dataContainer = (DataContainerGVO) intermediateResult;
+        	Object keyValue = values.get(key);
+            if (keyValue instanceof DataContainerGVO) {
+                DataContainerGVO dataContainer = (DataContainerGVO) keyValue;
                 switch (dataContainer.getKind()) {
                     case DataContainerGVO.KIND_MAP: {
-                        result = dataContainer.getDataMap().get(attribute);
+                    	keyValue = dataContainer.getDataMap();
                     }
                 }
+            }
+            if (keyValue instanceof Map) {
+            	result = ((Map) keyValue).get(attribute);
             }
         } else if (name.contains("[")) {
         	String newName = name.replace("[", ":").replace("]", ":");
         	String[] splitName = newName.split(":");
-        	String dataStoreKey = splitName[0];
+        	String key = splitName[0];
         	String index = splitName[1];
-        	Object value = values.get(dataStoreKey);
-        	if (value instanceof List) {
-        		List collectionValue = (List) value;
-        		result = collectionValue.get(Integer.valueOf(index));
+        	Object keyValue = values.get(key);
+            if (keyValue instanceof DataContainerGVO) {
+                DataContainerGVO dataContainer = (DataContainerGVO) keyValue;
+                switch (dataContainer.getKind()) {
+                    case DataContainerGVO.KIND_COLLECTION: {
+                    	keyValue = dataContainer.getListofDC();
+                    }
+                }
+            }
+        	if (keyValue instanceof List) {
+        		List listValue = (List) keyValue;
+        		result = listValue.get(Integer.valueOf(index));
         	}
         } else {
             result = values.get(name);
