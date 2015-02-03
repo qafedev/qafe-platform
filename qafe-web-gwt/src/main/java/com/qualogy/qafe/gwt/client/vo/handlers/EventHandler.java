@@ -25,6 +25,7 @@ import java.util.Stack;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.component.QTableModel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.service.RPCService;
 import com.qualogy.qafe.gwt.client.service.RPCServiceAsync;
@@ -117,7 +118,7 @@ public class EventHandler {
     }
 
     public void handleEvent(final UIObject sender, final String listenerType,
-            EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo) {
+            EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo, Map<String, Object> internalVariables) {
         final String appId = getAppId(sender);
         final String windowId = getWindowId(sender);
         final UIGVO applicationGVO = getApplication(appId);
@@ -138,6 +139,8 @@ public class EventHandler {
         }
 
         final String eventSessionId = register();
+        // Store the internal pagesize and offset in the pipe.
+        storeInternalVariables(eventGVO, eventSessionId, internalVariables);        
         storeEventAttributes(eventGVO, sender, listenerType, appId, windowId, eventSessionId);
 
         Stack<Queue<Object>> builtInsStack = new Stack<Queue<Object>>();
@@ -147,7 +150,19 @@ public class EventHandler {
         handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
     
-    // CHECKSTYLE.OFF: CyclomaticComplexity
+    private void storeInternalVariables(EventGVO eventGVO,
+			String eventSessionId, Map<String, Object> internalVariables) {
+ 		if (internalVariables != null) {
+			String pageSize = QTableModel.RESERVED_KEWORDS[2];
+			String offset = QTableModel.RESERVED_KEWORDS[3];
+			Object pageSizeValue = internalVariables.get(pageSize);
+			Object offsetValue = internalVariables.get(offset);
+			storeData(eventSessionId, offset, offsetValue);
+			storeData(eventSessionId, pageSize, pageSizeValue);
+ 		}
+	}
+
+	// CHECKSTYLE.OFF: CyclomaticComplexity
     public void handleEvent(final String eventSessionId, final UIObject sender, final String listenerType,
             final Map<String, String> mouseInfo, final String appId, final String windowId) {
         Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
