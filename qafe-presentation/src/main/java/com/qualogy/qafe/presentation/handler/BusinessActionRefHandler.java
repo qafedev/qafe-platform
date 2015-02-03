@@ -71,8 +71,22 @@ public class BusinessActionRefHandler {
             Object value = DataStore.getValue(dataId, key);
             outputValues.put(key, value);
         }
+        
+        // For sending the updated internal variables back to the client-side
+        collectInternalVariables(dataId, outputValues);
+        
         return outputValues;
     }
+
+	private void collectInternalVariables(final DataIdentifier dataId,
+			Map<String, Object> outputValues) {
+		for (String keyword : DataStore.KEY_WORDS) {
+        	Object value = DataStore.findValue(dataId, keyword);
+        	if (value != null) {
+        		outputValues.put(keyword, value);
+        	}
+        }
+	}
 
     private void storeValues(final Map<String, Object> values, final DataIdentifier dataId, final String windowId, final String sessionId) {
     	if (values == null) {

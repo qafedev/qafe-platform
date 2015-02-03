@@ -139,9 +139,10 @@ public class EventHandler {
         }
 
         final String eventSessionId = register();
-        // Store the internal pagesize and offset in the pipe.
-        storeInternalVariables(eventGVO, eventSessionId, internalVariables);        
         storeEventAttributes(eventGVO, sender, listenerType, appId, windowId, eventSessionId);
+
+        // Store the internal pagesize and offset in the pipe.
+        storeInternalVariables(eventGVO, eventSessionId, internalVariables);
 
         Stack<Queue<Object>> builtInsStack = new Stack<Queue<Object>>();
         Queue<Object> builtIns = getBuiltIns(eventGVO);
@@ -152,14 +153,13 @@ public class EventHandler {
     
     private void storeInternalVariables(EventGVO eventGVO,
 			String eventSessionId, Map<String, Object> internalVariables) {
- 		if (internalVariables != null) {
-			String pageSize = QTableModel.RESERVED_KEWORDS[2];
-			String offset = QTableModel.RESERVED_KEWORDS[3];
-			Object pageSizeValue = internalVariables.get(pageSize);
-			Object offsetValue = internalVariables.get(offset);
-			storeData(eventSessionId, offset, offsetValue);
-			storeData(eventSessionId, pageSize, pageSizeValue);
- 		}
+    	if (internalVariables == null) {
+    		return;
+    	}
+    	for (String key : internalVariables.keySet()) {
+			Object value = internalVariables.get(key);
+			storeData(eventSessionId, key, value);
+		}
 	}
 
 	// CHECKSTYLE.OFF: CyclomaticComplexity
