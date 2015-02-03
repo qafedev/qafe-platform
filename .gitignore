@@ -67,6 +67,7 @@ qafemobile/
 ######################################
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
+classes/
 
 # compilation logs #
 ################### #
@@ -83,6 +84,10 @@ www-test/
 # old GWT (1.5) created this dir #
 ##################################
 .gwt-tmp/
+
+# other GWT stuff #
+##################
+overlays/
 
 # Packages #
 ############

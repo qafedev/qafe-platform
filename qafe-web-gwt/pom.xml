@@ -64,7 +64,8 @@
                     documentation at codehaus.org -->
                 <configuration>
                     <runTarget>index.html</runTarget>
-                    <hostedWebapp>${webappDirectory}</hostedWebapp>
+                    <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+                    <hostedWebapp>${basedir}/src/main/webapp</hostedWebapp>
                 </configuration>
             </plugin>
             <plugin>
