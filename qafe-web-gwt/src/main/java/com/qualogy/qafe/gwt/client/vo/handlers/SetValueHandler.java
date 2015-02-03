@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,7 +56,7 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class SetValueHandler extends AbstractBuiltInHandler {
 
-	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
+    protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
         SetValueGVO setValueGVO = (SetValueGVO) builtInGVO;
         ParameterGVO parameterGVO = setValueGVO.getParameter();
         Object value = getValue(sender, parameterGVO, appId, windowId, eventSessionId);
@@ -65,13 +65,25 @@ public class SetValueHandler extends AbstractBuiltInHandler {
     }
     
     // CHECKSTYLE.OFF: CyclomaticComplexity
-    private void setValue(UIObject sender, String listenerType, SetValueGVO setValueGVO, Object value, String appId, String windowId, String eventSessionId) {
-        String senderId = getSenderId(sender);
-        DataContainerGVO dataContainerGVO = DataContainerGVO.create(value);
-        String action = setValueGVO.getAction();
+    private void setValue(final UIObject sender, final String listenerType, final SetValueGVO setValueGVO, 
+            final Object value, final String appId, final String windowId, final String eventSessionId) {
         
-        String componentId = setValueGVO.getComponentId();
-        String key = RendererHelper.generateId(componentId, windowId, appId);
+        final String senderId = getSenderId(sender);
+        final DataContainerGVO dataContainerGVO = DataContainerGVO.create(value);
+        final String action = setValueGVO.getAction();
+
+        final String componentId;
+
+        if (setValueGVO.getComponentId() != null && setValueGVO.getComponentId().contains("[")) {
+            // Then set value is to be done on a datagrid cell
+            componentId =
+                setValueGVO.getComponentId().substring(0, setValueGVO.getComponentId().indexOf("["));
+        } else {
+            componentId = setValueGVO.getComponentId();
+        }
+
+        String key = generateId(componentId, windowId, appId, eventSessionId);
+
         List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(key);
         if (uiObjects != null) {
             for (UIObject uiObject : uiObjects) {
