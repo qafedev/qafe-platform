@@ -83,7 +83,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             final String reference = resolveVariables(parameterGVO.getReference(), placeHolderValues, eventSessionId);
 
             if (BuiltInFunctionGVO.SOURCE_COMPONENT_ID.equals(source)) {
-                value = getComponentValue(sender, reference, appId, windowId);
+                value = getComponentValue(sender, reference, appId, windowId, eventSessionId);
             } else {
                 if (BuiltInFunctionGVO.SOURCE_DATASTORE_ID.equals(source)
                         && placeHolderValues.containsKey(reference)) {
@@ -106,7 +106,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     // The solution is based on retrieving value from textfield
     // TODO: Refactor to handle multiple components
     private Object getComponentValue(final UIObject sender, final String reference, String appId,
-            String windowId) {
+            String windowId, String eventSessionId) {
         EventDataGVO dummyEventDataObject = new EventDataGVO();// TODO EventDataGVO is used in server side
                                                                // event handling only, now we use common code
                                                                // that is why we are passing this dummy
@@ -133,7 +133,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             dataContainerObject =
                 BuiltinHandlerHelper.fetchDatagridCellValue(reference, uuid, windowId, appId);
         } else {
-            final String key = RendererHelper.generateId(reference, windowId, appId); // inputVariables[i][1]
+            final String key = generateId(reference, windowId, appId, eventSessionId); // inputVariables[i][1]
             log(key);
             List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(key);
 
@@ -165,7 +165,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                     if (keysSet.length == 1) {// so only the key
                         searchKey = key;
                     } else {
-                        searchKey = RendererHelper.generateId(keysSet[0], windowId, appId);
+                        searchKey = generateId(keysSet[0], windowId, appId, eventSessionId);
                     }
                     if (searchKey != null) {
                         uiObjects = ComponentRepository.getInstance().getNamedComponent(searchKey);
@@ -398,6 +398,11 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 	 * @return The key
 	 */
     protected String generateId(String componentId, String windowId, String appId, String eventSessionId) {
+        if (componentId != null && componentId.contains("[")) {
+            // extract component id when dealing with indexes
+            componentId = componentId.substring(0, componentId.indexOf("["));
+        }
+        
     	componentId = resolveVariables(componentId, null, eventSessionId);
         return RendererHelper.generateId(componentId, windowId, appId);
     }

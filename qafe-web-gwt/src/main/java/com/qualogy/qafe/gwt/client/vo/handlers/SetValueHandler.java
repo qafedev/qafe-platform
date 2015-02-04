@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *  http://www.apache.org/licenses/LICENSE-2.0
+ * 	http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,7 +46,6 @@ import com.qualogy.qafe.gwt.client.component.Tiles;
 import com.qualogy.qafe.gwt.client.component.TitledComponent;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.ui.renderer.DropDownRenderer;
-import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
@@ -72,16 +71,7 @@ public class SetValueHandler extends AbstractBuiltInHandler {
         final DataContainerGVO dataContainerGVO = DataContainerGVO.create(value);
         final String action = setValueGVO.getAction();
 
-        final String componentId;
-
-        if (setValueGVO.getComponentId() != null && setValueGVO.getComponentId().contains("[")) {
-            // Then set value is to be done on a datagrid cell
-            componentId =
-                setValueGVO.getComponentId().substring(0, setValueGVO.getComponentId().indexOf("["));
-        } else {
-            componentId = setValueGVO.getComponentId();
-        }
-
+        final String componentId = setValueGVO.getComponentId();
         String key = generateId(componentId, windowId, appId, eventSessionId);
 
         List<UIObject> uiObjects = ComponentRepository.getInstance().getComponent(key);
@@ -163,7 +153,7 @@ public class SetValueHandler extends AbstractBuiltInHandler {
                 reference = setValueGVO.getGroup();
                 referenceByName = false;
             }
-            key = RendererHelper.generateId(reference, windowId, appId);
+            key = generateId(reference, windowId, appId, eventSessionId);
             if (referenceByName) {
                 uiObjects = ComponentRepository.getInstance().getNamedComponent(key);
             } else {
