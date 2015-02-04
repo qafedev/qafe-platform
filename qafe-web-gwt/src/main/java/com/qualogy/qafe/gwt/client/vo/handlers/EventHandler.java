@@ -25,6 +25,7 @@ import java.util.Stack;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.component.QTableModel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.service.RPCService;
 import com.qualogy.qafe.gwt.client.service.RPCServiceAsync;
@@ -117,7 +118,7 @@ public class EventHandler {
     }
 
     public void handleEvent(final UIObject sender, final String listenerType,
-            EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo) {
+            EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo, Map<String, Object> internalVariables) {
         final String appId = getAppId(sender);
         final String windowId = getWindowId(sender);
         final UIGVO applicationGVO = getApplication(appId);
@@ -140,6 +141,9 @@ public class EventHandler {
         final String eventSessionId = register();
         storeEventAttributes(eventGVO, sender, listenerType, appId, windowId, eventSessionId);
 
+        // Store the internal pagesize and offset in the pipe.
+        storeInternalVariables(eventGVO, eventSessionId, internalVariables);
+
         Stack<Queue<Object>> builtInsStack = new Stack<Queue<Object>>();
         Queue<Object> builtIns = getBuiltIns(eventGVO);
         builtInsStack.add(builtIns);
@@ -147,7 +151,18 @@ public class EventHandler {
         handleEvent(eventSessionId, sender, listenerType, mouseInfo, appId, windowId);
     }
     
-    // CHECKSTYLE.OFF: CyclomaticComplexity
+    private void storeInternalVariables(EventGVO eventGVO,
+			String eventSessionId, Map<String, Object> internalVariables) {
+    	if (internalVariables == null) {
+    		return;
+    	}
+    	for (String key : internalVariables.keySet()) {
+			Object value = internalVariables.get(key);
+			storeData(eventSessionId, key, value);
+		}
+	}
+
+	// CHECKSTYLE.OFF: CyclomaticComplexity
     public void handleEvent(final String eventSessionId, final UIObject sender, final String listenerType,
             final Map<String, String> mouseInfo, final String appId, final String windowId) {
         Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);

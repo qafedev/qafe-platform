@@ -236,14 +236,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             } else {
                 value = getData(eventSessionId, varName);
             }
-            if (value == null) {
-                value = "null";
-            } else {
-            	if (value instanceof DataContainerGVO) {
-            		value = DataContainerGVO.createType((DataContainerGVO) value);
-            	}  
-            	value = resolveExpression(value);
-            }
+            if (value instanceof DataContainerGVO) {
+        		value = DataContainerGVO.createType((DataContainerGVO) value);
+        	}  
+        	value = resolveExpression(value);
             name = name.replace("${" + varName + "}", value.toString());
         }
         return name;
