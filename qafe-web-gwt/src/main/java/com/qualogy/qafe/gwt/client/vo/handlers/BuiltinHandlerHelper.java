@@ -35,7 +35,6 @@ import com.google.gwt.widgetideas.client.SliderBar;
 import com.google.gwt.widgetideas.client.ValueSpinner;
 import com.qualogy.qafe.gwt.client.component.AreaWidget;
 import com.qualogy.qafe.gwt.client.component.DataMap;
-import com.qualogy.qafe.gwt.client.component.HasChoice;
 import com.qualogy.qafe.gwt.client.component.HasData;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
 import com.qualogy.qafe.gwt.client.component.HasRequiredValidationMessage;
@@ -62,217 +61,320 @@ import com.qualogy.qafe.gwt.client.vo.ui.TextFieldGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.InputVariableGVO;
 
 public class BuiltinHandlerHelper {
-
-    // CHECKSTYLE.OFF: CyclomaticComplexity
+	
     public static Object getValue(UIObject uiObject, final UIObject sender, EventDataGVO eventDataObject,
             boolean idValueOnly, String groupName) {
         Object returnObject = null;
-        boolean hasSimpleValue = false;
         if (uiObject instanceof QPagingScrollTable) {
-            QPagingScrollTable qps = (QPagingScrollTable) uiObject;
-            returnObject = qps.getData(null, groupName);
-            DataContainerGVO dtc = convertToDataGVO(returnObject);
-            returnObject = dtc;
+            returnObject = getValue((QPagingScrollTable) uiObject, groupName);
         } else if (uiObject instanceof QRadioButton) {
-            QRadioButton qRadioButton = (QRadioButton) uiObject;
-            returnObject = qRadioButton.getText();
-            hasSimpleValue = true;
-        } else if (uiObject instanceof HasChoice) {
-            HasChoice hasChoice = (HasChoice) uiObject;
-            returnObject = hasChoice.getData();
-            hasSimpleValue = true;
+            returnObject = getValue((QRadioButton) uiObject);
         } else if (uiObject instanceof HasData) {
-            HasData hasData = (HasData) uiObject;
-            returnObject = hasData.getData();
-            hasSimpleValue = true;
-            if (!(returnObject instanceof String)) {
-                DataContainerGVO dtc = convertToDataGVO(returnObject);
-                if (dtc != null) {
-                    returnObject = dtc;
-                    hasSimpleValue = false;
-                }
-            }
+            returnObject = getValue((HasData) uiObject);
         } else if (uiObject instanceof CheckBox) {
-            CheckBox checkBox = (CheckBox) uiObject;
-            returnObject = checkBox.getValue().toString();
-            hasSimpleValue = true;
-            if (checkBox.getValue()) {
-                String attributeValue =
-                    DOM.getElementAttribute(checkBox.getElement(), CheckBoxGVO.CHECKED_VALUE_ATTRIBUTE_TAG);
-                if (attributeValue != null && attributeValue.length() > 0) {
-                    returnObject = attributeValue;
-                }
-            } else {
-                String attributeValue =
-                    DOM.getElementAttribute(checkBox.getElement(), CheckBoxGVO.UNCHECKED_VALUE_ATTRIBUTE_TAG);
-                if (attributeValue != null && attributeValue.length() > 0) {
-                    returnObject = attributeValue;
-                }
-            }
+            returnObject = getValue((CheckBox) uiObject);
         } else if (uiObject instanceof FormPanel) {
-            FormPanel fp = (FormPanel) uiObject;
-            if (fp instanceof HasWidgets) {
-                HasWidgets hasWidgets = (HasWidgets) fp;
-                Iterator<Widget> itr = hasWidgets.iterator();
-                while (itr.hasNext()) {
-                    Widget widget = itr.next();
-                    if (widget instanceof Grid) {
-                        Grid gridPanel = (Grid) widget;
-                        FileUpload fileUpload = (FileUpload) gridPanel.getWidget(0, 0);
-                        returnObject = DOM.getElementAttribute(fileUpload.getElement(), "fu-uuid");
-                        hasSimpleValue = true;
-                    }
-                }
-            }
+            returnObject = getValue((FormPanel) uiObject);
         } else if (uiObject instanceof ListBox) {
-            ListBox listBox = (ListBox) uiObject;
-            if (!(listBox.isMultipleSelect()) && listBox.getSelectedIndex() != -1) { // dropdown
-                int index = listBox.getSelectedIndex();
-                if (idValueOnly) {
-                    returnObject = listBox.getValue(index);
-                    hasSimpleValue = true;
-                } else {
-                    DataMap dm = new DataMap();
-                    dm.put("id", new DataContainerGVO(listBox.getValue(index)));
-                    dm.put("value", new DataContainerGVO(listBox.getItemText(index)));
-
-                    DataContainerGVO dtcMap = new DataContainerGVO();
-                    dtcMap.setKind(DataContainerGVO.KIND_MAP);
-                    dtcMap.setDataMap(dm);
-                    returnObject = dtcMap;
-
-                    // TODO: refactor, this is a workaround for checking simple
-                    // value
-                    dtcMap.setDataString(listBox.getValue(index));
-                    hasSimpleValue = true;
-                }
-            } else if (listBox.getSelectedIndex() != -1) {
-                DataContainerGVO dtclist = new DataContainerGVO();
-                dtclist.setKind(DataContainerGVO.KIND_COLLECTION);
-                List<DataContainerGVO> list = new ArrayList<DataContainerGVO>();
-                dtclist.setListofDC(list);
-                int items = listBox.getItemCount();
-                for (int itemIndex = 0; itemIndex < items; itemIndex++) {
-                    if (listBox.isItemSelected(itemIndex)) {
-                        DataMap dataMap = new DataMap();
-                        DataContainerGVO dtcId = new DataContainerGVO();
-                        dtcId.setKind(DataContainerGVO.KIND_STRING);
-                        dtcId.setDataString(listBox.getValue(itemIndex));
-                        dtcId.setStringDataType(DataContainerGVO.TYPE_STRING);
-                        dataMap.put("id", dtcId);
-
-                        DataContainerGVO dtcValue = new DataContainerGVO();
-                        dtcValue.setKind(DataContainerGVO.KIND_STRING);
-                        dtcValue.setDataString(listBox.getItemText(itemIndex));
-                        dtcValue.setStringDataType(DataContainerGVO.TYPE_STRING);
-                        dataMap.put("value", dtcValue);
-
-                        list.add(new DataContainerGVO(dataMap));
-                    }
-                }
-                returnObject = dtclist;
-            }
+            returnObject = getValue((ListBox) uiObject, idValueOnly);
         } else if (uiObject instanceof QDatePicker) {
-            DataContainerGVO data = new DataContainerGVO();
-            data.setKind(DataContainerGVO.KIND_STRING);
-            data.setStringDataType(DataContainerGVO.TYPE_DATE);
-            data.setDateData(((QDatePicker) uiObject).getValue());
-            returnObject = data;
-            hasSimpleValue = true;
+            returnObject = getValue((QDatePicker) uiObject);
         } else if (uiObject instanceof HasText) {
-            returnObject = ((HasText) uiObject).getText();
-            hasSimpleValue = true;
+            returnObject = getValue((HasText) uiObject);
         } else if (uiObject instanceof MapWidget) {
-            MapWidget mapWidget = (MapWidget) uiObject;
-            AreaWidget[] areas = mapWidget.getItems();
-            if (areas != null) {
-                for (int k = 0; k < areas.length; k++) {
-                    if (areas[k] == sender) {
-                        returnObject = sender.getTitle();
-                        hasSimpleValue = true;
-                        // The senderId has to be the one of the Map, not of the
-                        // area.
-                        String senderId = DOM.getElementProperty(mapWidget.getElement(), "id");
-                        eventDataObject.setSender(senderId);
-                    }
-                }
-            }
+            returnObject = getValue((MapWidget) uiObject, sender, eventDataObject);
         } else if (uiObject instanceof HasDataGridMethods) {
-            HasDataGridMethods dataGridSortableTable = (HasDataGridMethods) uiObject;
-            // MaxRowSize with the call
-            if (dataGridSortableTable.getMaxRows() != null) {
-                eventDataObject.getInputVariables().add(
-                    new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".max_rows",
-                            null, dataGridSortableTable.getMaxRows().toString()));
-            }
-            eventDataObject.getInputVariables().add(
-                new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".pagesize",
-                        null, "" + dataGridSortableTable.getPageSize()));
+            getValue((HasDataGridMethods) uiObject, eventDataObject);
         } else if (uiObject instanceof Image) {
-            Image img = (Image) uiObject;
-            if (img.getUrl() != null) {
-                returnObject = img.getUrl();
-                hasSimpleValue = true;
-            }
+            returnObject = getValue((Image) uiObject);
         } else if (uiObject instanceof ValueSpinner) {
-            ValueSpinner spinner = (ValueSpinner) uiObject;
-            if (spinner.getTextBox() != null) {
-                returnObject = spinner.getTextBox().getValue();
-                hasSimpleValue = true;
-            }
+            returnObject = getValue((ValueSpinner) uiObject);
         } else if (uiObject instanceof Tiles) {
-            Tiles tiles = (Tiles) uiObject;
-            DataContainerGVO dtc = new DataContainerGVO();
-            dtc.setKind(DataContainerGVO.KIND_MAP);
-            DataMap dataMap = new DataMap();
-            dtc.setDataMap(dataMap);
-            if (eventDataObject.getOriginalSenderId() != null) {
-                String index =
-                    eventDataObject.getOriginalSenderId().substring(0,
-                        eventDataObject.getOriginalSenderId().lastIndexOf(QAMLConstants.TOKEN_INDEXING));
-                index = index.replace(QAMLConstants.TOKEN_INDEXING, "");
-                Integer i = Integer.parseInt(index);
-                UIObject tileElement = tiles.getTileElements().get(i);
-                if (tileElement instanceof HasWidgets) {
-                    HasWidgets hasWidgets = (HasWidgets) tileElement;
-                    processWidgets(hasWidgets, dataMap, sender, eventDataObject);
-                }
-
-            }
-            returnObject = dtc;
+            returnObject = getValue((Tiles) uiObject, sender, eventDataObject);
         } else if (uiObject instanceof SliderBar) {
-            SliderBar slider = (SliderBar) uiObject;
-            if (slider.getCurrentValue() > 0) {
-                returnObject = String.valueOf(slider.getCurrentValue());
-            }
+            returnObject = getValue((SliderBar) uiObject);
         } else if (isDataGridField(uiObject)) {
-            returnObject = getDataGridValue(uiObject, sender, eventDataObject);
-        }
-
-        if (hasSimpleValue) {
-            String value = null;
-            if (returnObject instanceof String) {
-                value = (String) returnObject;
-            } else if (returnObject instanceof DataContainerGVO) {
-                DataContainerGVO gvo = (DataContainerGVO) returnObject;
-                if (gvo.getDataString() != null) {
-                    value = gvo.getDataString();
-                } else if (gvo.getDateData() != null) {
-                    value = gvo.getDateData().toString();
-                }
-            }
-            // Required field check
-            handleRequired(uiObject, value);
-            // Validation based on type- for textfield with type
-            handleTypeValidation(uiObject, value);
+            returnObject = getDataGridValue(sender);
         }
 
         return returnObject;
     }
+    
+    private static void handleSimpleValue(UIObject uiObject, Object valueObject) {
+        String valueString = null;
+        if (valueObject instanceof String) {
+            valueString = (String) valueObject;
+        } else if (valueObject instanceof DataContainerGVO) {
+            DataContainerGVO gvo = (DataContainerGVO) valueObject;
+            if (gvo.getDataString() != null) {
+                valueString = gvo.getDataString();
+            } else if (gvo.getDateData() != null) {
+                valueString = gvo.getDateData().toString();
+            }
+        }
+        // Required field check
+        handleRequired(uiObject, valueString);
+        // Validation based on type- for textfield with type
+        handleTypeValidation(uiObject, valueString);
+    }
+    
+	private static DataContainerGVO getValue(QPagingScrollTable qPagingScrollTable, String groupName) {
+        Object object = qPagingScrollTable.getData(null, groupName);
+        DataContainerGVO dtc = convertToDataGVO(object);
+        return dtc;
+	}
+	
+	private static String getValue(QRadioButton qRadioButton) {
+		String value = qRadioButton.getText();
+		handleSimpleValue(qRadioButton, value);
+        return value;
+	}
+	
+	private static Object getValue(HasData hasData) {
+        Object data = hasData.getData();
+        
+        if (!(data instanceof String)) {
+            DataContainerGVO dtc = convertToDataGVO(data);
+            if (dtc != null) {
+                return dtc;
+            }
+        }
+        
+        if (hasData instanceof UIObject) {
+        	handleSimpleValue((UIObject) hasData, data);
+        }
+        
+        return data;
+	}
+	
+	private static String getValue(CheckBox checkBox) {
+        String value = checkBox.getValue().toString();
+                
+        if (checkBox.getValue()) {
+            String attributeValue =
+                DOM.getElementAttribute(checkBox.getElement(), CheckBoxGVO.CHECKED_VALUE_ATTRIBUTE_TAG);
+            if (attributeValue != null && attributeValue.length() > 0) {
+            	value = attributeValue;
+            }
+        } else {
+            String attributeValue =
+                DOM.getElementAttribute(checkBox.getElement(), CheckBoxGVO.UNCHECKED_VALUE_ATTRIBUTE_TAG);
+            if (attributeValue != null && attributeValue.length() > 0) {
+            	value = attributeValue;
+            }
+        }
+        
+        handleSimpleValue(checkBox, value);
+        
+        return value;
+	}
+	
+	private static String getValue(FormPanel formPanel) {
+		String value = null;
+		
+        if (formPanel instanceof HasWidgets) {
+            HasWidgets hasWidgets = formPanel;
+            Iterator<Widget> itr = hasWidgets.iterator();
+            while (itr.hasNext()) {
+                Widget widget = itr.next();
+                if (widget instanceof Grid) {
+                    Grid gridPanel = (Grid) widget;
+                    FileUpload fileUpload = (FileUpload) gridPanel.getWidget(0, 0);
+                    value = DOM.getElementAttribute(fileUpload.getElement(), "fu-uuid");
+                    handleSimpleValue(formPanel, value);
+                }
+            }
+        }
+        
+        return value;
+	}
+	
+	private static Object getValue(ListBox listBox, boolean idValueOnly) {
+		Object value = null;
+		
+        if (!(listBox.isMultipleSelect()) && listBox.getSelectedIndex() != -1) { // dropdown
+            int index = listBox.getSelectedIndex();
+            if (idValueOnly) {
+            	value = listBox.getValue(index);
+            } else {
+                DataMap dm = new DataMap();
+                dm.put("id", new DataContainerGVO(listBox.getValue(index)));
+                dm.put("value", new DataContainerGVO(listBox.getItemText(index)));
 
-    // CHECKSTYLE.ON: CyclomaticComplexity
+                DataContainerGVO dtcMap = new DataContainerGVO();
+                dtcMap.setKind(DataContainerGVO.KIND_MAP);
+                dtcMap.setDataMap(dm);
+                value = dtcMap;
 
-    public static DataContainerGVO convertToDataGVO(Object returnObject) {
+                // TODO: refactor, this is a workaround for checking simple
+                // value
+                dtcMap.setDataString(listBox.getValue(index));
+            }
+            
+            handleSimpleValue(listBox, value);
+        } else if (listBox.getSelectedIndex() != -1) {
+            DataContainerGVO dtclist = new DataContainerGVO();
+            dtclist.setKind(DataContainerGVO.KIND_COLLECTION);
+            List<DataContainerGVO> list = new ArrayList<DataContainerGVO>();
+            dtclist.setListofDC(list);
+            int items = listBox.getItemCount();
+            for (int itemIndex = 0; itemIndex < items; itemIndex++) {
+                if (listBox.isItemSelected(itemIndex)) {
+                    DataMap dataMap = new DataMap();
+                    DataContainerGVO dtcId = new DataContainerGVO();
+                    dtcId.setKind(DataContainerGVO.KIND_STRING);
+                    dtcId.setDataString(listBox.getValue(itemIndex));
+                    dtcId.setStringDataType(DataContainerGVO.TYPE_STRING);
+                    dataMap.put("id", dtcId);
+
+                    DataContainerGVO dtcValue = new DataContainerGVO();
+                    dtcValue.setKind(DataContainerGVO.KIND_STRING);
+                    dtcValue.setDataString(listBox.getItemText(itemIndex));
+                    dtcValue.setStringDataType(DataContainerGVO.TYPE_STRING);
+                    dataMap.put("value", dtcValue);
+
+                    list.add(new DataContainerGVO(dataMap));
+                }
+            }
+            value = dtclist;
+        }
+        
+        return value;
+	}
+	
+	private static DataContainerGVO getValue(QDatePicker qDatePicker) {
+        DataContainerGVO value = new DataContainerGVO();
+        value.setKind(DataContainerGVO.KIND_STRING);
+        value.setStringDataType(DataContainerGVO.TYPE_DATE);
+        value.setDateData(qDatePicker.getValue());
+        
+        handleSimpleValue(qDatePicker, value);
+        
+        return value;
+	}
+	
+	private static String getValue(HasText hasText) {
+        String value = hasText.getText();
+        if (hasText instanceof UIObject) {
+        	handleSimpleValue((UIObject) hasText, value);
+        }
+        return value;
+	}
+	
+	private static String getValue(MapWidget mapWidget, UIObject sender, EventDataGVO eventDataObject) {
+		String value = null;
+		
+        AreaWidget[] areas = mapWidget.getItems();
+        if (areas != null) {
+            for (int k = 0; k < areas.length; k++) {
+                if (areas[k] == sender) {
+                	value = sender.getTitle();
+                    handleSimpleValue(mapWidget, value);
+                    // The senderId has to be the one of the Map, not of the
+                    // area.
+                    String senderId = DOM.getElementProperty(mapWidget.getElement(), "id");
+                    eventDataObject.setSender(senderId);
+                }
+            }
+        }
+        
+        return value;
+	}
+	
+	private static void getValue(HasDataGridMethods hasDataGridMethods, EventDataGVO eventDataObject) {
+		if (hasDataGridMethods instanceof UIObject) {
+			UIObject uiObject = (UIObject) hasDataGridMethods;
+			
+	        // MaxRowSize with the call
+	        if (hasDataGridMethods.getMaxRows() != null) {
+	            eventDataObject.getInputVariables().add(
+	                new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".max_rows",
+	                        null, hasDataGridMethods.getMaxRows().toString()));
+	        }
+	        
+	        eventDataObject.getInputVariables().add(
+	            new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".pagesize",
+	                    null, "" + hasDataGridMethods.getPageSize()));
+		}
+	}
+	
+	private static String getValue(Image image) {
+		String value = image.getUrl();
+        if (value != null) {
+            handleSimpleValue(image, value);
+        }
+        return value;
+	}
+	
+	private static String getValue(ValueSpinner valueSpinner) {
+		String value = null;
+        if (valueSpinner.getTextBox() != null) {
+            value = valueSpinner.getTextBox().getValue();
+            handleSimpleValue(valueSpinner, value);
+        }
+        return value;
+	}
+	
+	private static DataContainerGVO getValue(Tiles tiles, final UIObject sender, EventDataGVO eventDataObject) {
+        DataContainerGVO dtc = new DataContainerGVO();
+        dtc.setKind(DataContainerGVO.KIND_MAP);
+        DataMap dataMap = new DataMap();
+        dtc.setDataMap(dataMap);
+        if (eventDataObject.getOriginalSenderId() != null) {
+            String index =
+                eventDataObject.getOriginalSenderId().substring(0,
+                    eventDataObject.getOriginalSenderId().lastIndexOf(QAMLConstants.TOKEN_INDEXING));
+            index = index.replace(QAMLConstants.TOKEN_INDEXING, "");
+            Integer i = Integer.parseInt(index);
+            UIObject tileElement = tiles.getTileElements().get(i);
+            if (tileElement instanceof HasWidgets) {
+                HasWidgets hasWidgets = (HasWidgets) tileElement;
+                processWidgets(hasWidgets, dataMap, sender, eventDataObject);
+            }
+
+        }
+        return dtc;
+	}
+	
+	private static String getValue(SliderBar sliderBar) {
+		String value = null;
+        if (sliderBar.getCurrentValue() > 0) {
+            value = String.valueOf(sliderBar.getCurrentValue());
+        }
+        return value;
+	}
+
+    private static Object getDataGridValue(UIObject sender) {
+        String id = DOM.getElementAttribute(sender.getElement(), "id");
+        String row =
+            id.substring(0,
+                id.lastIndexOf(QAMLConstants.TOKEN_INDEXING) + QAMLConstants.TOKEN_INDEXING.length());
+        row = row.replace(QAMLConstants.TOKEN_INDEXING, "");
+
+        String datagridUUID =
+            id.substring(id.lastIndexOf(QAMLConstants.TOKEN_INDEXING) + QAMLConstants.TOKEN_INDEXING.length());
+        ;
+        String postfix = datagridUUID.substring(datagridUUID.indexOf("|") + 1);
+        String prefix = datagridUUID.substring(0, datagridUUID.indexOf("|"));
+        if (prefix.contains(".")) {
+            prefix = prefix.substring(0, prefix.indexOf("."));
+        }
+        DataContainerGVO dtc = null;
+        List<UIObject> ui = ComponentRepository.getInstance().getComponent(prefix + "|" + postfix);
+        if (ui != null) {
+            for (UIObject u : ui) {
+                if (u instanceof QPagingScrollTable) {
+                    QPagingScrollTable qps = (QPagingScrollTable) u;
+                    dtc = qps.getRowValue(Integer.valueOf(row));
+
+                }
+            }
+        }
+
+        return dtc;
+    }
+
+    private static DataContainerGVO convertToDataGVO(Object returnObject) {
         DataContainerGVO dtc = null;
         if (returnObject instanceof DataMap) {
             dtc = new DataContainerGVO();
@@ -287,7 +389,7 @@ public class BuiltinHandlerHelper {
         return dtc;
     }
 
-    public static void handleRequired(UIObject uiObject, String value) {
+    private static void handleRequired(UIObject uiObject, String value) {
         if (RendererHelper.isRequiredComponent(uiObject)) {
             if (uiObject instanceof ListBox) {
                 ListBox listBox = (ListBox) uiObject;
@@ -326,7 +428,7 @@ public class BuiltinHandlerHelper {
         }
     }
 
-    public static void handleTypeValidation(UIObject uiObject, String value) {
+    private static void handleTypeValidation(UIObject uiObject, String value) {
         String type = null;
         if (uiObject instanceof TextBox || uiObject instanceof LabeledTextFieldWidget) {
 
@@ -348,8 +450,7 @@ public class BuiltinHandlerHelper {
         }
     }
 
-    public static boolean isValidType(UIObject uiObject, String value) {
-        boolean valid = false;
+    private static boolean isValidType(UIObject uiObject, String value) {
         String type = RendererHelper.getComponentAttributeValue(uiObject, TextFieldGVO.REGEXPTYPE);
         String regExp = TextFieldGVO.getRegExp(type);
 
@@ -359,42 +460,10 @@ public class BuiltinHandlerHelper {
         return true;
     }
 
-    public static Object getDataGridValue(UIObject uiObject, UIObject sender, EventDataGVO eventDataObject) {
-        String id = DOM.getElementAttribute(sender.getElement(), "id");
-        String row =
-            id.substring(0,
-                id.lastIndexOf(QAMLConstants.TOKEN_INDEXING) + QAMLConstants.TOKEN_INDEXING.length());
-        row = row.replace(QAMLConstants.TOKEN_INDEXING, "");
-
-        String datagridUUID =
-            id.substring(id.lastIndexOf(QAMLConstants.TOKEN_INDEXING) + QAMLConstants.TOKEN_INDEXING.length());
-        ;
-        String postfix = datagridUUID.substring(datagridUUID.indexOf("|") + 1);
-        String prefix = datagridUUID.substring(0, datagridUUID.indexOf("|"));
-        if (prefix.contains(".")) {
-            prefix = prefix.substring(0, prefix.indexOf("."));
-        }
-        DataContainerGVO dtc = null;
-        List<UIObject> ui = ComponentRepository.getInstance().getComponent(prefix + "|" + postfix);
-        if (ui != null) {
-            for (UIObject u : ui) {
-                if (u instanceof QPagingScrollTable) {
-                    QPagingScrollTable qps = (QPagingScrollTable) u;
-                    dtc = qps.getRowValue(Integer.valueOf(row));
-
-                }
-            }
-        }
-
-        return dtc;
-    }
-
-    public static boolean isDataGridField(UIObject uiObject) {
+    private static boolean isDataGridField(UIObject uiObject) {
         String id = DOM.getElementAttribute(uiObject.getElement(), "id");
         return (id != null && id.startsWith(QAMLConstants.TOKEN_INDEXING));
     }
-
-    // CHECKSTYLE.ON: CyclomaticComplexity
 
     public static DataContainerGVO fetchDatagridRowValues(String inputVariableReference, String uuid,
             String parent, String context) {
@@ -408,7 +477,7 @@ public class BuiltinHandlerHelper {
         return dtc;
     }
 
-    public static DataContainerGVO fetchDatagridRowValues(String[] inputRef, List<UIObject> uiObjects) {
+    private static DataContainerGVO fetchDatagridRowValues(String[] inputRef, List<UIObject> uiObjects) {
         DataContainerGVO dtc = null;
         if (inputRef == null || uiObjects == null) {
             return null;
@@ -512,7 +581,7 @@ public class BuiltinHandlerHelper {
         return value;
     }
 
-    public static void fillDataContainerMapForGroup(DataMap dataMap, String groupName, UIObject uiObject,
+    private static void fillDataContainerMapForGroup(DataMap dataMap, String groupName, UIObject uiObject,
             final UIObject sender, EventDataGVO eventDataObject) throws RequiredFieldException {
 
         if (uiObject instanceof Widget) {
@@ -574,7 +643,7 @@ public class BuiltinHandlerHelper {
 
     }
 
-    public static void processWidgets(HasWidgets hasWidgets, DataMap dataMap, final UIObject sender,
+    private static void processWidgets(HasWidgets hasWidgets, DataMap dataMap, final UIObject sender,
             EventDataGVO eventDataObject) throws RequiredFieldException {
         for (Widget widget : hasWidgets) {
 
@@ -596,7 +665,7 @@ public class BuiltinHandlerHelper {
         }
     }
 
-    public static void processNamedComponent(Widget widget, DataMap dataMap, final UIObject sender,
+    private static void processNamedComponent(Widget widget, DataMap dataMap, final UIObject sender,
             EventDataGVO eventDataObject, String groupName) throws RequiredFieldException {
         UIObject uiObject = widget;
         if (widget instanceof TitledComponent) {
