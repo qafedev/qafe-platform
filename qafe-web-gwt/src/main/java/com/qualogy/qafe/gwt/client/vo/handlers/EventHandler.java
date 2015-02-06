@@ -537,7 +537,14 @@ public class EventHandler {
     }
 
     private String getComponentId(final UIObject sender) {
-        return RendererHelper.getComponentId(sender);
+    	String id = RendererHelper.getComponentId(sender);
+    	String[] idSplitted = id.split("\\|", 2);
+    	
+    	if (idSplitted.length == 2) {
+    		return idSplitted[0];
+    	}
+    	
+        return id;
     }
     
     private String getComponentName(final UIObject sender) {
@@ -545,7 +552,7 @@ public class EventHandler {
     }
 
     private Object getComponentValue(UIObject sender, String appId, String windowId, String srcId) {
-        return BuiltinHandlerHelper.getValue(sender, sender, null, false, null);
+        return BuiltinHandlerHelper.getValue(sender, sender, false, null);
     }
     
     private void cleanup(String eventSessionId) {

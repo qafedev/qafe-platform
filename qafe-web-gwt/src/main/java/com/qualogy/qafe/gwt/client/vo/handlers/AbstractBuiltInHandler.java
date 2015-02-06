@@ -34,7 +34,6 @@ import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.util.JNSIUtil;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
-import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
@@ -107,10 +106,6 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     // TODO: Refactor to handle multiple components
     private Object getComponentValue(final UIObject sender, final String reference, String appId,
             String windowId, String eventSessionId) {
-        EventDataGVO dummyEventDataObject = new EventDataGVO();// TODO EventDataGVO is used in server side
-                                                               // event handling only, now we use common code
-                                                               // that is why we are passing this dummy
-                                                               // object.
         final String senderId = getSenderId(sender);
 
         if (senderId == null || senderId.length() <= 0) {
@@ -144,7 +139,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
             if (uiObjects != null) {
                 for (UIObject uiObject : uiObjects) {
 
-                    Object o = BuiltinHandlerHelper.getValue(uiObject, sender, null, false, null);
+                    Object o = BuiltinHandlerHelper.getValue(uiObject, sender, false, null);
                     /* value = ((HasText) uiObject).getText(); */
 
                     if (o instanceof String) {
@@ -176,8 +171,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                                 // Collect all the data from a list of named
                                 // components
                                 DataContainerGVO dataContainer =
-                                    BuiltinHandlerHelper.createDataContainer(reference, uiObject, sender,
-                                        dummyEventDataObject);
+                                    BuiltinHandlerHelper.createDataContainer(reference, uiObject, sender);
                                 if (dataContainerObject == null) {
                                     dataContainerObject = dataContainer;
                                 } else if (dataContainer != null) {
@@ -204,8 +198,8 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                         } else { // Apparently we have to search for the Group
                                  // now.
                             dataContainerObject =
-                                BuiltinHandlerHelper.getGroupedComponentValue(sender, reference,
-                                    dummyEventDataObject, key);
+                                BuiltinHandlerHelper.getGroupedComponentValue(sender, reference
+                                    , key);
                         }
                     }
                 }

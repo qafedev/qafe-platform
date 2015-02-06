@@ -56,7 +56,7 @@ public class CallbackHandler {
 	}
 
 	final public static void createCallBack(final Object sender, final String listenerType, final EventListenerGVO eventGVO, List<InputVariableGVO> listOfInputVariables) {
-		createCallBack((UIObject) sender, listenerType, eventGVO, listOfInputVariables, null);
+		createCallBack(sender, listenerType, eventGVO, listOfInputVariables, null);
 	}
 
 	final private static AsyncCallback<?> createCallBack(final String listenerType) {
@@ -66,6 +66,7 @@ public class CallbackHandler {
 
 		if (callback == null){
 				callback = new AsyncCallback<Object>() {
+				@Override
 				public void onSuccess(Object result) {
 					GDataObject data = (GDataObject) result;
 					//this is to trigger handler registered to do on success of event body execution.
@@ -78,6 +79,7 @@ public class CallbackHandler {
 					ClientApplicationContext.getInstance().setBusy(false);
 				}
 
+				@Override
 				public void onFailure(Throwable caught) {
 					ClientApplicationContext.getInstance().log("Event execution for " + listenerType + " failed", caught.getMessage(), true, false, caught);
 					ClientApplicationContext.getInstance().setBusy(false);
@@ -156,7 +158,7 @@ public class CallbackHandler {
 				}
 				if (eventGVO.getSourceValue() != null) {
 					eventDataObject.setSourceValue(eventGVO.getSourceValue());
-					Object o = getValue(sender, sender, eventDataObject, true, null);
+					Object o = getValue(sender, sender, true, null);
 					if (o instanceof String) {
 						eventDataObject.setSourceValueValue(o.toString());
 					}
@@ -200,7 +202,7 @@ public class CallbackHandler {
 								if (uiObjects != null) {
 									for (UIObject uiObject : uiObjects) {
 
-										Object o = getValue(uiObject, sender, eventDataObject, false, null);
+										Object o = getValue(uiObject, sender, false, null);
 
 										if (o instanceof String) {
 											value = o.toString();
@@ -239,7 +241,7 @@ public class CallbackHandler {
 											if (uiObjects != null) {
 												for (UIObject uiObject : uiObjects) {
 													// Collect all the data from a list of named components
-													DataContainerGVO dataContainer = createDataContainer(inputVariables.getReference(), uiObject, sender, eventDataObject);
+													DataContainerGVO dataContainer = createDataContainer(inputVariables.getReference(), uiObject, sender);
 													if (dataContainerObject == null) {
 														dataContainerObject = dataContainer;
 													} else if (dataContainer != null) {
@@ -261,7 +263,7 @@ public class CallbackHandler {
 													}
 												}
 											} else {   // Apparently we have to search for the Group now.
-												dataContainerObject = BuiltinHandlerHelper.getGroupedComponentValue(sender, inputVariables.getReference(), eventDataObject, key);
+												dataContainerObject = BuiltinHandlerHelper.getGroupedComponentValue(sender, inputVariables.getReference(), key);
 
 											}
 										}
@@ -314,8 +316,8 @@ public class CallbackHandler {
 		return BuiltinHandlerHelper.getAttributeValue(inputVariableReference, uuid, parent, context);
 	}
 	
-	public static DataContainerGVO createDataContainer(String parameterName, UIObject uiObject, final UIObject sender, EventDataGVO eventDataObject) throws RequiredFieldException {
-		return BuiltinHandlerHelper.createDataContainer(parameterName, uiObject, sender, eventDataObject);
+	public static DataContainerGVO createDataContainer(String parameterName, UIObject uiObject, final UIObject sender) throws RequiredFieldException {
+		return BuiltinHandlerHelper.createDataContainer(parameterName, uiObject, sender);
 	}
 
 	private static void processOutput(GDataObject data) {
@@ -334,8 +336,8 @@ public class CallbackHandler {
 		}
 	}
 
-	public static Object getValue(UIObject uiObject, final UIObject sender, EventDataGVO eventDataObject, boolean idValueOnly, String groupName){
-		return BuiltinHandlerHelper.getValue(uiObject, sender, eventDataObject, idValueOnly, groupName);
+	public static Object getValue(UIObject uiObject, final UIObject sender, boolean idValueOnly, String groupName){
+		return BuiltinHandlerHelper.getValue(uiObject, sender, idValueOnly, groupName);
 	}
 	
 	

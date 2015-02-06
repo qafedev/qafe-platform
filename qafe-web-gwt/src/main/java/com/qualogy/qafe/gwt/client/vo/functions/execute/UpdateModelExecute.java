@@ -32,6 +32,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.UpdateModelGVO;
 
 public class UpdateModelExecute implements InternalExecuteCommand {
 
+	@Override
 	public void execute(BuiltInFunctionGVO builtInFunction) {
 		if (builtInFunction instanceof UpdateModelGVO) {
 			UpdateModelGVO updateModelGVO = (UpdateModelGVO)builtInFunction;
@@ -45,7 +46,7 @@ public class UpdateModelExecute implements InternalExecuteCommand {
 				for (UIObject uiObject : uiObjects) {
 					if (DataContainerGVO.QAFE_CHECKSUM.equals(updateAction)) {
 						try {
-							DataContainerGVO dataContainer = CallbackHandler.createDataContainer(component, uiObject, null, null);
+							DataContainerGVO dataContainer = CallbackHandler.createDataContainer(component, uiObject, null);
 							if ((dataContainer != null) && dataContainer.isMap()) {
 								updateChecksum(uiObject, dataContainer.getDataMap());
 							}

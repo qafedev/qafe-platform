@@ -52,18 +52,16 @@ import com.qualogy.qafe.gwt.client.ui.renderer.events.TypeValidationException;
 import com.qualogy.qafe.gwt.client.ui.renderer.events.exception.RequiredFieldException;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
-import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.execute.SetMaskHelper;
 import com.qualogy.qafe.gwt.client.vo.ui.CheckBoxGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.TextFieldGVO;
-import com.qualogy.qafe.gwt.client.vo.ui.event.InputVariableGVO;
 
 public class BuiltinHandlerHelper {
 	
-    public static Object getValue(UIObject uiObject, final UIObject sender, EventDataGVO eventDataObject,
-            boolean idValueOnly, String groupName) {
+    public static Object getValue(UIObject uiObject, final UIObject sender, boolean idValueOnly
+    		, String groupName) {
         Object returnObject = null;
         if (uiObject instanceof QPagingScrollTable) {
             returnObject = getValue((QPagingScrollTable) uiObject, groupName);
@@ -82,15 +80,13 @@ public class BuiltinHandlerHelper {
         } else if (uiObject instanceof HasText) {
             returnObject = getValue((HasText) uiObject);
         } else if (uiObject instanceof MapWidget) {
-            returnObject = getValue((MapWidget) uiObject, sender, eventDataObject);
-        } else if (uiObject instanceof HasDataGridMethods) {
-            getValue((HasDataGridMethods) uiObject, eventDataObject);
+            returnObject = getValue((MapWidget) uiObject, sender);
         } else if (uiObject instanceof Image) {
             returnObject = getValue((Image) uiObject);
         } else if (uiObject instanceof ValueSpinner) {
             returnObject = getValue((ValueSpinner) uiObject);
         } else if (uiObject instanceof Tiles) {
-            returnObject = getValue((Tiles) uiObject, sender, eventDataObject);
+            returnObject = getValue((Tiles) uiObject, sender);
         } else if (uiObject instanceof SliderBar) {
             returnObject = getValue((SliderBar) uiObject);
         } else if (isDataGridField(uiObject)) {
@@ -120,7 +116,7 @@ public class BuiltinHandlerHelper {
     
 	private static DataContainerGVO getValue(QPagingScrollTable qPagingScrollTable, String groupName) {
         Object object = qPagingScrollTable.getData(null, groupName);
-        DataContainerGVO dtc = convertToDataGVO(object);
+        DataContainerGVO dtc = DataContainerGVO.create(object);
         return dtc;
 	}
 	
@@ -134,7 +130,7 @@ public class BuiltinHandlerHelper {
         Object data = hasData.getData();
         
         if (!(data instanceof String)) {
-            DataContainerGVO dtc = convertToDataGVO(data);
+            DataContainerGVO dtc = DataContainerGVO.create(data);
             if (dtc != null) {
                 return dtc;
             }
@@ -260,8 +256,8 @@ public class BuiltinHandlerHelper {
         }
         return value;
 	}
-	
-	private static String getValue(MapWidget mapWidget, UIObject sender, EventDataGVO eventDataObject) {
+
+	private static String getValue(MapWidget mapWidget, UIObject sender) {
 		String value = null;
 		
         AreaWidget[] areas = mapWidget.getItems();
@@ -270,33 +266,12 @@ public class BuiltinHandlerHelper {
                 if (areas[k] == sender) {
                 	value = sender.getTitle();
                     handleSimpleValue(mapWidget, value);
-                    // The senderId has to be the one of the Map, not of the
-                    // area.
-                    String senderId = DOM.getElementProperty(mapWidget.getElement(), "id");
-                    eventDataObject.setSender(senderId);
                 }
             }
         }
         
         return value;
-	}
-	
-	private static void getValue(HasDataGridMethods hasDataGridMethods, EventDataGVO eventDataObject) {
-		if (hasDataGridMethods instanceof UIObject) {
-			UIObject uiObject = (UIObject) hasDataGridMethods;
-			
-	        // MaxRowSize with the call
-	        if (hasDataGridMethods.getMaxRows() != null) {
-	            eventDataObject.getInputVariables().add(
-	                new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".max_rows",
-	                        null, hasDataGridMethods.getMaxRows().toString()));
-	        }
-	        
-	        eventDataObject.getInputVariables().add(
-	            new InputVariableGVO(DOM.getElementAttribute(uiObject.getElement(), "id") + ".pagesize",
-	                    null, "" + hasDataGridMethods.getPageSize()));
-		}
-	}
+	}	
 	
 	private static String getValue(Image image) {
 		String value = image.getUrl();
@@ -315,24 +290,25 @@ public class BuiltinHandlerHelper {
         return value;
 	}
 	
-	private static DataContainerGVO getValue(Tiles tiles, final UIObject sender, EventDataGVO eventDataObject) {
+	private static DataContainerGVO getValue(Tiles tiles, final UIObject sender) {
         DataContainerGVO dtc = new DataContainerGVO();
         dtc.setKind(DataContainerGVO.KIND_MAP);
         DataMap dataMap = new DataMap();
-        dtc.setDataMap(dataMap);
-        if (eventDataObject.getOriginalSenderId() != null) {
-            String index =
-                eventDataObject.getOriginalSenderId().substring(0,
-                    eventDataObject.getOriginalSenderId().lastIndexOf(QAMLConstants.TOKEN_INDEXING));
+        dtc.setDataMap(dataMap);        
+        String originalSenderId = RendererHelper.getComponentId(sender);
+        
+        if (originalSenderId != null) {
+            String index = originalSenderId.substring(0, originalSenderId
+            		.lastIndexOf(QAMLConstants.TOKEN_INDEXING));
             index = index.replace(QAMLConstants.TOKEN_INDEXING, "");
             Integer i = Integer.parseInt(index);
             UIObject tileElement = tiles.getTileElements().get(i);
             if (tileElement instanceof HasWidgets) {
                 HasWidgets hasWidgets = (HasWidgets) tileElement;
-                processWidgets(hasWidgets, dataMap, sender, eventDataObject);
+                processWidgets(hasWidgets, dataMap, sender);
             }
-
         }
+        
         return dtc;
 	}
 	
@@ -371,21 +347,6 @@ public class BuiltinHandlerHelper {
             }
         }
 
-        return dtc;
-    }
-
-    private static DataContainerGVO convertToDataGVO(Object returnObject) {
-        DataContainerGVO dtc = null;
-        if (returnObject instanceof DataMap) {
-            dtc = new DataContainerGVO();
-            dtc.setDataMap((DataMap) returnObject);
-            dtc.setKind(DataContainerGVO.KIND_MAP);
-
-        } else if (returnObject instanceof List) {
-            dtc = new DataContainerGVO();
-            dtc.setListofDC((List<DataContainerGVO>) returnObject);
-            dtc.setKind(DataContainerGVO.KIND_COLLECTION);
-        }
         return dtc;
     }
 
@@ -511,7 +472,7 @@ public class BuiltinHandlerHelper {
                                                                                                // on
                                                                                                // columns.
                 }
-                dtc = convertToDataGVO(obj);
+                dtc = DataContainerGVO.create(obj);
             }
         }
         return dtc;
@@ -582,7 +543,7 @@ public class BuiltinHandlerHelper {
     }
 
     private static void fillDataContainerMapForGroup(DataMap dataMap, String groupName, UIObject uiObject,
-            final UIObject sender, EventDataGVO eventDataObject) throws RequiredFieldException {
+            final UIObject sender) throws RequiredFieldException {
 
         if (uiObject instanceof Widget) {
 
@@ -591,16 +552,16 @@ public class BuiltinHandlerHelper {
                     && !(widget instanceof FormPanel) && !(widget instanceof HasDataGridMethods)) {
 
                 HasWidgets innerHasWidget = (HasWidgets) widget;
-                processWidgets(innerHasWidget, dataMap, sender, eventDataObject);
+                processWidgets(innerHasWidget, dataMap, sender);
             } else {
-                processNamedComponent(widget, dataMap, sender, eventDataObject, groupName);
+                processNamedComponent(widget, dataMap, sender, groupName);
             }
         }
 
     }
 
     public static DataContainerGVO createDataContainer(String parameterName, UIObject uiObject,
-            final UIObject sender, EventDataGVO eventDataObject) throws RequiredFieldException {
+            final UIObject sender) throws RequiredFieldException {
         DataContainerGVO dtc = new DataContainerGVO();
         dtc.setParameterName(parameterName);
         if (uiObject != null) {
@@ -610,16 +571,18 @@ public class BuiltinHandlerHelper {
 
             if (uiObject instanceof Tiles) {
                 Tiles tiles = (Tiles) uiObject;
-                if (eventDataObject.getOriginalSenderId() != null) {
-                    String index =
-                        eventDataObject.getOriginalSenderId().substring(0,
-                            eventDataObject.getOriginalSenderId().lastIndexOf(QAMLConstants.TOKEN_INDEXING));
+                
+                String originalSenderId = RendererHelper.getComponentId(sender);
+                
+                if (originalSenderId != null) {
+                    String index = originalSenderId.substring(0, originalSenderId
+                    		.lastIndexOf(QAMLConstants.TOKEN_INDEXING));
                     index = index.replace(QAMLConstants.TOKEN_INDEXING, "");
                     Integer i = Integer.parseInt(index);
                     UIObject tileElement = tiles.getTileElements().get(i);
                     if (tileElement instanceof HasWidgets) {
                         HasWidgets hasWidgets = (HasWidgets) tileElement;
-                        processWidgets(hasWidgets, dataMap, sender, eventDataObject);
+                        processWidgets(hasWidgets, dataMap, sender);
                     }
                     if (parameterName != null && parameterName.contains(".")) {
                         String[] parameterParts = parameterName.split("[.]");
@@ -635,7 +598,7 @@ public class BuiltinHandlerHelper {
                 }
             } else if (uiObject instanceof HasWidgets) {
                 HasWidgets hasWidgets = (HasWidgets) uiObject;
-                processWidgets(hasWidgets, dataMap, sender, eventDataObject);
+                processWidgets(hasWidgets, dataMap, sender);
 
             }
         }
@@ -643,11 +606,11 @@ public class BuiltinHandlerHelper {
 
     }
 
-    private static void processWidgets(HasWidgets hasWidgets, DataMap dataMap, final UIObject sender,
-            EventDataGVO eventDataObject) throws RequiredFieldException {
+    private static void processWidgets(HasWidgets hasWidgets, DataMap dataMap, final UIObject sender) 
+    		throws RequiredFieldException {
         for (Widget widget : hasWidgets) {
 
-            processNamedComponent(widget, dataMap, sender, eventDataObject, null);
+            processNamedComponent(widget, dataMap, sender, null);
             if (widget instanceof HasWidgets && !(widget instanceof ValueSpinner)
                     && !(widget instanceof FormPanel) && !(widget instanceof HasDataGridMethods)) {
                 // not clear what is this code was meant for.
@@ -660,13 +623,13 @@ public class BuiltinHandlerHelper {
                  * dtc); }
                  */
                 HasWidgets innerHasWidget = (HasWidgets) widget;
-                processWidgets(innerHasWidget, dataMap, sender, eventDataObject);
+                processWidgets(innerHasWidget, dataMap, sender);
             }
         }
     }
 
-    private static void processNamedComponent(Widget widget, DataMap dataMap, final UIObject sender,
-            EventDataGVO eventDataObject, String groupName) throws RequiredFieldException {
+    private static void processNamedComponent(Widget widget, DataMap dataMap, final UIObject sender
+            , String groupName) throws RequiredFieldException {
         UIObject uiObject = widget;
         if (widget instanceof TitledComponent) {
             uiObject = ((TitledComponent) widget).getDataComponent();
@@ -682,7 +645,8 @@ public class BuiltinHandlerHelper {
 
             DataContainerGVO data = new DataContainerGVO();
 
-            Object valueObject = getValue(uiObject, sender, eventDataObject, valueOnly, groupName);
+            Object valueObject = getValue(uiObject, sender, valueOnly, groupName);
+            
             if (valueObject instanceof String) {
                 value = String.valueOf(valueObject);
                 if (uiObject instanceof QDatePicker) {
@@ -727,8 +691,8 @@ public class BuiltinHandlerHelper {
         }
     }
 
-    public static DataContainerGVO getGroupedComponentValue(final UIObject sender, final String reference,
-            EventDataGVO eventDataObject, String key) {
+    public static DataContainerGVO getGroupedComponentValue(final UIObject sender, final String reference
+            , String key) {
         List<UIObject> uiObjects = ComponentRepository.getInstance().getGroupedComponent(key);
         DataContainerGVO dataContainerObject = null;
         if (uiObjects != null) {
@@ -740,7 +704,7 @@ public class BuiltinHandlerHelper {
             for (UIObject uiObject : uiObjects) {
                 // Collect all the data from a list of named
                 // components
-                fillDataContainerMapForGroup(dataMap, reference, uiObject, sender, eventDataObject);
+                fillDataContainerMapForGroup(dataMap, reference, uiObject, sender);
             }
             dataContainerObject = dataContainer;
         }

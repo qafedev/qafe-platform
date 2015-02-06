@@ -37,7 +37,6 @@ import com.qualogy.qafe.gwt.client.component.HasRowSelectionChangeHandlers;
 import com.qualogy.qafe.gwt.client.component.RowSelectionChangeEvent;
 import com.qualogy.qafe.gwt.client.component.RowSelectionChangeHandler;
 import com.qualogy.qafe.gwt.client.ui.renderer.events.CallbackHandler;
-import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
@@ -54,6 +53,7 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
 	public PagingDataGridRenderer() {
 	}
 	
+	@Override
 	public UIObject render(ComponentGVO component, String uuid,String parent, String context) {
 		UIObject uiObject = null;
 		if (component != null) {
@@ -79,7 +79,8 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
 	private void registerRowSelectionChange(final DataGridGVO datagridGVO, UIObject datagrid) {
         if (datagrid instanceof HasRowSelectionChangeHandlers) {
             ((HasRowSelectionChangeHandlers)datagrid).addRowSelectionChangeHandler(new RowSelectionChangeHandler() {
-                public void onRowSelectionChange(RowSelectionChangeEvent event) {
+                @Override
+				public void onRowSelectionChange(RowSelectionChangeEvent event) {
                     UIObject source = event.getSource();
                     int rowIndex = event.getRowIndex();
                     Object rowValue = event.getRowValue();
@@ -125,14 +126,16 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
             if (overflowItem instanceof HasDataChangeHandlers) {
                 HasDataChangeHandlers hasDataChangeHandlers = (HasDataChangeHandlers)overflowItem;
                 hasDataChangeHandlers.addDataChangeHandler(new DataChangeHandler() {
-                    public void onDataChange(UIObject uiObject, Object oldValue, Object newValue) {
+                    @Override
+					public void onDataChange(UIObject uiObject, Object oldValue, Object newValue) {
                         handleOverflowItemDataChange(datagridGVO, datagrid, uiObject, newValue);
                     }
                 });        
             } else if (overflowItem instanceof HasValueChangeHandlers) {
                 HasValueChangeHandlers hasValueChangeHandlers = (HasValueChangeHandlers)overflowItem;
                 hasValueChangeHandlers.addValueChangeHandler(new ValueChangeHandler<Object>() {
-                    public void onValueChange(ValueChangeEvent<Object> event) {
+                    @Override
+					public void onValueChange(ValueChangeEvent<Object> event) {
                         UIObject source = (UIObject)event.getSource();
                         handleOverflowItemDataChange(datagridGVO, datagrid, source);
                     }
@@ -140,7 +143,8 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
             } else if (overflowItem instanceof HasChangeHandlers) {
                 HasChangeHandlers hasChangeHandlers = (HasChangeHandlers)overflowItem;
                 hasChangeHandlers.addChangeHandler(new ChangeHandler() {
-                    public void onChange(ChangeEvent event) {
+                    @Override
+					public void onChange(ChangeEvent event) {
                         UIObject source = (UIObject)event.getSource();
                         handleOverflowItemDataChange(datagridGVO, datagrid, source);
                     }
@@ -149,7 +153,8 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
                 // LEGACY CODE
                 SourcesChangeEvents sourcesChangeEvents = (SourcesChangeEvents)overflowItem;
                 sourcesChangeEvents.addChangeListener(new ChangeListener() {
-                    public void onChange(Widget sender) {
+                    @Override
+					public void onChange(Widget sender) {
                         handleOverflowItemDataChange(datagridGVO, datagrid, sender);
                     }
                 });
@@ -160,8 +165,7 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
     private void handleOverflowItemDataChange(DataGridGVO datagridGVO, UIObject datagrid, UIObject overflowItem) {
         Object value = null;
         try {
-            EventDataGVO dummy = new EventDataGVO();
-            value = CallbackHandler.getValue(overflowItem, overflowItem, dummy, true, null);    
+            value = CallbackHandler.getValue(overflowItem, overflowItem, true, null);    
         } catch (Exception e) {
             return;
         }
@@ -169,12 +173,7 @@ public class PagingDataGridRenderer extends AbstractComponentRenderer {
     }
     
     private void handleOverflowItemDataChange(DataGridGVO datagridGVO, UIObject datagrid, UIObject overflowItem, Object value) {
-        DataContainerGVO valueGVO = null;
-        if (value instanceof DataContainerGVO) {
-            valueGVO = (DataContainerGVO)value;
-        } else if (value != null) {
-            valueGVO = DataContainerGVO.create(value);
-        }
+    	DataContainerGVO valueGVO = DataContainerGVO.create(value);
         handleOverflowItemDataChange(datagridGVO, datagrid, overflowItem, valueGVO);
     }
     
