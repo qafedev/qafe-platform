@@ -301,6 +301,7 @@ public class DataContainerGVO implements IsSerializable {
     	return dataMap;
     }
     
+    // CHECKSTYLE.OFF: CyclomaticComplexity
     private static DataContainerGVO createSimpleType(Object object) {
     	DataContainerGVO data = new DataContainerGVO();
     	boolean valueIsSet = false;
@@ -349,6 +350,7 @@ public class DataContainerGVO implements IsSerializable {
 		
 		return data;
     }
+    // CHECKSTYLE.ON: CyclomaticComplexity
 
     @SuppressWarnings("unchecked")
 	private static DataContainerGVO create(Collection<?> collection) {
