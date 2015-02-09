@@ -29,7 +29,6 @@ import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.core.application.ApplicationIdentifier;
 import com.qualogy.qafe.bind.core.application.ApplicationStack;
 import com.qualogy.qafe.bind.core.application.Configuration;
-import com.qualogy.qafe.bind.core.security.AuthenticationModule;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.presentation.component.Window;
 import com.qualogy.qafe.bind.presentation.event.Component;
@@ -73,11 +72,6 @@ public class ApplicationCluster {
 	public Configuration getGlobalConfiguration() {
 		return globalConfiguration;
 	}
-	/**
-	 * is authentication required for the application cluster
-	 */
-	private boolean authenticationRequired = false;
-	private AuthenticationModule module = null;
 	
 	private static String appClusterUID = null;
 	
@@ -201,11 +195,6 @@ public class ApplicationCluster {
 		}
 		
 		globalConfiguration = stack.getGlobalConfiguration();
-		
-		authenticationRequired = ((stack.getSecuritySettings() != null) && (stack.getSecuritySettings().getAuthenticationSettings() != null)); 
-		if (authenticationRequired) {
-			module = stack.getSecuritySettings().getAuthenticationSettings().getModule();
-		}
 		
 		createWindowEvents();
 		createLoadOnStartupEvents();
@@ -342,14 +331,6 @@ public class ApplicationCluster {
 			}
 		}
 		return null;
-	}
-	
-	public boolean isAuthenticationRequired() {
-		return authenticationRequired;
-	}
-	
-	public AuthenticationModule getAuthenticationModule(){
-		return this.module;
 	}
 
 	public Boolean isConcurrentModificationEnabled() {

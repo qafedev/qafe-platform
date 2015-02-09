@@ -47,54 +47,7 @@ public class WindowRenderer extends AbstractComponentRenderer {
 			widget = (UIObject)window;
 		}
 		return widget;
-//		if (component != null) {
-//			if (component instanceof WindowGVO) {
-//				WindowGVO gvo = (WindowGVO) component;
-//				qRootPanel = new QRootPanel();
-//				RendererHelper.addId(component, qRootPanel,uuid,parent, context, false);
-//				RendererHelper.addUUID(component, qRootPanel,uuid);
-//				
-//				Widget rootPanel = (Widget)super.renderChildComponent(gvo.getRootPanel(), uuid,gvo.getId(), context);
-//				Widget menuAndToolbar = createMenuAndToolbar(qRootPanel,gvo.getRootPanel(), uuid, parent);				
-//				Widget messageBox = new MessageBox();
-//				
-//				ScrollPanel sp = new ScrollPanel();
-//				if (ClientApplicationContext.getInstance().isMDI()){
-//					sp.setHeight(gvo.getHeight());
-//					sp.setWidth(gvo.getWidth());
-//				} else {
-//					sp.setHeight(Window.getClientHeight()+"px");
-//					sp.setWidth(Window.getClientWidth()+"px");
-//				}
-//				sp.add(rootPanel);				
-//				
-//				qRootPanel.setMenuAndToolBar(menuAndToolbar);
-//				qRootPanel.setRootPanel(sp);
-//				qRootPanel.setMessageBox(messageBox);
-//				qRootPanel.add(menuAndToolbar,0,0);
-//				int yPosition = toolbarHeight != null ? Integer.parseInt(toolbarHeight)+ 20 : 0;
-//				if(qRootPanel.getMenuBar() != null){
-//					yPosition+=22;
-//				}
-//				qRootPanel.add(sp,0,yPosition);
-//				
-//				qRootPanel.add(messageBox,200,0);
-//				// Execute all authorization rules belonging to this window
-//				RestrictionsExecutor.getInstance().execute(gvo.getId(), context);
-//			}
-//		}
-//		return widget;
 	}
-	
-	/*private void inheritStyle(UIObject source, UIObject target) {
-		if ((source.getStyleName() != null) && (source.getStyleName().length() > 0)) {
-			target.addStyleName(source.getStyleName());	
-		}
-		if ((source.getElement().getStyle() != null) && (source.getElement().getStyle().toString().length() > 0)) {
-			String inlineStyle = DOM.getElementAttribute(source.getElement(), "style");
-			target.getElement().setAttribute("style", inlineStyle);
-		}
-	}*/
 	
 	@Override
 	protected void init(ComponentGVO component, UIObject widget, String owner, String uuid, String parent, String context, AbstractActivity activity) {

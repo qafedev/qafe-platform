@@ -30,11 +30,6 @@ import com.qualogy.qafe.bind.PostProcessing;
 import com.qualogy.qafe.bind.business.transaction.GlobalTransactions;
 import com.qualogy.qafe.bind.core.messages.HasMessage;
 import com.qualogy.qafe.bind.core.messages.Messages;
-import com.qualogy.qafe.bind.core.security.AuthenticationControlled;
-import com.qualogy.qafe.bind.core.security.AuthenticationModule;
-import com.qualogy.qafe.bind.core.security.AuthorizationControlled;
-import com.qualogy.qafe.bind.core.security.AuthorizationRule;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.io.FileLocation;
 import com.qualogy.qafe.bind.util.InterfaceScanner;
@@ -49,8 +44,7 @@ import com.qualogy.qafe.core.script.ScriptEngineManager;
  * @author
  * 
  */
-public class ApplicationContext implements Serializable, PostProcessing, AuthenticationControlled,
-        AuthorizationControlled {
+public class ApplicationContext implements Serializable, PostProcessing {
 
     private static final Logger LOG = Logger.getLogger(ApplicationContext.class.getName());
 
@@ -129,18 +123,6 @@ public class ApplicationContext implements Serializable, PostProcessing, Authent
     protected Configuration applicationConfiguration;
 
     /**
-	 * 
-	 */
-    protected SecuritySettings securitySettings;
-
-    /**
-     * authorization rule controlling this object
-     */
-    private AuthorizationRule controllingAuthorizationRule;
-
-    private boolean authenticationRequired;// is authentication required for this application
-
-    /**
      * String which can contain the filepath to the application context file this application context origins
      * from
      */
@@ -158,8 +140,6 @@ public class ApplicationContext implements Serializable, PostProcessing, Authent
      * boolean indicating to scan sub directories as well, only picked up when autoScanRoot is true
      */
     protected boolean recursiveScan;
-
-    private AuthenticationModule module;
 
     private List<String> warningMessages = new ArrayList<String>();
 
@@ -279,42 +259,6 @@ public class ApplicationContext implements Serializable, PostProcessing, Authent
 
     public void setId(ApplicationIdentifier id) {
         this.id = id;
-    }
-
-    public boolean isAuthenticationRequired() {
-        return authenticationRequired;
-    }
-
-    public AuthorizationRule getControllingAuthorizationRule() {
-        return controllingAuthorizationRule;
-    }
-
-    public void setControllingAuthorizationRule(AuthorizationRule controllingAuthorizationRule) {
-        this.controllingAuthorizationRule = controllingAuthorizationRule;
-    }
-
-    public void setAuthenticationRequired() {
-        this.authenticationRequired = true;
-    }
-
-    public SecuritySettings getSecuritySettings() {
-        return securitySettings;
-    }
-
-    public void setSecuritySettings(SecuritySettings securitySettings) {
-        this.securitySettings = securitySettings;
-    }
-
-    public void setAuthenticationModule(AuthenticationModule module) {
-        this.module = module;
-    }
-
-    public AuthenticationModule getAuthenticationModule() {
-        return this.module;
-    }
-
-    public boolean isAuthorizationControlled() {
-        return getControllingAuthorizationRule() != null;
     }
 
     public void setApplicationMapping(ApplicationMapping mapping) {

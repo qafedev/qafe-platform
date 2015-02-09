@@ -454,8 +454,6 @@
 				<xs:attribute name="width" type="xs:nonNegativeInteger" default="200"/>
 				<xs:attribute name="height" type="xs:nonNegativeInteger" default="200"/>
 				<xs:attribute name="icon" type="xs:string" />
-				<xs:attribute name="authentication-required" type="xs:boolean"
-					default="false" />
 				<xs:attribute name="icon-style" type="xs:string" />
 				<xs:attribute name="top" type="xs:unsignedInt" />
 				<xs:attribute name="left" type="xs:unsignedInt" />
@@ -593,9 +591,6 @@
 				minOccurs="0" />
 			<xs:element name="error-handler" type="ErrorHandlerType"
 				minOccurs="0" />
-			<xs:element name="authenticate" type="AuthenticateType"
-				minOccurs="0" />
-			<xs:element name="logout" type="LogoutType" minOccurs="0" />
 			<xs:element name="log" type="LogFunctionType" minOccurs="0" />
 			<!--
 				<xs:element name="builtin-function" type="BuiltInFunctionType"
@@ -648,7 +643,6 @@
 				minOccurs="0" />
 			<xs:element name="error-handler" type="ErrorHandlerType"
 				minOccurs="0" />
-			<xs:element name="logout" type="LogoutType" minOccurs="0" />
 			<xs:element name="log" type="LogFunctionType" minOccurs="0" />
 			<xs:element name="show-panel" type="ShowPanelType" minOccurs="0" />
 			<xs:element name="close-panel" type="ClosePanelType" minOccurs="0" />
@@ -2739,16 +2733,6 @@
 				<xs:attribute name="height" type="xs:string" />
 			</xs:extension>
 		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="AuthenticateType">
-		<xs:sequence>
-			<xs:element name="username" type="NamelessAbstractParameterType" minOccurs="1" maxOccurs="1" />
-			<xs:element name="password" type="NamelessAbstractParameterType" minOccurs="1" maxOccurs="1" />
-		</xs:sequence>
-		<xs:attribute name="business-action-ref" type="xs:string" use="required" />
-	</xs:complexType>
-	<xs:complexType name="LogoutType">
-		<xs:attribute name="confirmation-required" type="xs:boolean" default="false" />
 	</xs:complexType>
 
 	<xs:complexType name="SetPropertyType">

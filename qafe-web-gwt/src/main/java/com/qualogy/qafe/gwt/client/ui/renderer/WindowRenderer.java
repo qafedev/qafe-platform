@@ -29,7 +29,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.qualogy.qafe.gwt.client.component.QRootPanel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
-import com.qualogy.qafe.gwt.client.vo.functions.execute.RestrictionsExecutor;
 import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemSeparatorGVO;
@@ -76,8 +75,6 @@ public class WindowRenderer extends AbstractComponentRenderer {
 				qRootPanel.add(sp,0,yPosition);
 				
 				qRootPanel.add(messageBox,200,0);
-				// Execute all authorization rules belonging to this window
-				RestrictionsExecutor.getInstance().execute(gvo.getId(), context);
 			}
 		}
 		return qRootPanel;

@@ -18,7 +18,6 @@ package com.qualogy.qafe.mgwt.shared;
 public class QAMLConstants {
 	
 	public static final String MENU_APPLICATIONS 					= "qafe_menu_applications";
-	public static final String WINDOW_AUTHENTICATION 				= "$_authenticate_window";
 	
 	public final static String SYS_NAVIGATION_PANEL_ENABLED 		= "mobile.navigation.panel.enabled";
 	

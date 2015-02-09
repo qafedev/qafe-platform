@@ -37,7 +37,6 @@ import com.qualogy.qafe.bind.presentation.event.function.SetValue;
 import com.qualogy.qafe.bind.presentation.event.function.ShowPanel;
 import com.qualogy.qafe.bind.presentation.event.function.Toggle;
 import com.qualogy.qafe.bind.presentation.event.function.dialog.GenericDialog;
-import com.qualogy.qafe.core.security.SetRestriction;
 import com.qualogy.qafe.mgwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.mgwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.mgwt.server.event.assembler.dialog.DialogEventRenderer;
@@ -61,7 +60,6 @@ public class EventUIAssembler {
 		RENDERER_MAP.put(OpenWindow.class, new OpenWindowEventRenderer());
 		RENDERER_MAP.put(CloseWindow.class, new CloseWindowEventRenderer());
 		RENDERER_MAP.put(LogFunction.class, new LogFunctionEventRenderer());
-		RENDERER_MAP.put(SetRestriction.class, new SetRestrictionEventRenderer());
 		RENDERER_MAP.put(ShowPanel.class, new ShowPanelBuiltInRenderer());
 		RENDERER_MAP.put(ClosePanel.class, new ClosePanelBuiltInRenderer());
 	}

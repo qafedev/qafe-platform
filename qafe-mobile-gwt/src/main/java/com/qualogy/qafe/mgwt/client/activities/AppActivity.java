@@ -17,10 +17,8 @@ package com.qualogy.qafe.mgwt.client.activities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -35,8 +33,6 @@ import com.qualogy.qafe.mgwt.client.places.AppsPlace;
 import com.qualogy.qafe.mgwt.client.places.WindowPlace;
 import com.qualogy.qafe.mgwt.client.views.AbstractView;
 import com.qualogy.qafe.mgwt.client.views.AppView;
-import com.qualogy.qafe.mgwt.client.vo.functions.SetRestrictionGVO;
-import com.qualogy.qafe.mgwt.client.vo.functions.execute.RestrictionsExecutor;
 import com.qualogy.qafe.mgwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.mgwt.client.vo.ui.WindowGVO;
 import com.qualogy.qafe.mgwt.client.vo.ui.event.EventListenerGVO;
@@ -46,7 +42,6 @@ public class AppActivity extends AbstractActivity {
 
 	private Map<Integer,AbstractPlace> places = new HashMap<Integer,AbstractPlace>();
 	private int selectedIndex;
-	private Set<String> restrictions = new HashSet<String>();
 	
 	public AppActivity(ClientFactory clientFactory, AbstractPlace place) {
 		super(clientFactory, place);
@@ -97,8 +92,6 @@ public class AppActivity extends AbstractActivity {
 				appTitle = appGVO.getTitle();
 			}
 			
-			adaptRestrictions();
-			
 			appView.setTitle(appTitle);
 			// TODO make constant 
 			appView.setBackButtonText("Back");
@@ -124,12 +117,6 @@ public class AppActivity extends AbstractActivity {
 									continue;
 								}
 								String windowId = windowGVO.getId();
-								if (QAMLConstants.WINDOW_AUTHENTICATION.equals(windowId)) {
-									continue;
-								}
-								if (restrictions.contains(windowId)) {
-									continue;
-								}
 								String windowTitle = windowGVO.getTitle();
 								places.put(index, new WindowPlace(windowId, appId));
 								Topic topic = new Topic(windowTitle, 1);
@@ -143,20 +130,6 @@ public class AppActivity extends AbstractActivity {
 			}
 		}
 		return topicList;
-	}
-	
-	private void adaptRestrictions() {
-		restrictions.clear();
-		String context = getPlace().getContext();
-		String key = getClientFactory().generateComponentKey(null, null, context);
-		List<SetRestrictionGVO> setRestrictions = RestrictionsExecutor.getInstance().get(key);
-		if (setRestrictions == null) {
-			return;
-		}
-		for (SetRestrictionGVO setRestrictionGVO : setRestrictions) {
-			String windowId = setRestrictionGVO.getWindowId();
-			restrictions.add(windowId);
-		}
 	}
 
 	private void openWindow(WindowPlace place) {

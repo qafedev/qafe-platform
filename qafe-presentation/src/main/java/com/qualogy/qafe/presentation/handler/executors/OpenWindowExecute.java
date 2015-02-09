@@ -17,27 +17,19 @@ package com.qualogy.qafe.presentation.handler.executors;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import com.qualogy.qafe.bind.commons.type.Parameter;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
-import com.qualogy.qafe.bind.core.security.AuthenticationModule;
-import com.qualogy.qafe.bind.presentation.component.Window;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.event.EventItem;
 import com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
-import com.qualogy.qafe.core.application.ApplicationCluster;
-import com.qualogy.qafe.core.application.UserInfo;
 import com.qualogy.qafe.core.datastore.ApplicationLocalStore;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.core.framework.presentation.EventData;
-import com.qualogy.qafe.core.security.Authorize;
-import com.qualogy.qafe.core.security.SecurityInfo;
 import com.qualogy.qafe.presentation.EventHandlerImpl;
-import com.qualogy.qafe.presentation.handler.EventItemExecutor;
 import com.qualogy.qafe.presentation.handler.ExecuteEventItem;
 
 @Deprecated
@@ -51,7 +43,7 @@ public class OpenWindowExecute extends AbstractEventItemExecute implements Execu
 		if (eventItem instanceof OpenWindow) {
 			OpenWindow openWindow = (OpenWindow) eventItem;
 
-			OpenWindow copyOpenWindow = new OpenWindow(openWindow.isAuthenticationWindow());
+			OpenWindow copyOpenWindow = new OpenWindow();
 			copyOpenWindow.setPlacement(openWindow.getPlacement());
 			copyOpenWindow.setExternal(openWindow.getExternal());
 			if(openWindow.getTitle() != null){
@@ -94,100 +86,9 @@ public class OpenWindowExecute extends AbstractEventItemExecute implements Execu
 				}
 				copyOpenWindow.setDataParameters(clonedList);
 			}
-
-
-			String applicationId = eventData.getApplicationIdentifier().stringValueOf();
-			String windowId = copyOpenWindow.getWindowData();
-			if ((windowId != null) && windowId.indexOf(".") > -1) {
-				applicationId = windowId.substring(0, windowId.indexOf("."));
-				windowId = windowId.substring(windowId.indexOf(".") + 1);
-			}
-
-			Window window = findWindow(context, applicationId, windowId);
-
-			if ((window != null) && window.isAuthenticationRequired() && !copyOpenWindow.isAuthenticationWindow()) {
-
-				String resourceId = window.getAuthenticationModule().getResourceRef();
-				String resourceAppId = window.getAuthenticationModule().getApplicationRef();
-				if (resourceAppId == null) {
-					resourceAppId = applicationId;
-				}
-
-				UserInfo userInfo = SecurityInfo.getInstance().getUserInfo(eventData.getUserUID());
-				userInfo.addToOpenWindow(resourceAppId, resourceId, applicationId, windowId);
-
-				if (userInfo.isAuthenticated() && userInfo.isUsedAuthenticationResource(resourceAppId, resourceId) && !userInfo.isLoggedOutApp(applicationId)) {
-					Authorize authorize = new Authorize(userInfo.getUserUID(), resourceAppId, resourceId);
-					EventItemExecutor.getInstance().execute(authorize, context, event, eventData, listToExecute, eventHandler, dataId);
-				} else {
-					OpenWindow openAuthenticationWindow = createOpenAuthenticationWindow(context, window.getAuthenticationModule(), copyOpenWindow);
-					if (openAuthenticationWindow != null) {
-						listToExecute.add(openAuthenticationWindow);
-					}
-				}
-			} else {
-				listToExecute.add(copyOpenWindow);
-			}
+			listToExecute.add(copyOpenWindow);
 		}
 		return false;
 	}
     // CHECKSTYLE.OFF: CyclomaticComplexity
-
-	private Window findWindow(ApplicationContext appContext, String appId, String windowId) {
-		if (windowId != null) {
-			ApplicationContext context = appContext;
-			if (!appContext.getId().stringValueOf().equals(appId)) {
-				context = findContext(appId);
-			}
-
-			if (context != null) {
-				Iterator<Window> itr = context.getApplicationMapping().getPresentationTier().getView().getWindows().iterator();
-				while (itr.hasNext()) {
-					Window window = itr.next();
-					if (window.getId().equals(windowId)) {
-						return window;
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	private ApplicationContext findContext(String appId) {
-		if (appId != null) {
-			Iterator<ApplicationContext> itr = ApplicationCluster.getInstance().iterator();
-			while (itr.hasNext()) {
-				ApplicationContext appContext = itr.next();
-				if (appContext.getId().toString().equals(appId)) {
-					return appContext;
-				}
-			}
-		}
-		return null;
-	}
-
-	private OpenWindow createOpenAuthenticationWindow(ApplicationContext appContext, AuthenticationModule authenticationModule, OpenWindow openWindow) {
-		if (authenticationModule != null) {
-
-//			String appId = authenticationModule.getApplicationRef();
-			String authenticationWindow = authenticationModule.getWindowRef();
-
-//			if (appId == null) {
-//				// Application Level
-//				if (openWindow.getWindowData().indexOf(".") > -1) {
-//					appId = openWindow.getWindowData().substring(0, openWindow.getWindowData().indexOf("."));
-//				}
-//			}
-//
-//			if (appId != null) {
-//				authenticationWindow = appId + "." + authenticationWindow;
-//			}
-
-			OpenWindow openAuthenticationWindow = new OpenWindow(true);
-			openAuthenticationWindow.setWindowData(authenticationWindow);
-			openAuthenticationWindow.setPlacement(OpenWindow.PLACEMENT_CENTER_CASCADE);
-			return openAuthenticationWindow;
-		}
-		return null;
-	}
 }

@@ -26,13 +26,11 @@ import org.jibx.runtime.IUnmarshallingContext;
 
 import com.qualogy.qafe.bind.PostProcessing;
 import com.qualogy.qafe.bind.ValidationException;
-import com.qualogy.qafe.bind.core.security.AuthenticationControlled;
-import com.qualogy.qafe.bind.core.security.AuthenticationModule;
 import com.qualogy.qafe.bind.presentation.event.Event;
 import com.qualogy.qafe.bind.presentation.style.Style;
 import com.qualogy.qafe.bind.presentation.style.StyleSet;
 
-public class Window extends Component implements PostProcessing, AuthenticationControlled, HasVisibleText {
+public class Window extends Component implements PostProcessing, HasVisibleText {
 
 	/**
 	 * 
@@ -77,7 +75,6 @@ public class Window extends Component implements PostProcessing, AuthenticationC
 	protected Integer top;
 	protected String iconStyle;
 
-	private AuthenticationModule module;
 	private boolean authenticationRequired; // is authentication required for this app
 
 	public Boolean getInDock() {
@@ -274,18 +271,6 @@ public class Window extends Component implements PostProcessing, AuthenticationC
 
 	public void setCss(String css) {
 		this.css = css;
-	}
-
-	public AuthenticationModule getModule() {
-		return module;
-	}
-
-	public void setAuthenticationModule(AuthenticationModule module) {
-		this.module = module;
-	}
-
-	public AuthenticationModule getAuthenticationModule() {
-		return module;
 	}
 
 	public String getDisplayname() {
