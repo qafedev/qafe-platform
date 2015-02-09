@@ -16,7 +16,6 @@
 package com.qualogy.qafe.mgwt.client.activities;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.user.client.ui.UIObject;
@@ -35,9 +34,6 @@ import com.qualogy.qafe.mgwt.client.ui.events.UnloadEvent;
 import com.qualogy.qafe.mgwt.client.ui.renderer.WindowRenderer;
 import com.qualogy.qafe.mgwt.client.views.AbstractView;
 import com.qualogy.qafe.mgwt.client.views.WindowView;
-import com.qualogy.qafe.mgwt.client.vo.functions.SetRestrictionGVO;
-import com.qualogy.qafe.mgwt.client.vo.functions.execute.FunctionsExecutor;
-import com.qualogy.qafe.mgwt.client.vo.functions.execute.RestrictionsExecutor;
 import com.qualogy.qafe.mgwt.client.vo.ui.ComponentGVO;
 import com.qualogy.qafe.mgwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.mgwt.client.vo.ui.WindowGVO;
@@ -160,8 +156,6 @@ public class WindowActivity extends AbstractActivity {
 				windowTitle = windowGVO.getTitle();
 			}
 			
-			adaptRestrictions();
-			
 			windowView.setTitle(windowTitle);
 			boolean displayBackButton = (windowPlace.getFromPlace() != null);
 			windowView.displayBackButton(displayBackButton);
@@ -174,20 +168,6 @@ public class WindowActivity extends AbstractActivity {
 				fireLoad();
 			}
 		}
-	}
-	
-	private void adaptRestrictions() {
-		String windowId = getPlace().getId();
-		String context = getPlace().getContext();
-		String key = getClientFactory().generateComponentKey(null, windowId, context);
-		List<SetRestrictionGVO> setRestrictions = RestrictionsExecutor.getInstance().get(key);
-		if (setRestrictions == null) {
-			return;
-		}
-		for (SetRestrictionGVO setRestrictionGVO : setRestrictions) {
-			FunctionsExecutor.getInstance().execute(setRestrictionGVO, this);
-		}
-		RestrictionsExecutor.getInstance().remove(key);
 	}
 
 	private void fireLoad() {

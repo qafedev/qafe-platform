@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.time.StopWatch;
 
@@ -41,10 +40,8 @@ import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.core.application.ApplicationIdentifier;
 import com.qualogy.qafe.bind.core.application.Configuration;
 import com.qualogy.qafe.core.application.ApplicationCluster;
-import com.qualogy.qafe.core.application.UserInfo;
 import com.qualogy.qafe.core.datastore.ApplicationLocalStore;
 import com.qualogy.qafe.core.i18n.MessagesHandler;
-import com.qualogy.qafe.core.security.SecurityInfo;
 import com.qualogy.qafe.gwt.client.exception.GWTApplicationStoreException;
 import com.qualogy.qafe.gwt.client.exception.GWTServiceException;
 import com.qualogy.qafe.gwt.client.service.RPCService;
@@ -315,13 +312,6 @@ public class RPCServiceImpl
 		stopWatch.start();
 		
 		try {
-
-			if (StringUtils.isEmpty(eventData.getUserUID()) || (SecurityInfo.getInstance().getUserInfo(eventData.getUserUID()) == null)) {
-				UserInfo userInfo = new UserInfo(eventData.getUserUID());
-				eventData.setUserUID(userInfo.getUserUID());
-				SecurityInfo.getInstance().addUserInfo(userInfo);
-			}
-			
 			String appIdUUID = eventData.getUuid().substring(eventData.getUuid().lastIndexOf('|') + 1);// uuid.substring(uuid.lastIndexOf('|')+1);
 			ApplicationIdentifier appId = service.getApplicationId(appIdUUID);
 			

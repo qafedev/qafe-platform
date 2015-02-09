@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.Cookie;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang.time.StopWatch;
 
@@ -40,12 +39,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.core.application.ApplicationIdentifier;
 import com.qualogy.qafe.bind.core.application.Configuration;
-import com.qualogy.qafe.core.QafeApplicationContext;
 import com.qualogy.qafe.core.application.ApplicationCluster;
-import com.qualogy.qafe.core.application.UserInfo;
 import com.qualogy.qafe.core.datastore.ApplicationLocalStore;
 import com.qualogy.qafe.core.i18n.MessagesHandler;
-import com.qualogy.qafe.core.security.SecurityInfo;
 import com.qualogy.qafe.mgwt.client.exception.GWTServiceException;
 import com.qualogy.qafe.mgwt.client.service.RPCService;
 import com.qualogy.qafe.mgwt.client.vo.data.EventDataGVO;
@@ -68,7 +64,6 @@ import com.qualogy.qafe.web.UploadService;
 import com.qualogy.qafe.web.css.util.CssProvider;
 import com.qualogy.qafe.web.util.DatagridStorageHelper;
 import com.qualogy.qafe.web.util.MessageUtil;
-import com.qualogy.qafe.web.util.ServletUtilities;
 import com.qualogy.qafe.web.util.SessionContainer;
 import com.qualogy.qafe.web.util.UserAgentUtil;
 
@@ -332,12 +327,6 @@ public class RPCServiceImpl extends RemoteServiceServlet implements RPCService {
 		try {
 
 			stopWatch.start();
-			
-			if (StringUtils.isEmpty(eventData.getUserUID()) || (SecurityInfo.getInstance().getUserInfo(eventData.getUserUID()) == null)) {
-				UserInfo userInfo = new UserInfo(eventData.getUserUID());
-				eventData.setUserUID(userInfo.getUserUID());
-				SecurityInfo.getInstance().addUserInfo(userInfo);
-			}
 			
 			String appIdUUID = eventData.getUuid().substring(eventData.getUuid().lastIndexOf('|') + 1);// uuid.substring(uuid.lastIndexOf('|')+1);
 			ApplicationIdentifier appId = service.getApplicationId(appIdUUID);

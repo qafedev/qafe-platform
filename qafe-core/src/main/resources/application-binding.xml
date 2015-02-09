@@ -24,37 +24,6 @@
 		<structure usage="optional" field="globalConfiguration" type="com.qualogy.qafe.bind.core.application.Configuration" post-set="postset">
 			<collection field="configurationItems" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" item-type="com.qualogy.qafe.bind.core.application.KeyValue"/>
 		</structure>
-		<structure field="securitySettings" name="security" usage="optional" type="com.qualogy.qafe.bind.core.security.SecuritySettings">
-			<structure field="authenticationSettings" name="authentication" usage="required" type="com.qualogy.qafe.bind.core.security.AuthenticationSettings">
-				<structure field="module" name="module" usage="optional" type="com.qualogy.qafe.bind.core.security.AuthenticationModule">
-					<value name="window-ref" field="windowRef" usage="required" style="attribute"/>
-					<value name="resource-ref" field="resourceRef" usage="required" style="attribute"/>
-					<value name="application-ref" field="applicationRef" usage="required" style="attribute"/>
-				</structure>
-				<structure field="requiredOn" name="required-on" usage="optional" type="com.qualogy.qafe.bind.core.security.RequiredOn">
-					<collection field="idPatterns" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-						<structure name="application" usage="optional" type="com.qualogy.qafe.bind.core.pattern.ApplicationIdPattern">
-							<structure field="idpattern" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WildCardPattern">
-								<value name="id" style="attribute" field="pattern"  usage="required"/>
-							</structure>
-						</structure>
-					</collection>
-				</structure>		
-			</structure>
-			<collection name="authorization-rules" field="authorizationRules" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-				<structure name="rule" usage="optional" type="com.qualogy.qafe.bind.core.security.AuthorizationRule">
-					<value name="access" style="attribute" field="access" usage="required" default="if-any-granted"/>
-					<value name="when-no-access" style="attribute" field="whenNoAccess" usage="required"/>
-					<collection field="idPatterns" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-						<structure name="application" type="com.qualogy.qafe.bind.core.pattern.ApplicationIdPattern">
-							<structure field="idpattern" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WildCardPattern">
-								<value name="id" style="attribute" field="pattern"  usage="required"/>
-							</structure>
-						</structure>
-					</collection>
-				</structure>
-			</collection>
-		</structure>
 		<collection field="applications" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.application.ApplicationContext"/>
 	</mapping>
 	
@@ -91,9 +60,7 @@
 				</structure>
 			</collection>	
 		</structure>
-		
-		<structure usage="optional" field="securitySettings" type="com.qualogy.qafe.bind.core.security.SecuritySettings"/>
-		
+				
 		<collection field="mappingFileLocations" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
 			<structure name="application-mapping-file" usage="optional" type="com.qualogy.qafe.bind.io.FileLocation"  post-set="postset">
 				<value name="location" field="location" usage="required" style="attribute"/>	
@@ -138,51 +105,4 @@
   		</structure>
 	</collection>
   </mapping>
-
-
-	<mapping name="security" class="com.qualogy.qafe.bind.core.security.SecuritySettings">
-	<namespace uri="http://qafe.com/schema"  default="elements"/> 
-		<collection field="settingsFileLocations" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-			<structure name="settings-file" usage="optional" type="com.qualogy.qafe.bind.io.FileLocation"  post-set="postset">
-				<value name="location" field="location" usage="required" style="attribute"/>	
-			</structure>
-  	</collection>
-		<structure field="authenticationSettings" name="authentication" usage="required" type="com.qualogy.qafe.bind.core.security.AuthenticationSettings">
-			<structure field="module" name="module" usage="optional" type="com.qualogy.qafe.bind.core.security.AuthenticationModule">
-				<value name="window-ref" field="windowRef" usage="required" style="attribute"/>
-				<value name="resource-ref" field="resourceRef" usage="required" style="attribute"/>
-			</structure>
-			<structure field="requiredOn" name="required-on" usage="optional" type="com.qualogy.qafe.bind.core.security.RequiredOn">
-				<collection field="idPatterns" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-					<structure name="window" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WindowIdPattern">
-						<structure field="idpattern" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WildCardPattern">
-							<value name="id" style="attribute" field="pattern"  usage="required"/>
-						</structure>
-					</structure>
-				</collection>
-			</structure>	
-		</structure>
-		<collection name="authorization-rules" field="authorizationRules" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
-			<structure name="rule" usage="optional" type="com.qualogy.qafe.bind.core.security.AuthorizationRule">
-				<value name="access" style="attribute" field="access" usage="required" default="if-any-granted"/>
-				<value name="when-no-access" style="attribute" field="whenNoAccess" usage="required"/>
-				<collection field="idPatterns" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional" ordered="false">
-					<structure name="component" type="com.qualogy.qafe.bind.core.pattern.ComponentIdPattern">
-						<value name="window-id" style="attribute" field="windowId" usage="optional"/>
-						<structure field="idpattern" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WildCardPattern">
-							<value name="id" style="attribute" field="pattern" usage="optional"/>
-						</structure>
-					</structure>
-					<structure name="business-action" type="com.qualogy.qafe.bind.core.pattern.ActionIdPattern">
-						<structure field="idpattern" usage="optional" type="com.qualogy.qafe.bind.core.pattern.WildCardPattern">
-							<value name="id" style="attribute" field="pattern"  usage="required"/>
-						</structure>
-					</structure>
-				</collection>
-			</structure>
-		</collection>
-	</mapping>
-
-	
-	
 </binding>

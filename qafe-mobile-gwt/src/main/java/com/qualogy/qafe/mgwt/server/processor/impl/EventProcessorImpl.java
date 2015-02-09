@@ -38,7 +38,6 @@ import com.qualogy.qafe.mgwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.mgwt.client.vo.data.GDataObject;
 import com.qualogy.qafe.mgwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.mgwt.client.vo.functions.DataContainerGVO;
-import com.qualogy.qafe.mgwt.client.vo.functions.SetRestrictionGVO;
 import com.qualogy.qafe.mgwt.client.vo.ui.event.InputVariableGVO;
 import com.qualogy.qafe.mgwt.server.event.assembler.EventUIAssembler;
 import com.qualogy.qafe.mgwt.server.processor.EventProcessor;
@@ -109,17 +108,7 @@ public class EventProcessorImpl implements EventProcessor {
 					BuiltInFunction builtInFunctionToExecute = (BuiltInFunction) itr.next();
 					BuiltInFunctionGVO builtInFunction = EventUIAssembler.convert((EventItem) builtInFunctionToExecute, eventData, context,ss);
 					if (builtInFunction != null) {
-						if (builtInFunction instanceof SetRestrictionGVO) {
-							// Authorization rules should be placed prior to OpenWindow,
-							// so the rules can be added before opening the window
-							// Note: before, the order of execution is OpenWindow -> SetRestriction,
-							// because of the change in the method MainFactoryActions.getUIByUUID()
-							// the window will not be created immediately if it is not created before
-							// then this will result in timing issue
-							((List)builtInFunctions).add(0, builtInFunction);
-						} else {
-							builtInFunctions.add(builtInFunction);	
-						}
+						builtInFunctions.add(builtInFunction);	
 					}
 				}
 				data.setFunctions((BuiltInFunctionGVO[]) builtInFunctions.toArray(new BuiltInFunctionGVO[] {}));

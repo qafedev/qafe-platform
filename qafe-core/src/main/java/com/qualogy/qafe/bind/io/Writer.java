@@ -34,7 +34,6 @@ import org.xml.sax.SAXException;
 
 import com.qualogy.qafe.bind.core.application.ApplicationStack;
 import com.qualogy.qafe.bind.core.messages.Messages;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.io.document.DocumentLoader;
 import com.qualogy.qafe.bind.orm.jibx.BindException;
@@ -195,7 +194,6 @@ public class Writer {
 			MAPPING.put(ApplicationStack.class, new String[]{"applications", "http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd"});
 			MAPPING.put(QueryContainer.class, new String[]{QueryContainer.ROOT_ELEMENT_NAME, "http://qafe.com/schema http://www.qafe.com/schema/application-statements.xsd"});
 			MAPPING.put(Messages.class, new String[]{"messages", "http://qafe.com/schema http://www.qafe.com/schema/application-messages.xsd"});
-			MAPPING.put(SecuritySettings.class, new String[]{"security", "http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd"});
 			MAPPING.put(FilterRules.class, new String[]{"filter-rules", "http://qafe.com/schema http://www.qafe.com/schema/filter-rule.xsd"});
 			
 		};

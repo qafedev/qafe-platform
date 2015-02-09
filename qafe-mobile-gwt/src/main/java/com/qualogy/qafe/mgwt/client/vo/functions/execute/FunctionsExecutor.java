@@ -44,7 +44,6 @@ public class FunctionsExecutor {
 		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.CloseWindowGVO", new CloseWindowExecute());
 		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.dialog.GenericDialogGVO", new GenericDialogExecute());
 		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO", new LogFunctionExecute());
-		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.SetRestrictionGVO", new SetRestrictionExecute());
 		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.ShowPanelGVO", new ShowPanelExecute());
 		EXECUTOR_MAP.put("com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO", new ClosePanelExecute());
 	};

@@ -20,11 +20,7 @@ import java.util.List;
 import com.qualogy.qafe.bind.business.action.BusinessAction;
 import com.qualogy.qafe.bind.business.transaction.TransactionBehaviour;
 import com.qualogy.qafe.bind.core.application.io.ResourceMerger;
-import com.qualogy.qafe.bind.core.security.AuthenticationModule;
-import com.qualogy.qafe.bind.core.security.AuthenticationSettings;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
-import com.qualogy.qafe.bind.resource.BindResource;
 import com.qualogy.qafe.core.application.LoadFailedException;
 
 public class ApplicationContextPostProcessHelper {
@@ -53,63 +49,5 @@ public class ApplicationContextPostProcessHelper {
 		
 		//4. messages
 		context.messages = ResourceMerger.merge(context.messages, context.name, context.root, validating);
-		
-		//5. authorization
-//		String resourceRef = null;
-//		if(context.securitySettings!=null && context.securitySettings.getAuthenticationSettings()!=null && context.securitySettings.getAuthenticationSettings().getModule()!=null){
-//			resourceRef = context.securitySettings.getAuthenticationSettings().getModule().getResourceRef();
-//		}
-//		context.getApplicationMapping().resolveResourcePlaceHolder(BindResource.PLACEHOLDER_$_AUTHORISATION_RESOURCE, resourceRef);
-//		context.getApplicationMapping().resolveResourcePlaceHolder(BindResource.PLACEHOLDER_$_AUTHENTICATION_RESOURCE, resourceRef);
-	}
-	
-	public static void securityPostProcess(ApplicationStack stack, ApplicationContext context){
-		if (stack == null) {
-			return;
-		}
-		if ((context == null) || (context.getApplicationMapping() == null)) {
-			return;
-		}
-		String securityApplicationRef = null;
-		String securityWindowRef = null;
-		String securityResourceRef = null;
-		ApplicationMapping securityApplicationMapping = null;
-		AuthenticationModule authenticationModule = null;
-		SecuritySettings securitySettings = context.getSecuritySettings();
-		if (securitySettings != null) {
-			AuthenticationSettings authenticationSettings = securitySettings.getAuthenticationSettings();
-			if (authenticationSettings != null) {
-				authenticationModule = authenticationSettings.getModule();
-				if (authenticationModule != null) {
-					securityApplicationRef = authenticationModule.getApplicationRef();
-					securityWindowRef = authenticationModule.getWindowRef();
-					securityResourceRef = authenticationModule.getResourceRef();
-					String applicationId = context.getId().toString();
-					if ((securityApplicationRef == null) || (applicationId.equals(securityApplicationRef))) {
-						securityApplicationMapping = context.getApplicationMapping();
-						if (securityApplicationRef == null) {
-							authenticationModule.setApplicationRef(applicationId);
-						}
-					} else {
-						ApplicationIdentifier securityApplicationIdentifier = new ApplicationIdentifier(securityApplicationRef);
-						ApplicationContext securityApplicationContext = stack.get(securityApplicationIdentifier);
-						if (securityApplicationContext != null) {
-							securityApplicationMapping = securityApplicationContext.getApplicationMapping();
-						}
-					}
-				}
-			}
-		}
-		context.getApplicationMapping().resolveResourcePlaceHolder(BindResource.PLACEHOLDER_$_SECURITY_RESOURCE, securityApplicationMapping, securityResourceRef);
-		if (authenticationModule != null) {
-			String defaultSecurityWindowRef = SecuritySettings.AUTHENTICATE_WINDOW;
-			if (securityWindowRef.length() == 0) {
-				authenticationModule.setWindowRef(defaultSecurityWindowRef);
-			} else if (!securityWindowRef.equals(defaultSecurityWindowRef)) {							
-				if (context.getApplicationMapping().resolveDefaultLoginWindow(defaultSecurityWindowRef, securityApplicationMapping, securityWindowRef)) {
-					authenticationModule.setWindowRef(defaultSecurityWindowRef);
-				}
-			}	
-		}
 	}
 }

@@ -53,11 +53,7 @@ public class OpenWindowExecute extends BuiltInExecute {
 					currentPlace = (WindowPlace)fromPlace.getFromPlace();
 				}
 			}
-			if (currentPlace != null) {
-				if (!QAMLConstants.WINDOW_AUTHENTICATION.equals(currentPlace.getId())) {
-					return currentPlace;	
-				}	
-			}
+			return currentPlace;	
 		}
 		return null;
 	}

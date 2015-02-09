@@ -30,7 +30,6 @@ import org.w3c.dom.Document;
 
 import com.qualogy.qafe.bind.core.application.ApplicationStack;
 import com.qualogy.qafe.bind.core.messages.Messages;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.io.document.DocumentLoader;
 import com.qualogy.qafe.bind.io.merge.DocumentMerger;
@@ -233,11 +232,10 @@ public class Reader {
 	public static class Mapping{
 		private static Map<Class, String[]> MAPPING = new HashMap<Class, String[]>();
 		static{
-			MAPPING.put(ApplicationMapping.class, new String[]{"application-mapping", "application-mapping-defaults.xml"});
+			MAPPING.put(ApplicationMapping.class, new String[]{"application-mapping"});
 			MAPPING.put(ApplicationStack.class, new String[]{"applications"});
 			MAPPING.put(QueryContainer.class, new String[]{QueryContainer.ROOT_ELEMENT_NAME});
 			MAPPING.put(Messages.class, new String[]{"messages"});
-			MAPPING.put(SecuritySettings.class, new String[]{"security"});
             MAPPING.put(FilterRules.class, new String[]{"filter-rules"});
 		};
 		

@@ -17,8 +17,6 @@ package com.qualogy.qafe.bind.presentation.component;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
-import com.qualogy.qafe.bind.core.security.AuthorizationControlled;
-import com.qualogy.qafe.bind.core.security.AuthorizationRule;
 import com.qualogy.qafe.bind.domain.BindBase;
 
 /**
@@ -26,7 +24,7 @@ import com.qualogy.qafe.bind.domain.BindBase;
  *         rendered as graphical controls.
  */
 
-public abstract class Component extends BindBase implements AuthorizationControlled {
+public abstract class Component extends BindBase {
 
 	/**
 	 * 
@@ -75,11 +73,6 @@ public abstract class Component extends BindBase implements AuthorizationControl
 	protected String width;
 	
 	protected String height;
-	
-	/**
-	 * authorization rule controlling this object
-	 */
-	private AuthorizationRule controllingAuthorizationRule;
 	
 	protected String styleClass;
 	
@@ -161,15 +154,6 @@ public abstract class Component extends BindBase implements AuthorizationControl
 		return ReflectionToStringBuilder.reflectionToString(this);
 	}
 
-	public AuthorizationRule getControllingAuthorizationRule() {
-		return controllingAuthorizationRule;
-	}
-
-	public void setControllingAuthorizationRule(
-			AuthorizationRule controllingAuthorizationRule) {
-		this.controllingAuthorizationRule = controllingAuthorizationRule;
-	}
-
 	public String getStyle() {
 		return style;
 	}
@@ -184,10 +168,5 @@ public abstract class Component extends BindBase implements AuthorizationControl
 
 	public void setStyleClass(String styleClass) {
 		this.styleClass = styleClass;
-	}
-	
-	public boolean isAuthorizationControlled() {
-		return getControllingAuthorizationRule()!=null;
-	}
-	
+	}	
 }

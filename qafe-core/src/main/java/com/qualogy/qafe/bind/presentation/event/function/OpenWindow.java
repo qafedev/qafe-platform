@@ -37,7 +37,6 @@ public class OpenWindow extends BuiltInFunction implements PostProcessing{
 	public static final String PLACEMENT_CENTER_CASCADE = "center-cascade";
 	public static final String PLACEMENT_TILED = "tiled";
 	
-	protected  Boolean authenticationWindow;
 	protected Boolean external=Boolean.FALSE;
 	
 	public Boolean getExternal() {
@@ -70,7 +69,6 @@ public class OpenWindow extends BuiltInFunction implements PostProcessing{
 	protected String placement=PLACEMENT_CASCADE;
 	
 	
-	
 	public String getParamsData() {
 		return paramsData;
 	}
@@ -85,20 +83,6 @@ public class OpenWindow extends BuiltInFunction implements PostProcessing{
 
 	public void setParams(Parameter params) {
 		this.params = params;
-	}
-
-		
-
-	public OpenWindow() {
-		this(false);
-	}
-	
-	public OpenWindow(Boolean authenticationWindow) {
-		this.authenticationWindow = authenticationWindow;
-	}
-	
-	public Boolean isAuthenticationWindow() {
-		return authenticationWindow;
 	}
 	
 	public Parameter getWindow() {

@@ -31,8 +31,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.jibx.runtime.IUnmarshallingContext;
 
 import com.qualogy.qafe.bind.PostProcessing;
-import com.qualogy.qafe.bind.core.security.SecurityPostProcessHelper;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.io.Reader;
 import com.qualogy.qafe.core.application.LoadFailedException;
@@ -52,8 +50,6 @@ public class ApplicationStack implements PostProcessing{
 	 * holder for configuration items
 	 */
 	protected Configuration globalConfiguration;
-
-	protected SecuritySettings securitySettings;
 
 	/*
 	 *  The applicaton File path that is needed to get the information for external properties and other things.
@@ -102,12 +98,6 @@ public class ApplicationStack implements PostProcessing{
 			globalConfiguration = ConfigurationDefaults.getInstance().getGlobalConfiguration();
 		else	
 			globalConfiguration.fillInTheBlanks(ConfigurationDefaults.getInstance().getGlobalConfiguration());
-		
-		SecurityPostProcessHelper.postProcess(this);
-		
-		for (Iterator<ApplicationContext> iter = getApplicationsIterator(); iter.hasNext();) {
-			ApplicationContextPostProcessHelper.securityPostProcess(this, iter.next());
-		}
 	}
 
 	public void postset(IUnmarshallingContext context) {
@@ -118,10 +108,6 @@ public class ApplicationStack implements PostProcessing{
 	 */
 	public Iterator<ApplicationContext> getApplicationsIterator() {
 		return applications!=null?applications.iterator():null;
-	}
-	
-	public SecuritySettings getSecuritySettings() {
-		return securitySettings;
 	}
 	
 	@Deprecated

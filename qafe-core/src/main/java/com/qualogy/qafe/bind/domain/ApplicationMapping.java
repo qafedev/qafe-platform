@@ -24,15 +24,9 @@ import org.jibx.runtime.IUnmarshallingContext;
 
 import com.qualogy.qafe.bind.PostProcessing;
 import com.qualogy.qafe.bind.ValidationException;
-import com.qualogy.qafe.bind.commons.type.In;
-import com.qualogy.qafe.bind.core.security.SecuritySettings;
-import com.qualogy.qafe.bind.integration.service.Method;
-import com.qualogy.qafe.bind.integration.service.Service;
 import com.qualogy.qafe.bind.orm.jibx.BindException;
 import com.qualogy.qafe.bind.presentation.component.Window;
 import com.qualogy.qafe.bind.presentation.event.Event;
-import com.qualogy.qafe.bind.resource.BindResource;
-import com.qualogy.qafe.bind.resource.JavaResource;
 import com.qualogy.qafe.bind.util.Validator;
 
 /**
@@ -200,86 +194,7 @@ public class ApplicationMapping implements Serializable, PostProcessing{
 	public void postset(IUnmarshallingContext context) {
 		performPostProcessing();
 	}
-	
-	/**
-	 * convinience mapping to resolve resource placeholder
-	 */
-	public void resolveResourcePlaceHolder(String placeholder, ApplicationMapping resourceAppMapping, String actualResourceRef) {
-		boolean replaced = false;
-		if ((actualResourceRef != null) && (resourceAppMapping != null)) {
 
-			BindResource actualResource = resourceAppMapping.getResourceTier().getResource(actualResourceRef);
-			
-			if (actualResource != null) {
-				
-				if (getIntegrationTier() != null) {
-					getIntegrationTier().replaceResourceRef(placeholder, actualResource);
-				}
-				
-				if ((resourceAppMapping != this) && (getResourceTier() != null)) {
-					getResourceTier().replaceResource(placeholder, actualResource);	
-					replaced = true;
-				}
-				resolveInputParameters(actualResource);
-			}
-		}
-		if (!replaced && (getResourceTier() != null)) {
-			getResourceTier().removeResource(placeholder);
-		}
-	}
-	
-	private void resolveInputParameters(BindResource resource) {
-		if ((resource instanceof JavaResource) && (getIntegrationTier() != null)) {
-			List<Service> serviceList = getIntegrationTier().services;
-			if (serviceList == null) {
-				return;
-			}
-			for (int i=0; i<serviceList.size(); i++) {
-				Service service = serviceList.get(i);
-				if (service.getId().equals(SecuritySettings.SECURITY_SERVICE)) {
-					List<Method> methodList = service.getMethods();
-					for (int j=0; j<methodList.size(); j++) {
-						Method method = methodList.get(j);
-						if (method.getId().equals(SecuritySettings.AUTHENTICATE_METHOD) || method.getId().equals(SecuritySettings.GET_RESTRICTIONS_METHOD)) {
-							List<In> inputList = method.getInput();
-							for (int k=0; k<inputList.size(); k++) {
-								In in = inputList.get(k);
-								if (in.getName().equals(SecuritySettings.METHOD_IN_USERNAME)) {
-									in.setName("0");
-								}
-								if (in.getName().equals(SecuritySettings.METHOD_IN_PASSWORD)) {
-									in.setName("1");
-								}
-							}	
-						}
-					}	
-				}
-			}
-		}
-	}
-//	public void resolveInputParameters(BindResource resource, ApplicationMapping resourceAppMapping) {
-//		if (resource instanceof JavaResource) {
-//			List<Service> serviceList = resourceAppMapping.getIntegrationTier().services;
-//			for (int i=0; i<serviceList.size(); i++) {
-//				Service service = serviceList.get(i);
-//				List<Method> methodList = service.getMethods();
-//				for (int j=0; j<methodList.size(); j++) {
-//					Method method = methodList.get(j);
-//					List<In> inputList = method.getInput();
-//					for (int k=0; k<inputList.size(); k++) {
-//						In in = inputList.get(k);
-//						if (in.getName().equals("username")) {
-//							in.setName("0");
-//						}
-//						if (in.getName().equals("password")) {
-//							in.setName("1");
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-	
 	public Boolean resolveDefaultLoginWindow(String defaultLoginWindowRef, ApplicationMapping resourceAppMapping, String customLoginWindowRef) {
 		if ((getPresentationTier() != null) && (customLoginWindowRef != null)) {
 			Window defaultLoginWindow = null;	

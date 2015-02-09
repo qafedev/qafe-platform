@@ -23,10 +23,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import com.qualogy.qafe.bind.Validatable;
 import com.qualogy.qafe.bind.ValidationException;
 import com.qualogy.qafe.bind.business.transaction.TransactionBehaviour;
-import com.qualogy.qafe.bind.core.security.AuthorizationControlled;
-import com.qualogy.qafe.bind.core.security.AuthorizationRule;
 import com.qualogy.qafe.bind.domain.BindBase;
-import com.qualogy.qafe.bind.integration.service.MethodRef;
 import com.qualogy.qafe.bind.integration.service.ServiceRef;
 
 /**
@@ -35,7 +32,7 @@ import com.qualogy.qafe.bind.integration.service.ServiceRef;
  * @author Gideon Liem
  *
  */
-public class BusinessAction extends BindBase implements Validatable, AuthorizationControlled{
+public class BusinessAction extends BindBase implements Validatable {
 
 	private static final long serialVersionUID = -3413242264532864852L;
 
@@ -49,11 +46,6 @@ public class BusinessAction extends BindBase implements Validatable, Authorizati
 	protected List<BusinessActionItem> businessActionItems;
 
 	protected TransactionBehaviour transactionBehaviour = TransactionBehaviour.createDefault();
-	
-	/**
-	 * authorization rule controlling this object
-	 */
-	private AuthorizationRule controllingAuthorizationRule;
 	
 	public BusinessAction(String id) {
 		super();
@@ -168,18 +160,5 @@ public class BusinessAction extends BindBase implements Validatable, Authorizati
 
 	public void setAccess(String access) {
 		this.access = access;
-	}
-
-	public AuthorizationRule getControllingAuthorizationRule() {
-		return controllingAuthorizationRule;
-	}
-
-	public void setControllingAuthorizationRule(
-			AuthorizationRule controllingAuthorizationRule) {
-		this.controllingAuthorizationRule = controllingAuthorizationRule;
-	}
-	
-	public boolean isAuthorizationControlled() {
-		return getControllingAuthorizationRule()!=null;
 	}
 }
