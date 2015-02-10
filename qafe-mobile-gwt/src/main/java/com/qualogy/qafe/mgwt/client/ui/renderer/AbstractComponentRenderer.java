@@ -72,14 +72,6 @@ public abstract class AbstractComponentRenderer implements GWTUIRenderer {
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.TreeGVO", new TreeRenderer());
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.TreeItemGVO", new TreeItemRenderer());
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.WindowGVO", new WindowRenderer());
-
-		// Chart Components
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.ChartComponentGVO", new ChartComponentRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.BarChartGVO", new BarChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.ColumnChartGVO", new ColumnChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.LineChartGVO", new LineChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.PlotChartGVO", new PlotChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.PieChartGVO", new PieChartRenderer());
 	}
 
 	protected UIObject[] renderChildComponents(ComponentGVO[] components, String owner, String uuid, String parent, String context, AbstractActivity activity) {
