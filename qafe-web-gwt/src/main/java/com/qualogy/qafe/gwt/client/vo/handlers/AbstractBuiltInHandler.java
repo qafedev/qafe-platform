@@ -38,7 +38,9 @@ import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.BundleGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
+import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public abstract class AbstractBuiltInHandler implements BuiltInHandler {
@@ -87,6 +89,8 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
                 if (BuiltInFunctionGVO.SOURCE_DATASTORE_ID.equals(source)
                         && placeHolderValues.containsKey(reference)) {
                     value = placeHolderValues.get(reference);
+                } else if (BuiltInFunctionGVO.SOURCE_MESSAGE_ID.equals(source)) {
+                	value = getLocalizedMessage(appId, reference);
                 } else {
                     final String dataId = generateDataId(source, appId, windowId, eventSessionId);
 
@@ -101,7 +105,21 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return value;
     }
 
-    // CHECKSTYLE.OFF: CyclomaticComplexity
+    private String getLocalizedMessage(String appId, String reference) {
+    	String bundleId = BundleGVO.DEFAULT_BUNDLE_ID;
+    	String messageKey = reference;
+    	if (reference.contains(".")) {
+    		String[] referenceList = reference.split("\\.");
+    		bundleId = referenceList[0];
+    		messageKey = referenceList[1];
+    	}
+    	UIGVO uiGVO = EventHandler.getInstance().getApplication(appId);
+    	String currentLanguage = uiGVO.getCurrentLanguage();
+    	BundleGVO bundleGVO = uiGVO.getBundle(bundleId);
+    	return bundleGVO.getLocalizedMessage(currentLanguage, messageKey);
+	}
+
+	// CHECKSTYLE.OFF: CyclomaticComplexity
     // The solution is based on retrieving value from textfield
     // TODO: Refactor to handle multiple components
     private Object getComponentValue(final UIObject sender, final String reference, String appId,
