@@ -22,14 +22,10 @@ import java.util.logging.Logger;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.presentation.component.Area;
-import com.qualogy.qafe.bind.presentation.component.BarChart;
 import com.qualogy.qafe.bind.presentation.component.Button;
-import com.qualogy.qafe.bind.presentation.component.CategoryAxis;
-import com.qualogy.qafe.bind.presentation.component.ChartItem;
 import com.qualogy.qafe.bind.presentation.component.CheckBox;
 import com.qualogy.qafe.bind.presentation.component.Choice;
 import com.qualogy.qafe.bind.presentation.component.ChoiceItem;
-import com.qualogy.qafe.bind.presentation.component.ColumnChart;
 import com.qualogy.qafe.bind.presentation.component.Component;
 import com.qualogy.qafe.bind.presentation.component.DataGrid;
 import com.qualogy.qafe.bind.presentation.component.DataGridColumn;
@@ -41,8 +37,6 @@ import com.qualogy.qafe.bind.presentation.component.HTMLComponent;
 import com.qualogy.qafe.bind.presentation.component.Hidden;
 import com.qualogy.qafe.bind.presentation.component.Image;
 import com.qualogy.qafe.bind.presentation.component.Label;
-import com.qualogy.qafe.bind.presentation.component.LineChart;
-import com.qualogy.qafe.bind.presentation.component.LinearAxis;
 import com.qualogy.qafe.bind.presentation.component.Link;
 import com.qualogy.qafe.bind.presentation.component.ListBox;
 import com.qualogy.qafe.bind.presentation.component.MapComponent;
@@ -54,8 +48,6 @@ import com.qualogy.qafe.bind.presentation.component.Panel;
 import com.qualogy.qafe.bind.presentation.component.PanelDefinition;
 import com.qualogy.qafe.bind.presentation.component.PanelRef;
 import com.qualogy.qafe.bind.presentation.component.PasswordTextField;
-import com.qualogy.qafe.bind.presentation.component.PieChart;
-import com.qualogy.qafe.bind.presentation.component.PlotChart;
 import com.qualogy.qafe.bind.presentation.component.RootPanel;
 import com.qualogy.qafe.bind.presentation.component.Slider;
 import com.qualogy.qafe.bind.presentation.component.SplitPanel;
@@ -82,9 +74,8 @@ public class ComponentUIAssembler {
 	
 	public final static Logger logger = Logger.getLogger(ComponentUIAssembler.class.getName());
 
-	private static final Map<Class<?>,UIAssembler> COMPONENT_RENDERER_MAP			= new HashMap<Class<?>,UIAssembler>();
+	private static final Map<Class<?>,UIAssembler> COMPONENT_RENDERER_MAP = new HashMap<Class<?>,UIAssembler>();
 	static {
-	
 		COMPONENT_RENDERER_MAP.put(Area.class, new AreaUIAssembler());
 		COMPONENT_RENDERER_MAP.put(Button.class,new ButtonUIAssembler());
 		COMPONENT_RENDERER_MAP.put(CheckBox.class, new CheckBoxUIAssembler()); 
@@ -96,7 +87,6 @@ public class ComponentUIAssembler {
 		COMPONENT_RENDERER_MAP.put(DropDownItem.class, new DropDownItemUIAssembler());		
 		COMPONENT_RENDERER_MAP.put(FileUpload.class, new FileUploadUIAssembler());
 		COMPONENT_RENDERER_MAP.put(Hidden.class, new HiddenUIAssembler());		
-			
 		COMPONENT_RENDERER_MAP.put(Image.class,new ImageUIAssembler());
 		COMPONENT_RENDERER_MAP.put(Label.class, new LabelUIAssembler());
 		COMPONENT_RENDERER_MAP.put(Link.class, new LinkUIAssembler());
@@ -131,17 +121,6 @@ public class ComponentUIAssembler {
 		COMPONENT_RENDERER_MAP.put(HTMLComponent.class, new HTMLUIAssembler());
 		COMPONENT_RENDERER_MAP.put(FrameComponent.class, new FrameUIAssembler());
 		COMPONENT_RENDERER_MAP.put(TileList.class, new TileListUIAssembler());
-		COMPONENT_RENDERER_MAP.put(BarChart.class, new BarChartUIAssembler());
-		COMPONENT_RENDERER_MAP.put(CategoryAxis.class, new CategoryAxisUIAssembler());
-		COMPONENT_RENDERER_MAP.put(ChartItem.class, new ChartItemUIAssembler());
-		COMPONENT_RENDERER_MAP.put(ColumnChart.class, new ColumnChartUIAssembler());
-		COMPONENT_RENDERER_MAP.put(LinearAxis.class, new LinearAxisUIAssembler());
-		COMPONENT_RENDERER_MAP.put(LineChart.class, new LineChartUIAssembler());
-		COMPONENT_RENDERER_MAP.put(PieChart.class, new PieChartUIAssembler());
-		COMPONENT_RENDERER_MAP.put(PlotChart.class, new PlotChartUIAssembler());
-		
-		
-		
 	}
 	
 	public static ComponentGVO convert(Component object, Window currentWindow, ApplicationMapping applicationMapping,ApplicationContext context,SessionContainer ss){

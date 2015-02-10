@@ -1,5 +1,5 @@
 http\://www.qafe.com/schema/application-context.xsd=application-context.xsd
-http\://www.qafe.com/schema/1.3/application-mapping.xsd=application-mapping.xsd
+http\://www.qafe.com/schema/application-mapping.xsd=application-mapping.xsd
 http\://www.qafe.com/schema/application-messages.xsd=application-messages.xsd
 http\://www.qafe.com/schema/application-statements.xsd=application-statements.xsd
 http\://www.qafe.com/schema/filter-rule.xsd=filter-rule.xsd

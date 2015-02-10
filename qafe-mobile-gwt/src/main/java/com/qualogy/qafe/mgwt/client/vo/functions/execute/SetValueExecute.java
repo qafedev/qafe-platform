@@ -280,11 +280,6 @@ public class SetValueExecute extends BuiltInExecute {
 //				}
 //
 //			}
-//			if(uiObject instanceof QChart2D){
-//				QChart2D chart = (QChart2D)uiObject;
-//				DataContainerGVO val = (DataContainerGVO)valueToSet;
-//				chart.setChartData(uiObject, val.getListofDC());
-//			}
 //			if (uiObject instanceof QDatePicker) {
 //				QDatePicker qDatePicker = (QDatePicker)uiObject;
 //				if(valueDTC != null) {

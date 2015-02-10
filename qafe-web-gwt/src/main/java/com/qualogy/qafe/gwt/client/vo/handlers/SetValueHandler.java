@@ -36,7 +36,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.qualogy.qafe.gwt.client.component.DataMap;
 import com.qualogy.qafe.gwt.client.component.HasData;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
-import com.qualogy.qafe.gwt.client.component.QChart2D;
 import com.qualogy.qafe.gwt.client.component.QDatePicker;
 import com.qualogy.qafe.gwt.client.component.QMultiWordSuggestion;
 import com.qualogy.qafe.gwt.client.component.QRadioButton;
@@ -139,9 +138,6 @@ public class SetValueHandler extends AbstractBuiltInHandler {
                                 tiles.clear();
                             }
                             tiles.fillDataFromMapList(dataContainerGVOs, setValueGVO);
-                        } else if(uiObject instanceof QChart2D) {
-                            QChart2D chart = (QChart2D)uiObject;
-                            chart.setChartData(uiObject, dataContainerGVOs);
                         }
                     } break;
                 }
@@ -292,12 +288,6 @@ public class SetValueHandler extends AbstractBuiltInHandler {
                     image.setUrl(value.toString());
                 }
 
-            }
-
-            if(uiObject instanceof QChart2D){
-                QChart2D chart = (QChart2D)uiObject;
-                DataContainerGVO val = (DataContainerGVO)value;
-                chart.setChartData(uiObject, val.getListofDC());
             }
 
             if (uiObject instanceof QDatePicker) {

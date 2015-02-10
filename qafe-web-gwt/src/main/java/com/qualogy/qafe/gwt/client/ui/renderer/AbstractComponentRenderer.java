@@ -92,23 +92,7 @@ public abstract class AbstractComponentRenderer implements GWTUIRenderer {
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.WindowGVO", new WindowRenderer());
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.HTMLGVO", new HTMLRenderer());
 		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.FrameGVO", new FrameRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.TileListGVO", new TileListRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.ChartComponentGVO", new ChartComponentRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.BarChartGVO", new BarChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.ColumnChartGVO", new ColumnChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.LineChartGVO", new LineChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.PlotChartGVO", new PlotChartRenderer());
-		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.PieChartGVO", new PieChartRenderer());
-		//COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.ChartItemGVO", new ChartItemRenderer());
-		
-//		COMPONENT_RENDERER_MAP.put(CategoryAxis.class, new CategoryAxisUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(ChartItem.class, new ChartItemUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(ColumnChart.class, new ColumnChartUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(LinearAxis.class, new LinearAxisUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(LineChart.class, new LineChartUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(PieChart.class, new PieChartUIAssembler());
-//		COMPONENT_RENDERER_MAP.put(PlotChart.class, new PlotChartUIAssembler());
-		
+		COMPONENT_RENDERER_MAP.put("com.qualogy.qafe.gwt.client.vo.ui.TileListGVO", new TileListRenderer());		
 	}
 
 	protected UIObject[] renderChildComponents(ComponentGVO[] components, String uuid, String parent, String context) {

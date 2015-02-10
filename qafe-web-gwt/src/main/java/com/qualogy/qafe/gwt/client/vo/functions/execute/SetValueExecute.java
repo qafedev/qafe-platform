@@ -40,7 +40,6 @@ import com.qualogy.qafe.gwt.client.component.DataMap;
 import com.qualogy.qafe.gwt.client.component.HasData;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
 import com.qualogy.qafe.gwt.client.component.HasPrompt;
-import com.qualogy.qafe.gwt.client.component.QChart2D;
 import com.qualogy.qafe.gwt.client.component.QDatePicker;
 import com.qualogy.qafe.gwt.client.component.QMultiWordSuggestion;
 import com.qualogy.qafe.gwt.client.component.QRadioButton;
@@ -123,9 +122,6 @@ public class SetValueExecute implements ExecuteCommand {
 										tiles.clear();
 									}
 									tiles.fillDataFromMapList(dataContainer.getListofDC(), setValue);
-								} else if(uiObject instanceof QChart2D) {
-									QChart2D chart = (QChart2D)uiObject;
-									chart.setChartData(uiObject, dataContainer.getListofDC());
 								}
 							}
 						} else { // datacontainer is null, so no data can be found. Check the UIObjects on their kind and clear them.
@@ -438,12 +434,6 @@ public class SetValueExecute implements ExecuteCommand {
 					image.setUrl(valueToSet.toString());
 				}
 
-			}
-
-			if(uiObject instanceof QChart2D){
-				QChart2D chart = (QChart2D)uiObject;
-				DataContainerGVO val = (DataContainerGVO)valueToSet;
-				chart.setChartData(uiObject, val.getListofDC());
 			}
 
 			if (uiObject instanceof QDatePicker) {
