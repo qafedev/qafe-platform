@@ -45,9 +45,12 @@ public class UIGVO extends UIVO implements  IsSerializable{
 	private String css;
     private WindowGVO[] windows;
     private MenuItemGVO menus;
+    private String currentLanguage;
 	private Map<String,EventListenerGVO> eventMap = new HashMap<String, EventListenerGVO>();
 	
 	private Map<String, EventGVO> events = new HashMap<String, EventGVO>();
+	
+	private Map<String, BundleGVO> bundles = new HashMap<String, BundleGVO>();
 	
 	public String getRootMenu() {
 		return rootMenu;
@@ -79,6 +82,20 @@ public class UIGVO extends UIVO implements  IsSerializable{
 
 	public void setMenus(MenuItemGVO menus) {
 		this.menus = menus;
+	}
+
+	/**
+	 * @return the currentLanguage
+	 */
+	public String getCurrentLanguage() {
+		return currentLanguage;
+	}
+
+	/**
+	 * @param currentLanguage the currentLanguage to set
+	 */
+	public void setCurrentLanguage(String currentLanguage) {
+		this.currentLanguage = currentLanguage;
 	}
 
 	public  String getTitle() {
@@ -136,6 +153,25 @@ public class UIGVO extends UIVO implements  IsSerializable{
     public void addEvent(String eventKey, EventGVO event) {
         events.put(eventKey, event);
     }
+
+	/**
+	 * Returns a bundleGVO with a specific bundle id.
+	 * 
+	 * @return the bundleGVO
+	 */
+	public BundleGVO getBundle(String bundleId) {
+		return bundles.get(bundleId);
+	}
+	
+	/**
+	 * Adds a messages bundle to this object.
+	 * 
+	 * @param bundleId the bundle id
+	 * @param bundle the bundle gv object
+	 */
+	public void addBundle(String bundleId, BundleGVO bundle) {
+		bundles.put(bundleId, bundle);
+	}
 
 	public UIGVO strip() {
 		UIGVO uiGVO = new UIGVO();

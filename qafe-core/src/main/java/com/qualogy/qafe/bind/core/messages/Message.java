@@ -25,22 +25,22 @@ import org.jibx.runtime.IUnmarshallingContext;
 
 import com.qualogy.qafe.bind.PostProcessing;
 
-public class Message implements Serializable, PostProcessing{
-	
+public class Message implements Serializable, PostProcessing {
+
 	/**
-	 * if a message is set without locale, the message are
-	 * set to this default key
+	 * if a message is set without locale, the message are set to this default
+	 * key
 	 */
 	public final static String DEFAULT_LOCALE_KEY = "";
-	
+
 	/**
 	 * bind variables
 	 */
 	protected String key;
-	protected List<MessageValue> messageValues ;
-	
+	protected List<MessageValue> messageValues;
+
 	private static final long serialVersionUID = -5190746112696063105L;
-	
+
 	/**
 	 * postprocessing output
 	 */
@@ -49,49 +49,58 @@ public class Message implements Serializable, PostProcessing{
 	public Message() {
 		super();
 	}
-	
-	public String get(String locale){
-		String result =values.get(locale);
-		if (result==null){ // so there was no direct hit, maybe the local is for exampe 'nl' while in the messages file 'nl_NL' is specified. Then the next best solution must be searched!
-			boolean found=false;
-			for (Iterator<String> itr =values.keySet().iterator(); itr.hasNext() &&!found;){
+
+	public String get(String locale) {
+		String result = values.get(locale);
+		if (result == null) {
+			// so there was no direct hit, maybe the local is
+			// for exampe 'nl' while in the messages file
+			// 'nl_NL' is specified. Then the next best
+			// solution must be searched!
+			boolean found = false;
+			Iterator<String> itr = values.keySet().iterator();
+			while (itr.hasNext() && !found) {
 				String key = itr.next();
-				if (key!=null && key.startsWith(locale)){
+				if (key != null && key.startsWith(locale)) {
 					result = values.get(key);
-					found=true;
+					found = true;
 				}
-				
+			}
+			if (!found) {
+				result = values.get(DEFAULT_LOCALE_KEY);
 			}
 		}
 		return result;
 	}
-	
-	public String get(){
+
+	public String get() {
 		return get(DEFAULT_LOCALE_KEY);
 	}
 
 	public void performPostProcessing() {
-		if(messageValues!=null){
-			for (Iterator<MessageValue> iter = messageValues.iterator(); iter.hasNext();) {
+		if (messageValues != null) {
+			for (Iterator<MessageValue> iter = messageValues.iterator(); iter
+					.hasNext();) {
 				MessageValue mv = iter.next();
-				values.put(mv.getLocale()!=null?mv.getLocale():DEFAULT_LOCALE_KEY, mv.getValue());
+				values.put(mv.getLocale() != null ? mv.getLocale()
+						: DEFAULT_LOCALE_KEY, mv.getValue());
 			}
 		}
 	}
 
-	public void put(String value){
+	public void put(String value) {
 		put(DEFAULT_LOCALE_KEY, value);
 	}
-	
-	public void put(String locale, String value){	
+
+	public void put(String locale, String value) {
 		values.put(locale, value);
 	}
-	
+
 	public void postset(IUnmarshallingContext context) {
 		performPostProcessing();
 	}
-	
-	public Map<String, String> toMap(){
+
+	public Map<String, String> toMap() {
 		return values;
 	}
 

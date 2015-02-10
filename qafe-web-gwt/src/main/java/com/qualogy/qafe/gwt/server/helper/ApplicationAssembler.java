@@ -19,10 +19,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.core.messages.Bundle;
+import com.qualogy.qafe.bind.core.messages.Message;
+import com.qualogy.qafe.bind.core.messages.Messages;
 import com.qualogy.qafe.bind.domain.ApplicationMapping;
 import com.qualogy.qafe.bind.presentation.component.MenuItem;
 import com.qualogy.qafe.bind.presentation.component.Window;
@@ -35,6 +40,7 @@ import com.qualogy.qafe.core.application.ApplicationCluster;
 import com.qualogy.qafe.gwt.client.vo.functions.EventGVO;
 import com.qualogy.qafe.gwt.client.vo.layout.BorderLayoutGVO;
 import com.qualogy.qafe.gwt.client.vo.layout.HasElements;
+import com.qualogy.qafe.gwt.client.vo.ui.BundleGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.ComponentGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.DataGridColumnGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.DataGridGVO;
@@ -110,13 +116,55 @@ public class ApplicationAssembler {
                                 uiGVO.addEvent(eventKey, eventGVO);    
                             }
                         }
-                    }    
+                    }
+                    processLocalizedMessages(context, uiGVO, sessionContainer);
                 }
                 
             }
 			return uiGVO;
 		} else {
 			return null;
+		}
+	}
+
+	/**
+	 * Processes localized messages and adds them to a bundle GVO based on bundle id.
+	 * 
+	 * @param context
+	 * @param sessionContainer
+	 * @param uiGVO
+	 */
+	private static void processLocalizedMessages(ApplicationContext context
+			, UIGVO uiGVO, SessionContainer sessionContainer) {
+		Messages messages = context.getMessages();
+		if (messages == null) {
+			return;
+		}
+		String language = Message.DEFAULT_LOCALE_KEY;
+		Locale locale = sessionContainer.getLocale();
+		if (locale != null) {
+			language = locale.toString();
+		}
+		uiGVO.setCurrentLanguage(language);
+		Map<String, Bundle> bundles = messages.getBundles();
+		//For each locale within each Message object within each bundle we 
+		//construct the BundleGVO.
+		//The domain object code is really nasty and has to be re-factored
+		//at some point.
+		for (String bundleId : bundles.keySet()) {
+			BundleGVO bundleGVO = new BundleGVO();
+			Bundle bundle = bundles.get(bundleId);
+			Map<String, Message> localizedMessages = bundle.getMessages();
+			for (Entry<String, Message> messageSet : localizedMessages.entrySet()) {
+				String messageKey = messageSet.getKey();
+				Message message = messageSet.getValue();
+				Map<String, String> messageValues = message.toMap();
+				for (String messageLanguage : messageValues.keySet()) {
+					String messageValue = messageValues.get(messageLanguage);
+					bundleGVO.addLocalizedMessage(messageLanguage, messageKey, messageValue);
+				}
+			}
+			uiGVO.addBundle(bundleId, bundleGVO);
 		}
 	}
 
