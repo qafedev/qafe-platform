@@ -116,7 +116,10 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     	UIGVO uiGVO = EventHandler.getInstance().getApplication(appId);
     	String currentLanguage = uiGVO.getCurrentLanguage();
     	BundleGVO bundleGVO = uiGVO.getBundle(bundleId);
-    	return bundleGVO.getLocalizedMessage(currentLanguage, messageKey);
+    	if (bundleGVO != null) {
+    		return bundleGVO.getLocalizedMessage(currentLanguage, messageKey);
+    	}
+    	return null;
 	}
 
 	// CHECKSTYLE.OFF: CyclomaticComplexity
