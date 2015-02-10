@@ -18,7 +18,7 @@
 -->
 <application-mapping xmlns="http://qafe.com/schema"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
 	<presentation-tier>
 		<view>
 			<window closable="false" displayname="Authentication" id="$_authenticate_window"
@@ -49,10 +49,6 @@
 								<listener type="onclick" />
 							</listenergroup>
 						</listeners>
-						<authenticate business-action-ref="$_handle_security">
-							<username ref="$username" src="component" />
-							<password ref="$password" src="component" />
-						</authenticate>
 					</event>
 					<event id="$_authenticate_cancel">
 						<listeners>
