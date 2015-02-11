@@ -96,8 +96,4 @@ public class ApplicationMappingXMLMergerTest extends XMLTestCase {
 			assertTrue("Wrong binding", false);
 		}
 	}
-	
-	public void testValidation() throws Exception {
-		new DocumentLoader().loadDocument(getClass().getClassLoader().getResourceAsStream("application-mapping-defaults.xml"), true);
-	}
 }
