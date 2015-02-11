@@ -19,19 +19,9 @@
 <applications  xmlns="http://qafe.com/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-context.xsd">
 	
 	<configuration name="mode.development" value="true"/>
-		
-	<security>
-		<authentication>
-			<module application-ref="helloWorld" window-ref="" resource-ref="securityResource"/>
-				<required-on>
-					<application id="*" />
-				</required-on>
-		</authentication>
-	</security>		
 	
 	<application name="Hello World Application" id="helloWorld" >
-		<application-mapping-file location="hello-world.xml"/>
-		<application-mapping-file location="security-service.xml"/>		
+		<application-mapping-file location="hello-world.xml"/>	
 	</application>
 
 </applications>

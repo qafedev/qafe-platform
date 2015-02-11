@@ -19,6 +19,7 @@ package com.qualogy.qafe.bind.io;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,14 +114,22 @@ public class Reader {
 		return read(null, paths);
 	}
 
-	public Object read(String fileName) {
-		File file = new File(fileName);
-		if(!file.exists()){
-			throw new BindException("Cannot read file from location ["+fileName+"]");
-		}
-		return read(file.toURI());
-	}
-	
+    public Object read(String fileName) {
+        final File file;
+
+        final File checkFile = new File(getClass().getClassLoader().getResource(fileName).getFile());
+        if (checkFile.exists()) {
+            file = checkFile;
+        } else {
+            file = new File(fileName);
+            if (!file.exists()) {
+                throw new BindException("Cannot read file from location [" + fileName + "]");
+            }
+        }
+
+        return read(file.toURI());
+    }
+
 	public Object read(URI fileName) {
 		List<URI> fileNames = new ArrayList<URI>();
 		fileNames.add(fileName);
