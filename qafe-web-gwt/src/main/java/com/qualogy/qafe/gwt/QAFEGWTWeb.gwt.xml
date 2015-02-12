@@ -35,8 +35,6 @@
 	<inherits name='com.google.gwt.query.Query' /> 
 	<inherits name='gwtquery.plugins.UiEmbedded' />
 	 
-	<inherits name="com.objetdirect.tatami.Tatami_DojoCharting" />
-
     <inherits name="com.google.code.gwt.geolocation.Html5Geolocation" />
 	
 	<!-- Logging GWT -->
