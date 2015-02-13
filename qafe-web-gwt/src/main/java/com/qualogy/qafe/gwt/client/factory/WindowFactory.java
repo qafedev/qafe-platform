@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2014 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,14 +34,12 @@ import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.ui.GWTUIGenerator;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.ui.renderer.events.EventFactory;
-import com.qualogy.qafe.gwt.client.util.QAMLUtil;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.MenuItemSeparatorGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.QAFEKeywordsGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.UIGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.WindowGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.EventListenerGVO;
-import com.sun.stylesheet.types.Size.Unit;
 
 public class WindowFactory {
 

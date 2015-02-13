@@ -20,6 +20,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/application-mapping.xsd">
 	<presentation-tier>
 		<view>
@@ -40,6 +41,14 @@
 		<view>
 			<window id="window1" displayname="Hello World" width="30%" height="30%">
 >>>>>>> QAFE-1132 As a core developer I want to re-implement horizontallayout to be flexible/responsive, so that users of the QAFE platform can create scalable apps
+=======
+	xsi:schemaLocation="http://qafe.com/schema http://www.qafe.com/schema/2.2/application-mapping.xsd">
+	
+	<!-- -->
+	<presentation-tier>
+		<view>
+			<window id="window1" displayname="Hello World" width="30%" height="30%">
+>>>>>>> c9c1b53b4f1efbce3edbe2426a28f2b402c9d422
 				<rootpanel id="myRootPanel">
 					<horizontallayout>
 						<panel>
