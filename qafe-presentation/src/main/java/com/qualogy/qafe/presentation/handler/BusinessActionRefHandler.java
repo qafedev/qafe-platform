@@ -16,14 +16,11 @@
 package com.qualogy.qafe.presentation.handler;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.qualogy.qafe.bind.business.action.BusinessAction;
 import com.qualogy.qafe.bind.commons.type.Parameter;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
-import com.qualogy.qafe.business.integration.adapter.ObjectMapConverter;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
@@ -67,9 +64,11 @@ public class BusinessActionRefHandler {
     private Map<String, Object> collectOutputValues(final BusinessActionItemDataObject businessActionItemDataObject,
             final DataIdentifier dataId) {
         Map<String, Object> outputValues = new HashMap<String, Object>();
-        for(String key : businessActionItemDataObject.getOutputVariables()) {
-            Object value = DataStore.getValue(dataId, key);
-            outputValues.put(key, value);
+        Map<String, String> outputVariables = businessActionItemDataObject.getOutputVariables();
+        for(String outName : outputVariables.keySet()) {
+            String outReference = outputVariables.get(outName);
+            Object value = DataStore.getValue(dataId, outReference);
+            outputValues.put(outName, value);
         }
         
         // For sending the updated internal variables back to the client-side

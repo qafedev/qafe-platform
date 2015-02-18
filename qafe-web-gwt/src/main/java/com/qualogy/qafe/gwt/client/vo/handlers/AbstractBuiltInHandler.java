@@ -490,7 +490,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         return RendererHelper.isNamedComponent(uiObject);
     }
 
-    protected UIObject renderComponent(ComponentGVO componentGVO, String appId, String windowId, String eventSessionId) {
+    protected UIObject renderComponent(ComponentGVO componentGVO, String eventSessionId, String windowId, String appId) {
     	return AnyComponentRenderer.getInstance().render(componentGVO, eventSessionId, windowId, appId);    	
     }
     

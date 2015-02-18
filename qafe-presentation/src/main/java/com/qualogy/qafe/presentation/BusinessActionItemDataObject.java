@@ -16,9 +16,7 @@
 package com.qualogy.qafe.presentation;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BusinessActionItemDataObject extends EventItemDataObject implements Serializable {
@@ -29,12 +27,12 @@ public class BusinessActionItemDataObject extends EventItemDataObject implements
 
     private Map<String, Object> inputValues = new HashMap<String, Object>();
 
-    private List<String> outputVariables = new ArrayList<String>();
+    private Map<String, String> outputVariables = new HashMap<String, String>();
 
     private Map<String, Object> internalVariables = new HashMap<String, Object>();
 
     public BusinessActionItemDataObject(final String sessionId, final String appId, final String windowId, final String businessActionId,
-            final Map<String, Object> inputValues, List<String> outputVariables, Map<String, Object> internalVariables) {
+            final Map<String, Object> inputValues, Map<String, String> outputVariables, Map<String, Object> internalVariables) {
         super(sessionId, appId, windowId);
         this.businessActionId = businessActionId;
         this.inputValues = inputValues;
@@ -53,16 +51,16 @@ public class BusinessActionItemDataObject extends EventItemDataObject implements
     public void setInputValues(Map<String, Object> inputValues) {
         this.inputValues = inputValues;
     }
-
-    public List<String> getOutputVariables() {
+	
+    public Map<String, String> getOutputVariables() {
         return outputVariables;
     }
 
-    public void setOutputVariables(List<String> outputVariables) {
+    public void setOutputVariables(Map<String, String> outputVariables) {
         this.outputVariables = outputVariables;
     }
 
-	/**
+    /**
 	 * @return the internalVariables
 	 */
 	public Map<String, Object> getInternalVariables() {

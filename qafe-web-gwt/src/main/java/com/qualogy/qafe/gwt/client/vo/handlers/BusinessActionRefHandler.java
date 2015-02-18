@@ -15,9 +15,7 @@
  */
 package com.qualogy.qafe.gwt.client.vo.handlers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -47,7 +45,7 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 		Map<String, Object> internalVariables = collectInteralVariables(sender,
 				appId, windowId, eventSessionId);
 		eventItemDataGVO.setInternalVariables(internalVariables);
-        List<String> outputVariables = collectOutputVariables(businessActionRefGVO);
+        Map<String, String> outputVariables = collectOutputVariables(businessActionRefGVO);
         eventItemDataGVO.setOutputVariables(outputVariables);
 
 		executeBuiltInServerSide(sender, listenerType, mouseInfo,
@@ -97,13 +95,14 @@ public class BusinessActionRefHandler extends AbstractBuiltInHandler {
 		return internalVariables;
 	}
 
-	private List<String> collectOutputVariables(
+	private Map<String, String> collectOutputVariables(
 			BusinessActionRefGVO businessActionRefGVO) {
-        List<String> outputVariables = new ArrayList<String>();
+	    Map<String, String> outputVariables = new HashMap<String, String>();
 		for (ParameterGVO parameterGVO : businessActionRefGVO
 				.getOutputParameters()) {
             String key = parameterGVO.getName();
-            outputVariables.add(key);
+            String reference = parameterGVO.getReference();
+            outputVariables.put(key, reference);
         }
         return outputVariables;
     }

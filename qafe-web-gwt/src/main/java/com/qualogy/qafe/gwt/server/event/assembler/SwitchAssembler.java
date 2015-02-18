@@ -55,9 +55,17 @@ public class SwitchAssembler extends AbstractEventItemAssembler {
 		ParameterGVO expressionGVO = assembleParameter(eventItem.getExpression());
 		eventItemGVO.setExpression(expressionGVO);
 		SwitchResults results = eventItem.getResults();
-		for (SwitchResult result : results.getResults()) {
-			assembleChildren(eventItemGVO, result.getValue(), result.getResultItems(), event, applicationContext);
+		if (results == null) {
+		    return;
 		}
+		
+		List<SwitchResult> switchResults = results.getResults();
+		if (switchResults != null) {
+		    for (SwitchResult result : switchResults) {
+	            assembleChildren(eventItemGVO, result.getValue(), result.getResultItems(), event, applicationContext);
+	        }    
+		}
+		
 		List<ResultItem> defaultResultItems = results.getDefaultResult();
 		assembleChildren(eventItemGVO, SwitchGVO.DEFAULT_SELECTION, defaultResultItems, event, applicationContext);
     }

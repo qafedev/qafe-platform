@@ -61,44 +61,73 @@ public class LocalDataStorage implements DataStorage {
         	return values.get(name);
         }
         Object result = null;
+        resolveIndex(name, values, result);
+        resolveDotOperator(name, values, result);
+        
+        if (result == null) {
+            result = values.get(name);
+        }
+        return result;
+    }
+
+    /**
+     * If the reference contains a dot, we retrieve data
+     * by using what comes after the . as key
+     * 
+     * @param name the reference
+     * @param values the values to retrieve data from
+     * @param result the result object after resolving is done
+     */
+    private void resolveDotOperator(final String name, final Map<String, Object> values, Object result) {
         if (name.contains(".")) {
-        	String[] splitName = name.split("\\.");
-        	String key = splitName[0];
-        	String attribute = splitName[1];
-        	Object keyValue = values.get(key);
+            String[] splitName = name.split("\\.");
+            String key = splitName[0];
+            String attribute = splitName[1];
+            Object keyValue = values.get(key);
+            if (result != null) {
+                keyValue = result;
+            }
             if (keyValue instanceof DataContainerGVO) {
                 DataContainerGVO dataContainer = (DataContainerGVO) keyValue;
                 switch (dataContainer.getKind()) {
                     case DataContainerGVO.KIND_MAP: {
-                    	keyValue = dataContainer.getDataMap();
+                        keyValue = dataContainer.getDataMap();
                     }
                 }
             }
             if (keyValue instanceof Map) {
-            	result = ((Map) keyValue).get(attribute);
+                result = ((Map) keyValue).get(attribute);
             }
-        } else if (name.contains("[")) {
-        	String newName = name.replace("[", ":").replace("]", ":");
-        	String[] splitName = newName.split(":");
-        	String key = splitName[0];
-        	String index = splitName[1];
-        	Object keyValue = values.get(key);
+        }
+    }
+
+    /**
+     * Resolve the value at the specified index
+     * 
+     * @param name the reference
+     * @param values a map of values where the data will be retrieved from
+     * @param result the object in which the final variable will be set
+     */
+    private void resolveIndex(final String name, final Map<String, Object> values, Object result) {
+        if (name.contains("[")) {
+            String newName = name.replace("[", ":").replace("]", ":");
+            String[] splitName = newName.split(":");
+            String key = splitName[0];
+            String index = splitName[1];
+            Object keyValue = values.get(key);
             if (keyValue instanceof DataContainerGVO) {
                 DataContainerGVO dataContainer = (DataContainerGVO) keyValue;
                 switch (dataContainer.getKind()) {
                     case DataContainerGVO.KIND_COLLECTION: {
-                    	keyValue = dataContainer.getListofDC();
+                        keyValue = dataContainer.getListofDC();
                     }
                 }
             }
-        	if (keyValue instanceof List) {
-        		List listValue = (List) keyValue;
-        		result = listValue.get(Integer.valueOf(index));
-        	}
-        } else {
-            result = values.get(name);
+            if (keyValue instanceof List) {
+                List listValue = (List) keyValue;
+                result = listValue.get(Integer.valueOf(index));
+            }
         }
-        return result;
     }
 
     public final String register() {

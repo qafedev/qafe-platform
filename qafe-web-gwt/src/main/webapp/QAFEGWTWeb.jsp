@@ -25,8 +25,6 @@
 		<jsp:include page="QAFEGWTWebTitle.jsp"></jsp:include>
 		<script src="qafegwt/jquery-ui/jquery-1.4.2.min.js"></script>
 		<script src="qafegwt/jquery-ui/jquery-ui-1.8.5.min.js"></script>
-		<script src="qafegwt/dojo/dojo.js"></script>
-		<script src="qafegwt/dojo/tatami_charting_module.js"></script>
 		<script src="js/skulpt/skulpt.min.js"></script>
 <%
 		if(height>0 && width>0){
