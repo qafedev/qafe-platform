@@ -61,8 +61,8 @@ public class LocalDataStorage implements DataStorage {
         	return values.get(name);
         }
         Object result = null;
-        resolveIndex(name, values, result);
-        resolveDotOperator(name, values, result);
+        result = resolveIndex(name, values, result);
+        result = resolveDotOperator(name, values, result);
         
         if (result == null) {
             result = values.get(name);
@@ -78,7 +78,7 @@ public class LocalDataStorage implements DataStorage {
      * @param values the values to retrieve data from
      * @param result the result object after resolving is done
      */
-    private void resolveDotOperator(final String name, final Map<String, Object> values, Object result) {
+    private Object resolveDotOperator(final String name, final Map<String, Object> values, Object result) {
         if (name.contains(".")) {
             String[] splitName = name.split("\\.");
             String key = splitName[0];
@@ -99,6 +99,7 @@ public class LocalDataStorage implements DataStorage {
                 result = ((Map) keyValue).get(attribute);
             }
         }
+        return result;
     }
 
     /**
@@ -108,7 +109,7 @@ public class LocalDataStorage implements DataStorage {
      * @param values a map of values where the data will be retrieved from
      * @param result the object in which the final variable will be set
      */
-    private void resolveIndex(final String name, final Map<String, Object> values, Object result) {
+    private Object resolveIndex(final String name, final Map<String, Object> values, Object result) {
         if (name.contains("[")) {
             String newName = name.replace("[", ":").replace("]", ":");
             String[] splitName = newName.split(":");
@@ -128,6 +129,7 @@ public class LocalDataStorage implements DataStorage {
                 result = listValue.get(Integer.valueOf(index));
             }
         }
+        return result;
     }
 
     public final String register() {

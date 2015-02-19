@@ -33,6 +33,7 @@ public class IterationHandler extends AbstractBuiltInHandler {
 		IterationGVO iterationGVO = (IterationGVO) builtInGVO;
 		handleIteration(iterationGVO, sender, appId, windowId, eventSessionId, derivedBuiltIns);
 		if (derivedBuiltIns.isEmpty()) {
+		    cleanUp(iterationGVO, eventSessionId);
 			return BuiltInState.EXECUTED;
 		}
 		return BuiltInState.REPEAT;
@@ -116,4 +117,14 @@ public class IterationHandler extends AbstractBuiltInHandler {
 		String varIndex = resolveVarIndex(iterationGVO);
 		storeData(eventSessionId, varIndex, varIndexValue);
 	}
+	
+   private void cleanUp(IterationGVO iterationGVO, String eventSessionId) {   
+       String varIndex = resolveVarIndex(iterationGVO);
+       removeData(eventSessionId, varIndex);
+       
+       String var = iterationGVO.getVar();
+       if (var != null) {
+           removeData(eventSessionId, var);
+       }
+    }
 }
