@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.regex.Matcher;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -100,6 +101,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         } else if (parameterGVO.getExpression() != null) {
         	String expr = parameterGVO.getExpression();
         	expr = resolveExpression(expr, placeHolderValues, eventSessionId);
+        	log(parameterGVO.getExpression() + " = " + expr);
         	value = evaluateExpression(expr);
         }
         return value;
@@ -265,7 +267,9 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 			return "None";
 		}
 		if (value instanceof String) {
-    		return "'" + value + "'";
+		    value = escapeQuotes((String)value);
+		    // prefix with u to UTF-8 encode the string for in the python expression
+    		return "u'" + value + "'";
     	}
 		if (value instanceof Boolean) {
         	boolean bool = (Boolean) value;
@@ -302,6 +306,13 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
 		return value.toString();
 	}
 	
+    private String escapeQuotes(String value) {
+        if (value != null) {
+            value = value.replaceAll("'", "\\\\'");
+        }
+        return value;
+    }
+
     protected Map<String, Object> resolvePlaceholderValues(ParameterGVO parameterGVO, UIObject sender, String appId, String windowId, String eventSessionId) {
 		Map<String, Object> placeHolderValues = new HashMap<String, Object>();
         if (parameterGVO.getPlaceHolders() != null && !parameterGVO.getPlaceHolders().isEmpty()) {
