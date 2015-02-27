@@ -241,7 +241,7 @@ public class Reader {
 	public static class Mapping{
 		private static Map<Class, String[]> MAPPING = new HashMap<Class, String[]>();
 		static{
-			MAPPING.put(ApplicationMapping.class, new String[]{"application-mapping"});
+			MAPPING.put(ApplicationMapping.class, new String[]{"application-mapping", "qafe-config-app.xml"});
 			MAPPING.put(ApplicationStack.class, new String[]{"applications"});
 			MAPPING.put(QueryContainer.class, new String[]{QueryContainer.ROOT_ELEMENT_NAME});
 			MAPPING.put(Messages.class, new String[]{"messages"});
