@@ -226,8 +226,8 @@
 		<resources>
 			<drivermanager-datasource id="dbResource"
 				statements-file-url="call-statements.xml" 
-				url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV1" username="hdemo65"
-				password="hdemo65" driver-classname="oracle.jdbc.OracleDriver"/>
+				url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV1" username="hdemo65_xe"
+				password="hdemo65_xe" driver-classname="oracle.jdbc.OracleDriver"/>
 		</resources>
 		
 	</resource-tier>
