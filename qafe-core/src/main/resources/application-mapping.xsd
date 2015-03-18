@@ -553,8 +553,12 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:group name="builtInGroup">
+		<xs:annotation>
+			<xs:documentation>
+				All built ins possible within the scope of an event
+			</xs:documentation>
+		</xs:annotation>
 		<xs:choice>
-
 			<xs:element name="dialog" type="DialogType" minOccurs="0" />
 			<xs:element name="store" type="LocalStoreType" minOccurs="0" />
 			<xs:element name="set" type="SetValueType" minOccurs="0" />
@@ -598,13 +602,14 @@
 			-->
 			<xs:element name="show-panel" type="ShowPanelType" minOccurs="0" />
 			<xs:element name="close-panel" type="ClosePanelType" minOccurs="0" />
+			<xs:element name="call-script" type="CallScriptType" minOccurs="0" />
 		</xs:choice>
 	</xs:group>
 
 	<xs:group name="itemsGroup">
 		<xs:annotation>
 			<xs:documentation>
-				all items possible with event and business action
+				All built ins possible within another built in, such as built ins in an IF, SWITCH, or similar built ins.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
@@ -2467,6 +2472,45 @@
 	</xs:complexType>
 	<xs:complexType name="ClosePanelType">
 		<xs:attribute name="ref" type="xs:string" use="required"/>
+	</xs:complexType>
+
+	<xs:complexType name="CallScriptType">
+		<xs:complexContent>
+			<xs:extension base="BuiltInFunctionType">
+				<xs:sequence>
+					<xs:element name="param" type="NamelessAbstractParameterType"
+						minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>
+								Define a parameter to be passed to the function to be called
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+
+				<xs:attribute name="type" default="javascript">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="javascript">
+								<xs:annotation>
+									<xs:documentation>
+										Define the type of the script of whom a function should be invoked.
+									    Javascript by default.
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="function" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>
+							The name of the function to be invoked
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 
 	<xs:complexType name="SetValueType">

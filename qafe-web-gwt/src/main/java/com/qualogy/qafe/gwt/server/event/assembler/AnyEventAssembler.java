@@ -40,6 +40,7 @@ import com.qualogy.qafe.bind.presentation.event.function.LogFunction;
 import com.qualogy.qafe.bind.presentation.event.function.OpenWindow;
 import com.qualogy.qafe.bind.presentation.event.function.RegExpValidate;
 import com.qualogy.qafe.bind.presentation.event.function.Return;
+import com.qualogy.qafe.bind.presentation.event.function.CallScript;
 import com.qualogy.qafe.bind.presentation.event.function.SetPanel;
 import com.qualogy.qafe.bind.presentation.event.function.SetProperty;
 import com.qualogy.qafe.bind.presentation.event.function.SetValue;
@@ -80,6 +81,7 @@ public class AnyEventAssembler {
         ASSEMBLER_MAP.put(Iteration.class, new IterationAssembler());
         ASSEMBLER_MAP.put(SwitchStatement.class, new SwitchAssembler());
         ASSEMBLER_MAP.put(RegExpValidate.class, new RegExpValidateAssembler());
+        ASSEMBLER_MAP.put(CallScript.class, new CallScriptAssembler());
     }
 
     public static EventGVO assemble(final Event event, final ApplicationContext applicationContext) {

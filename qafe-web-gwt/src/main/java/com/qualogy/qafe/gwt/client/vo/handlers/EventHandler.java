@@ -25,7 +25,6 @@ import java.util.Stack;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.UIObject;
-import com.qualogy.qafe.gwt.client.component.QTableModel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.service.RPCService;
 import com.qualogy.qafe.gwt.client.service.RPCServiceAsync;
@@ -50,6 +49,7 @@ import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.CallScriptGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
@@ -98,6 +98,7 @@ public class EventHandler {
         BUILTIN_MAP.put(IterationGVO.CLASS_NAME, new IterationHandler());
         BUILTIN_MAP.put(SwitchGVO.CLASS_NAME, new SwitchHandler());
         BUILTIN_MAP.put(RegExpValidateGVO.CLASS_NAME, new RegExpValidateHandler());
+        BUILTIN_MAP.put(CallScriptGVO.CLASS_NAME, new CallScriptHandler());
     }
 
     public static EventHandler getInstance() {

@@ -38,7 +38,7 @@ public class PredefinedClassTypeConverter{
 		SIMPLE_TYPES.put(new TypeDefinition("int"), Integer.class);
 		SIMPLE_TYPES.put(new TypeDefinition("long"), Long.class);
 		//SIMPLE_TYPES.put(new TypeDefinition("short", Short.class);
-		//SIMPLE_TYPES.put(new TypeDefinition("float", Float.class);
+		SIMPLE_TYPES.put(new TypeDefinition("float"), Float.class);
 		SIMPLE_TYPES.put(new TypeDefinition("double"), Double.class);
 		SIMPLE_TYPES.put(new TypeDefinition("character"), Character.class);
 		SIMPLE_TYPES.put(new TypeDefinition("char"), Character.class);
@@ -72,7 +72,7 @@ public class PredefinedClassTypeConverter{
 	public static Class convert(TypeDefinition type){
 		if(!isPredefined(type))
 			throw new IllegalArgumentException("type ["+type+"] is unknown for simpletypeconverter");
-		return (Class)SIMPLE_TYPES.get(type);
+		return SIMPLE_TYPES.get(type);
 	}
 	
 }

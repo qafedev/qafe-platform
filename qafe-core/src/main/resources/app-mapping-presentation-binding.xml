@@ -545,6 +545,31 @@
 		<namespace uri="http://qafe.com/schema" default="elements" />
 		<value name="ref" field="ref" style="attribute" />
 	</mapping>
+	
+	<mapping class="com.qualogy.qafe.bind.presentation.event.function.CallScript"
+		name="call-script"
+		extends="com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction">
+		<namespace uri="http://qafe.com/schema" default="elements" />
+
+		<value name="type" field="type" usage="optional" style="attribute" default="javascript" />
+		<value name="function" field="functionName" style="attribute" />
+
+		<collection field="params" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" usage="optional">
+			<structure type="com.qualogy.qafe.bind.commons.type.Parameter" usage="optional" name="param">   				
+				<value name="expr" style="attribute" field="expression" usage="optional"/>
+				<structure usage="optional" field="ref" type="com.qualogy.qafe.bind.commons.type.Reference">
+					<value name="ref" style="attribute" field="ref"/>
+					<value name="src" style="attribute" field="source" usage="optional" default="pipe"/>
+				</structure>
+				<collection field="placeHolders" factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List" item-type="com.qualogy.qafe.bind.core.messages.PlaceHolder" usage="optional"/>
+				<structure usage="optional" field="value" type="com.qualogy.qafe.bind.commons.type.Value">
+					<value name="type" style="attribute" field="type" usage="optional" ident="ref" type="com.qualogy.qafe.bind.commons.type.TypeDefinition"/>
+					<value name="class" style="attribute" field="outputClass" usage="optional"/>
+					<value name="value" style="attribute" field="staticValue" usage="optional"/>
+				</structure>
+			</structure>
+		</collection>			
+	</mapping>
 
 
 	<mapping class="com.qualogy.qafe.bind.presentation.event.function.SetValue"
