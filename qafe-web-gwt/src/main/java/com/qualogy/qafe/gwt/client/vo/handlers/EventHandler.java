@@ -235,9 +235,8 @@ public class EventHandler {
                         return;
                     }
                 }
-                if (!derivedBuiltIns.isEmpty()) {
-                    // Postpone current processing and process the new top of the stack
-                    builtInsStack.add(derivedBuiltIns);
+                if (pushBuiltIns(eventSessionId, derivedBuiltIns)) {
+                	// Postpone current processing and process the new top of the stack
                     break;
                 }
             } catch (Exception e) {
@@ -252,6 +251,25 @@ public class EventHandler {
     }
     // CHECKSTYLE.ON: CyclomaticComplexity
 
+    public boolean pushBuiltIns(final String eventSessionId, final Collection<BuiltInFunctionGVO> eventItems) {
+    	if ((eventItems == null) || eventItems.isEmpty()) {
+    		return false;
+    	}
+    	Queue<Object> builtIns = new LinkedList<Object>(eventItems);
+    	return pushBuiltIns(eventSessionId, builtIns);
+    }
+    
+    private boolean pushBuiltIns(final String eventSessionId, final Queue<Object> builtIns) {
+    	if ((builtIns == null) || builtIns.isEmpty()) {
+    		return false;
+    	}
+    	Stack<Queue<Object>> builtInsStack = eventMap.get(eventSessionId);
+        if (builtInsStack == null) {
+            return false;
+        }
+        return builtInsStack.add(builtIns);
+    }
+    
     /**
      * Handles defined internal listeners. 
      * 

@@ -19,6 +19,7 @@ package com.qualogy.qafe.gwt.client.storage;
 public interface DataStorage {
 
 	String KEY_ERROR_MESSAGE = "$ERROR_MESSAGE";
+	String KEY_WORD_QAFE_BUILT_IN_LIST = "QAFE_BUILT_IN_LIST";
 	
     void storeData(String dataId, String name, Object data);
     void removeData(String dataId);

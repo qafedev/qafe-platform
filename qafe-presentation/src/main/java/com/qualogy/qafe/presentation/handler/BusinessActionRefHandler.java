@@ -16,15 +16,19 @@
 package com.qualogy.qafe.presentation.handler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.qualogy.qafe.bind.business.action.BusinessAction;
 import com.qualogy.qafe.bind.commons.type.Parameter;
 import com.qualogy.qafe.bind.core.application.ApplicationContext;
+import com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction;
 import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.presentation.BusinessActionItemDataObject;
+import com.qualogy.qafe.presentation.builtins.BuiltinConvertor;
+import com.qualogy.qafe.presentation.builtins.BuiltinConvertorImpl;
 import com.qualogy.qafe.presentation.handler.executors.EventItemExecuteHelper;
 
 /**
@@ -74,6 +78,8 @@ public class BusinessActionRefHandler {
         // For sending the updated internal variables back to the client-side
         collectInternalVariables(dataId, outputValues);
         
+        collectBuiltInsFromBackend(dataId, outputValues);
+        
         return outputValues;
     }
 
@@ -86,8 +92,23 @@ public class BusinessActionRefHandler {
         	}
         }
 	}
+	
+	private void collectBuiltInsFromBackend(DataIdentifier dataId, Map<String, Object> outputValues) {
+		Object builtInList = DataStore.getValue(dataId, DataStore.KEY_WORD_QAFE_BUILT_IN_LIST);
+		if (!(builtInList instanceof String)) {
+			return;
+		}
+		BuiltinConvertor builtInConverter = new BuiltinConvertorImpl();
+		List<BuiltInFunction> builtIns = builtInConverter.convert((String) builtInList);
+		if (builtIns == null) {
+			return;
+		}
+		outputValues.put(DataStore.KEY_WORD_QAFE_BUILT_IN_LIST, builtIns);
+	}
 
-    private void storeValues(final Map<String, Object> values, final DataIdentifier dataId, final String windowId, final String sessionId) {
+
+    private void storeValues(final Map<String, Object> values, final DataIdentifier dataId
+    		, final String windowId, final String sessionId) {
     	if (values == null) {
     		return;
     	}
@@ -101,5 +122,4 @@ public class BusinessActionRefHandler {
             DataStore.store(dataId, key, value);
         }
     }
-
 }

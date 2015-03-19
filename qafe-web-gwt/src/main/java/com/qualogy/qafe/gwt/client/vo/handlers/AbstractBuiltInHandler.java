@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.regex.Matcher;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -558,6 +557,11 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
         while (itrOutputName.hasNext()) {
         	String outputName = itrOutputName.next();
         	Object outputValue = outputValues.get(outputName);
+        	if (DataStorage.KEY_WORD_QAFE_BUILT_IN_LIST.equals(outputName)) {
+        		Collection<BuiltInFunctionGVO> builtIns = (Collection<BuiltInFunctionGVO>) outputValue; 
+        		EventHandler.getInstance().pushBuiltIns(eventSessionId, builtIns);
+        		continue;
+        	}
         	if (outputValue instanceof DataContainerGVO) {
         		outputValue = DataContainerGVO.createType((DataContainerGVO) outputValue);
         	}

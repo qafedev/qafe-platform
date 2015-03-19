@@ -15,12 +15,18 @@
  */
 package com.qualogy.qafe.gwt.server.processor.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import com.qualogy.qafe.bind.presentation.event.function.BuiltInFunction;
+import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
+import com.qualogy.qafe.gwt.server.event.assembler.AnyEventAssembler;
 import com.qualogy.qafe.gwt.server.processor.EventItemProcessor;
 import com.qualogy.qafe.presentation.BusinessActionItemDataObject;
 import com.qualogy.qafe.presentation.EventItemDataObject;
@@ -43,12 +49,29 @@ public class EventItemProcessorImpl implements EventItemProcessor {
         Map<String, Object> outputValues = eventItemHandler.execute(eventItemDataObject);
         if (outputValues != null) {
         	for (String key : outputValues.keySet()) {
-            	Object keyValue = outputValues.get(key);
-            	keyValue = DataContainerGVO.create(keyValue);
+        		Object keyValue = outputValues.get(key);
+        		if (DataStore.KEY_WORD_QAFE_BUILT_IN_LIST.equals(key)) {
+        			keyValue = assembleBuiltIns((List<BuiltInFunction>)keyValue);
+        		} else {
+        			keyValue = DataContainerGVO.create(keyValue);	
+        		}
             	outputValues.put(key, keyValue);
             }
         }
         return outputValues;
     }
 
+	private List<BuiltInFunctionGVO> assembleBuiltIns(List<BuiltInFunction> builtIns) {
+		List<BuiltInFunctionGVO> builtInGVOs = new ArrayList<BuiltInFunctionGVO>();
+		if (builtIns == null) {
+			return builtInGVOs;
+		}
+		for (BuiltInFunction builtIn : builtIns) {
+			BuiltInFunctionGVO builtIGVO = AnyEventAssembler.assemble(builtIn, null, null);
+			if (builtIGVO != null) {
+				builtInGVOs.add(builtIGVO);
+			}
+		}
+		return builtInGVOs;
+	}
 }
