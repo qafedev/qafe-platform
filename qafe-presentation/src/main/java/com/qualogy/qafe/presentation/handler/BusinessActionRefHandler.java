@@ -94,8 +94,8 @@ public class BusinessActionRefHandler {
 	}
 	
 	private void collectBuiltInsFromBackend(DataIdentifier dataId, Map<String, Object> outputValues) {
-		Object builtInList = DataStore.getValue(dataId, DataStore.KEY_WORD_QAFE_BUILT_IN_LIST);
-		if (!(builtInList instanceof String)) {
+		Object builtInList = DataStore.findValue(dataId, DataStore.KEY_WORD_QAFE_BUILT_IN_LIST);
+		if (builtInList == null || !(builtInList instanceof String)) {
 			return;
 		}
 		BuiltinConvertor builtInConverter = new BuiltinConvertorImpl();
