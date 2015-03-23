@@ -20,7 +20,7 @@
 	
 	<configuration name="external.properties"  value="external.properties"/>
 	<configuration name="mode.development" value="true"/>
-	<configuration name="load.on.startup" value="system_app.welcome"/>
+	<configuration name="load.on.startup" value="HelloWorld.window1"/>
 		
 	<application name="apps" id="system_app" >
 		<application-mapping-file location="qafe-default-system-app.xml"/>

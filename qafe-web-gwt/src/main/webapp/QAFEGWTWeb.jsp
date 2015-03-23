@@ -26,6 +26,7 @@
 		<script src="qafegwt/jquery-ui/jquery-1.4.2.min.js"></script>
 		<script src="qafegwt/jquery-ui/jquery-ui-1.8.5.min.js"></script>
 		<script src="js/skulpt/skulpt.min.js"></script>
+		<script src="script.js"></script>
 <%
 		if(height>0 && width>0){
 		%>
