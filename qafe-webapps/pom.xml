@@ -34,7 +34,7 @@
 
     <modules>
         <module>qafe-gwt-generic-webapp</module>
-        <!-- <module>qafe-gwt-weblogic-webapp</module> -->
+        <module>qafe-gwt-weblogic-webapp</module>
     </modules>
 
     <dependencies>
