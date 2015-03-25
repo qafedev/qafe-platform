@@ -200,7 +200,7 @@ public class DataContainerGVO implements IsSerializable {
 						returnValue = new Boolean(data.getDataString());
 						break;
 					case TYPE_CHAR:
-						returnValue = Character.valueOf(' ');
+						returnValue = data.getDataString().charAt(0);
 						break;
 					case TYPE_STRING:
 						returnValue = data.getDataString();
@@ -212,10 +212,10 @@ public class DataContainerGVO implements IsSerializable {
 						returnValue = new Byte(data.getDataString());
 						break;
 					case TYPE_BIGDECIMAL:
-						returnValue = new Long(data.getDataString());
+						returnValue = new BigDecimal(data.getDataString());
 						break;
 					case TYPE_BIGINTEGER:
-						returnValue = new Long(data.getDataString());
+						returnValue = new BigInteger(data.getDataString());
 						break;
 					case TYPE_DOUBLE:
 						returnValue = new Double(data.getDataString());
@@ -319,14 +319,7 @@ public class DataContainerGVO implements IsSerializable {
 		    if (object instanceof Byte) {
 		        data.setStringDataType(DataContainerGVO.TYPE_BYTE);
 		    } else if (object instanceof BigDecimal) {
-		        try {
-		            int intValue = Integer.parseInt(object.toString());
-		            data.setStringDataType(DataContainerGVO.TYPE_INT);
-		            data.setDataString("" + intValue);
-		            valueIsSet = true;
-		        } catch (Exception e) {
-		            data.setStringDataType(DataContainerGVO.TYPE_DOUBLE);
-		        }
+		    	data.setStringDataType(DataContainerGVO.TYPE_BIGDECIMAL);
 		    } else if (object instanceof BigInteger) {
 		        data.setStringDataType(DataContainerGVO.TYPE_BIGINTEGER);
 		    } else if (object instanceof Double) {

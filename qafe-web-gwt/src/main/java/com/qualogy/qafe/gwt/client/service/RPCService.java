@@ -21,6 +21,7 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.qualogy.qafe.gwt.client.exception.GWTApplicationStoreException;
 import com.qualogy.qafe.gwt.client.exception.GWTServiceException;
+import com.qualogy.qafe.gwt.client.util.SerializableWhitelist;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GDataObject;
@@ -73,4 +74,6 @@ public interface RPCService extends RemoteService {
 	void removeGloballyStoredData(String eventId, String applicationId) throws GWTServiceException;
 	
 	GEventItemDataObject executeEventItem(EventItemDataGVO eventItem) throws GWTServiceException, GWTApplicationStoreException;
+	
+	SerializableWhitelist whitelist(SerializableWhitelist value);
 }
