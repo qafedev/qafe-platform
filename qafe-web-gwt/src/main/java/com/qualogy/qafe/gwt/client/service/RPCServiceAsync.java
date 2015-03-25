@@ -20,9 +20,9 @@ import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
+import com.qualogy.qafe.gwt.client.util.SerializableWhitelist;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.DataContainerGVO;
 
 public interface RPCServiceAsync extends RemoteService {
@@ -73,4 +73,6 @@ public interface RPCServiceAsync extends RemoteService {
 	void removeGloballyStoredData(String windowSession, String applicationId, AsyncCallback<?> callback);
 
     void executeEventItem(EventItemDataGVO eventItem, AsyncCallback<?> callback);
+    
+    void whitelist(SerializableWhitelist value, AsyncCallback<?> callback);    
 }

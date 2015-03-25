@@ -45,6 +45,7 @@ import com.qualogy.qafe.core.i18n.MessagesHandler;
 import com.qualogy.qafe.gwt.client.exception.GWTApplicationStoreException;
 import com.qualogy.qafe.gwt.client.exception.GWTServiceException;
 import com.qualogy.qafe.gwt.client.service.RPCService;
+import com.qualogy.qafe.gwt.client.util.SerializableWhitelist;
 import com.qualogy.qafe.gwt.client.vo.data.EventDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GDataObject;
@@ -524,4 +525,12 @@ public class RPCServiceImpl
             throw gWTServiceException;
         }
     }
+
+	/**
+	 * This method is purely used to put data types mentioned in the SerializableWhitelist
+	 * in the GWT whitelist for serialization. The implementation is just a dummy.
+	 */
+	public SerializableWhitelist whitelist(SerializableWhitelist value) { 
+		return null; 
+	}
 }
