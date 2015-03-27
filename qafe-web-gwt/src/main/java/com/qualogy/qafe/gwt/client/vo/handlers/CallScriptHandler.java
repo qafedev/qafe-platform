@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import com.google.gwt.user.client.ui.UIObject;
+import com.qualogy.qafe.gwt.client.util.JSNIUtil;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.CallScriptGVO;
 import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
@@ -92,7 +93,24 @@ public final class CallScriptHandler extends AbstractBuiltInHandler {
             return value.toString();
         }
         
-        return "'" + value.toString() + "'";
+        String jsValue = value.toString(); 
+        if (isMapOrArray(jsValue)) {
+        	return jsValue;
+        }
+        return "'" + jsValue + "'";
+    }
+    
+    boolean isMapOrArray(String value) {
+    	if (value == null) {
+    		return false;
+    	}
+    	if (value.startsWith("{")) {
+    		return true;
+    	}
+    	if (value.startsWith("[")) {
+    		return true;
+    	}
+    	return false;
     }
 
     /**
@@ -114,18 +132,6 @@ public final class CallScriptHandler extends AbstractBuiltInHandler {
                 parameters += value.toString();
             }
         }
-        return executeJavascript(functionName, parameters);
+        return JSNIUtil.executeJavascript(functionName, parameters);
     }
-    
-    /**
-     * Execute the given JavaScript function with the given parameters.
-     * 
-     * @param functionName  Name of an available JavaScript function.
-     * @param params        Parameters to be passed to the JavaScript function.
-     * @return              The result of the executed function.
-     */
-    private native String executeJavascript(String functionName, String params) /*-{
-        var result = eval("$wnd."+ functionName + "(" + params + ")");    
-        return String(result);                                                                     
-    }-*/;
 }

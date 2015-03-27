@@ -32,7 +32,7 @@ import com.qualogy.qafe.gwt.client.storage.DataStorage;
 import com.qualogy.qafe.gwt.client.ui.renderer.AnyComponentRenderer;
 import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.util.ComponentRepository;
-import com.qualogy.qafe.gwt.client.util.JNSIUtil;
+import com.qualogy.qafe.gwt.client.util.JSNIUtil;
 import com.qualogy.qafe.gwt.client.util.QAMLConstants;
 import com.qualogy.qafe.gwt.client.vo.data.EventItemDataGVO;
 import com.qualogy.qafe.gwt.client.vo.data.GEventItemDataObject;
@@ -582,7 +582,7 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     }
     
     protected String evaluateExpression(String expression) {
-    	return JNSIUtil.evaluateExpression(expression);
+    	return JSNIUtil.evaluateExpression(expression);
     }
     
     protected String getShortenName(Object builtIn) {
