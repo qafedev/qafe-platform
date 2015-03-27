@@ -33,6 +33,7 @@ import com.qualogy.qafe.gwt.client.ui.renderer.RendererHelper;
 import com.qualogy.qafe.gwt.client.vo.data.GDataObject;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.BusinessActionRefGVO;
+import com.qualogy.qafe.gwt.client.vo.functions.CallScriptGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ChangeStyleGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClearGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ClosePanelGVO;
@@ -49,7 +50,6 @@ import com.qualogy.qafe.gwt.client.vo.functions.LogFunctionGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.OpenWindowGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.RegExpValidateGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.ReturnGVO;
-import com.qualogy.qafe.gwt.client.vo.functions.CallScriptGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPanelGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetPropertyGVO;
 import com.qualogy.qafe.gwt.client.vo.functions.SetValueGVO;
@@ -118,10 +118,23 @@ public class EventHandler {
         return rpcService;
     }
 
-    public void handleEvent(final UIObject sender, final String listenerType,
-            EventListenerGVO eventListenerGVO, Map<String, String> mouseInfo, Map<String, Object> internalVariables) {
+    public void handleEvent(final UIObject sender, final String listenerType, EventListenerGVO eventListenerGVO
+    		, Map<String, String> mouseInfo, Map<String, Object> internalVariables) {
         final String appId = getAppId(sender);
         final String windowId = getWindowId(sender);
+        final String eventId = eventListenerGVO.getEventId();
+        handleEvent(sender, listenerType, eventId, windowId, appId, mouseInfo, internalVariables);
+    }
+    
+    public void handleEvent(String eventId, String windowId, String appId, Map<String, Object> data) {
+    	Map<String, String> mouseInfo = new HashMap<String, String>();
+    	Map<String, Object> internalVariables = new HashMap<String, Object>(data);
+        handleEvent(null, null, eventId, windowId, appId, mouseInfo, internalVariables);
+    }
+    
+    private void handleEvent(final UIObject sender, final String listenerType, final String eventId
+    		, final String windowId, final String appId
+    		, Map<String, String> mouseInfo, Map<String, Object> internalVariables) {
         final UIGVO applicationGVO = getApplication(appId);
         if (applicationGVO == null) {
             return;
@@ -130,10 +143,6 @@ public class EventHandler {
         
         handleResultListeners(sender, listenerType);
 
-        if (eventListenerGVO == null) {
-        	return;
-        }
-        String eventId = eventListenerGVO.getEventId();
         EventGVO eventGVO = getEvent(eventId, windowId, applicationGVO);
         if (eventGVO == null) {
             return;
@@ -548,29 +557,42 @@ public class EventHandler {
     }
     
     private String getAppId(final UIObject sender) {
+    	if (sender == null) {
+    		return null;
+    	}
         return RendererHelper.getComponentContext(sender);
     }
 
     private String getWindowId(final UIObject sender) {
+    	if (sender == null) {
+    		return null;
+    	}
         return RendererHelper.getParentComponent(sender);
     }
 
     private String getComponentId(final UIObject sender) {
+    	if (sender == null) {
+    		return null;
+    	}
     	String id = RendererHelper.getComponentId(sender);
     	String[] idSplitted = id.split("\\|", 2);
-    	
     	if (idSplitted.length == 2) {
     		return idSplitted[0];
     	}
-    	
         return id;
     }
     
     private String getComponentName(final UIObject sender) {
+    	if (sender == null) {
+    		return null;
+    	}
         return RendererHelper.getNamedComponentName(sender);
     }
 
     private Object getComponentValue(UIObject sender, String appId, String windowId, String srcId) {
+    	if (sender == null) {
+    		return null;
+    	}
         return BuiltinHandlerHelper.getValue(sender, sender, false, null);
     }
     

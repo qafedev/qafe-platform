@@ -43,7 +43,7 @@ import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.css.Resources;
 import com.qualogy.qafe.gwt.client.factory.MainFactoryActions;
 import com.qualogy.qafe.gwt.client.service.RPCServiceAsync;
-import com.qualogy.qafe.gwt.client.util.JNSIUtil;
+import com.qualogy.qafe.gwt.client.util.JSNIUtil;
 import com.qualogy.qafe.gwt.client.vo.data.InitState;
 
 /**
@@ -57,8 +57,11 @@ public class QAFEGWTWeb implements EntryPoint {
 	
 	private static String rootPanelValue = "";
 
+	@Override
 	public void onModuleLoad() {
-		rootPanelValue = JNSIUtil.getScriptParameter(GWT.getModuleName(), JNSIUtil.ROOT_PANEL_PARAM);
+		JSNIUtil.exportQafeFunctions();
+		
+		rootPanelValue = JSNIUtil.getScriptParameter(GWT.getModuleName(), JSNIUtil.ROOT_PANEL_PARAM);
 		
 		// inject default qafe-gwt.css
 		Resources.INSTANCE.css().ensureInjected(); // This is same as StyleInjector.inject(Resources.INSTANCE.css().getText());
@@ -67,12 +70,14 @@ public class QAFEGWTWeb implements EntryPoint {
 		
 		buildUI();		
 		Window.addResizeHandler(new ResizeHandler() {
+			@Override
 			public void onResize(ResizeEvent event) {
 				moveWidgets();
 			}
 		});
 
 		Window.addWindowClosingHandler(new Window.ClosingHandler() {
+			@Override
 			public void onWindowClosing(Window.ClosingEvent closingEvent) {
 				closingEvent.setMessage(WINDOW_CLOSING_MESSAGE);
 			}
@@ -89,6 +94,7 @@ public class QAFEGWTWeb implements EntryPoint {
 		// set uncaught exception handler
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 
+			@Override
 			public void onUncaughtException(Throwable throwable) {
 				Throwable tempThrowable = throwable;
 				StringBuffer text = new StringBuffer("Uncaught exception: " +throwable.getMessage());
@@ -140,11 +146,13 @@ public class QAFEGWTWeb implements EntryPoint {
 	private static AsyncCallback<?> createMDICallback() {
 		return new AsyncCallback<Object>() {
 
+			@Override
 			public void onFailure(Throwable caught) {
 			    ClientApplicationContext.getInstance().log("Setting up SDI/MDI mode  failed", caught.getMessage(), true, true, caught);				
 
 			}
 
+			@Override
 			public void onSuccess(Object result) {
 				if (result != null && result instanceof InitState) {
 					InitState initState = (InitState)result;
@@ -177,6 +185,7 @@ public class QAFEGWTWeb implements EntryPoint {
 			RootPanel.get(rootPanelValue).add(ClientApplicationContext.getInstance().getHorizontalPanel(), 0, Window.getClientHeight() - 23);
 			ClientApplicationContext.getInstance().getBottomMenuBar().setWidth("100%");
 			ClientApplicationContext.getInstance().getBottomMenuBar().addItem(" ", new Command() {
+				@Override
 				public void execute() {
 				}
 			});
@@ -216,10 +225,12 @@ public class QAFEGWTWeb implements EntryPoint {
 	
 	private static AsyncCallback<?> createGenerateTypedCSSCallBack() {
 		return new AsyncCallback<Object>() {
+			@Override
 			public void onFailure(Throwable caught) {
 			    ClientApplicationContext.getInstance().log("Getting generated CSS Failed", caught.getMessage(), true, true, caught);				
 
 			}
+			@Override
 			public void onSuccess(Object result) {
 				if (result != null) {
 					String generatedCss = (String) result;
