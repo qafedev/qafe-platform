@@ -228,7 +228,9 @@ public class WindowFactory {
 				mainPanel.setHeight(Window.getClientHeight() + "px");
 
 				ClientApplicationContext.getInstance().setMainPanel(mainPanel);
-				if(ClientApplicationContext.getInstance().getApplicationsMenu() != null){
+				MenuBar menuBar = ClientApplicationContext.getInstance().getApplicationsMenu();
+				if(menuBar != null){
+					menuBar.addStyleName("SDIMenu");
 					RootPanel.get().add((Widget) mainPanel,0,24);
 				} else {
 					RootPanel.get().add((Widget) mainPanel,0,0);
@@ -237,6 +239,7 @@ public class WindowFactory {
 
 			w.setWidth(Window.getClientWidth() + "px");
 			w.setHeight(Window.getClientHeight() + "px");
+			mainPanel.addStyleName("SDIWrapper");
 			mainPanel.setWidget(w);
 			w.addStyleName("SDIPanel");
 			if(windowGVO != null) {

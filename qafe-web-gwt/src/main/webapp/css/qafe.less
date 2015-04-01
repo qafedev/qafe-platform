@@ -1717,3 +1717,40 @@ body fieldset.contentPanelClass legend {
     color: #d00018;
 }
 
+/* SDI mode specific styling added in PRE-158 */
+.SDIBody {
+  overflow-y: scroll !important;
+}
+
+.SDIBody .spinner {
+  left: auto !important;
+}
+
+.SDIWrapper {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+
+.SDIMenu {
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+
+.SDIPanel {
+  height: 100% !important;
+}
+
+.SDIPanel,
+.SDIPanel > div,
+.SDIPanel table,
+.SDIBody .gwt-ScrollTable {
+  width: 100% !important;
+}
+
+.SDIPanel > div,
+.SDIPanel > table {
+  overflow: hidden !important;
+  position: relative !important;
+  height: 100% !important;
+}

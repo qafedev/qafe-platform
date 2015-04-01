@@ -200,8 +200,8 @@ public class QAFEGWTWeb implements EntryPoint {
 	protected static void setupSDI() {
 		ClientApplicationContext.getInstance().setMode(ClientApplicationContext.SDI);
 		// This will remove the horizontal scrollbar
-		RootPanel.get(rootPanelValue).getElement().getStyle().setProperty("overflow", "hidden");
-		
+		RootPanel.get(rootPanelValue).getElement().getStyle().setProperty("overflow-x", "hidden");
+		RootPanel.get(rootPanelValue).getElement().addClassName("SDIBody");
 		RootPanel.get(rootPanelValue).add(buildMenu(),0,0);
 		MainFactoryActions.processUIFromApplicationContext();
 		ClientApplicationContext.getInstance().setLogText("SDI Mode");
@@ -213,6 +213,7 @@ public class QAFEGWTWeb implements EntryPoint {
 		menuBar.setAnimationEnabled(true);
 		menuBar.setAutoOpen(true);
 		menuBar.setWidth("100%");
+		menuBar.addStyleName("SDIMenu");
 		ClientApplicationContext.getInstance().setMainMenu(menuBar);
 		return menuBar;
 	}

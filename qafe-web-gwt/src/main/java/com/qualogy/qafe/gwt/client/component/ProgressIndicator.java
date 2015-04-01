@@ -44,6 +44,7 @@ public class ProgressIndicator extends AbsolutePanel {
 		setWidth(DEFAULT_SIZE);
 		setHeight(DEFAULT_SIZE);
 	    DOM.setStyleAttribute(getElement(), "zIndex", "9999");
+	    DOM.setStyleAttribute(getElement(), "right", "0");
 	}
 
 	protected QAFEGWTWebImageBundle getImageBundle() {
