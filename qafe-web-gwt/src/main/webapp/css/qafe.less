@@ -1726,31 +1726,31 @@ body fieldset.contentPanelClass legend {
   left: auto !important;
 }
 
-.SDIWrapper {
-  width: 100% !important;
-  height: 100% !important;
-  position: relative !important;
-}
-
 .SDIMenu {
   border-left: 0 !important;
   border-right: 0 !important;
 }
 
-.SDIPanel {
+/* Fluid layout styling */
+table.gwt-DecoratedPanel {
   height: 100% !important;
+  position: relative !important;
 }
 
-.SDIPanel,
-.SDIPanel > div,
-.SDIPanel table,
-.SDIBody .gwt-ScrollTable {
+table.gwt-DecoratedPanel,
+table.gwt-DecoratedPanel > div,
+table.gwt-DecoratedPanel table,
+table.gwt-DecoratedPanel .gwt-ScrollTable {
   width: 100% !important;
 }
 
-.SDIPanel > div,
-.SDIPanel > table {
+table.gwt-DecoratedPanel > div,
+table.gwt-DecoratedPanel > table {
   overflow: hidden !important;
   position: relative !important;
   height: 100% !important;
+}
+
+div.gwt-DecoratedPanel > div {
+  position: relative !important;
 }
