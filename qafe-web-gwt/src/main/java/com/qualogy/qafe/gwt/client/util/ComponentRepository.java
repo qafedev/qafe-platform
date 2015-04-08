@@ -96,7 +96,11 @@ public class ComponentRepository {
 	}
 
 	public void putComponent(final String key, UIObject uiObject) {
-		if (!getComponentMap().containsKey(key)) {
+		putComponent(key, uiObject, false);
+	}
+
+	public void putComponent(final String key, UIObject uiObject, boolean replace) {
+		if (replace || !getComponentMap().containsKey(key)) {
 			List<UIObject> listOfUIObject = new ArrayList<UIObject>();
 			listOfUIObject.add(uiObject);
 			getComponentMap().put(key, listOfUIObject);

@@ -88,7 +88,7 @@ public class ShowPanelHandler extends AbstractBuiltInHandler {
 		showPanel.setId(panelDefKey);
 		showPanel.setWindow(windowId);		
 		showPanel.setWindowIdentifier(windowKey);
-		ComponentRepository.getInstance().putComponent(panelDefKey, (UIObject)showPanel);
+		ComponentRepository.getInstance().putComponent(panelDefKey, (UIObject)showPanel, true);
 		
 		handleMask(showPanelGVO, panelDefKey, windowKey, windowId);
 		
