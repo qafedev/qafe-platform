@@ -426,7 +426,7 @@ public class BuiltinHandlerHelper {
         return (id != null && id.startsWith(QAMLConstants.TOKEN_INDEXING));
     }
 
-    public static DataContainerGVO fetchDatagridRowValues(String inputVariableReference, String uuid,
+    public static DataContainerGVO fetchDatagridRowValues(String inputVariableReference,
             String parent, String context) {
         String[] inputRef = inputVariableReference.split("[.]");
         String key = RendererHelper.generateId(inputRef[0], parent, context);
@@ -478,7 +478,7 @@ public class BuiltinHandlerHelper {
         return dtc;
     }
 
-    public static DataContainerGVO fetchDatagridCellValue(String inputVariableReference, String uuid,
+    public static DataContainerGVO fetchDatagridCellValue(String inputVariableReference,
             String parent, String context) {
         String datagrid = inputVariableReference.replaceFirst("\\[.+", "");
         String datagridId = RendererHelper.generateId(datagrid, parent, context);
@@ -515,7 +515,7 @@ public class BuiltinHandlerHelper {
         return false;
     }
 
-    public static String getAttributeValue(String inputVariableReference, String uuid, String parent,
+    public static String getAttributeValue(String inputVariableReference, String parent,
             String context) {
         String value = "";
         if (hasAttribute(inputVariableReference)) {

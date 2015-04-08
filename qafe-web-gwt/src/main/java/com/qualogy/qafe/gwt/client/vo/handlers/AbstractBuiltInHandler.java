@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.UIObject;
 import com.qualogy.qafe.gwt.client.component.HasDataGridMethods;
@@ -128,27 +127,20 @@ public abstract class AbstractBuiltInHandler implements BuiltInHandler {
     // TODO: Refactor to handle multiple components
     private Object getComponentValue(final UIObject sender, final String reference, String appId,
             String windowId, String eventSessionId) {
-        final String senderId = getSenderId(sender);
-
-        if (senderId == null || senderId.length() <= 0) {
-            return null;
-        }
-
-        final String uuid = DOM.getElementProperty(sender.getElement(), "uuid");
         String value = null;
 
         DataContainerGVO dataContainerObject = null;
 
         if (BuiltinHandlerHelper.hasAttribute(reference)) {
-            value = BuiltinHandlerHelper.getAttributeValue(reference, uuid, windowId, appId);
+            value = BuiltinHandlerHelper.getAttributeValue(reference, windowId, appId);
             dataContainerObject = DataContainerGVO.create(value);
             
         } else if (reference.contains(".$$")) {
             dataContainerObject =
-                BuiltinHandlerHelper.fetchDatagridRowValues(reference, uuid, windowId, appId);
+                BuiltinHandlerHelper.fetchDatagridRowValues(reference, windowId, appId);
         } else if (reference.contains("[")) {
             dataContainerObject =
-                BuiltinHandlerHelper.fetchDatagridCellValue(reference, uuid, windowId, appId);
+                BuiltinHandlerHelper.fetchDatagridCellValue(reference, windowId, appId);
         } else {
             final String key = generateId(reference, windowId, appId, eventSessionId); // inputVariables[i][1]
             log(key);
