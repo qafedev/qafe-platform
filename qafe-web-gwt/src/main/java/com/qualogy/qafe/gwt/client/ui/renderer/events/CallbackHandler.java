@@ -179,19 +179,17 @@ public class CallbackHandler {
 				if (listOfInputVariables != null) {
 					try {
 						for (InputVariableGVO inputVariables : listOfInputVariables) {
-
-							String uuid = DOM.getElementProperty(sender.getElement(), "uuid");
 							String value = null;
 
 							DataContainerGVO dataContainerObject = null;
 
 							String inputVariableReference = inputVariables.getReference();
 							if (hasAttribute(inputVariableReference)) {
-								value = getAttributeValue(inputVariableReference, uuid, parent, context);
+								value = getAttributeValue(inputVariableReference, parent, context);
 							} else if(inputVariableReference.contains(".$$")){
-								dataContainerObject = fetchDatagridRowValues(inputVariableReference, uuid, parent, context);
+								dataContainerObject = fetchDatagridRowValues(inputVariableReference, parent, context);
 							} else if(inputVariableReference.contains("[")){
-								dataContainerObject = fetchDatagridCellValue(inputVariableReference, uuid, parent, context);
+								dataContainerObject = fetchDatagridCellValue(inputVariableReference, parent, context);
 							} else {
 								String key = RendererHelper.generateId(inputVariableReference, parent, context); // inputVariables[i][1]
 								ClientApplicationContext.getInstance().log(key);
@@ -300,20 +298,20 @@ public class CallbackHandler {
 	
 	// CHECKSTYLE.ON: CyclomaticComplexity
 
-	private static DataContainerGVO fetchDatagridRowValues(String inputVariableReference, String uuid, String parent,String context) {
-		return BuiltinHandlerHelper.fetchDatagridRowValues(inputVariableReference, uuid, parent, context);
+	private static DataContainerGVO fetchDatagridRowValues(String inputVariableReference, String parent,String context) {
+		return BuiltinHandlerHelper.fetchDatagridRowValues(inputVariableReference, parent, context);
 	}
 
-	private static DataContainerGVO fetchDatagridCellValue(String inputVariableReference, String uuid, String parent,String context) {
-		return BuiltinHandlerHelper.fetchDatagridCellValue(inputVariableReference, uuid, parent, context);
+	private static DataContainerGVO fetchDatagridCellValue(String inputVariableReference, String parent,String context) {
+		return BuiltinHandlerHelper.fetchDatagridCellValue(inputVariableReference, parent, context);
 	}
 
 	private static boolean hasAttribute(String inputVariableReference) {
 		return BuiltinHandlerHelper.hasAttribute(inputVariableReference);
 	}
 
-	private static String getAttributeValue(String inputVariableReference, String uuid, String parent, String context) {
-		return BuiltinHandlerHelper.getAttributeValue(inputVariableReference, uuid, parent, context);
+	private static String getAttributeValue(String inputVariableReference, String parent, String context) {
+		return BuiltinHandlerHelper.getAttributeValue(inputVariableReference, parent, context);
 	}
 	
 	public static DataContainerGVO createDataContainer(String parameterName, UIObject uiObject, final UIObject sender) throws RequiredFieldException {
