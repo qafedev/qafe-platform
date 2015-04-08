@@ -764,7 +764,7 @@ public class BuiltinHandlerHelper {
 	}
     
 	public static String generatePanelDefinitionKey(String panelDefId, String appId, String windowId) {
-    	return "showPanel_" + RendererHelper.generateId(panelDefId, windowId, appId);
+    	return RendererHelper.generateId(panelDefId, windowId, appId);
     }
 	
 	public static void closeOpenedPanelDefinition(String panelDefId, String appId, String windowId, String eventSessionId) {
