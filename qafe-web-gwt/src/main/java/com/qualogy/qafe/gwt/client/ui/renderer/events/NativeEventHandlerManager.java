@@ -72,16 +72,21 @@ public abstract class NativeEventHandlerManager {
 	
 	private static UIObject resolveSource() {
 		UIObject source = null;
-		List<WindowPanel> windows = ClientApplicationContext.getInstance().getWindows();
-		if (windows != null) {
-			for (WindowPanel window : windows) {
-				if (window.isActive()) {
-					if (window instanceof QWindowPanel) {
-						source = ((QWindowPanel)window).getQRootPanel();
-						break;
+		if (ClientApplicationContext.getInstance().isMDI()) {
+			List<WindowPanel> windows = ClientApplicationContext.getInstance().getWindows();
+			if (windows != null) {
+				for (WindowPanel window : windows) {
+					if (window.isActive()) {
+						if (window instanceof QWindowPanel) {
+							source = ((QWindowPanel)window).getQRootPanel();
+							break;
+						}
 					}
 				}
-			}
+			}	
+		} else {
+			// SDI Mode: window (QRootPanel) is set to the MainPanel
+			source = ClientApplicationContext.getInstance().getMainPanel().getWidget();
 		}
 		return source;
 	}
