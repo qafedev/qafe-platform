@@ -1011,6 +1011,7 @@
 		<value name="group-name" style="attribute" field="group" usage="optional" />
 		<value field="width" name="width" usage="optional" style="attribute" />
 		<value field="height" name="height" usage="optional" style="attribute" />
+		<value field="selected" name="selected" usage="optional" style="attribute" />
 		<collection field="stacks"
 			factory="org.jibx.runtime.Utility.arrayListFactory" type="java.util.List"
 			item-type="com.qualogy.qafe.bind.presentation.component.Stack" usage="optional" />

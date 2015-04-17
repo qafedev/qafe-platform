@@ -1925,6 +1925,7 @@
 				<xs:attribute name="tooltip" type="xs:string" />
 				<xs:attribute name="width" type="xs:string" />
 				<xs:attribute name="height" type="xs:string" />
+				<xs:attribute name="selected" type="xs:string" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
