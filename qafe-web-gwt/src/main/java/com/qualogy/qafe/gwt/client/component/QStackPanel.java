@@ -37,6 +37,11 @@ public class QStackPanel extends DecoratedStackPanel {
 			selectedStack = getWidget(currentSelectedIndex);
 		}
 	}
+	
+	public void showStack(Widget stack) {
+	    setSelectedStack(stack);
+	    showStack();
+    }
 
 
 	public void processVisible(QStack stackToProcess, boolean visible) {

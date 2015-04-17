@@ -18,35 +18,37 @@
  */
 package com.qualogy.qafe.gwt.client.vo.ui;
 
-
 /**
- * @author rjankie
- * The Panel class is the container 
+ * @author rjankie The Panel class is the container
  */
-public class StackPanelGVO extends ComponentGVO implements HasComponentsI{
+public class StackPanelGVO extends ComponentGVO implements HasComponentsI {
 
-		
-	
-	protected StackGVO[] stacks;
+    protected StackGVO[] stacks;
 
-	
+    private String selected;
 
+    public String getSelected() {
+        return selected;
+    }
 
-	public String getClassName() {
-		return "com.qualogy.qafe.gwt.client.vo.ui.StackPanelGVO";
-	}
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
 
-	
-	public StackGVO[] getStacks() {
-		return stacks;
-	}
+    public String getClassName() {
+        return "com.qualogy.qafe.gwt.client.vo.ui.StackPanelGVO";
+    }
 
-	public void setStacks(StackGVO[] stacks) {
-		this.stacks = stacks;
-	}
+    public StackGVO[] getStacks() {
+        return stacks;
+    }
 
-	public ComponentGVO[] getComponents() {
-		return getStacks();
-	}
-	
+    public void setStacks(StackGVO[] stacks) {
+        this.stacks = stacks;
+    }
+
+    public ComponentGVO[] getComponents() {
+        return getStacks();
+    }
+
 }

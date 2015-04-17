@@ -51,6 +51,8 @@ public class StackPanelUIAssembler implements UIAssembler {
 					voTemp.setStacks(stacks);
 				}
 				
+				voTemp.setSelected(stackPanel.getSelected());
+				
 				vo =voTemp;
 			}
 		}

@@ -21,31 +21,40 @@ package com.qualogy.qafe.bind.presentation.component;
 import java.util.List;
 
 /**
- * @author rjankie
- * The Panel class is the container 
+ * @author rjankie The Panel class is the container
  */
 public class StackPanel extends Component implements HasComponents {
 
-
-/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -2449164112239620641L;
-	/**
+    private static final long serialVersionUID = -2449164112239620641L;
+
+    /**
 	 * 
 	 */
-	protected List<Stack> stacks;
-	public List<Stack> getStacks() {
-		return stacks;
-	}
-	public void setStacks(List<Stack> stacks) {
-		this.stacks = stacks;
-	}
-	public List<? extends Component> getComponents() {
-		return getStacks();
-	}
+    protected List<Stack> stacks;
 
+    private String selected;
 
+    public String getSelected() {
+        return selected;
+    }
 
-	
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
+
+    public List<Stack> getStacks() {
+        return stacks;
+    }
+
+    public void setStacks(List<Stack> stacks) {
+        this.stacks = stacks;
+    }
+
+    public List<? extends Component> getComponents() {
+        return getStacks();
+    }
+
 }
