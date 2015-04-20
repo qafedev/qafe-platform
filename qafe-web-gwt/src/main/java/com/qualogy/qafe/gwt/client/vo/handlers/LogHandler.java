@@ -21,6 +21,8 @@ import java.util.Queue;
 import org.gwt.mosaic.ui.client.WindowPanel;
 
 import com.google.gwt.user.client.ui.UIObject;
+import com.google.gwt.user.client.ui.Widget;
+import com.qualogy.qafe.gwt.client.component.QRootPanel;
 import com.qualogy.qafe.gwt.client.component.QWindowPanel;
 import com.qualogy.qafe.gwt.client.context.ClientApplicationContext;
 import com.qualogy.qafe.gwt.client.vo.functions.BuiltInFunctionGVO;
@@ -29,27 +31,54 @@ import com.qualogy.qafe.gwt.client.vo.ui.event.ParameterGVO;
 
 public class LogHandler extends AbstractBuiltInHandler {
 
-	protected BuiltInState executeBuiltIn(UIObject sender, String listenerType, Map<String, String> mouseInfo, BuiltInFunctionGVO builtInGVO, String appId, String windowId, String eventSessionId, Queue derivedBuiltIns) {
-        LogFunctionGVO logFunctionGVO = (LogFunctionGVO) builtInGVO;
-        logMessage(sender, logFunctionGVO, appId, windowId, eventSessionId);
+    protected final BuiltInState executeBuiltIn(final UIObject sender, final String listenerType,
+            final Map<String, String> mouseInfo, final BuiltInFunctionGVO builtInGVO, final String appId,
+            final String windowId, final String eventSessionId, final Queue derivedBuiltIns) {
+        final LogFunctionGVO logFunctionGVO = (LogFunctionGVO) builtInGVO;
+        if (!logFunctionGVO.getDebug().booleanValue()) {
+            executeLog(sender, logFunctionGVO, appId, windowId, eventSessionId);
+        }
         return BuiltInState.EXECUTED;
     }
-    
-    private void logMessage(UIObject sender, LogFunctionGVO logFunctionGVO, String appId, String windowId, String eventSessionId) {
-        ParameterGVO parameterGVO = logFunctionGVO.getMessageGVO();
-        String message = getValue(sender, parameterGVO, appId, windowId, eventSessionId).toString();
-		int delay = logFunctionGVO.getDelay();
-		String styleClass = logFunctionGVO.getStyleClass();
-		String[][] styleProperties = logFunctionGVO.getStyleProperties();
-		
-		ClientApplicationContext.getInstance().log(message);
-		if (!logFunctionGVO.getDebug().booleanValue()){
-			String uuid = getUUId(sender);
-			WindowPanel wp = ClientApplicationContext.getInstance().getWindow(uuid, windowId);
-			if (wp instanceof QWindowPanel){
-				QWindowPanel qwp = (QWindowPanel)wp;
-				qwp.showMessage(message, delay, styleClass, styleProperties);
-			}
-		}
+
+    private void executeLog(final UIObject sender, final LogFunctionGVO logFunctionGVO, final String appId,
+            final String windowId, final String eventSessionId) {
+        if (ClientApplicationContext.getInstance().isMDI()) {
+            executeLogForMDIMode(sender, logFunctionGVO, appId, windowId, eventSessionId);
+        } else {
+            executeLogForSDIMode(sender, logFunctionGVO, appId, windowId, eventSessionId);
+        }
+    }
+
+    private void executeLogForSDIMode(final UIObject sender, final LogFunctionGVO logFunctionGVO,
+            final String appId, final String windowId, final String eventSessionId) {
+        final Widget widget = ClientApplicationContext.getInstance().getMainPanel().getWidget();
+        if (widget instanceof QRootPanel) {
+            final QRootPanel rootPanel =
+                (QRootPanel) ClientApplicationContext.getInstance().getMainPanel().getWidget();
+            final String message = getLogMessage(sender, logFunctionGVO, appId, windowId, eventSessionId);
+            rootPanel.showMessage(message, logFunctionGVO.getDelay(), logFunctionGVO.getStyleClass(),
+                logFunctionGVO.getStyleProperties());
+        }
+    }
+
+    private void executeLogForMDIMode(final UIObject sender, final LogFunctionGVO logFunctionGVO,
+            final String appId, final String windowId, final String eventSessionId) {
+        final String uuid = getUUId(sender);
+        final WindowPanel wp = ClientApplicationContext.getInstance().getWindow(uuid, windowId);
+        if (wp instanceof QWindowPanel) {
+            final QWindowPanel qwp = (QWindowPanel) wp;
+            final String message = getLogMessage(sender, logFunctionGVO, appId, windowId, eventSessionId);
+            qwp.showMessage(message, logFunctionGVO.getDelay(), logFunctionGVO.getStyleClass(),
+                logFunctionGVO.getStyleProperties());
+        }
+    }
+
+    private String getLogMessage(final UIObject sender, final LogFunctionGVO logFunctionGVO,
+            final String appId, final String windowId, final String eventSessionId) {
+        final ParameterGVO parameterGVO = logFunctionGVO.getMessageGVO();
+        final String message = getValue(sender, parameterGVO, appId, windowId, eventSessionId).toString();
+        ClientApplicationContext.getInstance().log(message);
+        return message;
     }
 }
