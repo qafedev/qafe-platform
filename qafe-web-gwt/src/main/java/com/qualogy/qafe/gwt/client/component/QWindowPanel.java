@@ -97,17 +97,7 @@ public class QWindowPanel extends WindowPanel {
 		if (w!=null){
 			if (w instanceof QRootPanel){
 				QRootPanel qrp =(QRootPanel)w;
-				Widget wmb = qrp.getMessageBox();
-				
-				// the 100 is from the CSS width/2 
-				
-				qrp.setWidgetPosition(wmb, (getContentWidth()/2)-100, qrp.getMenuAndToolBarMargin());
-				
-				if (wmb instanceof MessageBox){
-					MessageBox mb = (MessageBox)wmb;
-					Utils.fadeMessage(mb, message,delay,styleClass,styleProperties);
-
-				}
+				qrp.showMessage(message, delay, styleClass, styleProperties, getContentWidth());
 			}
 		}
 	
