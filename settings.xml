@@ -49,73 +49,7 @@
                 <qafe.gwt.permutation.workers>4</qafe.gwt.permutation.workers>
             </properties>
         </profile>
-        <profile>
-            <id>sonar</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
-                <sonar.jdbc.driver>com.mysql.jdbc.Driver</sonar.jdbc.driver>
-                <sonar.jdbc.username>sonar</sonar.jdbc.username>
-                <sonar.jdbc.password>sonar</sonar.jdbc.password>
-                <sonar.host.url>http://localhost:9000/sonar</sonar.host.url>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>env-dev</id>
-            <repositories>
-                <repository>
-                    <id>projects.releases</id>
-                    <name>Projects Releases</name>
-                    <url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
-                    <releases>
-                        <checksumPolicy>ignore</checksumPolicy>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <checksumPolicy>ignore</checksumPolicy>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-
-                <repository>
-                    <id>projects.snapshots</id>
-                    <name>Projects Snapshots</name>
-                    <url>http://repository.qafe.com/nexus/content/repositories/projects.snapshots</url>
-                    <releases>
-                        <checksumPolicy>ignore</checksumPolicy>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <checksumPolicy>ignore</checksumPolicy>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-
-            </repositories>
-        </profile>
     </profiles>
-
-    <!--
-        servers: Specify profile info for one or more servers to use when connecting to online repositories.
-        TODO:change later to product user
-    -->
-    <servers>
-        <server>
-            <id>qafe.releases</id>
-            <username>tomcat</username>
-        </server>
-        <server>
-            <id>qafe.snapshots</id>
-            <username>tomcat</username>
-        </server>
-        <server>
-            <id>qafe.websites</id>
-            <username>tomcat</username>
-        </server>
-    </servers>
 
     <!--
         mirrors: Specify one or more mirrors to use for central (or any other
@@ -132,14 +66,14 @@
         <mirror>
             <id>snapshots</id>
             <name>Qualogy Maven SNAPSHOT Repository</name>
-            <url>http://repository.qafe.com/nexus/content/repositories/qafe.snapshots/</url>
-            <mirrorOf>qafe.snapshots</mirrorOf>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.public.snapshots/</url>
+            <mirrorOf>qafe.public.snapshots</mirrorOf>
         </mirror>
         <mirror>
             <id>releases</id>
             <name>Qualogy Maven Releases Repository</name>
-            <url>http://repository.qafe.com/nexus/content/repositories/qafe.releases/</url>
-            <mirrorOf>qafe.releases</mirrorOf>
+            <url>http://repository.qafe.com/nexus/content/repositories/qafe.public.releases/</url>
+            <mirrorOf>qafe.public.releases</mirrorOf>
         </mirror>
     </mirrors>
 </settings>
