@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.qualogy.qafe</groupId>
         <artifactId>platform</artifactId>
-        <version>3.4.0-rc2</version>
+        <version>3.4.0-SNAPSHOT</version>
     </parent>
     <groupId>com.qualogy.qafe.platform</groupId>
     <artifactId>qafe-core</artifactId>
@@ -147,12 +147,12 @@
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>api</artifactId>
-            <version>3.4.0-rc2</version>
+            <version>3.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
             <artifactId>standard</artifactId>
-            <version>3.4.0-rc2</version>
+            <version>3.4.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
