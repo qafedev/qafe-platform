@@ -68,8 +68,6 @@ public class DataGridUIAssembler implements UIAssembler {
 
         setPageSizeProperties(dataGrid, dataGridGVO);
 
-        // final ComponentGVO vo = voTemp;
-
         return dataGridGVO;
     }
 
