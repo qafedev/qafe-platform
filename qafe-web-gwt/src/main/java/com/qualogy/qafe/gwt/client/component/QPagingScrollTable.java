@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.gwt.mosaic.ui.client.MessageBox.MessageBoxType;
 
@@ -65,6 +67,8 @@ import com.qualogy.qafe.gwt.client.vo.ui.DataGridGVO;
 
 public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> implements HasDataGridMethods, RowSelectionHandler, ResultHandler, ScrollHandler, HasRowSelectionChangeHandlers {
 
+    private static final Logger logger = Logger.getLogger(QPagingScrollTable.class.getName());
+    
 	public static final String MSG_LAST_PAGE = "You reached the last page";
 
 	protected int qCurrentPage = 0;
@@ -158,7 +162,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
     	}
 	}
 
-	public void onRowSelection(final RowSelectionEvent event) {
+	@Override
+    public void onRowSelection(final RowSelectionEvent event) {
 		if (hasOverflow()) {
 			final Set<Row> selected = event.getSelectedRows();
 	        for (final Row row : selected) {
@@ -239,7 +244,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public Integer getMaxRows() {
+	@Override
+    public Integer getMaxRows() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -286,12 +292,37 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		return col;
 	}
 
-	public void insertData(final List<DataContainerGVO> listOfDataMap) {
-		insertData(listOfDataMap, false, null, null);
+	/**
+	 * inserts data to the datagrid, note that to prevent rows from getting
+	 * modified status, we always set append to false. We just make sure we have the complete
+	 * dataset/rows before setting them to the datagrid
+	 * 
+	 * @param listOfDataMap data to set to the datagrid
+	 */
+	public void insertImportedData(final List<DataContainerGVO> listOfDataMap) {
+	    List<DataContainerGVO> rows = new ArrayList<DataContainerGVO>();
+               
+	    final String importAction = source.getImportAction();
+	    if (ComponentConstants.ADD.equals(importAction)) {
+	        List<DataContainerGVO> currentRows = getRowValues();
+	        // done to make sure we wont get "null" rows since null is a valid list entry
+	        if (currentRows != null) {
+	            rows.addAll(currentRows);
+	        }
+	        rows.addAll(listOfDataMap);       
+	    } else if (ComponentConstants.SET.equals(importAction)) {
+	        rows = listOfDataMap;
+	    } else {
+	        logger.log(Level.INFO, "No import action found, using set as default");
+	        rows = listOfDataMap;
+	    }
+    	
+		insertData(rows, false, null, null);
 	}
 
     // CHECKSTYLE.OFF: CyclomaticComplexity
-	public void insertData(final List<DataContainerGVO> listOfDataMap, final Boolean append, final String senderId, final String listenerType) {
+	@Override
+    public void insertData(final List<DataContainerGVO> listOfDataMap, final Boolean append, final String senderId, final String listenerType) {
 		boolean makeRowSelected = false;
 		int rowToSelect = 0;
 		
@@ -393,7 +424,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public void insertDataRow(final List<String> listOfDataMap, final Boolean append, final String senderId, final String listenerType) {
+	@Override
+    public void insertDataRow(final List<String> listOfDataMap, final Boolean append, final String senderId, final String listenerType) {
 		if (canProcessEmptyDataSet(listOfDataMap, senderId, listenerType)) {
 			processEmptyDataSet(listOfDataMap, senderId, listenerType);
 		} else {
@@ -451,29 +483,35 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public void processActions(final DataGridGVO gvo, final String uuid, final String parent) {
+	@Override
+    public void processActions(final DataGridGVO gvo, final String uuid, final String parent) {
 		// TODO Auto-generated method stub
 	}
 
-	public void setAdd(final Boolean bool) {
+	@Override
+    public void setAdd(final Boolean bool) {
 		// TODO Auto-generated method stub
 	}
 
 
-	public void setDelete(final Boolean bool) {
+	@Override
+    public void setDelete(final Boolean bool) {
 		// TODO Auto-generated method stub
 	}
 
-	public boolean isEditable() {
+	@Override
+    public boolean isEditable() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public void setEditable(final boolean value) {
+	@Override
+    public void setEditable(final boolean value) {
 		// TODO Auto-generated method stub
 	}
 
-	public void setExport(final Boolean bool) {
+	@Override
+    public void setExport(final Boolean bool) {
 		// TODO Auto-generated method stub
 	}
 
@@ -481,15 +519,18 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		// TODO Auto-generated method stub
 	}
 
-	public void setModified(final boolean modified, final int row, final int column, final String value) {
+	@Override
+    public void setModified(final boolean modified, final int row, final int column, final String value) {
 		// TODO Auto-generated method stub
 	}
 
-	public void setModified(final ColumnDefinition<DataContainerGVO, String> columnDefinition, final UIObject uiObject, final DataContainerGVO rowValue, final Object newValue) {
+	@Override
+    public void setModified(final ColumnDefinition<DataContainerGVO, String> columnDefinition, final UIObject uiObject, final DataContainerGVO rowValue, final Object newValue) {
 		setModified(columnDefinition, uiObject, rowValue, newValue, false);
 	}
 
-	public void setModified(final ColumnDefinition<DataContainerGVO, String> columnDefinition, final UIObject uiObject, final DataContainerGVO rowValue, final Object newValue, final boolean changedByUser) {
+	@Override
+    public void setModified(final ColumnDefinition<DataContainerGVO, String> columnDefinition, final UIObject uiObject, final DataContainerGVO rowValue, final Object newValue, final boolean changedByUser) {
 		if (columnDefinition instanceof QColumnDefinition) {
 			if(rowValue != null && rowValue.isMap()) {
 				final QColumnDefinition colDefinition = (QColumnDefinition)columnDefinition;
@@ -516,11 +557,13 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 	}
 
 
-	public void setOverflow(final Widget overflow) {
+	@Override
+    public void setOverflow(final Widget overflow) {
 		this.overflow = overflow;
 	}
 
-	public void setPageSize(final Integer pageSize) {
+	@Override
+    public void setPageSize(final Integer pageSize) {
 		setPageSize(pageSize, false);
 	}
 
@@ -541,11 +584,13 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public void setShowAll(final Boolean bool) {
+	@Override
+    public void setShowAll(final Boolean bool) {
 		// TODO Auto-generated method stub
 	}
 
-	public void setup() {
+	@Override
+    public void setup() {
 		refreshColumnHeaders();
 		if (source.getColumns()!=null){
 			initColumnWidths();
@@ -677,7 +722,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 	/**
 	 * Reload the current page.
 	 */
-	public void reloadPage() {
+	@Override
+    public void reloadPage() {
 		if (qCurrentPage >= 0) {
 			gotoPage(qCurrentPage, true);
 		} else {
@@ -690,7 +736,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		return qCurrentPage;
 	}
 
-	public void setCurrentPage(final int currentPage) {
+	@Override
+    public void setCurrentPage(final int currentPage) {
 		if (hasPredefinedPageSize) {
 			// pageSize is specified in QAML code
 			qCurrentPage = Math.max(0, currentPage);
@@ -855,10 +902,12 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 			final Request request = new Request(firstRow, lastRow, dataTable.getColumnSortList());
 
 			final Callback callback = new Callback<DataContainerGVO>(){
-				public void onFailure(final Throwable caught) {
+				@Override
+                public void onFailure(final Throwable caught) {
 					ClientApplicationContext.getInstance().log("Setting datagrid values failed", caught);
 				}
-				public void onRowsReady(final Request request, final Response<DataContainerGVO> response) {
+				@Override
+                public void onRowsReady(final Request request, final Response<DataContainerGVO> response) {
 					setData(request, response);
 				}
 			};
@@ -913,7 +962,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public void selectRow(final int rowNr) {
+	@Override
+    public void selectRow(final int rowNr) {
 		if (rowNr>=0 && rowNr< getDataTable().getRowCount()){
 			getDataTable().selectRow(rowNr, true);
 			final Element rowToShow = getDataTable().getRowFormatter().getElement(rowNr);
@@ -1137,7 +1187,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 	}
 
 	// call back to handle anything to be done after the event body processing.
-	public void onResult(String senderId, final String listenerType) {
+	@Override
+    public void onResult(String senderId, final String listenerType) {
 		if (QAMLConstants.EVENT_ONCLICK.equals(listenerType)) {
 			senderId = getSenderIdOnly(senderId);
 			if (senderId.endsWith(QPagingScrollTableOperation.CONTROLS_DELETE)) {
@@ -1369,7 +1420,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		message.setText("Click ok to reset the data to initial value.");
 		final Button ok = new Button("Ok");
 		ok.addClickHandler(new ClickHandler() {
-			public void onClick(final ClickEvent event) {
+			@Override
+            public void onClick(final ClickEvent event) {
 				resetInitialData = false;
 				//datagridRendered = false;
 				getRowValues().clear();
@@ -1382,7 +1434,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		});
 		final Button cancel = new Button("Cancel");
 		cancel.addClickHandler(new ClickHandler() {
-			public void onClick(final ClickEvent event) {
+			@Override
+            public void onClick(final ClickEvent event) {
 				prompt.removeFromParent();
 			}
 		});
@@ -1473,7 +1526,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		}
 	}
 
-	public void onScroll(final ScrollEvent event) {
+	@Override
+    public void onScroll(final ScrollEvent event) {
 		if (scrollPosition == getDataWrapper().getScrollTop()) {
 			return;
 		}
@@ -1497,18 +1551,21 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		this.scrollEvent = scrollEvent;
 	}
 
-	public void setDataToCell(final DataContainerGVO valueToSet, final boolean b, final String senderId, final String cellOnRowToSet) {
+	@Override
+    public void setDataToCell(final DataContainerGVO valueToSet, final boolean b, final String senderId, final String cellOnRowToSet) {
 		final String[] inputRef = cellOnRowToSet.split("[.]");
 		final int rowIndex = getRowIndex(inputRef[0].toString().substring(inputRef[0].indexOf("[")+1, inputRef[0].indexOf("]")));
 		final String column = inputRef[1];
 		setColumnValue(rowIndex, column, valueToSet);
 	}
 	
-	public void setColumnValue(final String columnName, final DataContainerGVO value) {
+	@Override
+    public void setColumnValue(final String columnName, final DataContainerGVO value) {
 	    final int rowIndex = getSelectedRowIndex();
 	    setColumnValue(rowIndex, columnName, value);
 	}
 	
+    @Override
     @SuppressWarnings({"deprecation"})
     public void setColumnValue(final int rowIndex, final String columnName, final DataContainerGVO value) {
         if (rowIndex < 0) {
@@ -1566,7 +1623,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 	 * The following method returns the row number when setting or getting data is done on a data grid cell.
 	 * Setting and getting of datagrid cell can be done either by using the row index directly or by mentioning the change to be on the selected row.
 	 * */
-	public int getRowIndex(final String rowIndex){
+	@Override
+    public int getRowIndex(final String rowIndex){
 		if (rowIndex.equals(DataMap.SELECTED_INDEX)) {
 			return getSelectedRowIndex();
 		}
@@ -1589,7 +1647,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		return -1;
 	}
 
-	public void addToDropDownValuesForColumnList(final String dropDownColumnName, final SetValueGVO setValue) {
+	@Override
+    public void addToDropDownValuesForColumnList(final String dropDownColumnName, final SetValueGVO setValue) {
 		dropDownColumnAndValues.put(dropDownColumnName, setValue);
 	}
 
@@ -1597,7 +1656,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		return dropDownColumnAndValues;
 	}
 
-	public void setColumnVisible(final String column, final boolean value) {
+	@Override
+    public void setColumnVisible(final String column, final boolean value) {
 		final DataGridColumnGVO columnGVO = getColumn(column);
 		if (columnGVO == null) {
 			return;
@@ -1609,7 +1669,8 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		redraw();
 	}
 
-	public void setColumnLabel(final String column, final String value) {
+	@Override
+    public void setColumnLabel(final String column, final String value) {
 		final DataGridColumnGVO columnGVO = getColumn(column);
 		if (columnGVO == null) {
 			return;
@@ -1634,6 +1695,7 @@ public class QPagingScrollTable extends PagingScrollTable<DataContainerGVO> impl
 		return null;
 	}
 
+    @Override
     public void addRowSelectionChangeHandler(final RowSelectionChangeHandler handler) {
         if (handler != null) {
             rowSelectionChangeHandlers.add(handler);

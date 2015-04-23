@@ -1712,8 +1712,28 @@
 				<xs:attribute name="add" type="xs:boolean" default="false" />
 				<xs:attribute name="export" type="xs:boolean" default="false" />
 				<xs:attribute name="export-formats" type="xs:string" default="excel,pdf,csv,xml" />
-				
 				<xs:attribute name="import" type="xs:boolean" default="false" />
+				<xs:attribute name="import-action" default="set">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="set">
+								<xs:annotation>
+									<xs:documentation>
+										Set the result of the import to the datagrid, overriding the current value of the 
+										datagrid
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="add">
+								<xs:annotation>
+									<xs:documentation>
+										Append the result of the imports to the datagrid rather then overriding the data
+									</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>		
 				<xs:attribute name="name" type="xs:string" use="optional" />
 				<xs:attribute name="tooltip" type="xs:string" use="optional" />
 				<xs:attribute name="width" type="xs:string" />

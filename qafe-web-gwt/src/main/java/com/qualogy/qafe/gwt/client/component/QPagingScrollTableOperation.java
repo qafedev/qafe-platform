@@ -120,7 +120,7 @@ public class QPagingScrollTableOperation extends Composite {
 	public QPagingScrollTableOperation(final QPagingScrollTable table, ScrollTableOperationImages images) {
 		this.table = table;
 		if (this.table instanceof QPagingScrollTable){
-			((QPagingScrollTable)this.table).setScrollTableOperations(this);
+			this.table.setScrollTableOperations(this);
 		}
 
 		// Create the main widget
@@ -165,141 +165,154 @@ public class QPagingScrollTableOperation extends Composite {
 		hPanel.add(errorLabel);
 
 		if (table.getSource().getImportEnabled()!=null && table.getSource().getImportEnabled().booleanValue()){
-			final DisclosurePanel importPanel = new DisclosurePanel("Upload data");
-			hPanel.add(importPanel);
-			final FormPanel formPanel = new FormPanel();
-
-			formPanel.setAction(GWT.getModuleBaseURL() + "/rpc.datagridupload");
-			formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
-			formPanel.setMethod(FormPanel.METHOD_POST);
-
-			FileUpload fileUploadComponent = new FileUpload();
-			fileUploadComponent.setName("uploadElement");
-
-			Button uploadButtonComponent = new Button("Upload");
-			uploadButtonComponent.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					formPanel.submit();
-				}
-			});
-
-			CheckBox isFirstLineHeader = new CheckBox("Is first row header ?");
-			isFirstLineHeader.setName("isFirstLineHeader");
-			isFirstLineHeader.setTitle("Check wheter or not the first line of the uploaded file is a header/column definition");
-			HorizontalPanel hp = new HorizontalPanel();
-
-			Label label = new Label("Delimeter");
-			final TextBox delimiter = new TextBox();
-			delimiter.setValue(",");
-			delimiter.setTitle("Insert the delimeter (can be any value, as long it's length 1)");
-			delimiter.setName("delimiter");
-			delimiter.setWidth("15px");
-			hp.setSpacing(10);
-			hp.add(label);
-			hp.add(delimiter);
-
-			Grid gridPanel = new Grid(2, 4);
-			gridPanel.setWidget(0, 0, fileUploadComponent);
-			gridPanel.setWidget(0, 1, uploadButtonComponent);
-			gridPanel.setWidget(1, 0, isFirstLineHeader);
-			gridPanel.setWidget(1, 1, hp);
-
-			formPanel.add(gridPanel);
-
-			formPanel.addSubmitHandler(new FormPanel.SubmitHandler() {
-
-				public void onSubmit(SubmitEvent event) {
-					// This event is fired just before the form is submitted. We can
-					// take
-					// this opportunity to perform validation.
-					if (delimiter.getText().length() == 0 || delimiter.getText().length() > 1) {
-						ClientApplicationContext.getInstance().log("Ooops...Delimeter invalid", "Make sure there is valid delimeter value.One character only (current value ='" + delimiter.getText() + "'", true);
-						event.cancel();
-					}
-				}
-
-			});
-
-			formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler() {
-
-				public void onSubmitComplete(SubmitCompleteEvent event) {
-					String uuId = event.getResults();
-					if (uuId != null && uuId.indexOf("=") > 0) {
-						uuId = uuId.substring(uuId.indexOf("=") + 1);
-						processData(uuId);
-						importPanel.setOpen(false);
-					} else {
-						ClientApplicationContext.getInstance().log("Upload failed", event.getResults(), true);
-					}
-				}
-			});
-			importPanel.add(formPanel);
+			createFormComposite(hPanel);
 		}
 
 		if (table.getSource() != null && table.getSource().getExport() != null && table.getSource().getExport().booleanValue()) {
-
-			createExportLabelsAndImages();
-
-			final DisclosurePanel exportPanel = new DisclosurePanel("Export");
-			String[] labels = getExportLabels(table.getSource().getExportFormats());
-			Image[] exportImages = getExportImages(labels);
-
-			FlexTable gridExportPanel = new FlexTable();
-			hPanel.add(exportPanel);
-			exportPanel.add(gridExportPanel);
-			final Frame frame = new Frame();
-			frame.setHeight("0");
-			frame.setWidth("0");
-			frame.setVisible(false);
-			final String moduleRelativeURL = GWT.getModuleBaseURL() + "/rpc.export";
-			gridExportPanel.setWidget(0,0,frame);
-
-			final CheckBox generateColumnHeaderBox= new CheckBox("Generate Column Header");
-			gridExportPanel.getFlexCellFormatter().setColSpan(1,1, 7);
-			gridExportPanel.setWidget(2, 1,generateColumnHeaderBox);
-			gridExportPanel.getFlexCellFormatter().setColSpan(2,1,6);
-
-			for (int i = 0; i < labels.length; i++) {
-
-				exportImages[i].setStylePrimaryName("datagridexportlabel");
-				exportImages[i].setTitle(labels[i]);
-				gridExportPanel.setWidget(0, i+1,exportImages[i]);
-
-				exportImages[i].addClickHandler(new ClickHandler() {
-
-					public void onClick(ClickEvent event) {
-						if (event.getSource() instanceof Image) {
-							Image image = (Image) (event.getSource());
-							final String exportCode = image.getTitle();
-							RPCServiceAsync service = MainFactoryActions.createService();
-							AsyncCallback<?> callback = new AsyncCallback<Object>() {
-								public void onSuccess(Object result) {
-									String uuid = (String) result;
-									// set frame
-									frame.setUrl(moduleRelativeURL + "?uuid=" + uuid);
-									ClientApplicationContext.getInstance().setBusy(false);
-								}
-
-								public void onFailure(Throwable caught) {
-
-									ClientApplicationContext.getInstance().log("Export failed", "Export failed for " + exportCode + " ", true, true, caught);
-									ClientApplicationContext.getInstance().setBusy(false);
-									FunctionsExecutor.setProcessedBuiltIn(true);
-								}
-							};
-							List<DataContainerGVO> dList = new ArrayList<DataContainerGVO>();
-							// following loop is to maintain the order of rows while exporting.
-							for(int i=0;i<(table.getAbsoluteLastRowIndex()+1);i++){
-								dList.add(table.getRowValue(i));
-							}
-							service.prepareForExport(dList, exportCode, null, generateColumnHeaderBox.getValue().booleanValue(),  callback);
-						}
-					}
-				});
-			}
+			createExportComposite(table, hPanel);
 		}
 	}
     // CHECKSTYLE.ON: CyclomaticComplexity
+
+    private void createExportComposite(final QPagingScrollTable table, HorizontalPanel hPanel) {
+        createExportLabelsAndImages();
+
+        final DisclosurePanel exportPanel = new DisclosurePanel("Export");
+        String[] labels = getExportLabels(table.getSource().getExportFormats());
+        Image[] exportImages = getExportImages(labels);
+
+        FlexTable gridExportPanel = new FlexTable();
+        hPanel.add(exportPanel);
+        exportPanel.add(gridExportPanel);
+        final Frame frame = new Frame();
+        frame.setHeight("0");
+        frame.setWidth("0");
+        frame.setVisible(false);
+        final String moduleRelativeURL = GWT.getModuleBaseURL() + "/rpc.export";
+        gridExportPanel.setWidget(0,0,frame);
+
+        final CheckBox generateColumnHeaderBox= new CheckBox("Generate Column Header");
+        gridExportPanel.getFlexCellFormatter().setColSpan(1,1, 7);
+        gridExportPanel.setWidget(2, 1,generateColumnHeaderBox);
+        gridExportPanel.getFlexCellFormatter().setColSpan(2,1,6);
+
+        for (int i = 0; i < labels.length; i++) {
+
+        	exportImages[i].setStylePrimaryName("datagridexportlabel");
+        	exportImages[i].setTitle(labels[i]);
+        	gridExportPanel.setWidget(0, i+1,exportImages[i]);
+
+        	exportImages[i].addClickHandler(new ClickHandler() {
+
+        		@Override
+                public void onClick(ClickEvent event) {
+        			if (event.getSource() instanceof Image) {
+        				Image image = (Image) (event.getSource());
+        				final String exportCode = image.getTitle();
+        				RPCServiceAsync service = MainFactoryActions.createService();
+        				AsyncCallback<?> callback = new AsyncCallback<Object>() {
+        					@Override
+                            public void onSuccess(Object result) {
+        						String uuid = (String) result;
+        						// set frame
+        						frame.setUrl(moduleRelativeURL + "?uuid=" + uuid);
+        						ClientApplicationContext.getInstance().setBusy(false);
+        					}
+
+        					@Override
+                            public void onFailure(Throwable caught) {
+
+        						ClientApplicationContext.getInstance().log("Export failed", "Export failed for " + exportCode + " ", true, true, caught);
+        						ClientApplicationContext.getInstance().setBusy(false);
+        						FunctionsExecutor.setProcessedBuiltIn(true);
+        					}
+        				};
+        				List<DataContainerGVO> dList = new ArrayList<DataContainerGVO>();
+        				// following loop is to maintain the order of rows while exporting.
+        				for(int i=0;i<(table.getAbsoluteLastRowIndex()+1);i++){
+        					dList.add(table.getRowValue(i));
+        				}
+        				service.prepareForExport(dList, exportCode, null, generateColumnHeaderBox.getValue().booleanValue(),  callback);
+        			}
+        		}
+        	});
+        }
+    }
+
+    private void createFormComposite(HorizontalPanel hPanel) {
+        final DisclosurePanel importPanel = new DisclosurePanel("Upload data");
+        hPanel.add(importPanel);
+        final FormPanel formPanel = new FormPanel();
+
+        formPanel.setAction(GWT.getModuleBaseURL() + "/rpc.datagridupload");
+        formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+        formPanel.setMethod(FormPanel.METHOD_POST);
+
+        FileUpload fileUploadComponent = new FileUpload();
+        fileUploadComponent.setName("uploadElement");
+
+        Button uploadButtonComponent = new Button("Upload");
+        uploadButtonComponent.addClickHandler(new ClickHandler() {
+        	@Override
+            public void onClick(ClickEvent event) {
+        		formPanel.submit();
+        	}
+        });
+
+        CheckBox isFirstLineHeader = new CheckBox("Is first row header ?");
+        isFirstLineHeader.setName("isFirstLineHeader");
+        isFirstLineHeader.setTitle("Check wheter or not the first line of the uploaded file is a header/column definition");
+        HorizontalPanel hp = new HorizontalPanel();
+
+        Label label = new Label("Delimeter");
+        final TextBox delimiter = new TextBox();
+        delimiter.setValue(",");
+        delimiter.setTitle("Insert the delimeter (can be any value, as long it's length 1)");
+        delimiter.setName("delimiter");
+        delimiter.setWidth("15px");
+        hp.setSpacing(10);
+        hp.add(label);
+        hp.add(delimiter);
+
+        Grid gridPanel = new Grid(2, 4);
+        gridPanel.setWidget(0, 0, fileUploadComponent);
+        gridPanel.setWidget(0, 1, uploadButtonComponent);
+        gridPanel.setWidget(1, 0, isFirstLineHeader);
+        gridPanel.setWidget(1, 1, hp);
+
+        formPanel.add(gridPanel);
+
+        formPanel.addSubmitHandler(new FormPanel.SubmitHandler() {
+
+        	@Override
+            public void onSubmit(SubmitEvent event) {
+        		// This event is fired just before the form is submitted. We can
+        		// take
+        		// this opportunity to perform validation.
+        		if (delimiter.getText().length() == 0 || delimiter.getText().length() > 1) {
+        			ClientApplicationContext.getInstance().log("Ooops...Delimeter invalid", "Make sure there is valid delimeter value.One character only (current value ='" + delimiter.getText() + "'", true);
+        			event.cancel();
+        		}
+        	}
+
+        });
+
+        formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler() {
+
+        	@Override
+            public void onSubmitComplete(SubmitCompleteEvent event) {
+        		String uuId = event.getResults();
+        		if (uuId != null && uuId.indexOf("=") > 0) {
+        			uuId = uuId.substring(uuId.indexOf("=") + 1);
+        			processData(uuId);
+        			importPanel.setOpen(false);
+        		} else {
+        			ClientApplicationContext.getInstance().log("Upload failed", event.getResults(), true);
+        		}
+        	}
+        });
+        importPanel.add(formPanel);
+    }
 
 	/**
 	 * Create two maps to map the supported export formats with their corresponding labels and images
@@ -375,15 +388,17 @@ public class QPagingScrollTableOperation extends Composite {
 
 		RPCServiceAsync service = MainFactoryActions.createService();
 		AsyncCallback<?> callback = new AsyncCallback<Object>() {
-			public void onSuccess(Object result) {
+			@Override
+            public void onSuccess(Object result) {
 				List<DataContainerGVO> map = (List<DataContainerGVO>) result;
-				table.insertData(map);
+				table.insertImportedData(map);
 				// WindowFactory.createWindow(ui, windowId);
 				ClientApplicationContext.getInstance().setBusy(false);
 				FunctionsExecutor.setProcessedBuiltIn(true);
 			}
 
-			public void onFailure(Throwable caught) {
+			@Override
+            public void onFailure(Throwable caught) {
 
 				ClientApplicationContext.getInstance().log("Getting window from server failed", "Error getting data after upload", true, true, caught);
 				ClientApplicationContext.getInstance().setBusy(false);
@@ -440,7 +455,8 @@ public class QPagingScrollTableOperation extends Composite {
 
 		// Create the listener
 		ClickHandler handler = new ClickHandler() {
-			public void onClick(ClickEvent event) {
+			@Override
+            public void onClick(ClickEvent event) {
 				Object source = event.getSource();
 				if (source == addImage) {
 					table.onAdd();

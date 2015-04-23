@@ -20,237 +20,241 @@ package com.qualogy.qafe.bind.presentation.component;
 
 import java.util.List;
 
-
-
 /**
- * @author rjankie 
+ * @author rjankie
  */
 
-public  class DataGrid extends EditableComponent implements HasComponents{
+public class DataGrid extends EditableComponent implements HasComponents {
 
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3607530581878883535L;
+    private static final long serialVersionUID = 3607530581878883535L;
 
-	protected Integer maxRows ;
-	
-	protected Integer pageSize;
-	
-	protected Integer currentPage;
-	
-	protected Integer minRows;
-	
-	
-	
-	protected Boolean delete=Boolean.FALSE;
-	
-	protected Boolean add=Boolean.FALSE;
-	
-	protected Boolean pageScroll=Boolean.FALSE;
-	
-	
-	protected Boolean export=Boolean.FALSE;
-	
-	protected String exportFormats="excel,pdf,csv,xml";
-	
-	public String getExportFormats() {
-		return exportFormats;
-	}
+    private Integer maxRows;
 
-	public void setExportFormats(String exportFormats) {
-		this.exportFormats = exportFormats;
-	}
+    private Integer pageSize;
 
-	protected Boolean importEnabled=Boolean.FALSE;
-		
-	public Boolean getImportEnabled() {
-		return importEnabled;
-	}
+    private Integer currentPage;
 
-	public void setImportEnabled(Boolean importEnabled) {
-		this.importEnabled = importEnabled;
-	}
+    private Integer minRows;
 
-	protected List<DataGridColumn> columns;
-	
-	protected OverFlowPanel overflow;
-	
-	protected DatagridControlBar controlbar;
-	
-	protected Boolean multipleSelect;
-	
-	protected String rowColors;
-	private Boolean selectFirstRow;
-	private Boolean save;
-	private Boolean cancel;
-	private Boolean refresh;
-	private String overflowGroup;
-	
+    private Boolean delete = Boolean.FALSE;
 
-	public DatagridControlBar getControlbar() {
-		return controlbar;
-	}
+    private Boolean add = Boolean.FALSE;
 
-	public void setControlbar(DatagridControlBar controlbar) {
-		this.controlbar = controlbar;
-	}
+    private Boolean pageScroll = Boolean.FALSE;
 
-	public List<DataGridColumn> getColumns() {
-		return columns;
-	}
+    private Boolean export = Boolean.FALSE;
 
-	public void setColumns(List<DataGridColumn> columns) {
-		this.columns = columns;
-	}
+    private String exportFormats = "excel,pdf,csv,xml";
 
-	/**
-	 * @deprecated
-	 */
-	public Integer getMaxRows() {
-		return maxRows;
-	}
+    private Boolean importEnabled = Boolean.FALSE;
 
-	/**
-	 * @deprecated
-	 */
-	public void setMaxRows(Integer maxRows) {
-		this.maxRows = maxRows;
-	}
+    private String importAction = "set";
 
-	public Integer getPageSize() {
-		return pageSize;
-	}
+    private List<DataGridColumn> columns;
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
-	}
+    private OverFlowPanel overflow;
 
-	public Integer getCurrentPage() {
-		return currentPage;
-	}
+    private DatagridControlBar controlbar;
 
-	public void setCurrentPage(Integer currentPage) {
-		this.currentPage = currentPage;
-	}
+    private Boolean multipleSelect;
 
-	public Boolean getDelete() {
-		return delete;
-	}
+    private String rowColors;
 
-	public void setDelete(Boolean delete) {
-		this.delete = delete;
-	}
+    private Boolean selectFirstRow;
 
-	public Boolean getAdd() {
-		return add;
-	}
+    private Boolean save;
 
-	public void setAdd(Boolean add) {
-		this.add = add;
-	}
+    private Boolean cancel;
 
-	public Integer getMinRows() {
-		return minRows;
-	}
+    private Boolean refresh;
 
-	public void setMinRows(Integer minRows) {
-		this.minRows = minRows;
-	}
+    private String overflowGroup;
 
-	public Boolean getExport() {
-		return export;
-	}
+    public String getExportFormats() {
+        return exportFormats;
+    }
 
-	public void setExport(Boolean export) {
-		this.export = export;
-	}
+    public void setExportFormats(String exportFormats) {
+        this.exportFormats = exportFormats;
+    }
 
+    public Boolean getImportEnabled() {
+        return importEnabled;
+    }
 
+    public void setImportEnabled(Boolean importEnabled) {
+        this.importEnabled = importEnabled;
+    }
 
-	public OverFlowPanel getOverflow() {
-		return overflow;
-	}
+    public String getImportAction() {
+        return importAction;
+    }
 
-	public void setOverflow(OverFlowPanel overflow) {
-		this.overflow = overflow;
-	}
-	
-	public boolean hasOverflow(){
-		return (overflow!=null);
-	}
-	
-	public boolean hasColumns(){
-		return (columns!=null);
-	}
+    public void setImportAction(String importAction) {
+        this.importAction = importAction;
+    }
 
-	public List<? extends Component> getComponents() {
-		return columns;
-	}
+    public DatagridControlBar getControlbar() {
+        return controlbar;
+    }
 
-	public Boolean getMultipleSelect() {
-		return multipleSelect;
-	}
+    public void setControlbar(DatagridControlBar controlbar) {
+        this.controlbar = controlbar;
+    }
 
-	public void setMultipleSelect(Boolean multipleSelect) {
-		this.multipleSelect = multipleSelect;
-	}
+    public List<DataGridColumn> getColumns() {
+        return columns;
+    }
 
-	public String getRowColors() {
-		return rowColors;
-	}
+    public void setColumns(List<DataGridColumn> columns) {
+        this.columns = columns;
+    }
 
-	public void setRowColors(String rowColors) {
-		this.rowColors = rowColors;
-	}
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    public Integer getMaxRows() {
+        return maxRows;
+    }
 
-	public Boolean getPageScroll() {
-		return pageScroll;
-	}
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    public void setMaxRows(Integer maxRows) {
+        this.maxRows = maxRows;
+    }
 
-	public void setPageScroll(Boolean pageScroll) {
-		this.pageScroll = pageScroll;
-	}
+    public Integer getPageSize() {
+        return pageSize;
+    }
 
-	public Boolean getSelectFirstRow() {
-		return selectFirstRow;
-	}
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 
-	public void setSelectFirstRow(Boolean selectFirstRow) {
-		this.selectFirstRow = selectFirstRow;
-	}
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
 
-	public Boolean getSave() {
-		return save;
-	}
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
 
-	public void setSave(Boolean save) {
-		this.save = save;
-	}
+    public Boolean getDelete() {
+        return delete;
+    }
 
-	public Boolean getCancel() {
-		return cancel;
-	}
+    public void setDelete(Boolean delete) {
+        this.delete = delete;
+    }
 
-	public void setCancel(Boolean cancel) {
-		this.cancel = cancel;
-	}
+    public Boolean getAdd() {
+        return add;
+    }
 
-	public Boolean getRefresh() {
-		return refresh;
-	}
+    public void setAdd(Boolean add) {
+        this.add = add;
+    }
 
-	public void setRefresh(Boolean refresh) {
-		this.refresh = refresh;
-	}
+    public Integer getMinRows() {
+        return minRows;
+    }
 
-    
+    public void setMinRows(Integer minRows) {
+        this.minRows = minRows;
+    }
+
+    public Boolean getExport() {
+        return export;
+    }
+
+    public void setExport(Boolean export) {
+        this.export = export;
+    }
+
+    public OverFlowPanel getOverflow() {
+        return overflow;
+    }
+
+    public void setOverflow(OverFlowPanel overflow) {
+        this.overflow = overflow;
+    }
+
+    public boolean hasOverflow() {
+        return (overflow != null);
+    }
+
+    public boolean hasColumns() {
+        return (columns != null);
+    }
+
+    @Override
+    public List<? extends Component> getComponents() {
+        return columns;
+    }
+
+    public Boolean getMultipleSelect() {
+        return multipleSelect;
+    }
+
+    public void setMultipleSelect(Boolean multipleSelect) {
+        this.multipleSelect = multipleSelect;
+    }
+
+    public String getRowColors() {
+        return rowColors;
+    }
+
+    public void setRowColors(String rowColors) {
+        this.rowColors = rowColors;
+    }
+
+    public Boolean getPageScroll() {
+        return pageScroll;
+    }
+
+    public void setPageScroll(Boolean pageScroll) {
+        this.pageScroll = pageScroll;
+    }
+
+    public Boolean getSelectFirstRow() {
+        return selectFirstRow;
+    }
+
+    public void setSelectFirstRow(Boolean selectFirstRow) {
+        this.selectFirstRow = selectFirstRow;
+    }
+
+    public Boolean getSave() {
+        return save;
+    }
+
+    public void setSave(Boolean save) {
+        this.save = save;
+    }
+
+    public Boolean getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(Boolean cancel) {
+        this.cancel = cancel;
+    }
+
+    public Boolean getRefresh() {
+        return refresh;
+    }
+
+    public void setRefresh(Boolean refresh) {
+        this.refresh = refresh;
+    }
+
     public String getOverflowGroup() {
         return overflowGroup;
     }
 
-    
     public void setOverflowGroup(String overflowGroup) {
         this.overflowGroup = overflowGroup;
     }

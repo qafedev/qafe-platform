@@ -1953,7 +1953,9 @@
 		<value field="exportFormats" name="export-formats" style="attribute" usage="optional"
 			default="excel,pdf,csv,xml" />	
 		<value field="importEnabled" name="import" style="attribute" usage="optional"
-			default="false" />					
+			default="false" />	
+		<value field="importAction" name="import-action" style="attribute" usage="optional"
+			default="set" />		
 			
 					
 		<value name="tooltip" style="attribute" field="tooltip" usage="optional" />
