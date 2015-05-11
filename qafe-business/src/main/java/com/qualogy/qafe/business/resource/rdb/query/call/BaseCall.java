@@ -80,8 +80,9 @@ public class BaseCall extends DBCall {
     /**
      * could have called callStmt.getParameterMetaData(); per call but cheaper to do it ones
      */
-    public CallableStatement prepareCall(Connection conn, Call call, Method method, Map inputParameters)
+    public CallableStatement prepareCall(Connection connection, Call call, Method method, Map inputParameters)
             throws SQLException {
+        Connection conn = NativeConnectionHandler.getNativeConnection(connection);
         String sql = null;
         if (!call.isPrepared()) {
             if (call.isFunction()) {
