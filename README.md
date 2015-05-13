@@ -57,10 +57,11 @@ brew install maven
 ```
 For other platforms, the latest Maven-binaries can be found [here](http://maven.apache.org/download.cgi). 
 
-2\. The location of the local maven repository needs to be changed. In the qafe-platform/settings.xml locate the <localRepository> tag. By doing this you won't harm other maven projects on your system. Check it to for example:
+2\. If you want, you could change the location of the maven repository in the settings.xml of the project. This is located in the qafe-platform parent module. For example:
 ```
 <localRepository>/Users/johndoe/develop/qafe/m2/</localRepository>
 ``` 
+One of the more obvious reasons to do this is if you want seperate maven repositories for different projects. Perhaps for organizational reasons.
 
 3\. After setting the proper location of the local Maven repository, you can start the following command to build the platform:
 ```
