@@ -56,6 +56,7 @@ It's possible Eclipse asks to install certain Maven plugins during the import. T
 
 Before you start debugging make sure the project has been built successfully.
 Go to 'Debug Configurations', select the the **first** qafe-web-gwt under Java Application and press 'Debug'.
+The qafe-web-gwt is a configuration that should already be available in Eclipse for this project.
 
 A possible place for debugging the server is the `public void init(ServletContext servletContext)` method in the `com.qualogy.qafe.web.ContextLoader` class. This is the starting point for loading the server.
 
