@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.transform.Result;
@@ -43,7 +44,10 @@ import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -120,7 +124,7 @@ public class DocumentExporter {
 							String key = headerColumns.get(i);
 							Object value = map.get(key);
 							Cell cell = row.createCell(i);
-							setCellValue(cell, value);
+							setCellValue(wb, cell, value);
 						}
 					}
 				}
@@ -313,7 +317,7 @@ public class DocumentExporter {
 		return headerColumns;
 	}
 	
-	protected static void setCellValue(Cell cell, Object value) {
+	protected static void setCellValue(Workbook wb, Cell cell, Object value) {
 		if (cell == null) {
 			return;
 		}
@@ -322,7 +326,13 @@ public class DocumentExporter {
 		} else if (value instanceof Number) {
 			cell.setCellValue(((Number)value).doubleValue());
 		} else if (value instanceof Date) {
+			CellStyle cellStyle = wb.createCellStyle();
+			DataFormat poiFormat = wb.createDataFormat();
+			// Format: 0x16, "m/d/yy h:mm"
+			final short format = poiFormat.getFormat(BuiltinFormats.getBuiltinFormat(0x16));
+			cellStyle.setDataFormat(format);
 			cell.setCellValue(((Date)value));
+			cell.setCellStyle(cellStyle);
 		} else if (value instanceof Calendar) {
 			cell.setCellValue(((Calendar)value));
 		} else if (value != null) {
