@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.qualogy.qafe.webapps</groupId>
         <artifactId>qafe-webapps</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.2-SNAPSHOT</version>
     </parent>
     <artifactId>qafe-gwt-generic-webapp</artifactId>
     <packaging>war</packaging>
