@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qualogy.qafe</groupId>
     <artifactId>platform</artifactId>
-    <version>3.4.1-SNAPSHOT</version>
+    <version>3.4.1</version>
     <packaging>pom</packaging>
     <name>Qafe Platform</name>
     <description>TODO... add desciption</description>
@@ -45,7 +45,7 @@
         <connection>scm:git:git@github.com:qafedev/qafe-platform.git</connection>
         <developerConnection>scm:git:git@github.com:qafedev/qafe-platform.git</developerConnection>
         <url>http://github.com/qafedev/qafe-platform</url>
-        <tag>platform-3.1.0</tag>
+        <tag>platform-3.4.1</tag>
     </scm>
 
     <!-- Global properties specific for the entire Qafe platform build -->
