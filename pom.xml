@@ -196,7 +196,7 @@
                             <featureBranchPrefix>feature/</featureBranchPrefix>
                             <releaseBranchPrefix>release-</releaseBranchPrefix>
                             <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
-                            <versionTagPrefix>qafe-</versionTagPrefix>
+                            <versionTagPrefix>platform-</versionTagPrefix>
                         </flowInitContext>
                     </configuration>
                 </plugin>
