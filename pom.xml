@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qualogy.qafe</groupId>
     <artifactId>platform</artifactId>
-    <version>3.4.2-SNAPSHOT</version>
+    <version>3.4.2-rc1</version>
     <packaging>pom</packaging>
     <name>Qafe Platform</name>
     <description>TODO... add desciption</description>
@@ -182,6 +182,23 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>external.atlassian.jgitflow</groupId>
+                    <artifactId>jgitflow-maven-plugin</artifactId>
+                    <version>1.0-m4.3</version>
+                    <configuration>
+                        <pushReleases>true</pushReleases>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <flowInitContext>
+                            <masterBranchName>master</masterBranchName>
+                            <developBranchName>develop</developBranchName>
+                            <featureBranchPrefix>feature/</featureBranchPrefix>
+                            <releaseBranchPrefix>release-</releaseBranchPrefix>
+                            <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                            <versionTagPrefix>qafe-</versionTagPrefix>
+                        </flowInitContext>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
