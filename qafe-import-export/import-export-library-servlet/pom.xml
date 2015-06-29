@@ -19,7 +19,7 @@
     <parent>
         <artifactId>qafe-import-export</artifactId>
         <groupId>com.qualogy.qafe.platform</groupId>
-        <version>3.4.2-rc1</version>
+        <version>3.4.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qualogy.qafe.platform.qafe-import-export</groupId>
