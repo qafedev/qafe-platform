@@ -22,7 +22,7 @@
 			<drivermanager-datasource 
 				id="db" 
 				statements-file-url="statements.xml,statements2.xml" 
-				url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV1" 
+				url="jdbc:oracle:thin:@qpd.qualogy.com:1521:QPDDEV" 
 				username="hdemo65_xe"	
 				password="hdemo65_xe" 
 				driver-classname="oracle.jdbc.OracleDriver" />	
