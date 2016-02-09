@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,20 +20,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
+
 import com.qualogy.qafe.business.test.BusinessActionTestCase;
 import com.qualogy.qafe.core.datastore.CacheHandler;
 import com.qualogy.qafe.core.datastore.DataStore;
 
+@Ignore
 public class RDBServiceProcessorTest extends BusinessActionTestCase {
 	
 	private static final String APP_ID = "RPTest1";
 	private static final String SERVICE_ID = "databaseService";
 	
 	
+	@Override
 	protected String[] getSetupActions() {
 		return new String[]{"setup"};
 	}
 
+	@Override
 	protected String[] getTearDownActions() {
 		return new String[]{"teardown"};
 	}
@@ -203,6 +208,7 @@ public class RDBServiceProcessorTest extends BusinessActionTestCase {
 		CacheHandler.getInstance().remove(cacheKey);
 	}
 	
+	@Override
 	public String getAppContextDir() {
 		return getDirBasedUponPackage();
 	}

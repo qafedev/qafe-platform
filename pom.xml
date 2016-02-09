@@ -1,6 +1,6 @@
 <!--
 
-    Copyright 2008-2015 Qualogy Solutions B.V.
+    Copyright 2008-2016 Qualogy Solutions B.V.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.qualogy.qafe</groupId>
     <artifactId>platform</artifactId>
-    <version>3.4.2-rc1</version>
+    <version>3.4.3</version>
     <packaging>pom</packaging>
     <name>Qafe Platform</name>
     <description>TODO... add desciption</description>
@@ -181,7 +181,18 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.7</version>
+				    <version>2.10.3</version>
+				    <executions>
+				        <execution>
+				            <id>attach-javadocs</id>
+				            <goals>
+				                <goal>jar</goal>
+				            </goals>
+				            <configuration>
+				                <additionalparam>-Xdoclint:none</additionalparam>
+				            </configuration>
+				        </execution>
+			    	</executions>
                 </plugin>
                 <plugin>
                     <groupId>external.atlassian.jgitflow</groupId>
@@ -196,7 +207,7 @@
                             <featureBranchPrefix>feature/</featureBranchPrefix>
                             <releaseBranchPrefix>release-</releaseBranchPrefix>
                             <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
-                            <versionTagPrefix>qafe-</versionTagPrefix>
+                            <versionTagPrefix>platform-</versionTagPrefix>
                         </flowInitContext>
                     </configuration>
                 </plugin>
@@ -560,7 +571,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.7</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
