@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,20 @@
  */
 package test.com.qualogy.qafe.business.integration.rdb.selectdb;
 
-import com.qualogy.qafe.business.test.BusinessActionTestCase;
-import com.qualogy.qafe.core.datastore.DataStore;
-import com.qualogy.qafe.core.errorhandling.ExternalException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 
+import com.qualogy.qafe.business.test.BusinessActionTestCase;
+import com.qualogy.qafe.core.datastore.DataStore;
+import com.qualogy.qafe.core.errorhandling.ExternalException;
+
+
+@Ignore
 public class SelectStatementTest extends BusinessActionTestCase {
     /**
      *
@@ -41,15 +44,18 @@ public class SelectStatementTest extends BusinessActionTestCase {
     
     
      */
-    protected String[] getSetupActions() {
+    @Override
+	protected String[] getSetupActions() {
         return new String[] { "setUp" };
     }
 
-    protected String[] getTearDownActions() {
+    @Override
+	protected String[] getTearDownActions() {
         return new String[] { "tearDown" };
     }
 
-    public String getAppContextDir() {
+    @Override
+	public String getAppContextDir() {
         return getDirBasedUponPackage();
     }
 

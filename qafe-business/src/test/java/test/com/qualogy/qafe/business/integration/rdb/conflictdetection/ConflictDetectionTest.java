@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.junit.Ignore;
+
 import com.qualogy.qafe.bind.business.action.BusinessAction;
 import com.qualogy.qafe.business.test.BusinessActionLookup;
 import com.qualogy.qafe.business.test.BusinessActionTestCase;
@@ -30,6 +32,7 @@ import com.qualogy.qafe.core.datastore.DataIdentifier;
 import com.qualogy.qafe.core.datastore.DataStore;
 import com.qualogy.qafe.core.errorhandling.ExternalException;
 
+@Ignore
 public class ConflictDetectionTest extends BusinessActionTestCase {
 
 	private String columnEmpId = "EMP_ID";
@@ -42,14 +45,17 @@ public class ConflictDetectionTest extends BusinessActionTestCase {
 	 * "BIRTHDATE" DATE, "CHILDREN" NUMBER(10,0), CONSTRAINT
 	 * "QAFE_TEST_SELECTDB_PK" PRIMARY KEY ("EMP_ID") ) ;
 	 */
+	@Override
 	protected String[] getSetupActions() {
 		return new String[] { "setUp" };
 	}
 
+	@Override
 	protected String[] getTearDownActions() {
 		return new String[] {};
 	}
 
+	@Override
 	public String getAppContextDir() {
 		return getDirBasedUponPackage();
 	}
@@ -191,6 +197,7 @@ public class ConflictDetectionTest extends BusinessActionTestCase {
 
 	private Comparator<Map<String, String>> createComparator(final String empIdColumn) {
 		return new Comparator<Map<String, String>>() {
+			@Override
 			public int compare(Map<String, String> map1, Map<String, String> map2) {
 				return map1.get(empIdColumn).compareTo(map2.get(empIdColumn));
 			}

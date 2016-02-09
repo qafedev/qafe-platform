@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Ignore;
+
 import com.qualogy.qafe.business.test.BusinessActionTestCase;
 import com.qualogy.qafe.core.datastore.DataStore;
 
+@Ignore
 @SuppressWarnings("deprecation")
 public class RDBServiceProcessorUpdateTest extends BusinessActionTestCase {
 
@@ -33,6 +36,7 @@ public class RDBServiceProcessorUpdateTest extends BusinessActionTestCase {
 		return getDirBasedUponPackage();
 	}
 	
+	@Override
 	protected String[] getSetupActions() {
 		return new String[]{"deleteData", "insertData"};
 	}
@@ -333,6 +337,7 @@ public class RDBServiceProcessorUpdateTest extends BusinessActionTestCase {
 		assertEquals("Jupiter", DataStore.getValue(dataId, "result[0].NAME"));
 	}
 	
+	@Override
 	protected String[] getTearDownActions() {
 		return new String[]{"deleteData"};
 	}		

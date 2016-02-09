@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,20 @@ package test.com.qualogy.qafe.business.integration.rdb.select;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
+
 import com.qualogy.qafe.business.test.BusinessActionTestCase;
 import com.qualogy.qafe.core.datastore.DataStore;
 
+@Ignore
 public class RDBServiceProcessorSelectTest extends BusinessActionTestCase {
 	
+	@Override
 	protected String[] getSetupActions() {
 		return new String[]{"setupInMemory"};
 	}
 
+	@Override
 	protected String[] getTearDownActions() {
 		return new String[]{"teardownInMemory"};
 	}
@@ -62,6 +67,7 @@ public class RDBServiceProcessorSelectTest extends BusinessActionTestCase {
 		assertEquals("0", ((Map)DataStore.getValue(dataId, "outcome[9]")).get("id"));
 	}
 	
+	@Override
 	public String getAppContextDir() {
 		return getDirBasedUponPackage();
 	}

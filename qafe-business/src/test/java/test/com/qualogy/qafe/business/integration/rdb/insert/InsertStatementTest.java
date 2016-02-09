@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2015 Qualogy Solutions B.V.
+ * Copyright 2008-2016 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,12 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
+import org.junit.Ignore;
+
 import com.qualogy.qafe.business.test.BusinessActionTestCase;
 import com.qualogy.qafe.core.datastore.DataStore;
 
+@Ignore
 public class InsertStatementTest extends BusinessActionTestCase {
 	
 	/**
@@ -53,14 +56,17 @@ public class InsertStatementTest extends BusinessActionTestCase {
 	private Date SECOND_ENTRY_DATE = new Date("03/04/2011");
 	private int SECOND_SALARY = 544;
 	
+	@Override
 	protected String[] getSetupActions() {
 		return new String[]{"setup"};
 	}
 
+	@Override
 	protected String[] getTearDownActions() {
 		return new String[]{"teardown"};
 	}
 
+	@Override
 	public String getAppContextDir() {
 		return getDirBasedUponPackage();
 	}
