@@ -595,7 +595,7 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<name>Qafe Snapshots</name>
+			<name>Qafe Private Snapshots</name>
 			<id>qafe-private-snapshots</id>
 			<url>http://artifactory.qafe.com/artifactory/qafe-private-snapshots</url>
 		</snapshotRepository>

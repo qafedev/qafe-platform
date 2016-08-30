@@ -26,6 +26,11 @@
     <localRepository/>
     
     <servers>
+		<server>
+            <id>qafe-public-releases</id>
+            <username>qafe</username>
+            <password>APr2MWLuyCcB69WcxNq87WVxYA</password>
+        </server>
         <server>
             <id>qafe-private-dependencies</id>
             <username>qafe</username>
