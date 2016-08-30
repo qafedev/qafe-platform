@@ -214,21 +214,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gquery</artifactId>
-            <version>1.0.0-2.3.0</version>
-            <scope>provided</scope>
-        </dependency>
+		    <groupId>com.google.gwtquery</groupId>
+		    <artifactId>gwtquery</artifactId>
+		    <version>1.4.0</version>
+		    <scope>provided</scope>
+		</dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
-            <artifactId>gwtquery-ui</artifactId>
-            <version>r127</version>
+		    <artifactId>gwtquery-ui</artifactId>
+		    <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt-mosaic</groupId>
-            <artifactId>gwt-mosaic</artifactId>
-            <version>0.4.0-rc1</version>
+		    <artifactId>gwt-mosaic</artifactId>
+		    <version>0.4.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

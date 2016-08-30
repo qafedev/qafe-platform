@@ -24,6 +24,24 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
     <localRepository/>
+    
+    <servers>
+        <server>
+            <id>qafe-private-dependencies</id>
+            <username>qafe</username>
+            <password>APr2MWLuyCcB69WcxNq87WVxYA</password>
+        </server>
+        <server>
+            <id>qafe-private-releases</id>
+            <username>qafe</username>
+            <password>APr2MWLuyCcB69WcxNq87WVxYA</password>
+        </server>
+        <server>
+            <id>qafe-private-snapshots</id>
+            <username>qafe</username>
+            <password>APr2MWLuyCcB69WcxNq87WVxYA</password>
+        </server>
+    </servers>
 
     <!--
         Profiles
@@ -46,29 +64,5 @@
         </profile>
     </profiles>
 
-    <!--
-        mirrors: Specify one or more mirrors to use for central (or any other
-        repository defined by the project).
-        http://maven.apache.org/guides/mini/guide-mirror-settings.html
-    -->
-    <mirrors>
-        <mirror>
-            <id>public</id>
-            <name>Qualogy Maven Repository</name>
-            <url>http://repository.qafe.com/nexus/nexus/content/groups/public/</url>
-            <mirrorOf>central,thirdparty,apache-snapshots,codehaus-snapshots</mirrorOf>
-        </mirror>
-        <mirror>
-            <id>snapshots</id>
-            <name>Qualogy Maven SNAPSHOT Repository</name>
-            <url>http://repository.qafe.com/nexus/content/repositories/qafe.public.snapshots/</url>
-            <mirrorOf>qafe.public.snapshots</mirrorOf>
-        </mirror>
-        <mirror>
-            <id>releases</id>
-            <name>Qualogy Maven Releases Repository</name>
-            <url>http://repository.qafe.com/nexus/content/repositories/qafe.public.releases/</url>
-            <mirrorOf>qafe.public.releases</mirrorOf>
-        </mirror>
-    </mirrors>
+    
 </settings>

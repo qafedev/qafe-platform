@@ -187,19 +187,6 @@
         </dependency>
 	</dependencies>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<name>Qafe Snapshots</name>
-			<id>qafe.snapshots</id>
-			<url>http://repository.qafe.com/nexus/content/repositories/projects.snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<name>Qafe Releases</name>
-			<id>qafe.releases</id>
-			<url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
-		</repository>
-	</distributionManagement>
-
 	<reporting>
 		<plugins>
 			<plugin>
@@ -225,77 +212,4 @@
 		</plugins>
 	</reporting>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>UK</id>
-			<name>UK Central</name>
-			<url>http://uk.maven.org/maven2</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>public</id>
-			<url>http://repository.qafe.com/nexus/content/groups/public/</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<!-- Qafe build-tools needs this -->
-		<pluginRepository>
-			<id>projects.releases</id>
-			<name>Projects Releases</name>
-			<url>http://repository.qafe.com/nexus/content/repositories/projects.releases</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<repositories>
-		<repository>
-			<id>UK</id>
-			<name>UK Central</name>
-			<url>http://uk.maven.org/maven2</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>releases</id>
-			<url>http://repository.qafe.com/nexus/content/repositories/qafe.releases/</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>public</id>
-			<url>http://repository.qafe.com/nexus/content/repositories/public/</url>
-			<releases>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<checksumPolicy>ignore</checksumPolicy>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 </project>
