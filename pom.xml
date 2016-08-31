@@ -59,7 +59,6 @@
 		<connection>scm:git:git@github.com:qafedev/qafe-platform.git</connection>
 		<developerConnection>scm:git:git@github.com:qafedev/qafe-platform.git</developerConnection>
 		<url>http://github.com/qafedev/qafe-platform</url>
-		<tag>platform-3.1.0</tag>
 	</scm>
 
 	<!-- Global properties specific for the entire Qafe platform build -->
