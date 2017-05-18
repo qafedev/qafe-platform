@@ -242,4 +242,8 @@ public abstract class RDBDatasource extends Resource implements SupportsLocalTra
 
         validate();
     }
+    
+    public String getResourceId() {
+    	return getBindResource().getId();
+    }
 }
