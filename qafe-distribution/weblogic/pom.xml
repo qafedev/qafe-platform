@@ -20,7 +20,7 @@
     <parent>
         <artifactId>qafe-distribution</artifactId>
         <groupId>com.qualogy.qafe.platform</groupId>
-        <version>3.4.7-SNAPSHOT</version>
+        <version>3.4.7</version>
     </parent>
     <groupId>com.qualogy.qafe.platform.qafe-distribution</groupId>
     <artifactId>weblogic</artifactId>
