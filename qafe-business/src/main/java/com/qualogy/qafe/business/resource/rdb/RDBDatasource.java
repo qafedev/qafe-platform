@@ -1,5 +1,5 @@
 /**
- * Copyright 2008-2016 Qualogy Solutions B.V.
+ * Copyright 2008-2017 Qualogy Solutions B.V.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -241,5 +241,9 @@ public abstract class RDBDatasource extends Resource implements SupportsLocalTra
         setQueryContainer(container);
 
         validate();
+    }
+    
+    public String getResourceId() {
+    	return getBindResource().getId();
     }
 }
