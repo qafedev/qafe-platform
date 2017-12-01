@@ -30,15 +30,23 @@ After running this command the source code can be found in the *qafe-platform* s
 
 ## Building the platform
 
-Next we need to build the QAFE platform. Open your Maven tool and browse to the *qafe-platform* directory containing the *pom.xml* file. Run the following command to build to QAFE platform: 
+Next we need to build the QAFE platform.
+
+**Prerequisites**: Following Oracle libraries needs to be available in your privately maintained maven repository. Reason is because, libraries provided by Oracle are not allowed to be distributed by public maven repositories.
+ 
+- ojdbc5-11.1.0.7.0.jar
+- orai18n-11.2.0.3.jar
+- coherence-3.7.1.0b27797.jar
+
+Once the above mentioned libraries are in your maven repository, make entry in the parent pom or introduce settings.xml file with credentials for the privately maintained maven repository so that these libraries are available during the build process.
+
+Open your Maven tool and browse to the *qafe-platform* directory containing the *pom.xml* file. Run the following command to build to QAFE platform: 
 ```
 mvn clean install -DskipTests
 ```
 The build should take approximately 10 minutes on a modern machine. The *-DskipTests* is included because database testing using a real database needs to be skipped. The end product of the building the platform are two WAR files, one using GWT and one using Mobile GWT. These WAR files can be run on most web servers including Apache Tomcat, Jetty, Weblogic, JBoss and Glassfish.
 
-**Note**: If you want, you could change the location of the Maven repository by editing the *settings.xml* file in the same directory. One of the more obvious reasons to do this is if you want seperate Maven repositories for different projects. Perhaps for organizational reasons. For example `<localRepository>/Users/johndoe/develop/qafe/m2/</localRepository>`
 
-**Note**: The Oracle JDBC driver is not allowed to be distributed by maven repositories. For this follow [this link](http://www.mkyong.com/maven/how-to-add-oracle-jdbc-driver-in-your-maven-local-repository/) to make it work. 
 
 ##  Importing the software
 
