@@ -270,7 +270,7 @@
 				</dependencies>
 				<executions>
 					<execution>
-						<phase>${solutions.codechecking.phase}</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
 						</goals>
@@ -386,6 +386,11 @@
 				<version>11.1.0.7.0</version>
 			</dependency>
 			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>orai18n</artifactId>
+				<version>11.2.0.3</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.xmlgraphics</groupId>
 				<artifactId>fop</artifactId>
 				<version>0.95-1</version>
@@ -450,11 +455,6 @@
 				<groupId>com.oracle.coherence</groupId>
 				<artifactId>coherence</artifactId>
 				<version>3.7.1.0b27797</version>
-			</dependency>
-			<dependency>
-				<groupId>com.oracle</groupId>
-				<artifactId>active-cache</artifactId>
-				<version>1.0</version>
 			</dependency>
 
 			<!-- Spring dependencies -->
@@ -540,6 +540,12 @@
 				<artifactId>xml-apis</artifactId>
 				<version>1.3.04</version>
 			</dependency>
+			
+			<dependency>
+			    <groupId>javax.activation</groupId>
+			    <artifactId>activation</artifactId>
+			    <version>1.1.1</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -606,9 +612,8 @@
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>qafe-private-dependencies</id>
-			<name>qafe-private-dependencies</name>
-			<url>http://artifactory.qafe.com/artifactory/qafe-private-dependencies</url>
+			<id>qafe-public-releases</id>
+			<url>http://artifactory.qafe.com/artifactory/qafe-public-releases</url>
 			<releases>
 				<checksumPolicy>ignore</checksumPolicy>
 				<enabled>true</enabled>
@@ -625,7 +630,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
+		<!-- <repository>
 			<id>qafe-private-dependencies</id>
 			<url>http://artifactory.qafe.com/artifactory/qafe-private-dependencies</url>
 			<releases>
@@ -645,6 +650,6 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-		</repository>
+		</repository> -->
 	</repositories>
 </project>

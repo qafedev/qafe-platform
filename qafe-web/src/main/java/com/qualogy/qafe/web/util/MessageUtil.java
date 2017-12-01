@@ -16,22 +16,15 @@
 package com.qualogy.qafe.web.util;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.qualogy.qafe.bind.core.application.Configuration;
-import com.qualogy.qafe.core.QafeApplicationContext;
 import com.qualogy.qafe.core.application.ApplicationCluster;
-import com.qualogy.qafe.core.datastore.DataToLogStringBuilder;
-import com.qualogy.solutions.business.mail.client.service.MailClient;
-import com.qualogy.solutions.business.mail.client.service.impl.MailClientImpl;
 
 public class MessageUtil {
 	
@@ -48,24 +41,7 @@ public class MessageUtil {
 			buildMessageMap(map, httpServletRequest);
 		}
 		
-		notifyMessage(map, subject, message);
-	}
-	
-	private static void notifyMessage(Map<String, String> map, String subject, String message) {
-		StringBuilder strB = new StringBuilder();
-		DataToLogStringBuilder.build(map, strB);
-		strB.append("---- ENVIRONMENT INFO-----");
-		try{
-			DataToLogStringBuilder.build(System.getenv(),strB);
-		} catch (SecurityException e){
-			strB.append("Cannot retrieve information, due to security exception!");
-		}
-		strB.append("---- END ENVIRONMENT INFO-----");
-		LOG.info(strB.toString());
-		List<String> tos = new ArrayList<String>();
-		tos.add("support@qafe.com");
-	    MailClient mailClient = new  MailClientImpl (hostUrl);
-		mailClient.sendEmail ("support@qafe.com", tos, tos, tos, subject + "[" + SIMPLE_DATE_FORMAT.format(new Date()) + "]", message + "\n" + strB.toString(), null);
+		// HERE YOU CAN IMPLEMENT HOW NOTIFICATIONS NEEDS TO BE HANDLED. EG; SEND MAIL
 	}
 	
 	private static void buildMessageMap(Map<String, String> map, HttpServletRequest httpServletRequest) {

@@ -36,10 +36,6 @@
             <groupId>com.oracle.coherence</groupId>
             <artifactId>coherence</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>active-cache</artifactId>
-        </dependency>
 
         <!-- Qafe dependencies -->
         <dependency>

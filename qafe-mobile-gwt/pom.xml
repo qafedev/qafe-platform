@@ -67,7 +67,7 @@
                             <style>${qafe-compiler-debug}</style>
                             <skip>${gwt.compile.skip}</skip>
                             <force>true</force>
-                            <localWorkers>${qafe.gwt.permutation.workers}</localWorkers>
+                            <localWorkers>4</localWorkers>
                         </configuration>
                         <goals>
                             <goal>compile</goal>

@@ -140,12 +140,11 @@
                     <dependency>
                         <groupId>com.qualogy.solutions</groupId>
                         <artifactId>build-tools</artifactId>
-                        <version>0.1.0</version>
                     </dependency>
                 </dependencies>
                 <executions>
                     <execution>
-                        <phase>${solutions.codechecking.phase}</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>

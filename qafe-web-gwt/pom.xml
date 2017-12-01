@@ -53,7 +53,7 @@
                             <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                             <style>${qafe-compiler-debug}</style>
                             <force>true</force>
-                            <localWorkers>${qafe.gwt.permutation.workers}</localWorkers>
+                            <localWorkers>4</localWorkers>
                         </configuration>
                         <goals>
                             <goal>compile</goal>
@@ -241,10 +241,10 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>com.sun</groupId>
             <artifactId>css-all</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
